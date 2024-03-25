@@ -254,18 +254,18 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-people"></span><span class="mtext">Doctors</span>
+                        <a href="{{ route ('doctor.index')}}" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-stethoscope"></span><span class="mtext">Doctors</span>
                         </a>
                     </li>
 
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi-people-fill"></span
+                            <span class="micon bi-people"></span
                             ><span class="mtext">Patients</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="{{ route ('patient.add')}} ">Add Patients</a></li>
+                            <li><a href="{{ route ('patient.add')}}">Add Patients</a></li>
                             <li><a href="datatable.html">Manage Patients</a></li>
                         </ul>
                     </li>
@@ -350,7 +350,7 @@
 	<script src="{{ asset('vendors/scripts/layout-settings.js') }}"></script>
 	<script src="{{ asset('src/plugins/fullcalendar/fullcalendar.min.js') }}"></script>
 	<script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
-    <script src="{{ asset('src/plugins/apexcharts/apexcharts.min.js') }}"></script>
+    <script src=" {{ asset('vendors/scripts/datatable-setting.js')}}"></script> 
     <script src="{{ asset('src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>

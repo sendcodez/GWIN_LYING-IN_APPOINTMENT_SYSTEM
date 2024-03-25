@@ -49,4 +49,8 @@ class Patient extends Model
     {
         return $this->hasMany(MedicalHistory::class);
     }
+    public function pregnancy_term()
+    {
+        return $this->hasMany(Pregnancy_term::class);
+    }
 }

@@ -10,12 +10,6 @@ class PregnancyHistory extends Model
 
     protected $fillable = [
         'patient_id',
-        'gravida',
-        'para',
-        't',
-        'p',
-        'a',
-        'l',
         'pregnancy',
         'pregnancy_date',
         'aog',

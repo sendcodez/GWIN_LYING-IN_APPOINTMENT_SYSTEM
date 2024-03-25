@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\HomeController;
@@ -53,6 +54,10 @@ Route::middleware('auth')->group(function () {
     //PATIENT ROUTE
     Route::get('admin/profiling/add_patient', [PatientController::class, 'create'])->name('patient.add');
     Route::post('admin/profiling/add_patient', [PatientController::class, 'store'])->name('patient.store');
+
+
+    //DOCTORS ROUTE
+    Route::get('admin/create_doctor', [DoctorController::class, 'index'])->name('doctor.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

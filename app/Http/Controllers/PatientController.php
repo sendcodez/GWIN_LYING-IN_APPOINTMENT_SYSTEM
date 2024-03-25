@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\MedicalHistory;
 use App\Models\PregnancyHistory;
+use App\Models\Pregnancy_term;
 use Illuminate\Support\Facades\DB;
 
 class PatientController extends Controller
@@ -58,7 +59,7 @@ class PatientController extends Controller
             'barangay' => 'required|string',
 
         ]);
-
+    
         // Save patient information
         $patient = new Patient();
 
@@ -88,34 +89,47 @@ class PatientController extends Controller
 
         $patient->save();
 
+    
+         $pregnancy_term = new Pregnancy_term();
+         $pregnancy_term->patient_id = $patient->id;
+         $pregnancy_term->gravida = $request->gravida;
+         $pregnancy_term->para = $request->para;
+         $pregnancy_term->t = $request->t;
+         $pregnancy_term->p = $request->p;
+         $pregnancy_term->a = $request->a;  
+         $pregnancy_term->l = $request->l;
+         $pregnancy_term->save();
+       
+           $request->validate([
+        'inputs.*.pregnancy' => 'required',
+        'inputs.*.pregnancy_date' => 'required',
+        'inputs.*.aog' => 'required',
+        'inputs.*.manner' => 'required',
+        'inputs.*.bw' => 'required',
+        'inputs.*.sex' => 'required',
+        'inputs.*.present_status' => 'required',
+        'inputs.*.complications' => 'required',
+    ]);
+
+    // Process each input
+    foreach ($request->inputs as $input) {
+        // Create a new PregnancyHistory instance and fill it with the input data
         $pregnancyHistory = new PregnancyHistory();
-        $pregnancyHistory->patient_id = $patient->id;
-        
-        $pregnancyHistory->gravida = $request->gravida;
-        $pregnancyHistory->para = $request->para;
-        $pregnancyHistory->t = $request->t;
-        $pregnancyHistory->p = $request->p;
-        $pregnancyHistory->a = $request->a;
-        $pregnancyHistory->l = $request->l;
+        $pregnancyHistory->pregnancy = $input['pregnancy'];
+        $pregnancyHistory->pregnancy_date = $input['pregnancy_date'];
+        $pregnancyHistory->aog = $input['aog'];
+        $pregnancyHistory->manner = $input['manner'];
+        $pregnancyHistory->bw = $input['bw'];
+        $pregnancyHistory->sex = $input['sex'];
+        $pregnancyHistory->present_status = $input['present_status'];
+        $pregnancyHistory->complications = $input['complications'];
+        // Assuming you have a patient_id available
+        $pregnancyHistory->patient_id = $patient->id; // You should set this appropriately based on your application logic
+
+        // Save the PregnancyHistory instance
         $pregnancyHistory->save();
-        
-        // Assuming the form data arrays are received properly
-        $pregnancyData = $request->only(['pregnancy', 'pregnancy_date', 'aog', 'manner', 'bw', 'sex', 'present_status', 'complications']);
-        
-        foreach ($pregnancyData['pregnancy'] as $key => $pregnancy) {
-            $pregnancyHistory = new PregnancyHistory(); // Create a new instance for each iteration
-            $pregnancyHistory->patient_id = $patient->id;
-            $pregnancyHistory->pregnancy = $pregnancy;
-            $pregnancyHistory->pregnancy_date = $pregnancyData['pregnancy_date'][$key];
-            $pregnancyHistory->aog = $pregnancyData['aog'][$key];
-            $pregnancyHistory->manner = $pregnancyData['manner'][$key];
-            $pregnancyHistory->bw = $pregnancyData['bw'][$key];
-            $pregnancyHistory->sex = $pregnancyData['sex'][$key];
-            $pregnancyHistory->present_status = $pregnancyData['present_status'][$key];
-            $pregnancyHistory->complications = $pregnancyData['complications'][$key];
-            $pregnancyHistory->save(); // Save each instance
-        }
-        DB::commit();
+    }
+
 
 
         //Save medical history

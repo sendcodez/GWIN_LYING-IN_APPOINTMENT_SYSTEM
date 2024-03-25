@@ -273,20 +273,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><input type="number" name="pregnancy[]" class="form-control" /></td>
-                            <td><input type="date" name="pregnancy_date[]" class="form-control" /></td>
-                            <td><input type="text" name="aog[]" class="form-control" /></td>
-                            <td><input type="text" name="manner[]" class="form-control" /></td>
-                            <td><input type="text" name="bw[]" class="form-control" /></td>
+                        <tr class="data-row">
+                            <td><input type="number" name="inputs[0][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="inputs[0][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="inputs[0][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="inputs[0][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="inputs[0][bw]" class="form-control bw" /></td>
                             <td>
-                                <select class="form-control" name="sex[]">
+                                <select class="form-control sex" name="inputs[0][sex]">
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
                             </td>
-                            <td><input type="text" name="present_status[]" class="form-control" /></td>
-                            <td><input type="text" name="complications[]" class="form-control" /></td>
+                            <td><input type="text" name="inputs[0][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="inputs[0][complications]"
+                                    class="form-control complications" />
+                            </td>
                             <td><a href="javascript:void(0)" class="text-success font-18" title="Add"
                                     id="addBtn"><i class="fa fa-plus"></i></a></td>
                         </tr>
@@ -471,6 +476,38 @@
     </div>
 
     <script>
+        var i = 0;
+        $(document).ready(function() {
+            $("#addBtn").on("click", function() {
+                var newRow = `
+        <tr class="data-row">
+            <td><input type="number" name="inputs[${i}][pregnancy]" class="form-control pregnancy" /></td>
+            <td><input type="date" name="inputs[${i}][pregnancy_date]" class="form-control pregnancy_date" /></td>
+            <td><input type="text" name="inputs[${i}][aog]" class="form-control aog" /></td>
+            <td><input type="text" name="inputs[${i}][manner]" class="form-control manner" /></td>
+            <td><input type="text" name="inputs[${i}][bw]" class="form-control bw" /></td>
+            <td>
+                <select class="form-control sex" name="inputs[${i}][sex]">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select></td>
+            <td><input type="text" name="inputs[${i}][present_status]" class="form-control present_status" /></td>
+            <td><input type="text" name="inputs[${i}][complications]" class="form-control complications" /></td>
+
+
+            <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash-o"></i></a></td>
+        </tr>`;
+                $("#dataTable tbody").append(newRow);
+                i++;
+
+            });
+
+            // Remove row function
+            $("#dataTable tbody").on("click", ".remove", function() {
+                $(this).closest("tr").remove();
+            });
+        });
+
         function calculateAge() {
             var birthday = new Date(document.getElementById("birthday").value);
             var today = new Date();
@@ -492,37 +529,6 @@
             }
             document.getElementById("husband_age").value = age;
         }
-        $(document).ready(function() {
-            $("#addBtn").on("click", function() {
-                // Adding a row inside the tbody.
-                $("#dataTable tbody").append(`
-            <tr>
-                <td><input type="number" name="pregnancy[]" class="form-control" /></td>
-                <td><input type="date" name="pregnancy_date[]" class="form-control" /></td>
-                <td><input type="text" name="aog[]" class="form-control" /></td>
-                <td><input type="text" name="manner[]" class="form-control" /></td>
-                <td><input type="text" name="bw[]" class="form-control" /></td>
-                <td>
-                    <select class="form-control" name="sex[]">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                </td>
-                <td><input type="text" name="present_status[]" class="form-control" /></td>
-                <td><input type="text" name="complications[]" class="form-control" /></td>
-                <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash-o"></i></a></td>
-            </tr>`);
-            });
-
-            // Remove row function
-            $("#dataTable tbody").on("click", ".remove", function() {
-                $(this).closest("tr").remove();
-            });
-        });
-
-
-
-
         $(document).ready(function() {
             $('#othersCheckbox').change(function() {
                 if (this.checked) {
