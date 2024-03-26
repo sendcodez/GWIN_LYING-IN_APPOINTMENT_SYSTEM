@@ -1,5 +1,6 @@
 @extends ('layouts.sidebar')
 @section('contents')
+
     <script src="{{ asset('src/scripts/jquery.min.js') }}"></script>
     <div class="main-container">
 
@@ -16,7 +17,7 @@
                     </div>
 
                 </div>
-                <form method="POST" action="{{ route('patient.store') }}">
+                
                     @csrf
                     <div class="row">
                         <div class="col-md-3 col-sm-12">
@@ -259,9 +260,10 @@
                 </div>
 
 
-                <table id="dataTable">
+                <table>
                     <thead>
                         <tr>
+                
                             <th data-type="number">No. of Pregnancy</th>
                             <th data-type="date">Date</th>
                             <th>AOG</th>
@@ -272,24 +274,25 @@
                             <th>Complications</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="dataTable">
                         <tr class="data-row">
-                            <td><input type="number" name="inputs[0][pregnancy]" class="form-control pregnancy" /></td>
-                            <td><input type="date" name="inputs[0][pregnancy_date]"
+                        
+                            <td><input type="number" name="pregnancies[0][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[0][pregnancy_date]"
                                     class="form-control pregnancy_date" /></td>
-                            <td><input type="text" name="inputs[0][aog]" class="form-control aog" /></td>
-                            <td><input type="text" name="inputs[0][manner]" class="form-control manner" />
+                            <td><input type="text" name="pregnancies[0][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[0][manner]" class="form-control manner" />
                             </td>
-                            <td><input type="text" name="inputs[0][bw]" class="form-control bw" /></td>
+                            <td><input type="text" name="pregnancies[0][bw]" class="form-control bw" /></td>
                             <td>
-                                <select class="form-control sex" name="inputs[0][sex]">
+                                <select class="form-control sex" name="pregnancies[0][sex]">
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
                             </td>
-                            <td><input type="text" name="inputs[0][present_status]"
+                            <td><input type="text" name="pregnancies[0][present_status]"
                                     class="form-control present_status" /></td>
-                            <td><input type="text" name="inputs[0][complications]"
+                            <td><input type="text" name="pregnancies[0][complications]"
                                     class="form-control complications" />
                             </td>
                             <td><a href="javascript:void(0)" class="text-success font-18" title="Add"
@@ -466,9 +469,7 @@
 
 
     </div>
-
     </form>
-    </code></pre>
     </div>
     </div>
     </div>
@@ -476,37 +477,29 @@
     </div>
 
     <script>
-        var i = 0;
-        $(document).ready(function() {
-            $("#addBtn").on("click", function() {
-                var newRow = `
-        <tr class="data-row">
-            <td><input type="number" name="inputs[${i}][pregnancy]" class="form-control pregnancy" /></td>
-            <td><input type="date" name="inputs[${i}][pregnancy_date]" class="form-control pregnancy_date" /></td>
-            <td><input type="text" name="inputs[${i}][aog]" class="form-control aog" /></td>
-            <td><input type="text" name="inputs[${i}][manner]" class="form-control manner" /></td>
-            <td><input type="text" name="inputs[${i}][bw]" class="form-control bw" /></td>
-            <td>
-                <select class="form-control sex" name="inputs[${i}][sex]">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select></td>
-            <td><input type="text" name="inputs[${i}][present_status]" class="form-control present_status" /></td>
-            <td><input type="text" name="inputs[${i}][complications]" class="form-control complications" /></td>
+var pregnancyIndex = 0;
 
-
-            <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash-o"></i></a></td>
-        </tr>`;
-                $("#dataTable tbody").append(newRow);
-                i++;
-
-            });
-
+$("#addBtn").on("click", function() {
+    pregnancyIndex++;
+    console.log("Current pregnancyIndex:", pregnancyIndex);
+    var newRow = '<tr>' +
+        '<td><input type="number" name="pregnancies[' + pregnancyIndex + '][pregnancy]" class="form-control pregnancy" /></td>' +
+        '<td><input type="date" name="pregnancies[' + pregnancyIndex + '][pregnancy_date]" class="form-control pregnancy_date" /></td>' +
+        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][aog]" class="form-control aog" /></td>' +
+        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][manner]" class="form-control manner" /></td>' +
+        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][bw]" class="form-control bw" /></td>' +
+        '<td><select class="form-control sex" name="pregnancies[' + pregnancyIndex + '][sex]"><option value="male">Male</option><option value="female">Female</option></select></td>' +
+        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][present_status]" class="form-control present_status" /></td>' +
+        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][complications]" class="form-control complications" /></td>' +
+        '<td><a href="javascript:void(0)" class="text-danger font-16 remove" title="Remove"> <i class="fa fa-trash-o"></i></a></td>' +
+        '</tr>';
+    $("#dataTable").append(newRow); // Append the new row to the table
+});
             // Remove row function
-            $("#dataTable tbody").on("click", ".remove", function() {
+            $("#dataTable").on("click", ".remove", function() {
                 $(this).closest("tr").remove();
             });
-        });
+
 
         function calculateAge() {
             var birthday = new Date(document.getElementById("birthday").value);

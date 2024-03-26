@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PregnancyHistory extends Model
 {
     protected $table = 'pregnancy_histories'; // Specify custom table name
+
+    use HasFactory;
 
     protected $fillable = [
         'patient_id',
@@ -20,8 +22,4 @@ class PregnancyHistory extends Model
         'complications',
     ];
 
-    public function patient()
-    {
-        return $this->belongsTo(Patient::class);
-    }
 }
