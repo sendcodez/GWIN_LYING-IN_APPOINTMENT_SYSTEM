@@ -17,7 +17,7 @@
                     </div>
 
                 </div>
-                
+                <form method="POST" action="{{ route('patient.store') }} " enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-3 col-sm-12">
