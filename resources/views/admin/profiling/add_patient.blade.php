@@ -275,7 +275,8 @@
                         </tr>
                     </thead>
                     <tbody id="dataTable">
-                        <tr class="data-row">
+
+                        <tr class="first_row">
                         
                             <td><input type="number" name="pregnancies[0][pregnancy]" class="form-control pregnancy" /></td>
                             <td><input type="date" name="pregnancies[0][pregnancy_date]"
@@ -298,6 +299,213 @@
                             <td><a href="javascript:void(0)" class="text-success font-18" title="Add"
                                     id="addBtn"><i class="fa fa-plus"></i></a></td>
                         </tr>
+
+                        <tr class="second_row" style="display: none;">
+                        
+                            <td><input type="number" name="pregnancies[1][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[1][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="pregnancies[1][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[1][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="pregnancies[1][bw]" class="form-control bw" /></td>
+                            <td>
+                                <select class="form-control sex" name="pregnancies[1][sex]">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="pregnancies[1][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="pregnancies[1][complications]"
+                                    class="form-control complications" />
+                            </td>
+                             <td><a href="javascript:void(0)" class="text-danger font-18 removeBtn" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+
+                        <tr class="third_row" style="display: none;">
+                        
+                            <td><input type="number" name="pregnancies[2][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[2][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="pregnancies[2][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[2][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="pregnancies[2][bw]" class="form-control bw" /></td>
+                            <td>
+                                <select class="form-control sex" name="pregnancies[2][sex]">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="pregnancies[2][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="pregnancies[2][complications]"
+                                    class="form-control complications" />
+                            </td>
+                             <td><a href="javascript:void(0)" class="text-danger font-18 removeBtn" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+
+                        <tr class="fourth_row" style="display: none;">
+                        
+                            <td><input type="number" name="pregnancies[3][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[3][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="pregnancies[3][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[3][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="pregnancies[3][bw]" class="form-control bw" /></td>
+                            <td>
+                                <select class="form-control sex" name="pregnancies[3][sex]">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="pregnancies[3][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="pregnancies[3][complications]"
+                                    class="form-control complications" />
+                            </td>
+                             <td><a href="javascript:void(0)" class="text-danger font-18 removeBtn" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+
+                        <tr class="fifth_row" style="display: none;">
+                        
+                            <td><input type="number" name="pregnancies[4][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[4][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="pregnancies[4][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[4][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="pregnancies[4][bw]" class="form-control bw" /></td>
+                            <td>
+                                <select class="form-control sex" name="pregnancies[4][sex]">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="pregnancies[4][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="pregnancies[4][complications]"
+                                    class="form-control complications" />
+                            </td>
+                             <td><a href="javascript:void(0)" class="text-danger font-18 removeBtn" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+
+                        <tr class="sixth_row" style="display: none;">
+                        
+                            <td><input type="number" name="pregnancies[5][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[5][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="pregnancies[5][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[5][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="pregnancies[5][bw]" class="form-control bw" /></td>
+                            <td>
+                                <select class="form-control sex" name="pregnancies[5][sex]">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="pregnancies[5][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="pregnancies[5][complications]"
+                                    class="form-control complications" />
+                            </td>
+                             <td><a href="javascript:void(0)" class="text-danger font-18 removeBtn" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+
+                        <tr class="seventh_row" style="display: none;">
+                        
+                            <td><input type="number" name="pregnancies[6][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[6][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="pregnancies[6][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[6][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="pregnancies[6][bw]" class="form-control bw" /></td>
+                            <td>
+                                <select class="form-control sex" name="pregnancies[6][sex]">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="pregnancies[6][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="pregnancies[6][complications]"
+                                    class="form-control complications" />
+                            </td>
+                             <td><a href="javascript:void(0)" class="text-danger font-18 removeBtn" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+
+                        <tr class="eight_row" style="display: none;">
+                        
+                            <td><input type="number" name="pregnancies[7][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[7][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="pregnancies[7][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[7][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="pregnancies[7][bw]" class="form-control bw" /></td>
+                            <td>
+                                <select class="form-control sex" name="pregnancies[7][sex]">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="pregnancies[7][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="pregnancies[7][complications]"
+                                    class="form-control complications" />
+                            </td>
+                             <td><a href="javascript:void(0)" class="text-danger font-18 removeBtn" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+
+                        <tr class="nineth_row" style="display: none;">
+                        
+                            <td><input type="number" name="pregnancies[8][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[8][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="pregnancies[8][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[8][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="pregnancies[8][bw]" class="form-control bw" /></td>
+                            <td>
+                                <select class="form-control sex" name="pregnancies[8][sex]">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="pregnancies[8][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="pregnancies[8][complications]"
+                                    class="form-control complications" />
+                            </td>
+                             <td><a href="javascript:void(0)" class="text-danger font-18 removeBtn" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+
+                        <tr class="tenth_row" style="display: none;">
+                            <td><input type="number" name="pregnancies[9][pregnancy]" class="form-control pregnancy" /></td>
+                            <td><input type="date" name="pregnancies[9][pregnancy_date]"
+                                    class="form-control pregnancy_date" /></td>
+                            <td><input type="text" name="pregnancies[9][aog]" class="form-control aog" /></td>
+                            <td><input type="text" name="pregnancies[9][manner]" class="form-control manner" />
+                            </td>
+                            <td><input type="text" name="pregnancies[9][bw]" class="form-control bw" /></td>
+                            <td>
+                                <select class="form-control sex" name="pregnancies[9][sex]">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="pregnancies[9][present_status]"
+                                    class="form-control present_status" /></td>
+                            <td><input type="text" name="pregnancies[9][complications]"
+                                    class="form-control complications" />
+                            </td>
+                             <td><a href="javascript:void(0)" class="text-danger font-18 removeBtn" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -477,29 +685,65 @@
     </div>
 
     <script>
-var pregnancyIndex = 0;
+   let currentRow = 1; 
 
-$("#addBtn").on("click", function() {
-    pregnancyIndex++;
-    console.log("Current pregnancyIndex:", pregnancyIndex);
-    var newRow = '<tr>' +
-        '<td><input type="number" name="pregnancies[' + pregnancyIndex + '][pregnancy]" class="form-control pregnancy" /></td>' +
-        '<td><input type="date" name="pregnancies[' + pregnancyIndex + '][pregnancy_date]" class="form-control pregnancy_date" /></td>' +
-        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][aog]" class="form-control aog" /></td>' +
-        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][manner]" class="form-control manner" /></td>' +
-        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][bw]" class="form-control bw" /></td>' +
-        '<td><select class="form-control sex" name="pregnancies[' + pregnancyIndex + '][sex]"><option value="male">Male</option><option value="female">Female</option></select></td>' +
-        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][present_status]" class="form-control present_status" /></td>' +
-        '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][complications]" class="form-control complications" /></td>' +
-        '<td><a href="javascript:void(0)" class="text-danger font-16 remove" title="Remove"> <i class="fa fa-trash-o"></i></a></td>' +
-        '</tr>';
-    $("#dataTable").append(newRow); // Append the new row to the table
+document.getElementById("addBtn").addEventListener("click", function() {
+    if (currentRow === 1) {
+        document.querySelector(".second_row").style.display = "table-row";
+        currentRow = 2; 
+    } else if (currentRow === 2) {
+        document.querySelector(".third_row").style.display = "table-row";
+        currentRow = 3; 
+    }
+    else if (currentRow === 3) {
+        document.querySelector(".fourth_row").style.display = "table-row";
+        currentRow = 4; 
+    }
+    else if (currentRow === 4) {
+        document.querySelector(".fifth_row").style.display = "table-row";
+        currentRow = 5; 
+    }
+    else if (currentRow === 5) {
+        document.querySelector(".sixth_row").style.display = "table-row";
+        currentRow = 6; 
+    }
+    else if (currentRow === 6) {
+        document.querySelector(".seventh_row").style.display = "table-row";
+        currentRow = 7; 
+    }
+    else if (currentRow === 7) {
+        document.querySelector(".eight_row").style.display = "table-row";
+        currentRow = 8; 
+    }
+    else if (currentRow === 8) {
+        document.querySelector(".nineth_row").style.display = "table-row";
+        currentRow = 9; 
+    }
+    else if (currentRow === 9) {
+        document.querySelector(".tenth_row").style.display = "table-row";
+        currentRow = 10; 
+    }
+
 });
-            // Remove row function
-            $("#dataTable").on("click", ".remove", function() {
-                $(this).closest("tr").remove();
-            });
+document.querySelectorAll(".removeBtn").forEach(button => {
+        button.addEventListener("click", function() {
+            const row = this.closest("tr");
+            row.style.display = "none";
+            currentRow--;
+        });
+    });
 
+    function clearRowData(row) {
+        const inputs = row.querySelectorAll("input, select"); // Select all input and select elements within the row
+        inputs.forEach(input => {
+            // Clear the value of each input element
+            if (input.type === "text" || input.type === "number" || input.tagName === "SELECT") {
+                input.value = "";
+            } else if (input.type === "date") {
+                input.value = ""; // Set date inputs to an empty string or default date value
+            }
+        });
+    }
 
         function calculateAge() {
             var birthday = new Date(document.getElementById("birthday").value);

@@ -33,7 +33,7 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+     
         DB::beginTransaction();
         try {
 
@@ -131,11 +131,16 @@ class PatientController extends Controller
                 $item['present_status'] = $pregnancy['present_status'];
                 $item['complications'] = $pregnancy['complications'];
             
-                $history[] = $item;
-                
+                // Check if any value is null or empty, if so, skip adding this item to the $history array
+                if (!in_array(null, $item, true)) {
+                    $history[] = $item;
+                }
             }
             
-            PregnancyHistory::insert($history); 
+            // Insert only the non-null items into the database
+            if (!empty($history)) {
+                PregnancyHistory::insert($history);
+            }
 
             //Save medical history
             $medicalHistory = new MedicalHistory();
@@ -175,7 +180,7 @@ class PatientController extends Controller
 
             DB::commit();
 
-            return back()->with('success', 'Resident added successfully.');
+            return back()->with('success', 'Patient  added successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             $errorMessages = $e->getMessage();
