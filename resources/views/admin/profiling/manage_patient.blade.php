@@ -14,23 +14,25 @@
                     <table class="data-table table nowrap">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th class="table-plus">Patient ID</th>
                                 <th class="table-plus">Fullname</th>
                                 <th>Contact Number</th>
-                                <th>Address</th>
+                                <th style="text-align: center">Address</th>
                                 <th>Age</th>
                                 <th>QR Code</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php $count = 1 @endphp 
                             @foreach($patients as $patient)
                             <tr>
-
+                                <td>{{ $count++ }}</td>
                                 <td class="table-plus">
                                     <div class="name-avatar d-flex align-items-center">
                                         <div class="txt">
-                                            <div class="weight-600">{{ $patient->id }}</div>
+                                            <div class="weight-600" style="color:blue">{{ $patient->id }}</div>
                                         </div>
                                     </div>
                                 </td>
