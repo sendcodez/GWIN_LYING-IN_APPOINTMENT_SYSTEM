@@ -6,7 +6,10 @@ use App\Models\MedicalHistory;
 use App\Models\Patient;
 use App\Models\Pregnancy_term;
 use App\Models\PregnancyHistory;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +20,11 @@ class PatientController extends Controller
      */
     public function index()
     {
-
+        // Fetch all patient records from the database
+        $patients = Patient::all();
+    
+        // Pass the patient records to the view
+        return view('admin.profiling.manage_patient', ['patients' => $patients]);
     }
 
     /**
@@ -33,7 +40,7 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-     
+
         DB::beginTransaction();
         try {
 
@@ -72,40 +79,35 @@ class PatientController extends Controller
                 'pregnancies.*.sex' => 'nullable|string|in:male,female',
                 'pregnancies.*.present_status' => 'nullable|string',
                 'pregnancies.*.complications' => 'nullable|string',
-                
+
 
             ]);
-                 
-  
+
+
             // Save patient information
             $patient = new Patient();
+            $patient->fill($validatedData);
 
-            $patient->firstname = $validatedData['firstname'];
-            $patient->middlename = $validatedData['middlename'];
-            $patient->lastname = $validatedData['lastname'];
-            $patient->maiden = $validatedData['maiden'];
-            $patient->birthplace = $validatedData['birthplace'];
-            $patient->birthday = $validatedData['birthday'];
-            $patient->age = $validatedData['age'];
-            $patient->civil = $validatedData['civil'];
-            $patient->contact_number = $validatedData['contact_number'];
-            $patient->religion = $validatedData['religion'];
-            $patient->occupation = $validatedData['occupation'];
-            $patient->nationality = $validatedData['nationality'];
-            $patient->husband_firstname = $validatedData['husband_firstname'];
-            $patient->husband_middlename = $validatedData['husband_middlename'];
-            $patient->husband_lastname = $validatedData['husband_lastname'];
-            $patient->husband_occupation = $validatedData['husband_occupation'];
-            $patient->husband_birthday = $validatedData['husband_birthday'];
-            $patient->husband_age = $validatedData['husband_age'];
-            $patient->husband_contact_number = $validatedData['husband_contact_number'];
-            $patient->husband_religion = $validatedData['husband_religion'];
-            $patient->province = $validatedData['province'];
-            $patient->city = $validatedData['city'];
-            $patient->barangay = $validatedData['barangay'];
 
             $patient->save();
+            $patientId = $patient->id;
+            $qrCode = QrCode::format('png')
+                ->size(200)
+                ->errorCorrection('H')
+                ->generate($patientId);
+            
+            // Define the output file path
+            $output_filename = 'patient_' . $patientId . '_' . time() . '.png';
+            $output_file_path = public_path('qr_image/' . $output_filename);
+            
+            // Save the QR code image to the public directory
+            File::put($output_file_path, $qrCode);
+            
+            // Update the patient record with the filename of the QR code image
+            $patient->qr_name = $output_filename;
+            $patient->save();
 
+            //PREGNANCY_TERM
             $pregnancy_term = new Pregnancy_term();
             $pregnancy_term->patient_id = $patient->id;
             $pregnancy_term->gravida = $request->gravida;
@@ -122,7 +124,7 @@ class PatientController extends Controller
             foreach ($validatedData['pregnancies'] as $key => $pregnancy) {
                 $item = [];
                 $item['patient_id'] = $patient->id;
-                $item['pregnancy'] = $pregnancy['pregnancy']; 
+                $item['pregnancy'] = $pregnancy['pregnancy'];
                 $item['pregnancy_date'] = $pregnancy['pregnancy_date'];
                 $item['aog'] = $pregnancy['aog'];
                 $item['manner'] = $pregnancy['manner'];
@@ -130,13 +132,13 @@ class PatientController extends Controller
                 $item['sex'] = $pregnancy['sex'];
                 $item['present_status'] = $pregnancy['present_status'];
                 $item['complications'] = $pregnancy['complications'];
-            
+
                 // Check if any value is null or empty, if so, skip adding this item to the $history array
                 if (!in_array(null, $item, true)) {
                     $history[] = $item;
                 }
             }
-            
+
             // Insert only the non-null items into the database
             if (!empty($history)) {
                 PregnancyHistory::insert($history);
@@ -184,16 +186,16 @@ class PatientController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             $errorMessages = $e->getMessage();
-            
+
             // Log the error message
             Log::error($errorMessages);
-            
+
             // Debug the error message using dd()
             dd($errorMessages);
-            
+
             return redirect()->back()->withErrors($errorMessages);
         }
-        
+
 
     }
 
@@ -228,4 +230,5 @@ class PatientController extends Controller
     {
         //
     }
+    
 }

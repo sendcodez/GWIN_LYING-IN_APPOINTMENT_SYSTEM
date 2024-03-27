@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
 
 
     //PATIENT ROUTE
+   
+    Route::get('admin/profiling/manage_patient', [PatientController::class, 'index'])->name('patient.index');
     Route::get('admin/profiling/add_patient', [PatientController::class, 'create'])->name('patient.add');
     Route::post('admin/profiling/add_patient', [PatientController::class, 'store'])->name('patient.store');
 

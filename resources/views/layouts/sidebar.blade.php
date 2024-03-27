@@ -267,7 +267,7 @@
                         </a>
                         <ul class="submenu">
                             <li><a href="{{ route ('patient.add')}}">Add Patients</a></li>
-                            <li><a href="datatable.html">Manage Patients</a></li>
+                            <li><a href="{{ route ('patient.index')}}">Manage Patients</a></li>
                         </ul>
                     </li>
                  
