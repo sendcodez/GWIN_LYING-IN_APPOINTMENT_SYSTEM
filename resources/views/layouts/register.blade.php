@@ -9,6 +9,8 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/login_style.css') }}">
     <link href="{{ asset('lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css')}}" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('img/gwinlogo2.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('img/gwinlogo2.png') }}" />
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -19,7 +21,7 @@
 </head>
 <style>
     .logo-image {
-    width: 80px; /* Adjust the size as needed */
+    width: 150px; /* Adjust the size as needed */
     height: 80px; /* Adjust the size as needed */
     border-radius: 50%; /* Makes the image round */
     object-fit: cover; /* Ensures the image covers the entire container */
@@ -48,7 +50,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
                 <a href="index.html" class="navbar-brand">
-                    <h1 class="m-0 text-uppercase text-primary"><img src="{{ asset ('img/GWIN.jpg') }}" alt="GWIN Lying-in Logo" class="logo-image">&nbsp GWIN Lying-In</h1>
+                    <h1 class="m-0 text-uppercase text-primary"><img src="{{ asset ('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="logo-image">GWIN Lying-In</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -81,9 +83,14 @@
                                 <h4 class="card-title">Register</h4>
                                 <form method="POST" class="my-login-validation" novalidate="">
                                     <div class="form-group">
-                                        @yield ('name')
+                                        @yield ('firstname')
                                     </div>
-    
+                                    <div class="form-group">
+                                        @yield ('middlename')
+                                    </div>
+                                    <div class="form-group">
+                                        @yield ('lastname')
+                                    </div>
                                     <div class="form-group">
                                         @yield ('email')
                                     </div>

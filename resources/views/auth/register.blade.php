@@ -3,11 +3,25 @@
     @csrf
 
     <!-- Name -->
-    @section('name')
-        <x-input-label for="name" :value="__('Name')" />
-        <x-text-input id="name" class="form-control" type="text" name="name" :value="old('name')" required autofocus
-            autocomplete="name" />
-        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+    @section('firstname')
+        <x-input-label for="firstname" :value="__('Firstname')" />
+        <x-text-input id="firstname" class="form-control" type="text" name="firstname" :value="old('firstname')" required autofocus
+            autocomplete="firstname" />
+        <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
+    @endsection
+
+    @section('middlename')
+    <x-input-label for="middlename" :value="__('Middlename')" />
+    <x-text-input id="middlename" class="form-control" type="text" name="middlename" :value="old('middlename')"
+        autocomplete="middlename" />
+    <x-input-error :messages="$errors->get('middlename')" class="mt-2" />
+    @endsection
+
+    @section('lastname')
+    <x-input-label for="lastname" :value="__('Lastname')" />
+    <x-text-input id="lastname" class="form-control" type="text" name="lastname" :value="old('lastname')" required autofocus
+        autocomplete="lastname" />
+    <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
     @endsection
 
     <!-- Email Address -->

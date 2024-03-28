@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('patients', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->string('qr_name')->nullable();
         });
+        
     }
 
     /**

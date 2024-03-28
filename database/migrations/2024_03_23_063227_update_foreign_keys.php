@@ -12,16 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pregnancy_histories', function (Blueprint $table) {
-            $table->unsignedBigInteger('patient_id')->change(); // Change the column to unsignedBigInteger if needed
+            $table->unsignedBigInteger('user_id')->change(); // Change the column to unsignedBigInteger if needed
         
             // Add foreign key constraint
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
         Schema::table('medical_histories', function (Blueprint $table) {
-            $table->unsignedBigInteger('patient_id')->change(); // Change the column to unsignedBigInteger if needed
+            $table->unsignedBigInteger('user_id')->change(); // Change the column to unsignedBigInteger if needed
         
             // Add foreign key constraint
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+        Schema::table('patients', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->change(); // Change the column to unsignedBigInteger if needed
+        
+            // Add foreign key constraint
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

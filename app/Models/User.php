@@ -18,7 +18,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'middlename',
+        'lastname',
         'email',
         'password',
     ];
@@ -46,5 +48,8 @@ class User extends Authenticatable
     {
         return $this->status == '1';
     }
-
+    public function patient()
+    {
+        return $this->hasOne(Patient::class);
+    }
 }

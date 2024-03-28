@@ -12,17 +12,23 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;  
+use Illuminate\Support\Facades\Crypt;
 
 class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
+
         // Fetch all patient records from the database
-        $patients = Patient::all();
-    
+        $patients = Patient::join('users', 'patients.user_id', '=', 'users.id')
+            ->select('patients.*', 'users.qr_name')
+            ->get();
+
         // Pass the patient records to the view
         return view('admin.profiling.manage_patient', ['patients' => $patients]);
     }
@@ -35,17 +41,20 @@ class PatientController extends Controller
         return view('admin.profiling.add_patient');
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-    
+
         DB::beginTransaction();
         try {
 
             // Validate request data
             $validatedData = $request->validate([
+                'user_id' => 'required|exists:users,id',
                 'firstname' => 'required|string',
                 'middlename' => 'nullable|string',
                 'lastname' => 'required|string',
@@ -81,35 +90,33 @@ class PatientController extends Controller
                 'pregnancies.*.complications' => 'nullable|string',
 
 
+            ], [
+                'user_id.exists' => 'The selected user ID does not exist in the users table.',
             ]);
+
+            
+            $existingPatient = Patient::where('user_id', $validatedData['user_id'])->first();
+
+            // If patient with the provided user_id exists, return a response indicating so
+            if ($existingPatient) {
+                return back()->with('error', 'Patient already added.');
+            }
+            
 
 
             // Save patient information
             $patient = new Patient();
             $patient->fill($validatedData);
 
+            $patient->user_id = $request->user_id;
 
             $patient->save();
-            $patientId = $patient->id;
-            $qrCode = QrCode::format('png')
-                ->size(200)
-                ->errorCorrection('H')
-                ->generate($patientId);
-            
-            // Define the output file path
-            $output_filename = 'patient_' . $patientId . '_' . time() . '.png';
-            $output_file_path = public_path('qr_image/' . $output_filename);
-            
-            // Save the QR code image to the public directory
-            File::put($output_file_path, $qrCode);
-            
-            // Update the patient record with the filename of the QR code image
-            $patient->qr_name = $output_filename;
-            $patient->save();
+
 
             //PREGNANCY_TERM
             $pregnancy_term = new Pregnancy_term();
-            $pregnancy_term->patient_id = $patient->id;
+            $user_id = $patient->user->id;
+            $pregnancy_term->user_id = $user_id;
             $pregnancy_term->gravida = $request->gravida;
             $pregnancy_term->para = $request->para;
             $pregnancy_term->t = $request->t;
@@ -123,7 +130,8 @@ class PatientController extends Controller
 
             foreach ($validatedData['pregnancies'] as $key => $pregnancy) {
                 $item = [];
-                $item['patient_id'] = $patient->id;
+                $user_id = $patient->user->id;
+                $item['user_id'] = $patient->user->id;
                 $item['pregnancy'] = $pregnancy['pregnancy'];
                 $item['pregnancy_date'] = $pregnancy['pregnancy_date'];
                 $item['aog'] = $pregnancy['aog'];
@@ -146,7 +154,8 @@ class PatientController extends Controller
 
             //Save medical history
             $medicalHistory = new MedicalHistory();
-            $medicalHistory->patient_id = $patient->id;
+            $user_id = $patient->user->id;
+            $medicalHistory->user_id = $patient->user->id;
             $booleanValues = [
                 'hypertension',
                 'heartdisease',
@@ -183,52 +192,102 @@ class PatientController extends Controller
             DB::commit();
 
             return back()->with('success', 'Patient  added successfully.');
+        } catch (ValidationException $e) {
+            // Custom error message for exists validation rule failure
+            if ($e->validator->errors()->has('user_id')) {
+                return back()->with('error', 'The selected user ID does not have an account.');
+            }
+    
+            // Other validation errors
+            return redirect()->back()->withErrors($e->validator->errors());
         } catch (\Exception $e) {
             DB::rollback();
             $errorMessages = $e->getMessage();
-
-            // Log the error message
             Log::error($errorMessages);
-
-            // Debug the error message using dd()
-            dd($errorMessages);
-
-            return redirect()->back()->withErrors($errorMessages);
+            return redirect()->back()->with('error', 'Failed to add patient.');
         }
 
-
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+
+    public function show($userId)
     {
-        //
+        // Fetch the patient with related data based on the user_id
+        $patient = Patient::with(['pregnancyTerms', 'PregnancyHistories', 'MedicalHistories'])
+            ->where('user_id', $userId)
+            ->firstOrFail();
+
+        // Pass the patient data to the view
+        return view('admin.profiling.show_patient', compact('patient'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+    public function edit($userId)
     {
-        //
+        $patient = Patient::where('user_id', $userId)->firstOrFail();
+        $pregnancyterm = Pregnancy_term::where('user_id', $userId)->firstOrFail();
+        $pregnancyHistories = PregnancyHistory::where('user_id', $userId)->get();
+        $medicalHistory = MedicalHistory::where('user_id', $userId)->first();
+        return view('admin.profiling.edit_patient', compact('patient', 'pregnancyterm', 'pregnancyHistories', 'medicalHistory'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, $userId)
+{
+    $patient = Patient::where('user_id', $userId)->firstOrFail();
+
+    $patient->update($request->all());
+
+    // Convert checkbox values to boolean
+    $medicalHistoryData = $request->only(['hypertension', 'heartdisease', 'asthma', 'tuberculosis', 'diabetes', 'goiter', 'epilepsy', 'allergy', 'hepatitis', 'vdrl', 'bleeding', 'operation']);
+    foreach ($medicalHistoryData as $key => $value) {
+        $medicalHistoryData[$key] = $value ? true : false;
     }
+
+    $medicalHistory = MedicalHistory::updateOrCreate(
+        ['user_id' => $patient->user_id],
+        $medicalHistoryData
+    );
+
+    $pregnancyTerm = Pregnancy_term::updateOrCreate(
+        ['user_id' => $patient->user_id],
+        $request->only(['tt1', 'tt2', 'tt3', 'tt4', 'tt5'])
+    );
+
+    if ($request->has('pregnancies')) {
+        foreach ($request->pregnancies as $pregnancy) {
+            PregnancyHistory::updateOrCreate(
+                ['user_id' => $patient->user_id],
+                $pregnancy
+            );
+        }
+    }
+
+    return redirect()->route('patients.show', ['userId' => $userId])->with('success', 'Patient information updated successfully');
+}
+
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
-    }
+        try {
+            // Find the patient by ID
+            $patient = Patient::findOrFail($id);
+            
+            // Soft delete the patient record
+            $patient->delete();
     
+            // Optionally, you can redirect back with a success message
+            return redirect()->back()->with('success', 'Patient deleted successfully.');
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error($e->getMessage());
+    
+            // Redirect back with an error message
+            return redirect()->back()->with('error', 'Failed to delete patient.');
+        }
+    }
+
 }

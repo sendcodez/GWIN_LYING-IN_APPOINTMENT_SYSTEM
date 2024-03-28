@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pregnancy_histories', function (Blueprint $table) {
            
             $table->id();
-            $table->integer('patient_id'); 
+            $table->integer('user_id'); 
             $table->integer('pregnancy')->nullable();
             $table->date('pregnancy_date')->nullable();
             $table->string('aog')->nullable();

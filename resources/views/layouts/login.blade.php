@@ -12,15 +12,22 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-
+    <link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('img/gwinlogo2.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('img/gwinlogo2.png') }}" />
     <!-- Template Stylesheet -->
     <link href=" {{ asset('css/style.css') }}" rel="stylesheet">
     <title>Login</title>
 </head>
 <style>
     .logo-image {
-    width: 80px; /* Adjust the size as needed */
+    width: 150px; /* Adjust the size as needed */
     height: 80px; /* Adjust the size as needed */
+    border-radius: 50%; /* Makes the image round */
+    object-fit: cover; /* Ensures the image covers the entire container */
+    }
+    .logo {
+    width: 250px; /* Adjust the size as needed */
+    height: 280px; /* Adjust the size as needed */
     border-radius: 50%; /* Makes the image round */
     object-fit: cover; /* Ensures the image covers the entire container */
 }
@@ -50,7 +57,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
                 <a href="index.html" class="navbar-brand">
-                    <h1 class="m-0 text-uppercase text-primary"><img src="{{ asset ('img/GWIN.jpg') }}" alt="GWIN Lying-in Logo" class="logo-image">&nbsp GWIN Lying-In</h1>
+                    <h1 class="m-0 text-uppercase text-primary"><img src="{{ asset ('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="logo-image">GWIN Lying-In</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
@@ -75,7 +82,7 @@
                 <div class="row justify-content-md-center h-100">
                     <div class="card-wrapper">
                         <div class="brand">
-                            <img src="{{ asset ('img/GWIN.jpg') }}" alt="logo">
+                            <img src="{{ asset ('img/GWIN.jpg') }}" alt="logo" class="logo">
                         </div>
                         <div class="card fat">
                             <div class="card-body">

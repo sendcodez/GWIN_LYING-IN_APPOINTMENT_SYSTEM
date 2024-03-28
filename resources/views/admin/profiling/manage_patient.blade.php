@@ -1,6 +1,5 @@
 @extends ('layouts.sidebar')
 @section ('contents')
-
 <div class="main-container">
     <div class="pd-ltr-20 xs-pd-20-10">
         <div class="min-height-200px">
@@ -32,7 +31,7 @@
                                 <td class="table-plus">
                                     <div class="name-avatar d-flex align-items-center">
                                         <div class="txt">
-                                            <div class="weight-600" style="color:blue">{{ $patient->id }}</div>
+                                            <div class="weight-000"><b>{{ $patient->user_id }}</b></div>
                                         </div>
                                     </div>
                                 </td>
@@ -40,7 +39,7 @@
                                 <td class="table-plus">
                                     <div class="name-avatar d-flex align-items-center">
                                         <div class="txt">
-                                            <div class="weight-600">{{ $patient->firstname }} {{ $patient->lastname }}</div>
+                                            <div class="">{{ $patient->firstname }} {{ $patient->lastname }}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -57,10 +56,22 @@
                                             <i class="dw dw-more"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-                                            <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-                                        </div>
+                                            <a class="dropdown-item" href="{{ route('patients.show', ['userId' => $patient->user_id]) }}">
+                                                <i class="dw dw-eye"></i> View
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('patient.edit', ['userId' => $patient->user_id]) }}">
+                                                <i class="dw dw-edit2"></i> Edit
+                                            </a>
+                                            <form action="{{ route('patient.destroy', $patient->id) }}"
+                                                method="POST" style="display: inline;"
+                                                id="deleteForm{{ $patient->id }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="dropdown-item delete-btn"
+                                                    data-user-id="{{ $patient->id }}">
+                                                    <i class="dw dw-delete-3"></i> Delete <!-- Example using Bootstrap Icons -->
+                                                </button>
+                                            </form>
                                     </div>
                                 </td>
                             </tr>
@@ -71,3 +82,5 @@
                 
 @endsection
 <script src=" {{ asset('src/scripts/jquery.min.js')}}"></script>
+
+

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('medical_histories', function (Blueprint $table) {
            
             $table->id();
-            $table->integer('patient_id'); 
+            $table->integer('user_id'); 
             $table->boolean('hypertension')->default(false);
             $table->boolean('heartdisease')->default(false);
             $table->boolean('asthma')->default(false);

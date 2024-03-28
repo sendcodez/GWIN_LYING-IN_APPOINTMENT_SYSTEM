@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pregnancy_terms', function (Blueprint $table) {
            
             $table->id();
-            $table->integer('patient_id'); 
+            $table->integer('user_id'); 
             $table->string('gravida')->nullable();
             $table->string('para')->nullable();
             $table->string('t')->nullable();

@@ -10,6 +10,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PatientController;
+use App\Models\User;
 
 
 /*
@@ -43,6 +44,22 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 Route::middleware('auth')->group(function () {
 
+    //USER ROUTE
+    Route::get('/get-user-details/{id}', function($id) {
+        $user = User::find($id);
+        if ($user) {
+            return response()->json([
+                'firstname' => $user->firstname,
+                'middlename' => $user->middlename,
+                'lastname' => $user->lastname
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'User not found'
+            ], 404);
+        }
+    });
+    
     //HOME ROUTE
     Route::get('admin/home', [HomeController::class, 'index'])->name('admin.home');
 
@@ -52,10 +69,16 @@ Route::middleware('auth')->group(function () {
 
 
     //PATIENT ROUTE
-   
-    Route::get('admin/profiling/manage_patient', [PatientController::class, 'index'])->name('patient.index');
+
     Route::get('admin/profiling/add_patient', [PatientController::class, 'create'])->name('patient.add');
+    Route::get('admin/profiling/manage_patient', [PatientController::class, 'index'])->name('patient.index');
+  
+    Route::get('/admin/profiling/{userId}', [PatientController::class, 'show'])->name('patients.show');
+    Route::get('admin/profiling/edit_patient/{userId}', [PatientController::class, 'edit'])->name('patient.edit');
     Route::post('admin/profiling/add_patient', [PatientController::class, 'store'])->name('patient.store');
+    Route::put('/admin/profiling/edit_patient/{userId}', [PatientController::class, 'update'])->name('patient.update');
+    Route::delete('admin/profiling/manage_patient/{patient}', [PatientController::class, 'destroy'])->name('patient.destroy');
+
 
 
     //DOCTORS ROUTE

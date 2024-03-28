@@ -8,8 +8,8 @@
 
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href=" {{ asset('vendors/images/apple-touch-icon.png') }}" />
-    <link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('vendors/images/favicon-32x32.png') }}" />
-    <link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('vendors/images/favicon-16x16.png') }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('img/gwinlogo2.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('img/gwinlogo2.png') }}" />
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -26,10 +26,12 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/style.css') }}" />
 	<link rel="stylesheet" type="text/css" href="{{ asset('src/plugins/fullcalendar/fullcalendar.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/toastr.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sweetalert2.min.css') }}" />
 	
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBZ3SGGX85"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2973766580778258"
         crossorigin="anonymous"></script>
@@ -63,8 +65,14 @@
 </head>
 <style>
     .logo-image {
-    width: 80px; /* Adjust the size as needed */
-    height: 80px; /* Adjust the size as needed */
+    width: 280px; /* Adjust the size as needed */
+    height: 280px; /* Adjust the size as needed */
+    border-radius: 50%; /* Makes the image round */
+    object-fit: cover; /* Ensures the image covers the entire container */
+}
+.gwin {
+    width: 100px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
     border-radius: 50%; /* Makes the image round */
     object-fit: cover; /* Ensures the image covers the entire container */
 }
@@ -73,7 +81,7 @@
     <div class="pre-loader">
         <div class="pre-loader-box">
             <div class="loader-logo">
-                <img src="{{ asset ('img/GWIN.jpg') }}" alt="GWIN Lying-in Logo" class="logo-image">
+                <img src="{{ asset ('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="logo-image">
             </div>
             <div class="loader-progress" id="progress_div">
                 <div class="bar" id="bar1"></div>
@@ -106,7 +114,7 @@
                         <span class="user-icon">
                             <img src="{{ asset ('vendors/images/avatar.png') }}" alt="" />
                         </span>
-                        <span class="user-name"> {{ Auth::user()->name }}</span>
+                        <span class="user-name"> {{ Auth::user()->firstname }}  {{ Auth::user()->lastname }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
@@ -227,7 +235,7 @@
     <div class="left-side-bar">
         <div class="brand-logo">
             <a href="index.html">
-                <h1>GWIN</h1>
+                <img src="{{ asset ('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="gwin"> <h1>GWIN</h1>
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
                 <i class="ion-close-round"></i>
@@ -302,6 +310,11 @@
                             <span class="micon bi bi-people"></span><span class="mtext">User Setting</span>
                         </a>
                     </li>
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-globe"></span><span class="mtext">Website Setting</span>
+                        </a>
+                    </li>
 					@endif
 
 
@@ -351,6 +364,8 @@
     <script src="{{ asset('vendors/scripts/process.js') }}"></script>
 	<script src="{{ asset('vendors/scripts/layout-settings.js') }}"></script>
 	<script src="{{ asset('src/plugins/fullcalendar/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('js/instascan.min.js') }}"></script>
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 	<script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
     <script src=" {{ asset('vendors/scripts/datatable-setting.js')}}"></script> 
     <script src="{{ asset('src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
@@ -371,10 +386,7 @@
     </script>
 @endif
 <script>
-    // Check for success flash message
-
-
-    document.querySelectorAll('.delete-btn').forEach(button => {
+   document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function() {
             const userId = this.getAttribute('data-user-id');
 

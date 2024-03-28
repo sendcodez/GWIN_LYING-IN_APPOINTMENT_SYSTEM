@@ -9,7 +9,8 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('img/gwinlogo2.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('img/gwinlogo2.png') }}" />
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -31,9 +32,9 @@
 </head>
 <style>
     .logo-image {
-    width: 80px; /* Adjust the size as needed */
-    height: 80px; /* Adjust the size as needed */
-    border-radius: 50%; /* Makes the image round */
+    width: 180px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
+    /* Makes the image round */
     object-fit: cover; /* Ensures the image covers the entire container */
 }
 </style>
@@ -66,7 +67,7 @@
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
                 <a href="index.html" class="navbar-brand">
                     
-                    <h1 class="m-0 text-uppercase text-primary"><img src="{{ asset ('img/GWIN.jpg') }}" alt="GWIN Lying-in Logo" class="logo-image"> &nbsp GWIN Lying-in</h1>
+                    <h1 class="m-0 text-uppercase text-primary"><img src="{{ asset ('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="logo-image">GWIN Lying-in</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>

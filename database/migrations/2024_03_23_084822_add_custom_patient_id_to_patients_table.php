@@ -16,7 +16,7 @@ return new class extends Migration
         $currentYear = date('Y');
         $startingId = intval($currentYear . '000001');
 
-        DB::statement("ALTER TABLE patients AUTO_INCREMENT = $startingId");
+        DB::statement("ALTER TABLE users AUTO_INCREMENT = $startingId");
     }
 
     /**
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('patients', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

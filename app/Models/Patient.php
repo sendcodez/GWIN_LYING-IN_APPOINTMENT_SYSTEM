@@ -13,6 +13,7 @@ class Patient extends Model
     protected $table = 'patients'; // Specify custom table name
 
     protected $fillable = [
+        'user_id',
         'firstname', 
         'middlename', 
         'lastname', 
@@ -39,18 +40,25 @@ class Patient extends Model
 
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
+    public function pregnancyTerms()
+    {
+        return $this->hasMany(Pregnancy_term::class, 'user_id', 'user_id');
+    }
+
+    // Define the relationship with pregnancy histories
     public function pregnancyHistories()
     {
-        return $this->hasMany(PregnancyHistory::class);
+        return $this->hasMany(PregnancyHistory::class, 'user_id', 'user_id');
     }
 
+    // Define the relationship with medical histories
     public function medicalHistories()
     {
-        return $this->hasMany(MedicalHistory::class);
-    }
-    public function pregnancy_term()
-    {
-        return $this->hasMany(Pregnancy_term::class);
+        return $this->hasMany(MedicalHistory::class, 'user_id', 'user_id');
     }
 }
