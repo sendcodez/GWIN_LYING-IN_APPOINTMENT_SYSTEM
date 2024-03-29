@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\User;
 use App\Models\DoctorAvailability;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
+use Exception;
 class DoctorController extends Controller
 {
     /**
@@ -25,18 +27,11 @@ class DoctorController extends Controller
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Doctor $doctor)
     {
-        //
+        $doctor->load('availabilities');
+        return view('admin/show_doctor', ['doctor' => $doctor]);
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -100,19 +95,86 @@ class DoctorController extends Controller
         return redirect()->back()->with('success', 'Doctor added successfully');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function edit(string $id)
     {
-        //
+        $doctor = Doctor::findOrFail($id); // Retrieve the user by ID
+        return view('doctor.edit', compact('doctor'));
     }
+    public function update(Request $request, string $id)
+{
+    try {
+        $doctor = Doctor::with('availabilities')->findOrFail($id);
+
+        $request->validate([
+            'firstname' => 'required|string',
+            'middlename' => 'nullable|string',
+            'lastname' => 'required|string',
+            'contact_number' => 'required|string',
+            'address' => 'required|string',
+            'expertise' => 'required|string',
+            'email' => 'required|email|unique:doctors,email,' . $doctor->id,
+            'password' => 'required|string|min:8',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:30748',
+            // You may need to add more validation rules for day and time inputs
+        ]);
+
+        // Update doctor properties
+        $doctor->firstname = $request->input('firstname');
+        $doctor->middlename = $request->input('middlename');
+        $doctor->lastname = $request->input('lastname');
+        $doctor->contact_no = $request->input('contact_number');
+        $doctor->address = $request->input('address');
+        $doctor->expertise = $request->input('expertise');
+        $doctor->email = $request->input('email');
+        $doctor->password = $request->input('password');
+
+        // Upload new image if provided
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = $doctor->firstname . '_' . $doctor->lastname . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('doc_image'), $imageName);
+            $doctor->image = $imageName;
+        }
+
+        $doctor->save();
+
+        // Update doctor availabilities
+        $days = $request->input('day');
+        $startTimes = $request->input('start_time');
+        $endTimes = $request->input('end_time');
+
+        // Delete existing availabilities
+        $doctor->availabilities()->delete();
+
+        // Save new availabilities
+        foreach ($days as $key => $day) {
+            DoctorAvailability::create([
+                'doctor_id' => $doctor->id,
+                'day' => $day,
+                'start_time' => $startTimes[$key],
+                'end_time' => $endTimes[$key],
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Doctor updated successfully.');
+    } catch (Exception $e) {
+        Log::error('Error occurred while updating doctor: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'An error occurred while updating the doctor. Please try again.');
+    }
+}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Find the doctor record
+        $doctor = Doctor::findOrFail($id);
+    
+        // Soft delete the doctor
+        $doctor->delete();
+    
+        // Redirect back with success message
+        return redirect()->back()->with('success', 'Doctor deleted successfully.');
     }
 }

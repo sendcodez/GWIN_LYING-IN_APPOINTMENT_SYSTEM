@@ -83,7 +83,12 @@ Route::middleware('auth')->group(function () {
 
     //DOCTORS ROUTE
     Route::get('admin/create_doctor', [DoctorController::class, 'index'])->name('doctor.index');
+    Route::get('admin/show_doctor{doctor}', [DoctorController::class, 'show'])->name('doctor.show');
     Route::post('admin/create_doctor', [DoctorController::class, 'store'])->name('doctor.store');
+    Route::put('admin/create_doctor{doctor}', [DoctorController::class, 'update'])->name('doctor.update');
+    Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
+
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
