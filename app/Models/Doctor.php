@@ -11,17 +11,25 @@ class Doctor extends Model
     use HasFactory,  SoftDeletes;
 
     protected $fillable = [
+        'user_id',
         'firstname',
         'middlename',
         'lastname',
         'contact_no',
         'address',
         'expertise',
-        'day_availability',
-        'time_availability',
         'email',
         'password',
         'usertype',
         'status',
+        'image',
     ];
+    public function availabilities()
+    {
+        return $this->hasMany(DoctorAvailability::class);
+    }
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

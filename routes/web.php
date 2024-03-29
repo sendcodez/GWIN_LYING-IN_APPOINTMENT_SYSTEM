@@ -83,6 +83,7 @@ Route::middleware('auth')->group(function () {
 
     //DOCTORS ROUTE
     Route::get('admin/create_doctor', [DoctorController::class, 'index'])->name('doctor.index');
+    Route::post('admin/create_doctor', [DoctorController::class, 'store'])->name('doctor.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
