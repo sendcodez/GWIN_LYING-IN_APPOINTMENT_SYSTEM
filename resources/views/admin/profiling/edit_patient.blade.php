@@ -1,4 +1,5 @@
 @extends ('layouts.sidebar')
+@section('title', 'Edit Patient')
 @section('contents')
     <script src="{{ asset('src/scripts/jquery.min.js') }}"></script>
     <div class="main-container">

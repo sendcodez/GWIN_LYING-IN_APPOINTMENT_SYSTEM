@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('contact_no');
             $table->string('address');
             $table->string('expertise');
+            $table->string('description');
             $table->string('day_availability');
             $table->string('time_availability');
             $table->string('email')->unique();

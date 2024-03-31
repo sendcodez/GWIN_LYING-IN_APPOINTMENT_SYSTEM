@@ -1,28 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Website;
-use App\Models\Doctor;
+
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class PackageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $website = Website::first(); // Fetch the first website record
-        $doctors = Doctor::all(); // Fetch all doctors
-        return view('index', compact('website', 'doctors'));
+        //
     }
-    
-    
-    public function login()
-    {
-        return view ('auth.login');
-    }
-
 
     /**
      * Show the form for creating a new resource.

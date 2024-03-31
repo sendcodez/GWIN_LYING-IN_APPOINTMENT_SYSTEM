@@ -9,6 +9,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\PatientController;
 use App\Models\User;
 
@@ -88,6 +89,12 @@ Route::middleware('auth')->group(function () {
     Route::put('admin/create_doctor{doctor}', [DoctorController::class, 'update'])->name('doctor.update');
     Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
 
+
+    
+    //WEBSITE ROUTE
+    Route::get('admin/website', [WebsiteController::class, 'index'])->name('website.index');
+    Route::post('admin/website/update', [WebsiteController::class, 'update'])->name('website.update');
+    
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

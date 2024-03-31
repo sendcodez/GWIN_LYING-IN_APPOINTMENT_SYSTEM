@@ -41,5 +41,30 @@ class UserSeeder extends Seeder
             'status' => '1',
             'usertype' => '3'
         ]);
+        DB::table('doctors')->insert([
+            'user_id' => '202401',
+            'firstname' => 'Pedro',
+            'middlename' => '',
+            'lastname' => 'Cruz',
+            'address' => 'Laguna',
+            'expertise' => 'test',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam faucibus elit pulvinar nunc porttitor sagittis.',
+            'contact_no' => '0909909099',
+            'email' => 'docdoc@gmail.com',
+            'password' => Hash::make('docdoc123'),
+            'status' => '1',
+            'usertype' => '2'
+        ]);
+
+        DB::table('website')->insert([
+            'logo' => 'gwinlogo.png',
+            'business_name' => 'GWIN LYING-IN',
+            'tagline' => 'Best Healthcare Solution In Your City',
+            'tagline_2' => 'Best Medical Care For Yourself and Your Family',
+            'address' => 'Bulihan, Silang Cavite',
+            'contact_no' => '0909909099',
+            'email' => 'gwin@gmail.com',
+            'about_us' => 'Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt magna dolores aliquyam dolores dolore. Amet erat amet et magna',
+        ]);
     }
 }

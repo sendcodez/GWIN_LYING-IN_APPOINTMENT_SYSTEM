@@ -1,4 +1,5 @@
 @extends ('layouts.sidebar')
+@section('title', 'Dashboard')
 @section ('contents')
 
 		<div class="main-container">

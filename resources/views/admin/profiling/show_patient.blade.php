@@ -1,5 +1,5 @@
 @extends('layouts.sidebar')
-
+@section('title', 'Show Patient')
 @section('contents')
 <style>
     .Yes {

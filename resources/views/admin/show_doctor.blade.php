@@ -1,5 +1,5 @@
 @extends('layouts.sidebar')
-
+@section('title', 'Show Doctor')
 @section('contents')
     <style>
         .Yes {
@@ -42,6 +42,10 @@
                                     <li style="font-size: 1.3rem">
                                         <span style="font-size: 1.1rem">Expertise:</span>
                                         {{ $doctor->expertise }}
+                                    </li>
+                                    <li style="font-size: 1.3rem">
+                                        <span style="font-size: 1.1rem">Description:</span>
+                                        {{ $doctor->description }}
                                     </li>
                                 </ul>
                             </div>

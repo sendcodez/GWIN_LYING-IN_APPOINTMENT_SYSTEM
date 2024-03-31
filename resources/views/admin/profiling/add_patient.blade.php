@@ -1,4 +1,5 @@
 @extends ('layouts.sidebar')
+@section('title', 'Add Patient')
 @section('contents')
 <!-- SweetAlert CSS -->
 

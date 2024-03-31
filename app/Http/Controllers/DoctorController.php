@@ -43,6 +43,7 @@ class DoctorController extends Controller
             'middlename' => 'nullable|string',
             'lastname' => 'required|string',
             'contact_number' => 'required|string',
+            'description' => 'required|string',
             'address' => 'required|string',
             'expertise' => 'required|string',
             'email' => 'required|email|unique:doctors',
@@ -73,6 +74,7 @@ class DoctorController extends Controller
             'lastname' => $validatedData['lastname'],
             'contact_no' => $validatedData['contact_number'],
             'address' => $validatedData['address'],
+            'description' => $validatedData['description'],
             'expertise' => $validatedData['expertise'],
             'email' => $validatedData['email'],
             'image' => $imageName,
@@ -111,6 +113,7 @@ class DoctorController extends Controller
             'lastname' => 'required|string',
             'contact_number' => 'required|string',
             'address' => 'required|string',
+            'description' => 'required|string',
             'expertise' => 'required|string',
             'email' => 'required|email|unique:doctors,email,' . $doctor->id,
             'password' => 'required|string|min:8',
@@ -125,6 +128,7 @@ class DoctorController extends Controller
         $doctor->contact_no = $request->input('contact_number');
         $doctor->address = $request->input('address');
         $doctor->expertise = $request->input('expertise');
+        $doctor->description = $request->input('description');
         $doctor->email = $request->input('email');
         $doctor->password = $request->input('password');
 

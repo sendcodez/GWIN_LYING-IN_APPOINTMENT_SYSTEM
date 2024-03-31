@@ -1,4 +1,5 @@
 @extends ('layouts.sidebar')
+@section('title', 'Manage Patients')
 @section ('contents')
 <div class="main-container">
     <div class="pd-ltr-20 xs-pd-20-10">

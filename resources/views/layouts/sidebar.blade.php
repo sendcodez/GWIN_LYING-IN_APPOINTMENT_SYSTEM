@@ -311,7 +311,7 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{route('website.index')}}" class="dropdown-toggle no-arrow">
                             <span class="micon fa fa-globe"></span><span class="mtext">Website Setting</span>
                         </a>
                     </li>
