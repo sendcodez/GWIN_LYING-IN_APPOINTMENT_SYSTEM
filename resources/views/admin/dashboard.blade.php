@@ -12,14 +12,20 @@
                     <h4 class="font-20 weight-500 mb-10 text-capitalize">
                         Welcome back
                         <div class="weight-600 font-30 text-blue">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</div>
+                        <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download>
+                            <img src="{{ asset('qr_image/' . Auth::user()->qr_name) }}" alt="QR Code" style="float: right; margin-right:90px; max-width: 130px;">
+                        </a>
                     </h4>
                     <p class="font-18 max-width-600">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde
                         hic non repellendus debitis iure, doloremque assumenda. Autem
                         modi, corrupti, nobis ea iure fugiat, veniam non quaerat
                         mollitia animi error corporis.
+                       
                     </p>
+            
                 </div>
+                
             </div>
         </div>
 @endsection

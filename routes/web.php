@@ -11,6 +11,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ServicesController;
 use App\Models\User;
 
 
@@ -24,15 +25,13 @@ use App\Models\User;
 | be assigned to the "web" middleware group. Make something great!
 
 */
-Route::get('/', function () {
-    return view('index');
-});
-
+Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/login', function () {
     return view('auth.login');
 });
 
-Route::get('index', [IndexController::class, 'index'])->name('index');
+
+
 Route::get('login', [IndexController::class, 'login'])->name('login');
 
 //AUTH
@@ -83,11 +82,12 @@ Route::middleware('auth')->group(function () {
 
 
     //DOCTORS ROUTE
-    Route::get('admin/create_doctor', [DoctorController::class, 'index'])->name('doctor.index');
+    Route::get('admin/create_doctor', [DoctorController::class, 'create'])->name('doctor.create');
     Route::get('admin/show_doctor{doctor}', [DoctorController::class, 'show'])->name('doctor.show');
     Route::post('admin/create_doctor', [DoctorController::class, 'store'])->name('doctor.store');
     Route::put('admin/create_doctor{doctor}', [DoctorController::class, 'update'])->name('doctor.update');
     Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
+    Route::patch('/update-doctor-status/{id}', [DoctorController::class, 'updateStatus'])->name('update-doctor-status');
 
 
     
@@ -95,6 +95,16 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/website', [WebsiteController::class, 'index'])->name('website.index');
     Route::post('admin/website/update', [WebsiteController::class, 'update'])->name('website.update');
     
+
+    //SERVICES ROUTE
+    Route::get('admin/create_services', [ServicesController::class, 'index'])->name('service.index');
+    Route::post('admin/create_services', [ServicesController::class, 'store'])->name('service.store');
+    Route::patch('/update-service-status/{id}', [ServicesController::class, 'updateStatus'])->name('update-service-status');
+
+    //USERS ROUTE
+    Route::get('admin/create_user', [UserController::class, 'create'])->name('user.create');
+    Route::post('admin/create_user', [UserController::class, 'store'])->name('user.store');
+    Route::patch('/update-user-status/{id}', [UserController::class, 'updateStatus'])->name('update-user-status');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

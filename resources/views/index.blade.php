@@ -126,7 +126,7 @@
                         <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">About Us</h5>
                         <h1 class="display-4">{{$website->tagline2}}</h1>
                     </div>
-                    <p>{{$website->abbout_us}}</p>
+                    <p>{{$website->about_us}}</p>
                     <div class="row g-3 pt-3">
                         <div class="col-sm-3 col-6">
                             <div class="bg-light text-center rounded-circle py-4">

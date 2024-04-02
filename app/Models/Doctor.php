@@ -18,6 +18,7 @@ class Doctor extends Model
         'contact_no',
         'address',
         'expertise',
+        'description',
         'email',
         'password',
         'usertype',

@@ -21,9 +21,10 @@
                         <table class="data-table table nowrap">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Contact Number</th>
-                                    <th>Expertise</th>
+                                    <th>Service Offered</th>
                                     <th>Email</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -32,6 +33,7 @@
                             <tbody>
                                 @foreach ($doctors as $doctor)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td class="table-plus">
                                             <div class="name-avatar d-flex align-items-center">
                                                 <div class="avatar mr-2 flex-shrink-0">
@@ -48,7 +50,20 @@
                                         <td>{{ $doctor->contact_no }}</td>
                                         <td>{{ $doctor->expertise }}</td>
                                         <td>{{ $doctor->email }}</td>
-                                        <td>{{ $doctor->status }}</td>
+                                        <td>
+                                            <form method="POST" action="{{ route('update-doctor-status', ['id' => $doctor->id]) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="{{ $doctor->status == 1 ? 0 : 1 }}">
+                                                <button type="submit" class="btn btn-link" style="text-decoration: none;">
+                                                    @if($doctor->status == 1)
+                                                        <span class="badge badge-success">Active</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Inactive</span>
+                                                    @endif
+                                                </button>
+                                            </form>
+                                        </td>
                                         <td>
                                             <div class="dropdown">
                                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -136,7 +151,7 @@
                                                         <input type="text" name="address" value="{{ $doctor->address }}"
                                                             class="form-control" required>
                                                     </div>
-                                                    <label>Expertise</label>
+                                                    <label>Service Offered</label>
                                                     <div class="form-group">
                                                         <input type="text" name="expertise"
                                                             value="{{ $doctor->expertise }}" class="form-control" required>
@@ -310,10 +325,16 @@
                                         <div class="form-group">
                                             <input type="text" name="address" class="form-control" required>
                                         </div>
-                                        <label>Expertise</label>
+                                        <label>Service Offered</label>
                                         <div class="form-group">
-                                            <input type="text" name="expertise" class="form-control" required>
+                                            <select name="expertise" class="form-control" required>
+                                                <option value="">Select Service</option>
+                                                @foreach($services as $service)
+                                                    <option value="{{ $service->name}}">{{ $service->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
+                                        
                                         <label>Email</label>
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control" required>
@@ -491,5 +512,39 @@
                 $(this).closest('.modal').modal('hide');
             });
         });
+        document.addEventListener('DOMContentLoaded', function () {
+        const statusCells = document.querySelectorAll('.service-status');
+
+        statusCells.forEach(cell => {
+            cell.addEventListener('click', function () {
+                const serviceId = this.getAttribute('data-service-id');
+                const newStatus = this.textContent.trim() === 'Active' ? 0 : 1;
+
+                // Send AJAX request to update status
+                fetch(`/update-doctor-status/${serviceId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Failed to update status');
+                })
+                .then(data => {
+                    // Update UI based on response
+                    const badge = data.status === 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>';
+                    this.innerHTML = badge;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    });
     </script>
     </script>

@@ -13,7 +13,7 @@
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
-                <a href="{{route('doctor.index')}}" class="btn btn-danger btn-sm scroll-click" ><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</a>
+                <a href="{{route('doctor.create')}}" class="btn btn-danger btn-sm scroll-click" ><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</a>
                 <div class="row">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
                         <div class="pd-20 card-box height-100-p">

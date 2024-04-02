@@ -12,8 +12,8 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $website = Website::first(); // Fetch the first website record
-        $doctors = Doctor::all(); // Fetch all doctors
+        $website = Website::first();
+        $doctors = Doctor::all(); 
         return view('index', compact('website', 'doctors'));
     }
     
@@ -27,10 +27,6 @@ class IndexController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.

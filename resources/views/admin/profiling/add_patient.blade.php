@@ -87,7 +87,7 @@
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>Civil Status</label>
-                                <select class="custom-select2 form-control" name="civil" required="true">
+                                <select class="form-control" name="civil" required="true">
                                     <option value="single">Single</option>
                                     <option value="married" selected>Married</option>
                                     <option value="divorced">Divorced</option>

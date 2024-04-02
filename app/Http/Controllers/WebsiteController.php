@@ -12,7 +12,7 @@ class WebsiteController extends Controller
    
     public function index()
     {
-        $websiteData = Website::first(); // Assuming you only have one row for website data
+        $websiteData = Website::first(); 
         return view('admin.website', compact('websiteData'));
     }
 
@@ -45,9 +45,9 @@ class WebsiteController extends Controller
     
     public function update(Request $request)
     {
-        $websiteData = Website::first(); // Assuming you only have one row for website data
+        $websiteData = Website::first(); 
     
-        // Update other fields
+
         $websiteData->update([
             'business_name' => $request->business_name,
             'tagline' => $request->tagline,
@@ -61,25 +61,24 @@ class WebsiteController extends Controller
         $logo = $request->file('logo');
     
         if ($logo) {
-            // Get the current date and time
+           
             $currentDateTime = now()->format('Ymd_His');
         
-            // Get the original filename of the uploaded file
+           
             $originalFileName = $request->logo->getClientOriginalName();
         
-            // Concatenate the current date and time with the original filename
+           
             $logoName = $currentDateTime . '_' . $originalFileName;
         
-            // Define the destination path
+            
             $destinationPath = public_path('website_images');
         
-            // Move the uploaded file to the desired public path with the new filename
+          
             if ($logo->move($destinationPath, $logoName)) {
-                // File moved successfully
-                // Update the 'logo' field in the database with the new filename
+                
                 $websiteData->update(['logo' => $logoName]);
             } else {
-                // File moving failed
+                
                 return redirect()->back()->with('error', 'Failed to update website data. Please try again.');
             }
         }

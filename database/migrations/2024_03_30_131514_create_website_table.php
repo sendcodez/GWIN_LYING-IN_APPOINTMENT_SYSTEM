@@ -30,7 +30,8 @@ return new class extends Migration
             $table->string('description');
             $table->string('price');
             $table->boolean('type');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
+            $table->timestamps();
         });
 
     }

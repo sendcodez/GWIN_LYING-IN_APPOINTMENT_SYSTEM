@@ -263,7 +263,7 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="{{ route ('doctor.index')}}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route ('doctor.create')}}" class="dropdown-toggle no-arrow">
                             <span class="micon fa fa-stethoscope"></span><span class="mtext">Doctors</span>
                         </a>
                     </li>
@@ -290,7 +290,7 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{route('service.index')}}" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-file-check"></span><span class="mtext">Services</span>
                         </a>
                     </li>
@@ -306,7 +306,7 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{route('user.create')}}" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-people"></span><span class="mtext">User Setting</span>
                         </a>
                     </li>
