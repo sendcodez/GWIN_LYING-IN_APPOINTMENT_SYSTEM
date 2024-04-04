@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 use App\Models\Doctor;
-use App\Models\User;
 use App\Models\Patient;
+use App\Models\Service;
+
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class AppointmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        
-        return view ('admin.dashboard');
+    {
+       
     }
 
     /**
@@ -22,9 +22,11 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
+        $services = Service::where('status', 1)->get();
+        return view('patient.appointment', compact('services'));
     }
-
+    
+    
     /**
      * Store a newly created resource in storage.
      */
@@ -64,5 +66,4 @@ class DashboardController extends Controller
     {
         //
     }
-
 }

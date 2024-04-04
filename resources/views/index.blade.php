@@ -103,7 +103,7 @@
                     <h1 class="display-1 text-white mb-md-4">{{ $website->tagline}}</h1>
                     <div class="pt-2">
                       
-                        <a href="" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Appointment</a>
+                        <a href="{{route('login')}}" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Appointment</a>
                     </div>
                 </div>
             </div>

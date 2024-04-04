@@ -16,4 +16,26 @@ class Service extends Model
         'type',
         'status',
     ];
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    public function doctorsAppointments()
+    {
+        return $this->hasManyThrough(Doctor::class, Appointment::class);
+    }
+    
+    public function doctorsServices()
+    {
+        return $this->belongsToMany(Doctor::class);
+    }
+    public function doctors()
+{
+    return $this->belongsToMany(Doctor::class, 'doctor_services');
+}
+
+    
+    
 }

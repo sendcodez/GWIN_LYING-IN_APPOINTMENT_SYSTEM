@@ -41,7 +41,9 @@
                                     </li>
                                     <li style="font-size: 1.3rem">
                                         <span style="font-size: 1.1rem">Expertise:</span>
-                                        {{ $doctor->expertise }}
+                                        @foreach ($doctor->services as $service)
+                                                {{ $service->name }}@if (!$loop->last), @endif
+                                            @endforeach
                                     </li>
                                     <li style="font-size: 1.3rem">
                                         <span style="font-size: 1.1rem">Description:</span>

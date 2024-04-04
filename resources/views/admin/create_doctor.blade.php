@@ -1,13 +1,13 @@
 @extends ('layouts.sidebar')
 @section('title', 'Add Doctor')
 @section('contents')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
-                <!-- Simple Datatable start -->
+              
                 <div class="card-box mb-30">
 
                     <div class="pd-20">
@@ -48,7 +48,11 @@
                                             </div>
                                         </td>
                                         <td>{{ $doctor->contact_no }}</td>
-                                        <td>{{ $doctor->expertise }}</td>
+                                        <td>
+                                            @foreach ($doctor->services as $service)
+                                                {{ $service->name }}@if (!$loop->last), @endif
+                                            @endforeach
+                                        </td>
                                         <td>{{ $doctor->email }}</td>
                                         <td>
                                             <form method="POST" action="{{ route('update-doctor-status', ['id' => $doctor->id]) }}">
@@ -74,12 +78,12 @@
                                                     <a class="dropdown-item"
                                                         href="{{ route('doctor.show', ['doctor' => $doctor->id]) }}"><i
                                                             class="dw dw-eye"></i> View</a>
-
+    
                                                     <button type="button" class="dropdown-item" data-bs-toggle="modal"
                                                         data-bs-target="#editUserModal{{ $doctor->id }}">
                                                         <i class="dw dw-edit2"></i>Edit
                                                     </button>
-
+    
                                                     <form action="{{ route('doctor.destroy', $doctor->id) }}"
                                                         method="POST" style="display: inline;"
                                                         id="deleteForm{{ $doctor->id }}">
@@ -91,7 +95,7 @@
                                                             <!-- Example using Bootstrap Icons -->
                                                         </button>
                                                     </form>
-
+    
                                                 </div>
                                             </div>
                                         </td>
@@ -113,7 +117,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <!-- Edit user form -->
+                                   
                                     <form method="POST" action="{{ route('doctor.update', $doctor->id) }}"
                                         enctype="multipart/form-data">
                                         @csrf
@@ -151,11 +155,17 @@
                                                         <input type="text" name="address" value="{{ $doctor->address }}"
                                                             class="form-control" required>
                                                     </div>
-                                                    <label>Service Offered</label>
-                                                    <div class="form-group">
-                                                        <input type="text" name="expertise"
-                                                            value="{{ $doctor->expertise }}" class="form-control" required>
-                                                    </div>
+                                                        <label>Service Offered</label>
+                                                        <div class="form-group">
+                                                            <select name="expertise[]" class="form-control"required>
+                                                                @foreach($services as $service)
+                                                                    <option value="{{ $service->id }}" {{ $doctor->services->contains('id', $service->id) ? 'selected' : '' }}>
+                                                                        {{ $service->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        
                                                     <label>Email</label>
                                                     <div class="form-group">
                                                         <input type="email" name="email" value="{{ $doctor->email }}"
@@ -190,7 +200,7 @@
                                             </div>
                                             <button type="button" class="btn btn-primary next2 float-right">Next</button>
                                         </div>
-
+                                        
 
 
                                         <div id="step2_edit" style="display: none;">
@@ -330,7 +340,7 @@
                                             <select name="expertise" class="form-control" required>
                                                 <option value="">Select Service</option>
                                                 @foreach($services as $service)
-                                                    <option value="{{ $service->name}}">{{ $service->name }}</option>
+                                                    <option value="{{ $service->id }}">{{ $service->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -547,4 +557,4 @@
         });
     });
     </script>
-    </script>
+   

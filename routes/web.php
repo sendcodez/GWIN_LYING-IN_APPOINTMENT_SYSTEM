@@ -12,6 +12,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\DoctorAvailabilityController;
 use App\Models\User;
 
 
@@ -90,10 +92,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/update-doctor-status/{id}', [DoctorController::class, 'updateStatus'])->name('update-doctor-status');
 
 
+    //APPOINTMENT ROUTE
+    Route::get('patient/appointment', [AppointmentController::class, 'create'])->name('appointment.create');
+    Route::get('/doctors/{serviceId}', [DoctorController::class, 'getDoctorsByService']);
+    Route::get('/doctor-availability/{doctorId}', [DoctorController::class, 'getDoctorAvailability']);
+
+
+
     
     //WEBSITE ROUTE
     Route::get('admin/website', [WebsiteController::class, 'index'])->name('website.index');
     Route::post('admin/website/update', [WebsiteController::class, 'update'])->name('website.update');
+  
+
+
     
 
     //SERVICES ROUTE

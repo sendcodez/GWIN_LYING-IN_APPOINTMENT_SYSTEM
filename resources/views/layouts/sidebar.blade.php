@@ -328,7 +328,7 @@
 					</li>
 
 					<li class="dropdown">
-						<a href="" class="dropdown-toggle no-arrow">
+						<a href="{{route('appointment.create')}}" class="dropdown-toggle no-arrow">
 							<span class="micon bi bi-calendar4-week"></span><span class="mtext">My
 								Appointments</span>
 						</a>
