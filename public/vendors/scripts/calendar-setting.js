@@ -1,158 +1,132 @@
 jQuery(document).ready(function () {
-	jQuery("#add-event").submit(function () {
-		alert("Submitted");
-		var values = {};
-		$.each($("#add-event").serializeArray(), function (i, field) {
-			values[field.name] = field.value;
-		});
-		console.log(values);
-	});
+    jQuery("#add-event").submit(function () {
+        var values = {};
+        $.each($("#add-event").serializeArray(), function (i, field) {
+            values[field.name] = field.value;
+        });
+        console.log(values);
+    });
 });
 
 (function () {
-	"use strict";
-	// ------------------------------------------------------- //
-	// Calendar
-	// ------------------------------------------------------ //
-	jQuery(function () {
-		// page is ready
-		jQuery("#calendar").fullCalendar({
-			themeSystem: "bootstrap4",
-			// emphasizes business hours
-			businessHours: false,
-			defaultView: "month",
-			// event dragging & resizing
-			editable: true,
-			// header
-			header: {
-				left: "title",
-				center: "month,agendaWeek,agendaDay",
-				right: "today prev,next",
-			},
-			events: [
-				{
-					title: "Barber",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2023-05-05",
-					end: "2023-05-05",
-					className: "fc-bg-default",
-					icon: "circle",
-				},
-				{
-					title: "Flight Paris",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-08-08T14:00:00",
-					end: "2022-08-08T20:00:00",
-					className: "fc-bg-deepskyblue",
-					icon: "cog",
-					allDay: false,
-				},
-				{
-					title: "Team Meeting",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-07-10T13:00:00",
-					end: "2022-07-10T16:00:00",
-					className: "fc-bg-pinkred",
-					icon: "group",
-					allDay: false,
-				},
-				{
-					title: "Meeting",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-08-12",
-					className: "fc-bg-lightgreen",
-					icon: "suitcase",
-				},
-				{
-					title: "Conference",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-08-13",
-					end: "2022-08-15",
-					className: "fc-bg-blue",
-					icon: "calendar",
-				},
-				{
-					title: "Baby Shower",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-07-13",
-					end: "2022-07-14",
-					className: "fc-bg-default",
-					icon: "child",
-				},
-				{
-					title: "Birthday",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-09-13",
-					end: "2022-09-14",
-					className: "fc-bg-default",
-					icon: "birthday-cake",
-				},
-				{
-					title: "Restaurant",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-10-15T09:30:00",
-					end: "2022-10-15T11:45:00",
-					className: "fc-bg-default",
-					icon: "glass",
-					allDay: false,
-				},
-				{
-					title: "Dinner",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-11-15T20:00:00",
-					end: "2022-11-15T22:30:00",
-					className: "fc-bg-default",
-					icon: "cutlery",
-					allDay: false,
-				},
-				{
-					title: "Shooting",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-08-25",
-					end: "2022-08-25",
-					className: "fc-bg-blue",
-					icon: "camera",
-				},
-				{
-					title: "Go Space :)",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-12-27",
-					end: "2022-12-27",
-					className: "fc-bg-default",
-					icon: "rocket",
-				},
-				{
-					title: "Dentist",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-12-29T11:30:00",
-					end: "2022-12-29T012:30:00",
-					className: "fc-bg-blue",
-					icon: "medkit",
-					allDay: false,
-				},
-			],
-			dayClick: function () {
-				jQuery("#modal-view-event-add").modal();
-			},
-			eventClick: function (event, jsEvent, view) {
-				jQuery(".event-icon").html("<i class='fa fa-" + event.icon + "'></i>");
-				jQuery(".event-title").html(event.title);
-				jQuery(".event-body").html(event.description);
-				jQuery(".eventUrl").attr("href", event.url);
-				jQuery("#modal-view-event").modal();
-			},
-		});
-	});
+    "use strict";
+    // ------------------------------------------------------- //
+    // Calendar
+    // ------------------------------------------------------ //
+    jQuery(function () {
+        // page is ready
+        jQuery("#calendar").fullCalendar({
+            themeSystem: "bootstrap4",
+            // emphasizes business hours
+            businessHours: false,
+            defaultView: "month",
+            // event dragging & resizing
+            editable: true,
+            // header
+            header: {
+                left: "title",
+                center: "month,agendaWeek,agendaDay",
+                right: "today prev,next",
+            },
+            events: function (start, end, timezone, callback) {
+                var events = [];
+                appointments.forEach(function (appointment) {
+                    console.log('Start Time:', appointment.start_time);
+
+                    var startTime = appointment.start_time;
+                    var timeParts = startTime.split(':');
+                    var hour = parseInt(timeParts[0], 10);
+                    var minute = parseInt(timeParts[1], 10);
+                    var period = 'AM';
+                    if (hour >= 12) {
+                        period = 'PM';
+                        if (hour > 12) {
+                            hour -= 12;
+                        }
+                    }
+                    var timeString = hour + ':' + ('0' + minute).slice(-2) + ' ' + period;
+                    
+                    var title = timeString; // Construct the event title
+                    
+                    var event = {
+                        title: title,
+                        start: appointment.date,
+                        service_id: appointment.service_id,
+                    };
+                    events.push(event);
+                });
+                callback(events);
+            },
+            
+            /*
+            eventClick: function (event, jsEvent, view) {
+                jQuery(".event-title").text(event.title);
+                jQuery(".doctor-name").text(event.doctorName);
+                jQuery(".service").text(event.service);
+                jQuery(".date").text(event.date);
+                jQuery(".time").text(event.time);
+                jQuery("#modal-view-event").modal();
+            },
+            */
+            
+            dayClick: function (date, jsEvent, view) {
+                if (jQuery(this).hasClass("unclick")) {
+                    return false; 
+                }
+                if (date.isBefore(moment(), 'day')) {
+                    return false; // Prevent default action for past dates
+                }
+                jQuery('input[name="selected_date"]').val(
+                    date.format("YYYY-MM-DD")
+                );
+                jQuery('input[name="selected_day"]').val(date.format("dddd"));
+                var selectedDay = jQuery('input[name="selected_day"]').val();
+                console.log("Selected Day:", selectedDay);
+                jQuery("#modal-view-event-add").modal();
+            },
+            
+            // Callback to customize day rendering
+            dayRender: function(date, cell) {
+                var dayName = date.format("dddd").toLowerCase();
+                var isAvailable = false;
+            
+                doctorAvailabilities.forEach(function(availability) {
+                    if (availability.day === dayName) {
+                        var startTime = moment(availability.start_time, "HH:mm:ss");
+                        var endTime = moment(availability.end_time, "HH:mm:ss");
+            
+                        // Create a copy of startTime to avoid modifying the original variable
+                        var currentTime = moment(startTime);
+            
+                        while (currentTime.isBefore(endTime)) {
+                            var slotStart = currentTime.format("HH:mm:ss");
+                            var slotEnd = currentTime.add(1, "hour").format("HH:mm:ss");
+            
+                            var isSlotAvailable = !allAppointments.some(function(appointment) {
+                                return appointment.date === date.format("YYYY-MM-DD") &&
+                                       appointment.start_time <= slotEnd &&
+                                       appointment.end_time >= slotStart;
+                            });
+            
+                            if (isSlotAvailable) {
+                                isAvailable = true;
+                                break; // Exit the loop if any available slot is found
+                            }
+            
+                            // Reset the currentTime for the next iteration
+                            currentTime = moment(slotEnd, "HH:mm:ss");
+                        }
+                    }
+                });
+            
+                if (!isAvailable) {
+                    cell.addClass("red-day");
+                    cell.addClass("unclick");
+                    cell.append("<span class='not-available'>Not Available</span>");
+                }
+            }
+            
+            
+        });
+    });
 })(jQuery);

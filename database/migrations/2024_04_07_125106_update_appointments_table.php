@@ -15,10 +15,12 @@ return new class extends Migration
             // Change the column types to unsignedBigInteger
             $table->unsignedBigInteger('patient_id')->change();
             $table->unsignedBigInteger('doctor_id')->change();
+            $table->unsignedBigInteger('service_id')->change();
 
             // Add foreign key constraints
             $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('doctor_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
         });
     }
 

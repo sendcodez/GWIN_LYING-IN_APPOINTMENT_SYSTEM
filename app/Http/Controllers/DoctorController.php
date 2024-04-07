@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\User;
 use App\Models\Service;
+use App\Models\Appointment;
 use App\Models\Doctor_service;
 use App\Models\DoctorAvailability;
 use Illuminate\Support\Facades\File;
@@ -216,34 +217,74 @@ class DoctorController extends Controller
         return redirect()->back()->with('error', 'No status provided.');
     }
 
-    public function getDoctorsByService($serviceId)
+    public function getDoctorsByService($serviceId, Request $request)
     {
         try {
+            // Fetch the selected day from the request
+            $selectedDay = strtolower($request->input('selected_day'));
+    
             // Fetch doctors based on the selected service
             $service = Service::findOrFail($serviceId);
             $doctors = $service->doctors;
-
+    
+            // Filter doctors based on their availability for the selected day
+            $availableDoctors = $doctors->filter(function ($doctor) use ($selectedDay) {
+                return $doctor->availabilities()->where('day', $selectedDay)->exists();
+            });
+    
+            // Transform the collection of models into an array of plain objects
+            $availableDoctorsArray = $availableDoctors->map(function ($doctor) {
+                return [
+                    'id' => $doctor->id,
+                    'firstname' => $doctor->firstname,
+                    'lastname' => $doctor->lastname,
+                    // Add any other properties you need
+                ];
+            })->toArray();
+    
             // Return JSON response with the fetched doctors
-            return response()->json($doctors);
+            return response()->json($availableDoctorsArray);
         } catch (\Exception $e) {
             // Handle any errors that may occur
             return response()->json(['error' => 'Failed to fetch doctors.'], 500);
         }
     }
+    
 
-    public function getDoctorAvailability($doctorId)
+    public function getDoctorAvailability($doctorId, Request $request)
     {
         try {
-            // Fetch doctor's availability based on the doctor ID
-            $availability = DoctorAvailability::where('doctor_id', $doctorId)->first();
-
+            // Fetch doctor's availability based on the doctor ID and the requested day
+            $day = $request->input('day');
+            $availability = DoctorAvailability::where('doctor_id', $doctorId)
+                                               ->where('day', $day)
+                                               ->first();
+    
+            // Fetch already booked appointments for the given doctor and date
+            $selectedDate = $request->input('selected_date');
+            $bookedAppointments = Appointment::where('doctor_id', $doctorId)
+                                              ->where('date', $selectedDate)
+                                              ->pluck('start_time')
+                                              ->toArray();
+    
+            // Convert available times from 12-hour format to 24-hour format
+            $availableTimes = explode(',', $availability->available_times);
+            $availableTimes = array_map(function ($time) {
+                return date('H:i', strtotime($time));
+            }, $availableTimes);
+    
+            // Filter out already booked appointment times from availability
+            $availability['booked_times'] = $bookedAppointments; // Include booked_times in the response
+            $availability['available_times'] = array_values(array_diff($availableTimes, $bookedAppointments));
+    
             // Return availability as JSON response
             return response()->json($availability);
         } catch (\Exception $e) {
+            Log::error('Exception: ' . $e->getMessage());
             // Handle any errors that may occur
             return response()->json(['error' => 'Failed to fetch doctor availability.'], 500);
         }
     }
-
+    
 
 }

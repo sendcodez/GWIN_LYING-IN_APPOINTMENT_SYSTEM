@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
 
     //CALENDAR ROUTE
     Route::get('admin/calendar', [CalendarController::class, 'index'])->name('calendar.index');
-
+    Route::get('/calendar', [AppointmentController::class, 'showCalendar'])->name('calendar');
 
 
     //PATIENT ROUTE
@@ -93,9 +93,11 @@ Route::middleware('auth')->group(function () {
 
 
     //APPOINTMENT ROUTE
-    Route::get('patient/appointment', [AppointmentController::class, 'create'])->name('appointment.create');
+    Route::get('/appointments',  [AppointmentController::class, 'showCalendar'])->name('appointment.index');
     Route::get('/doctors/{serviceId}', [DoctorController::class, 'getDoctorsByService']);
     Route::get('/doctor-availability/{doctorId}', [DoctorController::class, 'getDoctorAvailability']);
+    Route::post('/appointments/store', [AppointmentController::class, 'store'])->name('appointments.store');
+
 
 
 

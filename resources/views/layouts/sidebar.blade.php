@@ -321,14 +321,14 @@
 					@if (Auth::user()->usertype == '2' || Auth::user()->usertype == '3')
 
 					<li class="dropdown">
-						<a href="" class="dropdown-toggle no-arrow">
+						<a href="{{route('admin.dashboard')}}" class="dropdown-toggle no-arrow">
 							<span class="micon bi bi-house"></span><span class="mtext">
 								Home</span>
 						</a>
 					</li>
 
 					<li class="dropdown">
-						<a href="{{route('appointment.create')}}" class="dropdown-toggle no-arrow">
+						<a href="{{route('appointment.index')}}" class="dropdown-toggle no-arrow">
 							<span class="micon bi bi-calendar4-week"></span><span class="mtext">My
 								Appointments</span>
 						</a>
@@ -366,7 +366,7 @@
 	<script src="{{ asset('src/plugins/fullcalendar/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('js/instascan.min.js') }}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
-	<script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
+	
     <script src=" {{ asset('vendors/scripts/datatable-setting.js')}}"></script> 
     <script src="{{ asset('src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>

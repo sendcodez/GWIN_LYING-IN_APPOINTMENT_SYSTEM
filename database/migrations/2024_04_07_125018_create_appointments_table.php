@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->integer('patient_id');
             $table->integer('doctor_id');
-            $table->string('service');
+            $table->integer('service_id');
             $table->date('date');
+            $table->string('day');
             $table->string('start_time');
-            $table->date('end_time')->nullable();
+            $table->integer('status')->default('1');
+            $table->string('remarks')->nullable();
+            $table->string('end_time')->nullable();
             $table->timestamps();
         });
     }
