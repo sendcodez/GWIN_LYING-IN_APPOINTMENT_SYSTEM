@@ -3,34 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Doctor;
 use App\Models\User;
 use App\Models\Patient;
 use App\Models\Appointment;
-class HomeController extends Controller
+use Illuminate\Support\Facades\Auth;
+class DocModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
-    public function index()
-    {
-        
-        $totalAppointments = Appointment::count();
-    
-        $totalPatients = Patient::count();
-    
-        $completedAppointments = Appointment::with(['doctor', 'service'])
+     */public function index()
+{   
+    $user = Auth::user(); // Get the authenticated user
 
-        ->where('status', 3)
-        ->get(); 
-        
-        $totalDoctors = User::where('usertype', 2)->count();
-    
-       // $totalEarnings = Appointment::sum('earnings');
-      
-        $recentPatients = Patient::orderBy('created_at', 'desc')->take(5)->get();
-    
-        return view('admin.home', compact('totalAppointments', 'totalPatients', 'totalDoctors','completedAppointments', 'recentPatients'));
-    }
+    // Retrieve appointments where the doctor_id matches the authenticated user's id
+    $appointments = Appointment::with(['patient', 'service'])
+                    ->whereHas('doctor', function ($query) use ($user) {
+                        $query->where('user_id', $user->id);
+                    })
+                    ->orderBy('date', 'asc') // Order appointments by date in ascending order
+                    ->get(); 
+
+    return view('doctor.mypatients', compact('appointments'));
+}
 
     /**
      * Show the form for creating a new resource.

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\User;
 use App\Models\Patient;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,10 +15,12 @@ class DashboardController extends Controller
      */
     public function index()
     {   
-        
-        return view ('admin.dashboard');
+        $user = Auth::user(); // Get the authenticated user
+        $appointments = Appointment::with(['doctor', 'service'])
+                        ->where('patient_id', $user->id)
+                        ->get(); // Fetch appointments with related doctor and service information
+        return view('admin.dashboard', compact('appointments'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -64,5 +68,16 @@ class DashboardController extends Controller
     {
         //
     }
+    public function cancel($id)
+    {
+        // Find the appointment by ID
+        $appointment = Appointment::findOrFail($id);
 
+        // Update the status to 'cancelled' (status code 4)
+        $appointment->status = 4;
+        $appointment->save();
+
+        // Optionally, you can redirect the user back or return a response
+        return redirect()->back()->with('success', 'Appointment cancelled successfully');
+    }
 }

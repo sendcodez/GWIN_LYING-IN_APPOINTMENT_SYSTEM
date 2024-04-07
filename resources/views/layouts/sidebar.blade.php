@@ -234,7 +234,7 @@
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="index.html">
+            <a href="#">
                 <img src="{{ asset ('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="gwin"> <h1>GWIN</h1>
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -326,18 +326,19 @@
 								Home</span>
 						</a>
 					</li>
-
+                    @endif
+                    @if ( Auth::user()->usertype == '3')
 					<li class="dropdown">
 						<a href="{{route('appointment.index')}}" class="dropdown-toggle no-arrow">
-							<span class="micon bi bi-calendar4-week"></span><span class="mtext">My
+							<span class="micon bi bi-calendar4-week"></span><span class="mtext">Book
 								Appointments</span>
 						</a>
 					</li>
-					@endif
+                    @endif
 
 					@if (Auth::user()->usertype == '2')
 					<li class="dropdown">
-						<a href="" class="dropdown-toggle no-arrow">
+						<a href="{{route('mypatients.index')}}" class="dropdown-toggle no-arrow">
 							<span class="micon bi bi-people"></span><span class="mtext">My Patients</span>
 						</a>
 					</li>
@@ -347,6 +348,14 @@
 					<li class="dropdown">
 						<a href="" class="dropdown-toggle no-arrow">
 							<span class="micon bi bi-files"></span><span class="mtext">My Records</span>
+						</a>
+					</li>
+					@endif
+
+                    @if (Auth::user()->usertype == '2')
+					<li class="dropdown">
+						<a href="" class="dropdown-toggle no-arrow">
+							<span class="micon bi bi-files"></span><span class="mtext">Medical Records</span>
 						</a>
 					</li>
 					@endif
@@ -387,26 +396,28 @@
 @endif
 <script>
    document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const userId = this.getAttribute('data-user-id');
-
-            // Display SweetAlert confirmation dialog
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You won\'t be able to revert this!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // If confirmed, submit the form
-                    document.getElementById('deleteForm' + userId).submit();
-                }
-            });
+    button.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+        
+        const form = this.closest('form'); // Find the closest form element
+        
+        // Display SweetAlert confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, submit the form
+                form.submit();
+            }
         });
     });
+});
     document.getElementById("printButton").addEventListener("click", function() {
         window.print();
     });

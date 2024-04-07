@@ -4,46 +4,16 @@
 
     <div class="main-container">
         <div class="pd-ltr-20">
-            <div class="card-box pd-20 height-100-p mb-30">
-                <div class="row align-items-center">
-                    <div class="col-md-4">
-                        <img src="vendors/images/banner-img.png" alt="" />
-                    </div>
-                    <div class="col-md-8">
-                        <h4 class="font-20 weight-500 mb-10 text-capitalize">
-                            Welcome back
-                            <div class="weight-600 font-30 text-blue">{{ Auth::user()->firstname }}
-                                {{ Auth::user()->lastname }}</div>
-                            @if (Auth::user()->usertype == 3)
-                                <h5>{{ Auth::user()->id }}</h5>
-                                <p class="font-12 max-width-600">Patient ID </p>
-                                <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download>
-                                    <img src="{{ asset('qr_image/' . Auth::user()->qr_name) }}" alt="QR Code"
-                                        style="float: right; margin-right:90px;margin-bottom:3%; margin-top:-10%; max-width: 150px;">
-                                </a>
-                            @endif
-                        </h4>
-                        <p class="font-18 max-width-600">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde
-                            hic non repellendus debitis iure, doloremque assumenda. Autem
-                            modi, corrupti, nobis ea iure fugiat, veniam non quaerat
-                            mollitia animi error corporis.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            @if (Auth::user()->usertype == 3)
             <div class="card-box mb-30">
                 <div class="pd-20">
-                    <h4 class="text-blue h4">My Recent Appointments</h4>
+                    <h4 class="text-blue h4">My Patients</h4>
                 </div>
                 <div class="card-box pb-10">
                     <table class="data-table table nowrap">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Doctor Name</th>
+                                <th>Patient Name</th>
                                 <th>Service</th>
                                 <th>Date</th>
                                 <th>Time</th>
@@ -55,7 +25,7 @@
                             @foreach ($appointments as $key => $appointment)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>Dr. {{ $appointment->doctor->lastname }}</td>
+                                    <td>{{ $appointment->patient->firstname }} {{ $appointment->patient->lastname }}</td>
                                     <td>{{ $appointment->service->name }}</td>
                                     <td>{{ $appointment->date }}</td>
                                     <td>{{ $appointment->start_time }}</td>
@@ -186,5 +156,4 @@
             });
         });
     </script>
-    @endif
 @endsection

@@ -19,4 +19,19 @@ class Appointment extends Model
         'start_time',
         'end_time',
     ];
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+    public function patient()
+    {
+        return $this->belongsTo(User::class, 'patient_id');
+    }
+    
+    
 }

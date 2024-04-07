@@ -13,7 +13,7 @@ use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\DoctorAvailabilityController;
+use App\Http\Controllers\DocModuleController;
 use App\Models\User;
 
 
@@ -92,11 +92,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/update-doctor-status/{id}', [DoctorController::class, 'updateStatus'])->name('update-doctor-status');
 
 
-    //APPOINTMENT ROUTE
+
+
+
+    //APPOINTMENT/PATIENTS ROUTE
     Route::get('/appointments',  [AppointmentController::class, 'showCalendar'])->name('appointment.index');
     Route::get('/doctors/{serviceId}', [DoctorController::class, 'getDoctorsByService']);
     Route::get('/doctor-availability/{doctorId}', [DoctorController::class, 'getDoctorAvailability']);
     Route::post('/appointments/store', [AppointmentController::class, 'store'])->name('appointments.store');
+    Route::put('/appointments/{id}/cancel',[DashboardController::class, 'cancel'])->name('appointments.cancel');
 
 
 
@@ -107,9 +111,12 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/website/update', [WebsiteController::class, 'update'])->name('website.update');
   
 
+    //DOCTORS MODULE ROUTE
+    Route::get('admin/doctor', [DocModuleController::class, 'index'])->name('mypatients.index');
+
+
 
     
-
     //SERVICES ROUTE
     Route::get('admin/create_services', [ServicesController::class, 'index'])->name('service.index');
     Route::post('admin/create_services', [ServicesController::class, 'store'])->name('service.store');
