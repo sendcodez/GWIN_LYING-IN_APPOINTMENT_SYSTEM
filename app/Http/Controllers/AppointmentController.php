@@ -22,13 +22,13 @@ class AppointmentController extends Controller
    
     $allAppointments = Appointment::all();
 
-    Log::info('Appointments:', $allAppointments->toArray()); 
+   
 
     $appointments = Appointment::where('patient_id', Auth::id())->get();
 
     $doctorAvailabilities = DoctorAvailability::all();
 
-    Log::info('Doctor Availability:', $doctorAvailabilities->toArray()); 
+   
 
     $services = Service::where('status', 1)->get();
     return view('patient.appointment', [
@@ -40,9 +40,15 @@ class AppointmentController extends Controller
 }
 
     
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function showAppointments(){
+
+        $user = Auth::user(); // Get the authenticated user
+        $appointments = Appointment::with(['doctor', 'service'])
+                        ->get(); 
+        return view('admin.showAppointments', compact('appointments'));
+       
+    }
+
     public function store(Request $request)
     {
         try {
@@ -116,6 +122,18 @@ class AppointmentController extends Controller
     {
         //
     }
+
+    public function getAll(Request $request)
+    {
+        // Fetch all appointments with the corresponding doctor's name
+        $appointments = Appointment::all()->map(function ($appointment) {
+            $doctor = Doctor::find($appointment->doctor_id);
+            $appointment->doctor_name = $doctor->lastname; // Assuming the doctor's first name is stored in the 'firstname' column
+            return $appointment;
+        });
     
+        // Return JSON response with appointments including doctors' names
+        return response()->json($appointments);
+    }
 
 }

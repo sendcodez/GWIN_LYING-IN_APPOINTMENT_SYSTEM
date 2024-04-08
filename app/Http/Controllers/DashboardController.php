@@ -80,4 +80,28 @@ class DashboardController extends Controller
         // Optionally, you can redirect the user back or return a response
         return redirect()->back()->with('success', 'Appointment cancelled successfully');
     }
+    public function approve($id)
+    {
+        // Find the appointment by ID
+        $appointment = Appointment::findOrFail($id);
+
+        // Update the status to 'cancelled' (status code 4)
+        $appointment->status = 2;
+        $appointment->save();
+
+        // Optionally, you can redirect the user back or return a response
+        return redirect()->back()->with('success', 'Appointment approved successfully');
+    }
+    public function complete($id)
+    {
+        // Find the appointment by ID
+        $appointment = Appointment::findOrFail($id);
+
+        // Update the status to 'cancelled' (status code 4)
+        $appointment->status = 3;
+        $appointment->save();
+
+        // Optionally, you can redirect the user back or return a response
+        return redirect()->back()->with('success', 'Appointment completed successfully');
+    }
 }

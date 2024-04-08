@@ -285,6 +285,5 @@ class DoctorController extends Controller
             return response()->json(['error' => 'Failed to fetch doctor availability.'], 500);
         }
     }
-    
 
 }

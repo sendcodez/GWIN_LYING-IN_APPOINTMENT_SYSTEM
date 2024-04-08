@@ -119,7 +119,6 @@
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
                         <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
-                        <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -252,7 +251,7 @@
 
                     </li>
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{route('appointments.show')}}" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-calendar4-week"></span><span class="mtext">Appointments</span>
                         </a>
 
@@ -375,7 +374,6 @@
 	<script src="{{ asset('src/plugins/fullcalendar/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('js/instascan.min.js') }}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
-	
     <script src=" {{ asset('vendors/scripts/datatable-setting.js')}}"></script> 
     <script src="{{ asset('src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>

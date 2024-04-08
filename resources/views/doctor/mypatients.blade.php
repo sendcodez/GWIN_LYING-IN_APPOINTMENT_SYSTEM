@@ -70,6 +70,18 @@
                                                     <i class="dw dw-eye"></i> Show
                                                 </button>
 
+
+                                                @if ($appointment->status == 2)
+                                                    <form action="{{ route('appointments.complete', $appointment->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit" class="dropdown-item ">
+                                                            <i class="dw dw-tick"></i> Complete
+                                                        </button>
+                                                    </form>
+                                                @endif
+
                                                 @if ($appointment->status == 1 || $appointment->status == 2)
                                                     <form action="{{ route('appointments.cancel', $appointment->id) }}"
                                                         method="POST">

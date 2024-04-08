@@ -25,11 +25,12 @@ class HomeController extends Controller
         
         $totalDoctors = User::where('usertype', 2)->count();
     
-       // $totalEarnings = Appointment::sum('earnings');
+        $totalEarnings = Appointment::join('services', 'appointments.service_id', '=', 'services.id')
+            ->sum('services.price');
       
         $recentPatients = Patient::orderBy('created_at', 'desc')->take(5)->get();
     
-        return view('admin.home', compact('totalAppointments', 'totalPatients', 'totalDoctors','completedAppointments', 'recentPatients'));
+        return view('admin.home', compact('totalAppointments', 'totalPatients','totalEarnings', 'totalDoctors','completedAppointments', 'recentPatients'));
     }
 
     /**

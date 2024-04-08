@@ -101,6 +101,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/doctor-availability/{doctorId}', [DoctorController::class, 'getDoctorAvailability']);
     Route::post('/appointments/store', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::put('/appointments/{id}/cancel',[DashboardController::class, 'cancel'])->name('appointments.cancel');
+    Route::put('/appointments/{id}/approve',[DashboardController::class, 'approve'])->name('appointments.approve');
+    Route::put('/appointments/{id}/complete',[DashboardController::class, 'complete'])->name('appointments.complete');
+    Route::get('admin/appointments',  [AppointmentController::class, 'showAppointments'])->name('appointments.show');
+    Route::get('/getAllAppointments', [AppointmentController::class, 'getAll']);
 
 
 
