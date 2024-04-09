@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\User;
 use App\Models\Patient;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppointmentCancelled;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
@@ -76,7 +78,7 @@ class DashboardController extends Controller
         // Update the status to 'cancelled' (status code 4)
         $appointment->status = 4;
         $appointment->save();
-
+        Mail::to($appointment->patient->email)->send(new AppointmentCancelled($appointment));
         // Optionally, you can redirect the user back or return a response
         return redirect()->back()->with('success', 'Appointment cancelled successfully');
     }

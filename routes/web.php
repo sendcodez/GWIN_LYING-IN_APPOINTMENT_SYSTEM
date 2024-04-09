@@ -92,9 +92,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/update-doctor-status/{id}', [DoctorController::class, 'updateStatus'])->name('update-doctor-status');
 
 
-
-
-
     //APPOINTMENT/PATIENTS ROUTE
     Route::get('/appointments',  [AppointmentController::class, 'showCalendar'])->name('appointment.index');
     Route::get('/doctors/{serviceId}', [DoctorController::class, 'getDoctorsByService']);
@@ -107,9 +104,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/getAllAppointments', [AppointmentController::class, 'getAll']);
 
 
-
-
-    
     //WEBSITE ROUTE
     Route::get('admin/website', [WebsiteController::class, 'index'])->name('website.index');
     Route::post('admin/website/update', [WebsiteController::class, 'update'])->name('website.update');
@@ -125,12 +119,13 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/create_services', [ServicesController::class, 'index'])->name('service.index');
     Route::post('admin/create_services', [ServicesController::class, 'store'])->name('service.store');
     Route::patch('/update-service-status/{id}', [ServicesController::class, 'updateStatus'])->name('update-service-status');
+    Route::delete('/service/{id}', [ServicesController::class, 'destroy'])->name('service.destroy');
 
     //USERS ROUTE
     Route::get('admin/create_user', [UserController::class, 'create'])->name('user.create');
     Route::post('admin/create_user', [UserController::class, 'store'])->name('user.store');
     Route::patch('/update-user-status/{id}', [UserController::class, 'updateStatus'])->name('update-user-status');
-
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

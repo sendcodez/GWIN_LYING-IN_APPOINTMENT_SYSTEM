@@ -39,7 +39,19 @@
                     <h4 class="text-blue h4">My Recent Appointments</h4>
                 </div>
                 <div class="card-box pb-10">
-                    <table class="data-table table nowrap">
+                    <div class="col-md-2 col-sm-6">
+                        <div class="form-group">
+                        <label for="statusFilter">Filter by Status:</label>
+                        <select id="statusFilter" class="selectpicker form-control">
+                            <option value="">All</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                       </div>
+                    </div>
+                    <table class="data-table table nowrap" id="appointmentsTable">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -185,6 +197,14 @@
                 console.log('Modal Element:', modal);
             });
         });
+
+        $('#statusFilter').change(function() {
+        var status = $(this).val();
+        $('#appointmentsTable tbody tr').show(); // Show all rows
+        if (status) {
+            $('#appointmentsTable tbody tr').not(':contains(' + status + ')').hide(); // Hide rows not matching selected status
+        }
+    });
     </script>
     @endif
 @endsection

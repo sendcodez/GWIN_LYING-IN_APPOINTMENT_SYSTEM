@@ -74,9 +74,16 @@ class ServicesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Find the doctor record
+        $service = Service::findOrFail($id);
+
+        // Soft delete the service
+        $service->delete();
+
+        // Redirect back with success message
+        return redirect()->back()->with('success', 'Service deleted successfully.');
     }
     public function updateStatus(Request $request, $id)
     {

@@ -135,5 +135,6 @@ class AppointmentController extends Controller
         // Return JSON response with appointments including doctors' names
         return response()->json($appointments);
     }
+    
 
 }

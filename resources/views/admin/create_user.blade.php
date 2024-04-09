@@ -67,12 +67,16 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item" href=""><i class="dw dw-eye"></i> View</a>
-
-                                                <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#editUserModal">
-                                                    <i class="dw dw-edit2"></i>Edit
+                                               
+                                                <form action="{{ route('user.destroy', $user->id) }}"
+                                                    method="POST" style="display: inline;"
+                                                    id="deleteForm{{ $user->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                <button type="button" class="dropdown-item delete-btn">
+                                                    <i class="dw dw-trash"></i>Delete
                                                 </button>
+                                            </form>
                                             </div>
                                         </div>
                                     </td>

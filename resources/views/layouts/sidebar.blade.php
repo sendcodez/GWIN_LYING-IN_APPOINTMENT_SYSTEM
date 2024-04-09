@@ -416,6 +416,31 @@
         });
     });
 });
+
+document.querySelectorAll('.cancel-btn').forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+        
+        const form = this.closest('form'); // Find the closest form element
+        
+        // Display SweetAlert confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, cancel it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, submit the form
+                form.submit();
+            }
+        });
+    });
+});
+
     document.getElementById("printButton").addEventListener("click", function() {
         window.print();
     });
