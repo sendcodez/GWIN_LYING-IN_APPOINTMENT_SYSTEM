@@ -19,7 +19,7 @@ class HomeController extends Controller
         $totalPatients = Patient::count();
     
         $completedAppointments = Appointment::with(['doctor', 'service'])
-
+        ->orderBy('date', 'desc')
         ->where('status', 3)
         ->get(); 
         

@@ -8,8 +8,8 @@ use App\Models\Pregnancy_term;
 use App\Models\PregnancyHistory;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
+use App\Models\ActivityLog;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;  
@@ -191,6 +191,16 @@ class PatientController extends Controller
 
             DB::commit();
 
+            $user = Auth::user();
+            $action = 'patient_profile';
+            $description = 'Profiled patient: ' . $patient->firstname . ' ' . $patient->lastname;
+    
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
             return back()->with('success', 'Patient  added successfully.');
         } catch (ValidationException $e) {
             // Custom error message for exists validation rule failure
@@ -262,6 +272,16 @@ class PatientController extends Controller
         }
     }
 
+    $user = Auth::user();
+    $action = 'patient_update';
+    $description = 'Update patient information: ' . $patient->firstname . ' ' . $patient->lastname;
+
+    ActivityLog::create([
+        'user_id' => $user->id,
+        'name' => $user->firstname,
+        'action' => $action,
+        'description' => $description,
+    ]);
     return redirect()->route('patients.show', ['userId' => $userId])->with('success', 'Patient information updated successfully');
 }
 
@@ -279,7 +299,17 @@ class PatientController extends Controller
             // Soft delete the patient record
             $patient->delete();
     
-            // Optionally, you can redirect back with a success message
+          
+            $user = Auth::user();
+            $action = 'delete_patient';
+            $description = 'Deleted patient: ' . $patient->firstname . ' ' . $patient->lastname;
+    
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
             return redirect()->back()->with('success', 'Patient deleted successfully.');
         } catch (\Exception $e) {
             // Log the error

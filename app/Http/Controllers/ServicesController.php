@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Http\Request;
-
+use App\Models\ActivityLog;
+use Illuminate\Support\Facades\Auth;
 class ServicesController extends Controller
 {
     /**
@@ -37,9 +38,18 @@ class ServicesController extends Controller
         $type = $request->has('type') && $request->input('type') ? 1 : 0;
         
         // Save the form data into the database
-        Service::create($validatedData);
+        $service = Service::create($validatedData);
         
 
+        $user = Auth::user();
+        $action = 'added_service';
+        $description = 'Added a service: ' . $service->name;
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
         return back()->with('success', 'Service added successfully.');
     } catch (\Exception $e) {
         // Handle the exception, you can log it or return a response
@@ -82,7 +92,15 @@ class ServicesController extends Controller
         // Soft delete the service
         $service->delete();
 
-        // Redirect back with success message
+        $user = Auth::user();
+        $action = 'delete_service';
+        $description = 'Deleted service: ' . $service->name;
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
         return redirect()->back()->with('success', 'Service deleted successfully.');
     }
     public function updateStatus(Request $request, $id)
@@ -91,6 +109,16 @@ class ServicesController extends Controller
         if ($request->has('status')) {
             $service->status = $request->status;
             $service->save();
+
+            $user = Auth::user();
+            $action = 'update_service';
+            $description = 'Update a service status: ' . $service->name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
             return redirect()->back()->with('success', 'Service status updated successfully.');
         }
         return redirect()->back()->with('error', 'No status provided.');

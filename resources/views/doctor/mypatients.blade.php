@@ -99,7 +99,7 @@
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')
-                                                        <button type="submit" class="dropdown-item delete-btn">
+                                                        <button type="submit" class="dropdown-item cancel-btn">
                                                             <i class="dw dw-trash"></i> Cancel
                                                         </button>
                                                     </form>

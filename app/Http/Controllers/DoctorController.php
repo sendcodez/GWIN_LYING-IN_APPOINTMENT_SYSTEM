@@ -8,7 +8,8 @@ use App\Models\Service;
 use App\Models\Appointment;
 use App\Models\Doctor_service;
 use App\Models\DoctorAvailability;
-use Illuminate\Support\Facades\File;
+use App\Models\ActivityLog;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -113,7 +114,16 @@ class DoctorController extends Controller
                     'end_time' => $endTimes[$key],
                 ]);
             }
-
+            $user = Auth::user();
+            $action = 'create_doctor';
+            $description = 'Added Dr. ' . $doctor->firstname . ' ' . $doctor->lastname;
+    
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
             return redirect()->back()->with('success', 'Doctor added successfully');
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
@@ -164,7 +174,16 @@ class DoctorController extends Controller
                 $image->move(public_path('doc_image'), $imageName);
                 $doctor->image = $imageName;
             }
-
+            $user = Auth::user();
+            $action = 'update_doctor';
+            $description = 'Updated an information for: Dr. ' . $doctor->firstname . ' ' . $doctor->lastname;
+    
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
             $doctor->save();
 
 
@@ -203,7 +222,16 @@ class DoctorController extends Controller
         // Soft delete the doctor
         $doctor->delete();
 
-        // Redirect back with success message
+        $user = Auth::user();
+        $action = 'delete_doctor';
+        $description = 'Deleted Dr. ' . $doctor->firstname . ' ' . $doctor->lastname;
+
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
         return redirect()->back()->with('success', 'Doctor deleted successfully.');
     }
     public function updateStatus(Request $request, $id)
@@ -212,6 +240,17 @@ class DoctorController extends Controller
         if ($request->has('status')) {
             $doctor->status = $request->status;
             $doctor->save();
+
+            $user = Auth::user();
+            $action = 'update_status';
+            $description = 'Updated an status for: Dr. ' . $doctor->firstname . ' ' . $doctor->lastname;
+    
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
             return redirect()->back()->with('success', 'Doctor status updated successfully.');
         }
         return redirect()->back()->with('error', 'No status provided.');
@@ -264,6 +303,7 @@ class DoctorController extends Controller
             $selectedDate = $request->input('selected_date');
             $bookedAppointments = Appointment::where('doctor_id', $doctorId)
                                               ->where('date', $selectedDate)
+                                              ->where('status', '!=', 4)
                                               ->pluck('start_time')
                                               ->toArray();
     

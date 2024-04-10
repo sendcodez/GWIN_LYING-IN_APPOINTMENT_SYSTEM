@@ -300,7 +300,7 @@
                         <div class="sidebar-small-cap">Extra</div>
                     </li>
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{route('activity.show')}}" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-clock"></span><span class="mtext">Activity Log</span>
                         </a>
                     </li>

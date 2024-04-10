@@ -31,29 +31,31 @@ jQuery(document).ready(function () {
             events: function (start, end, timezone, callback) {
                 var events = [];
                 appointments.forEach(function (appointment) {
-                    console.log('Start Time:', appointment.start_time);
-
-                    var startTime = appointment.start_time;
-                    var timeParts = startTime.split(':');
-                    var hour = parseInt(timeParts[0], 10);
-                    var minute = parseInt(timeParts[1], 10);
-                    var period = 'AM';
-                    if (hour >= 12) {
-                        period = 'PM';
-                        if (hour > 12) {
-                            hour -= 12;
+                    if (appointment.status !== 4) { // Fetch appointments only if status is not cancelled
+                        console.log('Start Time:', appointment.start_time);
+    
+                        var startTime = appointment.start_time;
+                        var timeParts = startTime.split(':');
+                        var hour = parseInt(timeParts[0], 10);
+                        var minute = parseInt(timeParts[1], 10);
+                        var period = 'AM';
+                        if (hour >= 12) {
+                            period = 'PM';
+                            if (hour > 12) {
+                                hour -= 12;
+                            }
                         }
+                        var timeString = hour + ':' + ('0' + minute).slice(-2) + ' ' + period;
+                        
+                        var title = timeString; // Construct the event title
+                        
+                        var event = {
+                            title: title,
+                            start: appointment.date,
+                            service_id: appointment.service_id,
+                        };
+                        events.push(event);
                     }
-                    var timeString = hour + ':' + ('0' + minute).slice(-2) + ' ' + period;
-                    
-                    var title = timeString; // Construct the event title
-                    
-                    var event = {
-                        title: title,
-                        start: appointment.date,
-                        service_id: appointment.service_id,
-                    };
-                    events.push(event);
                 });
                 callback(events);
             },
@@ -91,7 +93,7 @@ jQuery(document).ready(function () {
                 var isAvailable = false;
             
                 doctorAvailabilities.forEach(function(availability) {
-                    if (availability.day === dayName) {
+                    if (availability.day === dayName && availability.status !== 4) {
                         var startTime = moment(availability.start_time, "HH:mm:ss");
                         var endTime = moment(availability.end_time, "HH:mm:ss");
             
@@ -103,7 +105,9 @@ jQuery(document).ready(function () {
                             var slotEnd = currentTime.add(1, "hour").format("HH:mm:ss");
             
                             var isSlotAvailable = !allAppointments.some(function(appointment) {
+                                // Check if the appointment is not cancelled
                                 return appointment.date === date.format("YYYY-MM-DD") &&
+                                       appointment.status !== 4 &&
                                        appointment.start_time <= slotEnd &&
                                        appointment.end_time >= slotStart;
                             });
@@ -125,6 +129,7 @@ jQuery(document).ready(function () {
                     cell.append("<span class='not-available'>Not Available</span>");
                 }
             }
+            
             
             
         });

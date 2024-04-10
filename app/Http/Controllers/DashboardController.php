@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Doctor;
 use App\Models\User;
-use App\Models\Patient;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentCancelled;
+use App\Mail\AppointmentApproved;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
@@ -16,11 +18,11 @@ class DashboardController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         $user = Auth::user(); // Get the authenticated user
         $appointments = Appointment::with(['doctor', 'service'])
-                        ->where('patient_id', $user->id)
-                        ->get(); // Fetch appointments with related doctor and service information
+            ->where('patient_id', $user->id)
+            ->get(); // Fetch appointments with related doctor and service information
         return view('admin.dashboard', compact('appointments'));
     }
     /**
@@ -79,19 +81,40 @@ class DashboardController extends Controller
         $appointment->status = 4;
         $appointment->save();
         Mail::to($appointment->patient->email)->send(new AppointmentCancelled($appointment));
-        // Optionally, you can redirect the user back or return a response
+        
+        if (Auth::user()->usertype === 1 || Auth::user()->usertype === 2) {
+            // Log the cancellation if the user is an admin
+            $user = Auth::user();
+            $action = 'cancel_appointment';
+            $description = 'Cancelled an appointment on ' . $appointment->date . ' for: ' . $appointment->doctor->firstname . ' ' . $appointment->doctor->lastname . ' with ' . $appointment->patient->firstname;
+    
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+        }
         return redirect()->back()->with('success', 'Appointment cancelled successfully');
     }
     public function approve($id)
     {
-        // Find the appointment by ID
         $appointment = Appointment::findOrFail($id);
 
-        // Update the status to 'cancelled' (status code 4)
         $appointment->status = 2;
         $appointment->save();
+        Mail::to($appointment->patient->email)->send(new AppointmentApproved($appointment));
 
-        // Optionally, you can redirect the user back or return a response
+        $user = Auth::user();
+        $action = 'approve_appointment';
+        $description = 'Approved an appointment for: ' . $appointment->doctor->firstname . ' ' . $appointment->doctor->lastname . ' with ' . $appointment->patient->firstname . ' '. $appointment->patient->lastname;
+
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
         return redirect()->back()->with('success', 'Appointment approved successfully');
     }
     public function complete($id)
@@ -102,6 +125,17 @@ class DashboardController extends Controller
         // Update the status to 'cancelled' (status code 4)
         $appointment->status = 3;
         $appointment->save();
+
+        $user = Auth::user();
+        $action = 'complete_appointment';
+        $description = 'Dr.'. $appointment->doctor->firstname . ' ' . $appointment->doctor->lastname .' '. 'completed an appointment for: ' . $appointment->patient->firstname . ' '. $appointment->patient->lastname;
+
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
 
         // Optionally, you can redirect the user back or return a response
         return redirect()->back()->with('success', 'Appointment completed successfully');

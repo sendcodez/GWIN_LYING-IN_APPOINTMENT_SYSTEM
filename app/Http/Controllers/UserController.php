@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
+use App\Models\ActivityLog;
+
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\File;
@@ -74,6 +76,16 @@ class UserController extends Controller
         $user->qr_name = $output_filename;
         $user->save();
 
+
+        $user = Auth::user();
+        $action = 'added_user';
+        $description = 'Added a new user: ' . $user->firstname. ' '. $user->lastname;
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
         return redirect()->back()->with('success', 'User added successfully');
     } catch (\Exception $e) {
         // Handle the exception, you can log it or return a response
@@ -115,7 +127,15 @@ class UserController extends Controller
         // Soft delete the User
         $user->delete();
 
-        // Redirect back with success message
+        $user = Auth::user();
+        $action = 'deleted_user';
+        $description = 'Deleted user: ' . $user->firstname . ' '. $user->lastname;
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
         return redirect()->back()->with('success', 'User deleted successfully.');
     }
 
@@ -125,6 +145,16 @@ class UserController extends Controller
         if ($request->has('status')) {
             $user->status = $request->status;
             $user->save();
+
+            $user = Auth::user();
+            $action = 'update_user';
+            $description = 'Update user status: ' . $user->firstname . ' '. $user->lastname;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
             return redirect()->back()->with('success', 'User status updated successfully.');
         }
         return redirect()->back()->with('error', 'No status provided.');

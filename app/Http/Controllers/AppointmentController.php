@@ -44,6 +44,7 @@ class AppointmentController extends Controller
 
         $user = Auth::user(); // Get the authenticated user
         $appointments = Appointment::with(['doctor', 'service'])
+                        ->orderBy('date', 'desc')
                         ->get(); 
         return view('admin.showAppointments', compact('appointments'));
        
@@ -126,9 +127,11 @@ class AppointmentController extends Controller
     public function getAll(Request $request)
     {
         // Fetch all appointments with the corresponding doctor's name
-        $appointments = Appointment::all()->map(function ($appointment) {
+        $appointments = Appointment::where('status', '!=', 4) // Exclude appointments with status code 4 (cancelled)
+        ->get()
+        ->map(function ($appointment) {
             $doctor = Doctor::find($appointment->doctor_id);
-            $appointment->doctor_name = $doctor->lastname; // Assuming the doctor's first name is stored in the 'firstname' column
+            $appointment->doctor_name = $doctor->lastname; // Assuming the doctor's last name is stored in the 'lastname' column
             return $appointment;
         });
     

@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Website;
-use Illuminate\Support\Facades\File;
+use App\Models\ActivityLog;
+use Illuminate\Support\Facades\Auth;
 
 class WebsiteController extends Controller
 {
@@ -83,6 +84,15 @@ class WebsiteController extends Controller
             }
         }
     
+        $user = Auth::user();
+        $action = 'update_website';
+        $description = 'Update our website';
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
         return redirect()->back()->with('success', 'Website data updated successfully!');
     }
 
