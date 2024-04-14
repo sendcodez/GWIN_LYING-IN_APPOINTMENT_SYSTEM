@@ -17,10 +17,14 @@
                             @if (Auth::user()->usertype == 3)
                                 <h5>{{ Auth::user()->id }}</h5>
                                 <p class="font-12 max-width-600">Patient ID </p>
-                                <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download>
+
+                                <div class="col-md-12">
+                                <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download><p style="float: right;margin-bottom:3%;margin-right:100px; margin-top:-12.56%; max-width: 150px;"> Click to download</p>
                                     <img src="{{ asset('qr_image/' . Auth::user()->qr_name) }}" alt="QR Code"
                                         style="float: right; margin-right:90px;margin-bottom:3%; margin-top:-10%; max-width: 150px;">
                                 </a>
+                            </div>
+                            
                             @endif
                         </h4>
                         <p class="font-18 max-width-600">

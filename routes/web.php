@@ -14,6 +14,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DocModuleController;
+use App\Http\Controllers\RecordController;
 use App\Http\Controllers\AcitivityLogController;
 use App\Models\User;
 
@@ -111,20 +112,27 @@ Route::middleware('auth')->group(function () {
   
 
     //DOCTORS MODULE ROUTE
-    Route::get('admin/doctor', [DocModuleController::class, 'index'])->name('mypatients.index');
-
+    Route::get('/doctor/patient-list', [DocModuleController::class, 'index'])->name('mypatients.index');
+    Route::get('/doctor/mypatient={userId}', [DocModuleController::class, 'show'])->name('mypatient.show');
+    Route::post('/doctor/add-medication', [DocModuleController::class, 'store'])->name('medication.store');
 
 
     
     //SERVICES ROUTE
-    Route::get('admin/create_services', [ServicesController::class, 'index'])->name('service.index');
+    Route::get('admin/services', [ServicesController::class, 'index'])->name('service.index');
     Route::post('admin/create_services', [ServicesController::class, 'store'])->name('service.store');
     Route::patch('/update-service-status/{id}', [ServicesController::class, 'updateStatus'])->name('update-service-status');
     Route::delete('/service/{id}', [ServicesController::class, 'destroy'])->name('service.destroy');
 
 
-    //ACTIVITY LOG
+    //ACTIVITY LOG ROUTE
     Route::get('admin/activity', [AcitivityLogController::class, 'index'])->name('activity.show');
+
+
+    //RECORDS ROUTE
+    Route::post('/admin/add-records', [RecordController::class, 'storeRecords'])->name('record.store');
+    Route::post('/admin/add-laboratories', [RecordController::class, 'storeLaboratory'])->name('laboratory.store');
+    Route::post('/admin/add-ultrasounds', [RecordController::class, 'storeUltrasound'])->name('ultrasound.store');
 
     //USERS ROUTE
     Route::get('admin/create_user', [UserController::class, 'create'])->name('user.create');

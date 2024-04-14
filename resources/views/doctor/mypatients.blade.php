@@ -11,15 +11,15 @@
                 <div class="card-box pb-10">
                     <div class="col-md-2 col-sm-6">
                         <div class="form-group">
-                        <label for="statusFilter">Filter by Status:</label>
-                        <select id="statusFilter" class="selectpicker form-control">
-                            <option value="">All</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                       </div>
+                            <label for="statusFilter">Filter by Status:</label>
+                            <select id="statusFilter" class="selectpicker form-control">
+                                <option value="">All</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
                     </div>
                     <table class="data-table table nowrap" id="appointmentsTable">
                         <thead>
@@ -77,19 +77,24 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                <a class="dropdown-item"
+                                                    href="{{ route('mypatient.show', ['userId' => $appointment->patient_id]) }}">
+                                                    <i class="dw dw-eye"></i> View
+                                                </a>
                                                 <button type="button" class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#showModal{{ $appointment->id }}">
-                                                    <i class="dw dw-eye"></i> Show
+                                                    <i class="dw dw-add"></i> Add Medication
                                                 </button>
-
 
                                                 @if ($appointment->status == 2)
                                                     <form action="{{ route('appointments.complete', $appointment->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')
-                                                        <button type="submit" class="dropdown-item \">
-                                                            <i class="dw dw-tick"></i> Complete
+                                                        <button type="submit"
+                                                            class="dropdown-item \">
+                                                            <i class="dw
+                                                            dw-tick"></i> Complete
                                                         </button>
                                                     </form>
                                                 @endif
@@ -108,50 +113,6 @@
                                         </div>
                                     </td>
                                 </tr>
-
-                                <!-- Modal for appointment details -->
-                                <div class="modal fade" id="showModal{{ $appointment->id }}" tabindex="-1"
-                                    aria-labelledby="showModalLabel{{ $appointment->id }}" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="text-center">Appointment Information</h3>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p><strong>Doctor Name:</strong> Dr. {{ $appointment->doctor->firstname }} {{ $appointment->doctor->lastname }}
-                                                </p>
-                                                <p><strong>Service:</strong> {{ $appointment->service->name }}</p>
-                                                <p><strong>Date:</strong> {{ $appointment->date }}</p>
-                                                <p><strong>Time:</strong> {{ $appointment->start_time }}</p>
-                                                <p><strong>Status:</strong> 
-                                                    @php
-                                                        switch ($appointment->status) {
-                                                            case 1:
-                                                                echo '<span class="badge badge-warning">Pending</span>';
-                                                                break;
-                                                            case 2:
-                                                                echo '<span class="badge badge-success">Approved</span>';
-                                                                break;
-                                                            case 3:
-                                                                echo '<span class="badge badge-primary">Completed</span>';
-                                                                break;
-                                                            case 4:
-                                                                echo '<span class="badge badge-danger">Cancelled</span>';
-                                                                break;
-                                                            default:
-                                                                echo '<span class="badge badge-secondary">Unknown</span>';
-                                                                break;
-                                                        }
-                                                    @endphp
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             @endforeach
                         </tbody>
                     </table>
@@ -159,10 +120,96 @@
             </div>
         </div>
     </div>
+    @foreach ($appointments as $key => $appointment)
+        <div class="modal fade" id="showModal{{ $appointment->id }}" tabindex="-1"
+            aria-labelledby="showModalLabel{{ $appointment->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-center">Medication Information</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="multiStepForm" method="POST" action="{{ route('medication.store') }}"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Patient Name</label>
+                                    <div class="form-group">
+                                        <input type="text" name="patient_name" class="form-control"
+                                            value="{{ $appointment->patient->firstname }} {{ $appointment->patient->lastname }}"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Patient ID</label>
+                                    <div class="form-group">
+                                        <input type="text" name="patient_id" value="{{ $appointment->patient->id }}"
+                                            class="form-control" readonly>
+                                        <input type="hidden" name="service_id" value="{{ $appointment->service->id }}"
+                                            class="form-control" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Second Row -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Date</label>
+                                    <div class="form-group">
+                                        <input type="text" name="date"
+                                            value="{{ $appointment->created_at->format('Y-m-d') }}" class="form-control"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Bed</label>
+                                    <div class="form-group">
+                                        <input type="text" name="bed" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Room</label>
+                                    <div class="form-group">
+                                        <input type="text" name="room" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Medication/Treatment</label>
+                                    <div class="form-group medications-container">
+                                        <a href="javascript:void(0)" class="text-success font-18 add-medication"
+                                            title="Add">
+                                            <i class="fa fa-plus"></i> Add another medication
+                                        </a>
+                                        <input type="text" name="medications[0][medications]" value=""
+                                            class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-danger">
+                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Reset</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Submit</span>
+                                </button>
+                            </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    @endforeach
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-         $(document).ready(function() {
+        $(document).ready(function() {
             $('#addUserModal .close').click(function() {
                 $('#addUserModal').modal('hide');
             });
@@ -180,11 +227,31 @@
             });
         });
         $('#statusFilter').change(function() {
-        var status = $(this).val();
-        $('#appointmentsTable tbody tr').show(); // Show all rows
-        if (status) {
-            $('#appointmentsTable tbody tr').not(':contains(' + status + ')').hide(); // Hide rows not matching selected status
-        }
-    });
+            var status = $(this).val();
+            $('#appointmentsTable tbody tr').show(); // Show all rows
+            if (status) {
+                $('#appointmentsTable tbody tr').not(':contains(' + status + ')')
+                    .hide(); // Hide rows not matching selected status
+            }
+        });
+        document.querySelectorAll('.add-medication').forEach(button => {
+            button.addEventListener("click", function() {
+                var container = this.parentElement;
+                var input = container.querySelector("input[name^='medications']");
+                var clone = input.cloneNode(true);
+                var newIndex = container.querySelectorAll("input[name^='medications']").length;
+                clone.name = "medications[" + newIndex + "][medications]";
+                container.appendChild(clone);
+
+                var removeBtn = document.createElement('button');
+                removeBtn.innerHTML = 'Remove';
+                removeBtn.className = 'btn btn-danger btn-sm remove-medication';
+                removeBtn.addEventListener('click', function() {
+                    container.removeChild(clone); // Remove the associated input field
+                    container.removeChild(removeBtn); // Remove the remove button
+                });
+                container.appendChild(removeBtn);
+            });
+        });
     </script>
 @endsection
