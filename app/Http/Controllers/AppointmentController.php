@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\Appointment;
+use Illuminate\Support\Facades\Auth;
 use App\Models\DoctorAvailability;
 use App\Models\Service;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -24,7 +24,7 @@ class AppointmentController extends Controller
 
    
 
-    $appointments = Appointment::where('patient_id', Auth::id())->get();
+    $appointments = Appointment::where('user_id', Auth::id())->get();
 
     $doctorAvailabilities = DoctorAvailability::all();
 
@@ -71,7 +71,7 @@ class AppointmentController extends Controller
     
             // Create a new appointment instance
             $appointment = new Appointment([
-                'patient_id' => $request->input('patient_id'),
+                'user_id' => $request->input('patient_id'),
                 'doctor_id' => $request->input('doctor'),
                 'service_id' => $request->input('service'),
                 'date' => $request->input('selected_date'),

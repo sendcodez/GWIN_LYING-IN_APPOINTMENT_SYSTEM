@@ -222,7 +222,7 @@
                             if (availability) {
                                 var start = new Date('2024-01-01 ' + availability.start_time);
                                 var end = new Date('2024-01-01 ' + availability.end_time);
-                                var interval = 60 * 60 * 1000; // 1 hour in milliseconds
+                                var interval = 30 * 60 * 1000; // 30 minutes in milliseconds
                                 var options = '';
 
                                 for (var time = start.getTime(); time < end.getTime(); time += interval) {

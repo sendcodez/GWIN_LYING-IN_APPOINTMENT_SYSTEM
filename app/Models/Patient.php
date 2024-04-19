@@ -61,4 +61,33 @@ class Patient extends Model
     {
         return $this->hasMany(MedicalHistory::class, 'user_id', 'user_id');
     }
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'user_id', 'user_id');
+    }
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class, 'user_id', 'user_id');
+    }
+
+    public function laboratories()
+    {
+        return $this->hasMany(Laboratory::class, 'user_id', 'user_id');
+    }
+
+    public function records()
+    {
+        return $this->hasMany(Record::class, 'user_id', 'user_id');
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'user_id', 'user_id');
+    }
+
+    public function ultrasounds()
+    {
+        return $this->hasMany(Ultrasound::class, 'user_id', 'user_id');
+    }
 }

@@ -25,6 +25,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Patient Name</th>
                                 <th>Doctor Name</th>
                                 <th>Service</th>
                                 <th>Date</th>
@@ -37,10 +38,11 @@
                             @foreach ($appointments as $key => $appointment)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>Dr. {{ $appointment->doctor->lastname }}</td>
+                                    <td>{{ ucfirst($appointment->patient->firstname) }} {{ ucfirst($appointment->patient->lastname) }}</td>
+                                    <td>Dr. {{ ucfirst($appointment->doctor->lastname)  }}</td>
                                     <td>{{ $appointment->service->name }}</td>
                                     <td>{{ $appointment->date }}</td>
-                                    <td>{{ $appointment->start_time }}</td>
+                                    <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                     <td>
                                         @php
                                             $statusWord = '';

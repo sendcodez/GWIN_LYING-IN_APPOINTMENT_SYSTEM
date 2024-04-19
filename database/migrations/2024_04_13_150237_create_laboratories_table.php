@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('laboratories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('patient_name');
             $table->string('date')->nullable();
             $table->string('urinalysis')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
 
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

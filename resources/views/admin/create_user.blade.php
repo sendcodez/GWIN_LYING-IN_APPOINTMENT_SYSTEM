@@ -13,9 +13,9 @@
                     <div class="pd-20">
                         <button type="button" class="btn btn-success float-right" data-bs-toggle="modal"
                             data-bs-target="#addUserModal">
-                            ADD SERVICE
+                            ADD USER
                         </button>
-                        <h4 class="text-blue h4">Services</h4>
+                        <h4 class="text-blue h4">USERS</h4>
                     </div>
                     <div class="card-box pb-10">
                         <table class="data-table table nowrap">

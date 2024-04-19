@@ -12,7 +12,7 @@ class Laboratory extends Model
     protected $table = 'laboratories';
 
     protected $fillable = [
-        'patient_id',
+        'user_id',
         'patient_name',
         'date',
         'urinalysis',
@@ -23,4 +23,8 @@ class Laboratory extends Model
         'fbs',
 
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }

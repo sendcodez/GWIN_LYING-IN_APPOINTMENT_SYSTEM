@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->integer('patient_id');
+            $table->integer('user_id');
             $table->integer('doctor_id');
             $table->integer('service_id');
             $table->date('date');

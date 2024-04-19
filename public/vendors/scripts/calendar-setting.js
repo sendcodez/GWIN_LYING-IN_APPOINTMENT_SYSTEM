@@ -31,24 +31,30 @@ jQuery(document).ready(function () {
             events: function (start, end, timezone, callback) {
                 var events = [];
                 appointments.forEach(function (appointment) {
-                    if (appointment.status !== 4) { // Fetch appointments only if status is not cancelled
-                        console.log('Start Time:', appointment.start_time);
-    
+                    if (appointment.status !== 4) {
+                        // Fetch appointments only if status is not cancelled
+                        console.log("Start Time:", appointment.start_time);
+
                         var startTime = appointment.start_time;
-                        var timeParts = startTime.split(':');
+                        var timeParts = startTime.split(":");
                         var hour = parseInt(timeParts[0], 10);
                         var minute = parseInt(timeParts[1], 10);
-                        var period = 'AM';
+                        var period = "AM";
                         if (hour >= 12) {
-                            period = 'PM';
+                            period = "PM";
                             if (hour > 12) {
                                 hour -= 12;
                             }
                         }
-                        var timeString = hour + ':' + ('0' + minute).slice(-2) + ' ' + period;
-                        
+                        var timeString =
+                            hour +
+                            ":" +
+                            ("0" + minute).slice(-2) +
+                            " " +
+                            period;
+
                         var title = timeString; // Construct the event title
-                        
+
                         var event = {
                             title: title,
                             start: appointment.date,
@@ -59,7 +65,7 @@ jQuery(document).ready(function () {
                 });
                 callback(events);
             },
-            
+
             /*
             eventClick: function (event, jsEvent, view) {
                 jQuery(".event-title").text(event.title);
@@ -70,12 +76,12 @@ jQuery(document).ready(function () {
                 jQuery("#modal-view-event").modal();
             },
             */
-            
+
             dayClick: function (date, jsEvent, view) {
                 if (jQuery(this).hasClass("unclick")) {
-                    return false; 
+                    return false;
                 }
-                if (date.isBefore(moment(), 'day')) {
+                if (date.isBefore(moment(), "day")) {
                     return false; // Prevent default action for past dates
                 }
                 jQuery('input[name="selected_date"]').val(
@@ -86,7 +92,7 @@ jQuery(document).ready(function () {
                 console.log("Selected Day:", selectedDay);
                 jQuery("#modal-view-event-add").modal();
             },
-            
+
             // Callback to customize day rendering
             dayRender: function(date, cell) {
                 var dayName = date.format("dddd").toLowerCase();
@@ -102,14 +108,18 @@ jQuery(document).ready(function () {
             
                         while (currentTime.isBefore(endTime)) {
                             var slotStart = currentTime.format("HH:mm:ss");
-                            var slotEnd = currentTime.add(1, "hour").format("HH:mm:ss");
+                            var slotEnd = moment(currentTime).add(30, "minutes").format("HH:mm:ss"); // Add 30 minutes to currentTime
             
                             var isSlotAvailable = !allAppointments.some(function(appointment) {
                                 // Check if the appointment is not cancelled
                                 return appointment.date === date.format("YYYY-MM-DD") &&
-                                       appointment.status !== 4 &&
-                                       appointment.start_time <= slotEnd &&
-                                       appointment.end_time >= slotStart;
+                               
+                                (
+                                    appointment.status !== 4 &&
+                                  // Check if appointment overlaps with the current slot
+                                  (moment(appointment.start_time, "HH:mm:ss") < moment(slotEnd, "HH:mm:ss") && 
+                                   moment(appointment.end_time, "HH:mm:ss") > moment(slotEnd, "HH:mm:ss"))
+                                );
                             });
             
                             if (isSlotAvailable) {
@@ -117,8 +127,8 @@ jQuery(document).ready(function () {
                                 break; // Exit the loop if any available slot is found
                             }
             
-                            // Reset the currentTime for the next iteration
-                            currentTime = moment(slotEnd, "HH:mm:ss");
+                            // Increment currentTime manually by adding 30 minutes
+                            currentTime = moment(currentTime).add(30, "minutes");
                         }
                     }
                 });
@@ -128,10 +138,8 @@ jQuery(document).ready(function () {
                     cell.addClass("unclick");
                     cell.append("<span class='not-available'>Not Available</span>");
                 }
-            }
             
-            
-            
+            },
         });
     });
 })(jQuery);

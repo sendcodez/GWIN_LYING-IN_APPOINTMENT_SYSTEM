@@ -9,14 +9,17 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DocModuleController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\MyRecordsController;
 use App\Http\Controllers\AcitivityLogController;
 use App\Models\User;
+use App\Models\Patient;
 
 
 /*
@@ -49,20 +52,25 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::middleware('auth')->group(function () {
 
     //USER ROUTE
-    Route::get('/get-user-details/{id}', function($id) {
-        $user = User::find($id);
-        if ($user) {
-            return response()->json([
-                'firstname' => $user->firstname,
-                'middlename' => $user->middlename,
-                'lastname' => $user->lastname
-            ]);
-        } else {
-            return response()->json([
-                'error' => 'User not found'
-            ], 404);
-        }
-    });
+  Route::get('/get-patient-details/{id}', [RecordController::class, 'getPatientDetails']);
+    
+  Route::get('/get-user-details/{id}', function($id) {
+    $user = User::find($id);
+    if ($user) {
+        return response()->json([
+            'firstname' => $user->firstname,
+            'middlename' => $user->middlename,
+            'lastname' => $user->lastname
+        ]);
+    } else {
+        return response()->json([
+            'error' => 'User not found'
+        ], 404);
+    }
+});
+
+
+
     
     //HOME ROUTE
     Route::get('admin/home', [HomeController::class, 'index'])->name('admin.home');
@@ -130,15 +138,26 @@ Route::middleware('auth')->group(function () {
 
 
     //RECORDS ROUTE
+    Route::get('admin/records', [RecordController::class, 'index'])->name('record.index');
     Route::post('/admin/add-records', [RecordController::class, 'storeRecords'])->name('record.store');
     Route::post('/admin/add-laboratories', [RecordController::class, 'storeLaboratory'])->name('laboratory.store');
     Route::post('/admin/add-ultrasounds', [RecordController::class, 'storeUltrasound'])->name('ultrasound.store');
+    Route::get('/patient/{id}', [RecordController::class, 'getPatientDetails']);
+
+    //MYRECORDS ROUTE
+    Route::get('/MyRecords', [MyRecordsController::class, 'index'])->name('myrecord.index');
+
 
     //USERS ROUTE
     Route::get('admin/create_user', [UserController::class, 'create'])->name('user.create');
     Route::post('admin/create_user', [UserController::class, 'store'])->name('user.store');
     Route::patch('/update-user-status/{id}', [UserController::class, 'updateStatus'])->name('update-user-status');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    //REPORTS ROUTE 
+    Route::get('admin/reports', [ReportController::class, 'index'])->name('report.index');
+    Route::post('/reports/filter', [ReportController::class, 'filter'])->name('reports.filter');
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

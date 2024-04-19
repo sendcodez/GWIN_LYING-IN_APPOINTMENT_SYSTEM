@@ -7,8 +7,7 @@
     <script src="{{ asset('src/scripts/jquery.min.js') }}"></script>
     <div class="main-container">
 
-        <a href="#form-grid-form" class="btn btn-danger btn-sm scroll-click" rel="content-y" data-toggle="collapse"
-            role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</a>
+        <a href="{{route('patient.index')}}" class="btn btn-danger btn-sm scroll-click" ><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</a>
 
         <div class="pd-ltr-20 xs-pd-20-10">
 

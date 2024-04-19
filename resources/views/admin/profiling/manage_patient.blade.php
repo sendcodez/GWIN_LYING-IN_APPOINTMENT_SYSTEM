@@ -89,10 +89,12 @@
                                                     <i class="dw dw-more"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                    <!--
                                                     <a class="dropdown-item"
                                                         href="{{ route('patients.show', ['userId' => $patient->user_id]) }}">
                                                         <i class="dw dw-eye"></i> View
                                                     </a>
+                                                    -->
                                                     <a class="dropdown-item"
                                                         href="{{ route('patient.edit', ['userId' => $patient->user_id]) }}">
                                                         <i class="dw dw-edit2"></i> Edit
@@ -260,7 +262,7 @@
                                                 </div>
                                                 <label>Patient ID</label>
                                                 <div class="form-group">
-                                                    <input type="text" name="patient_id" class="form-control"
+                                                    <input type="text" name="user_id" class="form-control"
                                                         id="laboratory_patient_id" readonly>
                                                 </div>
 

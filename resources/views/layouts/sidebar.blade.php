@@ -117,8 +117,8 @@
                         <span class="user-name"> {{ Auth::user()->firstname }}  {{ Auth::user()->lastname }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
-                        <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="dw dw-user1"></i> Profile</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="dw dw-settings2"></i> Setting</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -279,12 +279,12 @@
                     </li>
                  
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('record.index') }}" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-files"></span><span class="mtext">Records</span>
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('report.index') }}" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-file-earmark"></span><span class="mtext">Reports</span>
                         </a>
                     </li>
@@ -345,7 +345,7 @@
 
 					@if (Auth::user()->usertype == '3')
 					<li class="dropdown">
-						<a href="" class="dropdown-toggle no-arrow">
+						<a href="{{route('myrecord.index')}}" class="dropdown-toggle no-arrow">
 							<span class="micon bi bi-files"></span><span class="mtext">My Records</span>
 						</a>
 					</li>

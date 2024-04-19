@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
-use App\Models\Doctor;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Medication;
 use App\Models\Patient;
@@ -18,7 +20,7 @@ class RecordController extends Controller
 
     public function index()
     {
-
+        return view('admin.record');
     }
 
     public function create()
@@ -62,7 +64,7 @@ class RecordController extends Controller
 
             // Create a new Medication instance
             $record = new Record();
-            $record->patient_id = $request->patient_id;
+            $record->user_id = $request->patient_id;
             $record->patient_name = $request->patient_name;
             $record->date = $request->date;
             $record->aog = $request->aog;
@@ -100,51 +102,57 @@ class RecordController extends Controller
     }
 
     public function storeUltrasound(Request $request)
-{
-    try {
-        $validatedData = $request->validate([
-            'patient_id' => 'required|exists:users,id',
-            'patient_name' => 'required|string',
-            'date' => 'nullable|date',
-            'result' => 'nullable|string',
-            'attachment' => 'nullable|file',
-        ]);
+    {
+        try {
+            $validatedData = $request->validate([
+                'patient_id' => 'required|exists:users,id',
+                'patient_name' => 'required|string',
+                'date' => 'nullable|date',
+                'result' => 'nullable|string',
+                'attachment' => 'nullable|file',
+            ]);
 
-        // Retrieve the uploaded file
-        $attachment = $request->file('attachment');
+            // Check if a file has been uploaded
+            if ($request->hasFile('attachment')) {
+                // Retrieve the uploaded file
+                $attachment = $request->file('attachment');
 
-        // Generate the filename using patient ID and current timestamp
-        $imageName = 'ultrasound_' . $validatedData['patient_id'] . '_' . time() . '.' . $attachment->getClientOriginalExtension();
+                // Generate the filename using patient ID and current timestamp
+                $imageName = 'ultrasound_' . $validatedData['patient_id'] . '_' . time() . '.' . $attachment->getClientOriginalExtension();
 
-        // Move the uploaded file to the desired directory
-        $attachment->move(public_path('ultrasound_image'), $imageName);
+                // Move the uploaded file to the desired directory
+                $attachment->move(public_path('ultrasound_image'), $imageName);
+            } else {
+                // If no file has been uploaded, set imageName to null
+                $imageName = null;
+            }
 
-        // Create the ultrasound record with the filename
-        $ultrasound = Ultrasound::create([
-            'patient_id' => $validatedData['patient_id'],
-            'patient_name' => $validatedData['patient_name'],
-            'date' => $validatedData['date'],
-            'result' => $validatedData['result'],
-            'attachment' => $imageName,
-        ]);
+            // Create the ultrasound record with the filename
+            $ultrasound = Ultrasound::create([
+                'user_id' => $validatedData['patient_id'],
+                'patient_name' => $validatedData['patient_name'],
+                'date' => $validatedData['date'],
+                'result' => $validatedData['result'],
+                'attachment' => $imageName,
+            ]);
 
-        // Log the activity
-        $user = Auth::user();
-        $action = 'added_ultrasound';
-        $description = 'Added a ultrasound result for patient: ' . $ultrasound->patient_name;
-        ActivityLog::create([
-            'user_id' => $user->id,
-            'name' => $user->firstname,
-            'action' => $action,
-            'description' => $description,
-        ]);
+            // Log the activity
+            $user = Auth::user();
+            $action = 'added_ultrasound';
+            $description = 'Added a ultrasound result for patient: ' . $ultrasound->patient_name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
 
-        return back()->with('success', 'Ultrasound added successfully.');
-    } catch (\Exception $e) {
-        $errorMessage = $e->getMessage();
-        return redirect()->back()->with('error', $errorMessage);
+            return back()->with('success', 'Ultrasound added successfully.');
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
     }
-}
 
 
 
@@ -152,7 +160,7 @@ class RecordController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'patient_id' => 'required|exists:users,id',
+                'user_id' => 'required|exists:users,id',
                 'patient_name' => 'required|string',
                 'date' => 'nullable|date',
                 'urinalysis' => 'nullable|string',
@@ -206,4 +214,137 @@ class RecordController extends Controller
     {
 
     }
+
+    public function getPatientDetails($id)
+    {
+        $patient = Patient::with([
+            'user',
+            'pregnancyTerms',
+            'pregnancyHistories',
+            'medicalHistories',
+            'appointments',
+            'laboratories',
+            'records',
+            'ultrasounds'
+        ])->where('user_id', $id)->first();
+    
+        if ($patient || User::where('id', $id)->exists()) {
+            $user = $patient ? $patient->user : User::find($id);
+    
+            $terms = $patient ? $patient->pregnancyTerms->first() : null;
+            $medical = $patient ? $patient->medicalHistories->first() : null;
+    
+            // Collect all pregnancy histories
+            $pregnancyData = [];
+            foreach ($patient->pregnancyHistories as $preg) {
+                $pregnancyData[] = [
+                    'pregnancy' => $preg->pregnancy,
+                    'pregnancy_date' => $preg->pregnancy_date,
+                    'aog' => $preg->aog,
+                    'manner' => $preg->manner,
+                    'bw' => $preg->bw,
+                    'sex' => $preg->sex,
+                    'present_status' => $preg->present_status,
+                    'complications' => $preg->complications
+                ];
+            }
+    
+            // Collect all laboratory records
+            $labData = [];
+            foreach ($patient->laboratories as $lab) {
+                $labData[] = [
+                    'date' => date('m-d-Y', strtotime($lab->date)),
+                    'urinalysis' => $lab->urinalysis,
+                    'cbc' => $lab->cbc,
+                    'blood_type' => $lab->blood_type,
+                    'hbsag' => $lab->hbsag,
+                    'vdrl' => $lab->vdrl,
+                    'fbs' => $lab->fbs
+                ];
+            }
+    
+            // Collect all ultrasound records
+            $ultrasoundData = [];
+            foreach ($patient->ultrasounds as $ultra) {
+                $ultrasoundData[] = [
+                    'ultra_date' => date('m-d-Y', strtotime($ultra->date)),
+                    'result' => $ultra->result,
+                    'attachment' => asset('ultrasound_image/' . $ultra->attachment)
+                ];
+            }
+    
+            // Collect all appointment records
+            $appointmentData = [];
+            foreach ($patient->appointments as $app) {
+                $appointmentData[] = [
+                    'app_date' => date('m-d-Y', strtotime($app->date)),
+                    'doctor' => $app->doctor ? 'Dr. ' . $app->doctor->lastname : 'No record',
+                    'service' => $app->service ? $app->service->name : 'No record',
+                    'start_time' => $app->start_time ? date('h:i A', strtotime($app->start_time)) : 'No record',
+                    'status' => $app->status == 1 ? 'Pending' : ($app->status == 2 ? 'Approved' : ($app->status == 3 ? 'Completed' : ($app->status == 4 ? 'Cancelled' : 'No record')))
+                ];
+            }
+    
+            return response()->json([
+                // USER
+                'firstname' => $user->firstname,
+                'middlename' => $user->middlename,
+                'lastname' => $user->lastname,
+                'contact_number' => $patient ? $patient->contact_number : 'No record',
+                'birthday' => $patient ? $patient->birthday : 'No record',
+                'birthplace' => $patient ? $patient->birthplace : 'No record',
+                // PATIENT
+                'age' => $patient ? $patient->age : 'No record',
+                'civil' => $patient ? $patient->civil : 'No record',
+                'religion' => $patient ? $patient->religion : 'No record',
+                'occupation' => $patient ? $patient->occupation : 'No record',
+                'nationality' => $patient ? $patient->nationality : 'No record',
+                'husband_firstname' => $patient ? $patient->husband_firstname : 'No record',
+                'husband_middlename' => $patient ? $patient->husband_middlename : 'No record',
+                'husband_lastname' => $patient ? $patient->husband_lastname : 'No record',
+                'husband_occupation' => $patient ? $patient->husband_occupation : 'No record',
+                'husband_birthday' => $patient ? $patient->husband_birthday : 'No record',
+                'husband_age' => $patient ? $patient->husband_age : 'No record',
+                'husband_contact_number' => $patient ? $patient->husband_contact_number : 'No record',
+                'husband_religion' => $patient ? $patient->husband_religion : 'No record',
+                'province' => $patient ? $patient->province : 'No record',
+                'city' => $patient ? $patient->city : 'No record',
+                'barangay' => $patient ? $patient->barangay : 'No record',
+                // TERMS
+                'gravida' => $terms ? $terms->gravida : 'No record',
+                'para' => $terms ? $terms->para : 'No record',
+                't' => $terms ? $terms->t : 'No record',
+                'p' => $terms ? $terms->p : 'No record',
+                'a' => $terms ? $terms->a : 'No record',
+                'l' => $terms ? $terms->l : 'No record',
+                // PREGNANCY HISTORIES
+                'pregnancyHistories' => $pregnancyData,
+                // LABORATORIES
+                'laboratories' => $labData,
+                // ULTRASOUNDS
+                'ultrasounds' => $ultrasoundData,
+                // APPOINTMENTS
+                'appointments' => $appointmentData,
+                // MEDICAL HISTORY
+                'hypertension' => $medical ? ($medical->hypertension == 1 ? 'Yes' : 'No') : 'No record',
+                'heartdisease' => $medical ? ($medical->heartdisease == 1 ? 'Yes' : 'No') : 'No record',
+                'asthma' => $medical ? ($medical->asthma == 1 ? 'Yes' : 'No') : 'No record',
+                'tuberculosis' => $medical ? ($medical->tuberculosis == 1 ? 'Yes' : 'No') : 'No record',
+                'diabetes' => $medical ? ($medical->diabetes == 1 ? 'Yes' : 'No') : 'No record',
+                'goiter' => $medical ? ($medical->goiter == 1 ? 'Yes' : 'No') : 'No record',
+                'epilepsy' => $medical ? ($medical->epilepsy == 1 ? 'Yes' : 'No') : 'No record',
+                'allergy' => $medical ? ($medical->allergy == 1 ? 'Yes' : 'No') : 'No record',
+                'hepatitis' => $medical ? ($medical->hepatitis == 1 ? 'Yes' : 'No') : 'No record',
+                'medical_vdrl' => $medical ? ($medical->vdrl == 1 ? 'Yes' : 'No') : 'No record',
+                'bleeding' => $medical ? ($medical->bleeding == 1 ? 'Yes' : 'No') : 'No record',
+                'operation' => $medical ? ($medical->operation == 1 ? 'Yes' : 'No') : 'No record',
+                'others' => $medical ? $medical->others : 'No record',
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'Patient not found for user id ' . $id
+            ], 404);
+        }
+    }
+    
 }

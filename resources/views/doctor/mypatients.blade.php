@@ -78,7 +78,7 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 <a class="dropdown-item"
-                                                    href="{{ route('mypatient.show', ['userId' => $appointment->patient_id]) }}">
+                                                    href="{{ route('mypatient.show', ['userId' => $appointment->user_id]) }}">
                                                     <i class="dw dw-eye"></i> View
                                                 </a>
                                                 <button type="button" class="dropdown-item" data-bs-toggle="modal"

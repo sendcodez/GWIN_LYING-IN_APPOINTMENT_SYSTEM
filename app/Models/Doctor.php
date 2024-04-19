@@ -42,5 +42,8 @@ public function appointments()
 {
     return $this->belongsToMany(Service::class, 'doctor_services');
 }
-
+public function patient()
+{
+    return $this->belongsTo(Patient::class);
+}
 }

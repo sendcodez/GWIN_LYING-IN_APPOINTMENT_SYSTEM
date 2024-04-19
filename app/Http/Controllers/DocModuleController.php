@@ -68,7 +68,7 @@ class DocModuleController extends Controller
     
         // Create a new Medication instance
         $medication = new Medication();
-        $medication->patient_id = $request->patient_id;
+        $medication->user_id = $request->patient_id;
         $medication->service_id = $request->service_id;
         $medication->bed = $request->bed;
         $medication->room = $request->room;

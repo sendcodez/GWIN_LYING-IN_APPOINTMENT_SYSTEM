@@ -11,7 +11,7 @@ class Record extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'patient_id',
+        'user_id',
         'patient_name',
         'date',
         'aog',
@@ -32,4 +32,8 @@ class Record extends Model
     protected $casts = [
         'plan' => 'array',
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }

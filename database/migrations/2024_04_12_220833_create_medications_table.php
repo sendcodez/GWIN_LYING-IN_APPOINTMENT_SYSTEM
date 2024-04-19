@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('medications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('service_id');
             $table->string('name');
             $table->string('bed')->nullable();
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('medications');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
         });
     }

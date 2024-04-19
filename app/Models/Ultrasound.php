@@ -12,10 +12,14 @@ class Ultrasound extends Model
 
     protected $fillable = [
 
-        'patient_id',
+        'user_id',
         'patient_name',
         'date',
         'result',
         'attachment',
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
