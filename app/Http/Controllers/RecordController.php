@@ -227,64 +227,122 @@ class RecordController extends Controller
             'records',
             'ultrasounds'
         ])->where('user_id', $id)->first();
-    
+
         if ($patient || User::where('id', $id)->exists()) {
             $user = $patient ? $patient->user : User::find($id);
-    
+
             $terms = $patient ? $patient->pregnancyTerms->first() : null;
             $medical = $patient ? $patient->medicalHistories->first() : null;
-    
+
             // Collect all pregnancy histories
             $pregnancyData = [];
-            foreach ($patient->pregnancyHistories as $preg) {
+
+            if ($patient && isset($patient->pregnancyHistories)) {
+                foreach ($patient->pregnancyHistories as $preg) {
+                    $pregnancyData[] = [
+                        'pregnancy' => $preg ? $preg->pregnancy : 'No record',
+                        'pregnancy_date' => $preg ? $preg->pregnancy_date : 'No record',
+                        'aog' => $preg ? $preg->aog : 'No record',
+                        'manner' => $preg ? $preg->manner : 'No record',
+                        'bw' => $preg ? $preg->bw : 'No record',
+                        'sex' => $preg ? $preg->sex : 'No record',
+                        'present_status' => $preg ? $preg->status : 'No record',
+                        'complications' => $preg ? $preg->complications : 'No record',
+                    ];
+                }
+            } else {
+                // Handle the case when $patient is null or pregnancyHistories is not set
                 $pregnancyData[] = [
-                    'pregnancy' => $preg->pregnancy,
-                    'pregnancy_date' => $preg->pregnancy_date,
-                    'aog' => $preg->aog,
-                    'manner' => $preg->manner,
-                    'bw' => $preg->bw,
-                    'sex' => $preg->sex,
-                    'present_status' => $preg->present_status,
-                    'complications' => $preg->complications
+                    'pregnancy' => 'No record',
+                    'pregnancy_date' => 'No record',
+                    'aog' => 'No record',
+                    'manner' => 'No record',
+                    'bw' => 'No record',
+                    'sex' => 'No record',
+                    'present_status' => 'No record',
+                    'complications' => 'No record',
                 ];
             }
-    
+
+
             // Collect all laboratory records
             $labData = [];
-            foreach ($patient->laboratories as $lab) {
+
+            if ($patient && isset($patient->laboratories)) {
+                foreach ($patient->laboratories as $lab) {
+                    $labData[] = [
+                        'date' => $lab->date ? date('m-d-Y', strtotime($lab->date)) : 'No record',
+                        'urinalysis' => $lab->urinalysis ?? 'No record',
+                        'cbc' => $lab->cbc ?? 'No record',
+                        'blood_type' => $lab->blood_type ?? 'No record',
+                        'hbsag' => $lab->hbsag ?? 'No record',
+                        'vdrl' => $lab->vdrl ?? 'No record',
+                        'fbs' => $lab->fbs ?? 'No record'
+                    ];
+                }
+            } else {
+                // Handle the case when $patient is null or laboratories is not set
                 $labData[] = [
-                    'date' => date('m-d-Y', strtotime($lab->date)),
-                    'urinalysis' => $lab->urinalysis,
-                    'cbc' => $lab->cbc,
-                    'blood_type' => $lab->blood_type,
-                    'hbsag' => $lab->hbsag,
-                    'vdrl' => $lab->vdrl,
-                    'fbs' => $lab->fbs
+                    'date' => 'No record',
+                    'urinalysis' => 'No record',
+                    'cbc' => 'No record',
+                    'blood_type' => 'No record',
+                    'hbsag' => 'No record',
+                    'vdrl' => 'No record',
+                    'fbs' => 'No record'
                 ];
             }
-    
+
+
             // Collect all ultrasound records
             $ultrasoundData = [];
-            foreach ($patient->ultrasounds as $ultra) {
+
+            if ($patient && isset($patient->ultrasounds)) {
+                foreach ($patient->ultrasounds as $ultra) {
+                    $ultrasoundData[] = [
+                        'ultra_date' => $ultra->date ? date('m-d-Y', strtotime($ultra->date)) : 'No record',
+                        'result' => $ultra->result ?? 'No record',
+                        'attachment' => $ultra->attachment ? asset('ultrasound_image/' . $ultra->attachment) : 'No record'
+                    ];
+                }
+            } else {
+                // Handle the case when $patient is null or ultrasounds is not set
                 $ultrasoundData[] = [
-                    'ultra_date' => date('m-d-Y', strtotime($ultra->date)),
-                    'result' => $ultra->result,
-                    'attachment' => asset('ultrasound_image/' . $ultra->attachment)
+                    'ultra_date' => 'No record',
+                    'result' => 'No record',
+                    'attachment' => 'No record'
                 ];
             }
-    
+
             // Collect all appointment records
             $appointmentData = [];
-            foreach ($patient->appointments as $app) {
+
+            if ($patient && isset($patient->appointments)) {
+                // Sort appointments by date in descending order
+                $appointments = $patient->appointments->sortByDesc('date');
+
+                foreach ($appointments as $app) {
+                    $appointmentData[] = [
+                        'app_date' => $app->date ? date('m-d-Y', strtotime($app->date)) : 'No record',
+                        'doctor' => $app->doctor ? 'Dr. ' . $app->doctor->lastname : 'No record',
+                        'service' => $app->service ? $app->service->name : 'No record',
+                        'start_time' => $app->start_time ? date('h:i A', strtotime($app->start_time)) : 'No record',
+                        'status' => $app->status == 1 ? 'Pending' : ($app->status == 2 ? 'Approved' : ($app->status == 3 ? 'Completed' : ($app->status == 4 ? 'Cancelled' : 'No record')))
+                    ];
+                }
+            } else {
+                // Handle the case when $patient is null or appointments is empty
                 $appointmentData[] = [
-                    'app_date' => date('m-d-Y', strtotime($app->date)),
-                    'doctor' => $app->doctor ? 'Dr. ' . $app->doctor->lastname : 'No record',
-                    'service' => $app->service ? $app->service->name : 'No record',
-                    'start_time' => $app->start_time ? date('h:i A', strtotime($app->start_time)) : 'No record',
-                    'status' => $app->status == 1 ? 'Pending' : ($app->status == 2 ? 'Approved' : ($app->status == 3 ? 'Completed' : ($app->status == 4 ? 'Cancelled' : 'No record')))
+                    'app_date' => 'No record',
+                    'doctor' => 'No record',
+                    'service' => 'No record',
+                    'start_time' => 'No record',
+                    'status' => 'No record'
                 ];
             }
-    
+
+
+
             return response()->json([
                 // USER
                 'firstname' => $user->firstname,
@@ -346,5 +404,5 @@ class RecordController extends Controller
             ], 404);
         }
     }
-    
+
 }

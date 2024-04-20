@@ -128,31 +128,31 @@ $(document).ready(function () {
                         appointmentTable.append(row);
                     });
 
-                    
+                    /*
                     var today = new Date(); // Current date
                     var hasAppointmentToday = appointments.some(function (appointment) {
                         // Convert the appointment date to a Date object for comparison
                         var appointmentDate = new Date(appointment.app_date);
+                        
                         // Compare only the date part (not time)
                         var appointmentDateString = appointmentDate.toLocaleDateString();
                         var todayDateString = today.toLocaleDateString();
-                        return appointmentDateString === todayDateString;
-                    });
-                    
-                    
-                    
-                    console.log("Has appointment today:", hasAppointmentToday);
-                    
-                    if (hasAppointmentToday) {
-                        // Show SweetAlert for today's appointment
-                        Swal.fire({
-                            icon: "success",
-                            title: "Appointment Today",
-                            text: "You have an appointment scheduled for today!",
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                    }
+                        
+                        if (appointmentDateString === todayDateString) {
+                            // Extract the time part of the appointment
+                            var appointmentStartTime = appointment.start_time;
+                            
+                            // Show SweetAlert with appointment time
+                            Swal.fire({
+                                icon: "success",
+                                title: "Appointment Today",
+                                text: "You have an appointment scheduled for today at " + appointmentStartTime,
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            
+
+                        }
                     else{
                         Swal.fire({
                             icon: "error",
@@ -162,8 +162,8 @@ $(document).ready(function () {
                             timer: 3000,
                         });
                     }
-                    
-
+                });
+                */
                     //MEDICAL HISTORY
                     $("#hypertension").text(data.hypertension);
                     $("#asthma").text(data.asthma);
@@ -351,40 +351,7 @@ $(document).ready(function () {
                         appointmentTable.append(row);
                     });
 
-                    var today = new Date(); // Current date
-                    var hasAppointmentToday = appointments.some(function (appointment) {
-                        // Convert the appointment date to a Date object for comparison
-                        var appointmentDate = new Date(appointment.app_date);
-                        // Compare only the date part (not time)
-                        var appointmentDateString = appointmentDate.toLocaleDateString();
-                        var todayDateString = today.toLocaleDateString();
-                        return appointmentDateString === todayDateString;
-                    });
-                    
-                    
-                    
-                    console.log("Has appointment today:", hasAppointmentToday);
-                    
-                    if (hasAppointmentToday) {
-                        // Show SweetAlert for today's appointment
-                        Swal.fire({
-                            icon: "success",
-                            title: "Appointment Today",
-                            text: "You have an appointment scheduled for today!",
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                    }
-                    else{
-                        Swal.fire({
-                            icon: "error",
-                            title: "No Appointment for Today",
-                            text: "You have no appointment scheduled for today!",
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                    }
-                    
+                
 
                     //MEDICAL HISTORY
                     $("#hypertension").text(data.hypertension);
