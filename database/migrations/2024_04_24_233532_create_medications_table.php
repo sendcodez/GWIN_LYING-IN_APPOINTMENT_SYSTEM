@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('service_id');
+            $table->BigInteger('appointment_id');
             $table->string('name');
             $table->string('bed')->nullable();
             $table->string('room')->nullable();

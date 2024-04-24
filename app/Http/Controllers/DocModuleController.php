@@ -48,6 +48,7 @@ class DocModuleController extends Controller
         $validator = Validator::make($request->all(), [
             'patient_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:services,id',
+            'appointment_id' => 'required|integer',
             'patient_name' => 'required|string',
             'bed' => 'nullable|string',
             'room' => 'nullable|string',
@@ -70,6 +71,7 @@ class DocModuleController extends Controller
         $medication = new Medication();
         $medication->user_id = $request->patient_id;
         $medication->service_id = $request->service_id;
+        $medication->appointment_id = $request->appointment_id;
         $medication->bed = $request->bed;
         $medication->room = $request->room;
         $medication->name = $request->patient_name;

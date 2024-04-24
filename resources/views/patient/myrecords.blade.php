@@ -25,6 +25,9 @@
                                                 role="tab">Personal Information</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#appointment" role="tab">Completed Appointments</a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#pregnancy" role="tab">Pregnancy
                                                 History</a>
                                         </li>
@@ -323,6 +326,87 @@
                                             </div>
                                         </div>
 
+                                         <!-- APPOINTMENT -->
+                                         <div class="tab-pane fade " id="appointment" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped" id="appointment">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th>#</th>
+                                                            <th class="table-plus">Date</th>
+                                                            <th class="table-plus">Doctor</th>
+                                                            <th>Service</th>
+                                                            <th>Time</th>
+                                                            <th>Status</th>
+                                                            <th class="text-center">View Medication</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @forelse ($app as $appointment)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $appointment->date }}</td>
+                                                            <td>Dr. {{ $appointment->doctor->lastname }}</td>
+                                                            <td>{{ $appointment->service->name }}</td>
+                                                            <td>{{ $appointment->start_time }}</td>
+                                                            <td>
+                                                                @if($appointment->status == 3)
+                                                                    <span class="badge badge-success">Completed</span>
+                                                                @else
+                                                                    <span>No</span>
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                                    data-bs-target="#showModal{{ $appointment->id }}">
+                                                                    <i class="dw dw-eye"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <div class="modal fade" id="showModal{{ $appointment->id }}" tabindex="-1" aria-labelledby="showModal{{ $appointment->id }}Label" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h3 class="text-center">Appointment Information</h3>
+                                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                                aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    <div class="modal-body">
+                                                                        <p><strong>Doctor Name:</strong> Dr.
+                                                                            {{ $appointment->doctor->firstname }}
+                                                                            {{ $appointment->doctor->lastname }}
+                                                                        </p>
+                                                                        <p><strong>Patient Name:</strong>
+                                                                            {{ $appointment->patient->firstname }}
+                                                                            {{ $appointment->patient->lastname }}
+                                                                        </p>
+                                                                    @foreach($appointment->medications as $medication)
+                                                                        <p><strong>Bed:</strong> {{  $medication->bed }}</p>
+                                                                        <p><strong>Room:</strong> {{ $medication->room }}</p>
+                                                                        <p><strong>Date:</strong> {{ $medication->date }}</p>
+                                                                        <p><strong>Medications:</strong> {{ implode(", ", json_decode($medication->medications)) }}</p>
+
+                                                                     @endforeach
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @empty
+                                                        <tr>
+                                                            <td colspan="6" style="text-align: center">No data available</td>
+                                                        </tr>
+                                                        @endforelse
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
                                         <!-- ULTRASOUND -->
 
                                         <div class="tab-pane fade " id="ultrasound" role="tabpanel">
@@ -371,4 +455,16 @@
                 </div>
             </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#addUserModal .close').click(function() {
+                    $('#addUserModal').modal('hide');
+                });
+                $('.modal .close').click(function() {
+                    $(this).closest('.modal').modal('hide');
+                });
+            });
+        </script>
     @endsection

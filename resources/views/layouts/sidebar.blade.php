@@ -350,7 +350,7 @@
 						</a>
 					</li>
 					@endif
-
+                    <!--
                     @if (Auth::user()->usertype == '2')
 					<li class="dropdown">
 						<a href="" class="dropdown-toggle no-arrow">
@@ -358,6 +358,7 @@
 						</a>
 					</li>
 					@endif
+                -->
                 </ul>
             </div>
         </div>

@@ -13,6 +13,7 @@ class Medication extends Model
     protected $fillable = [
         'user_id',
         'service_id',
+        'appointment_id',
         'name',
         'date',
         'bed',

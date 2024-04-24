@@ -151,6 +151,8 @@
                                             class="form-control" readonly>
                                         <input type="hidden" name="service_id" value="{{ $appointment->service->id }}"
                                             class="form-control" readonly>
+                                        <input type="hidden" name="appointment_id" value="{{ $appointment->id }}"
+                                            class="form-control" readonly>
                                     </div>
                                 </div>
                             </div>

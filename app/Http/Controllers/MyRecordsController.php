@@ -31,6 +31,9 @@ class MyRecordsController extends Controller
     $ultra = Ultrasound::where('user_id', Auth::id())->get();
     $lab = Laboratory::where('user_id', Auth::id())->get();
     $record = Record::where('user_id', Auth::id())->get();
+    $app = Appointment::where('user_id', Auth::id())
+                  ->where('status', 3)
+                  ->get();
     
     return view('patient.myrecords', [
         'appointments' => $appointments,
@@ -41,6 +44,7 @@ class MyRecordsController extends Controller
         'ultra' => $ultra,
         'lab' => $lab,
         'record' => $record,
+        'app' => $app,
     ]);
 }
 
