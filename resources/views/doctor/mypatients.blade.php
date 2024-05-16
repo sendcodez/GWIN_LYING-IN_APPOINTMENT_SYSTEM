@@ -40,7 +40,7 @@
                                     <td>{{ $appointment->patient->firstname }} {{ $appointment->patient->lastname }}</td>
                                     <td>{{ $appointment->service->name }}</td>
                                     <td>{{ $appointment->date }}</td>
-                                    <td>{{ $appointment->start_time }}</td>
+                                    <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                     <td>
                                         @php
                                             $statusWord = '';
