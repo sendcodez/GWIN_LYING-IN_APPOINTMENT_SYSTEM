@@ -11,7 +11,7 @@
 
                     </div>
                     <div class="card-box pb-10">
-                        <table class="data-table table nowrap">
+                        <table class="data-table table">
                             <thead>
                                 <tr>
                                     <th>#</th>
