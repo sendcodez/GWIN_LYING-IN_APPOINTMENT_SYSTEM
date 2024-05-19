@@ -385,7 +385,7 @@
                                             <label>Day Availability</label>
                                             <select id="daySelect" class="selectpicker form-control" data-size="5"
                                                 data-style="btn-outline-secondary" multiple data-actions-box="true"
-                                                data-selected-text-format="text" name="day[]">
+                                                data-selected-text-format="text" name="day[]" required>
                                                 <optgroup label="Days">
                                                     <option value="monday">Monday</option>
                                                     <option value="tuesday">Tuesday</option>
