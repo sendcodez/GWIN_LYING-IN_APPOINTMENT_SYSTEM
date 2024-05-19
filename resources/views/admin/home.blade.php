@@ -80,38 +80,52 @@
             </div>
             <div class="card-box pb-10">
                 <div class="h5 pd-20 mb-0">Recent Patient</div>
-				<table class="data-table table nowrap">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Patient Name</th>
-							<th>Doctor Assigned</th>
-							<th>Service</th>
-							<th>Date</th>
-							<th>Status</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach ($completedAppointments as $key => $appointment)
-							<tr>
-								<td>{{ $key + 1 }}</td>
-								<td class="table-plus">
-									<div class="name-avatar d-flex align-items-center">
-										<div class="txt">
-											<div class="weight-600">{{ $appointment->patient->firstname }} {{ $appointment->patient->lastname }}</div>
-											<span class="text-muted">User ID: {{ $appointment->patient->id }}</span>
-										</div>
-									</div>
-								</td>
-								<td>Dr. {{ $appointment->doctor->lastname }}</td>
-								<td>{{ $appointment->service->name }}</td>
-								<td>{{ $appointment->date }}</td>
-								<td>
-									<span class="badge badge-primary">Completed</span>
-								</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
+                <table class="data-table table nowrap">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Patient Name</th>
+                            <th>Doctor Assigned</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($completedAppointments as $key => $appointment)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td class="table-plus">
+                                    <div class="name-avatar d-flex align-items-center">
+                                        <div class="txt">
+                                            <div class="weight-600">{{ $appointment->patient->firstname }}
+                                                {{ $appointment->patient->lastname }}</div>
+                                            <span class="text-muted">User ID: {{ $appointment->patient->id }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @if ($appointment->doctor && $appointment->doctor->lastname)
+                                        Dr. {{ ucfirst($appointment->doctor->lastname) }}
+                                    @else
+                                        <span style="color:red">Doctor Not Found</span>
+                                    @endif
+                                </td>
+
+                                <td>
+                                    @if ($appointment->service && $appointment->service->name)
+                                        {{ $appointment->service->name }}
+                                    @else
+                                        <span style="color:red">Service Not Found</span>
+                                    @endif
+                                </td>
+                                <td>{{ $appointment->date }}</td>
+                                <td>
+                                    <span class="badge badge-primary">Completed</span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         @endsection

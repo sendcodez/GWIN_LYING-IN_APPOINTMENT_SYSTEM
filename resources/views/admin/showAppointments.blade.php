@@ -39,8 +39,20 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ ucfirst($appointment->patient->firstname) }} {{ ucfirst($appointment->patient->lastname) }}</td>
-                                    <td>Dr. {{ ucfirst($appointment->doctor->lastname)  }}</td>
-                                    <td>{{ $appointment->service->name }}</td>
+                                    <td>
+                                        @if($appointment->doctor && $appointment->doctor->lastname)
+                                            Dr. {{ ucfirst($appointment->doctor->lastname) }}
+                                        @else
+                                            <span style="color:red">Doctor Not Found</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($appointment->service && $appointment->service->name)
+                                            {{ $appointment->service->name }}
+                                        @else
+                                            <span style="color:red">Service Not Found</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $appointment->date }}</td>
                                     <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                     <td>
@@ -121,15 +133,23 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p><strong>Doctor Name:</strong> Dr.
-                                                    {{ $appointment->doctor->firstname }}
-                                                    {{ $appointment->doctor->lastname }}
+                                                <p><strong>Doctor Name:</strong>
+                                                    @if($appointment->doctor && $appointment->doctor->firstname && $appointment->doctor->lastname)
+                                                        Dr. {{ $appointment->doctor->firstname }} {{ ucfirst($appointment->doctor->lastname) }}
+                                                    @else
+                                                        N/A
+                                                    @endif
                                                 </p>
+                                                
                                                 <p><strong>Patient Name:</strong>
                                                     {{ $appointment->patient->firstname }}
                                                     {{ $appointment->patient->lastname }}
                                                 </p>
-                                                <p><strong>Service:</strong> {{ $appointment->service->name }}</p>
+                                                <p><strong>Service:</strong>   @if($appointment->service && $appointment->service->name)
+                                                    {{ $appointment->service->name }}
+                                                @else
+                                                    <span style="color:red">Service Not Found</span>
+                                                @endif</p>
                                                 <p><strong>Date:</strong> {{ $appointment->date }}</p>
                                                 <p><strong>Time:</strong> {{ $appointment->start_time }}</p>
                                                 <p><strong>Status:</strong>

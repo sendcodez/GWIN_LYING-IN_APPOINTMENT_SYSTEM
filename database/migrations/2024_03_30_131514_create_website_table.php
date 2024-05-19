@@ -32,6 +32,7 @@ return new class extends Migration
             $table->boolean('type');
             $table->boolean('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
 
     }
