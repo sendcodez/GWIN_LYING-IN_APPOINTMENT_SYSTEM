@@ -419,7 +419,7 @@
                                         <i class="bx bx-x d-block d-sm-none"></i>
                                         <span class="d-none d-sm-block">Previous</span>
                                     </button>
-                                    <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                                    <button type="submit" id="submitButton" class="btn btn-primary ml-1">
                                         <i class="bx bx-check d-block d-sm-none"></i>
                                         <span class="d-none d-sm-block">Submit</span>
                                     </button>
@@ -562,6 +562,22 @@
                     console.error('Error:', error);
                 });
             });
+        });
+    });
+    $(document).ready(function() {
+        // Prevent modal from closing on form submission
+        $('#submitButton').click(function(event) {
+            // Prevent default form submission
+            event.preventDefault();
+
+            // Trigger form validation
+            if ($('#multiStepForm')[0].checkValidity()) {
+                // If form is valid, submit the form
+                $('#multiStepForm').submit();
+            } else {
+                // If form is invalid, add validation styling
+                $('#multiStepForm').addClass('was-validated');
+            }
         });
     });
     </script>
