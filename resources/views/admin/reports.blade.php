@@ -31,7 +31,7 @@
                                 <button type="submit" class="btn btn-primary">Filter</button>
                                 <button type="button" class="btn btn-success" onclick="printTable()">Print</button>
                             </div>
-                            
+
                         </form>
                     </div>
                     <table class="data-table table nowrap" id="appointmentsTable">
@@ -53,8 +53,20 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ ucfirst($appointment->patient->firstname) }}
                                         {{ ucfirst($appointment->patient->lastname) }}</td>
-                                    <td>Dr. {{ ucfirst($appointment->doctor->lastname) }}</td>
-                                    <td>{{ $appointment->service->name }}</td>
+                                    <td>
+                                        @if ($appointment->doctor && $appointment->doctor->lastname)
+                                            Dr. {{ ucfirst($appointment->doctor->lastname) }}
+                                        @else
+                                            <span style="color:red">Doctor Not Found</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($appointment->service && $appointment->service->name)
+                                            {{ $appointment->service->name }}
+                                        @else
+                                            <span style="color:red">Service Not Found</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $appointment->date }}</td>
                                     <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                     <td>
@@ -86,7 +98,11 @@
                                         @endphp
                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                     </td>
-                                    <td>₱ {{ $appointment->service->price }}</td>
+                                    <td> @if ($appointment->service && $appointment->service->name)
+                                        ₱ {{ $appointment->service->name }}
+                                    @else
+                                        <span style="color:red">Service Not Found</span>
+                                    @endif</td>
                                 </tr>
                             @endforeach
                         </tbody>
