@@ -31,10 +31,12 @@ class DashboardController extends Controller
         // Fetch recent appointments for the doctor
         $doctor = Doctor::where('user_id', $user->id)->first();
 
-        if ($doctor) {
+        $doc_app = collect(); // Initialize as an empty collection
+
+        if ($user->isDoctor()) {
             // Fetch recent appointments of the doctor
             $doc_app = Appointment::with(['patient', 'service'])
-                ->where('doctor_id', $doctor->id)
+                ->where('doctor_id', $user->doctor->id)
                 ->orderBy('date', 'desc')
                 ->get();
         }
