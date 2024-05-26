@@ -61,6 +61,10 @@
                                             <a class="nav-link" data-toggle="tab" href="#ultrasound"
                                                 role="tab">Ultrasound Result</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#medication"
+                                                role="tab">Medications</a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content">
 
@@ -159,7 +163,7 @@
                                           <!-- APPOINTMENT -->
                                           <div class="tab-pane fade " id="appointment" role="tabpanel">
                                             <div class="pd-20">
-                                                <table class="table table-striped">
+                                                <table class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr class="table-info">
                                                             <th class="table-plus">Date</th>
@@ -185,7 +189,7 @@
                                         <!-- PREGNANCY -->
                                         <div class="tab-pane fade " id="pregnancy" role="tabpanel">
                                             <div class="pd-20">
-                                                <table class="table table-striped">
+                                                <table class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr class="table-info">
                                                             <th class="table-plus">Gravida</th>
@@ -209,7 +213,7 @@
                                                     </tbody>
                                                 </table>
                                                 <br>
-                                                <table class="table table-striped" id="pregnancy_histories">
+                                                <table class="table table-striped table-bordered" id="pregnancy_histories">
                                                     <thead>
                                                         <tr class="table-success">
                                                             <th class="table-plus">Pregnancy number</th>
@@ -243,7 +247,7 @@
                                         <!-- MEDICAL -->
                                         <div class="tab-pane fade " id="medical" role="tabpanel">
                                             <div class="pd-20">
-                                                <table class="table table-striped">
+                                                <table class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr class="table-info">
                                                             <th class="text-center">Hypertension</th>
@@ -268,7 +272,7 @@
                                             </div>
 
                                             <div class="pd-20">
-                                                <table class="table table-striped">
+                                                <table class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr class="table-info">
                                                             <th class="text-center">Epilepsy</th>
@@ -299,7 +303,7 @@
                                         <!-- LABORATORY -->
                                         <div class="tab-pane fade " id="laboratory" role="tabpanel">
                                             <div class="pd-20">
-                                                <table class="table table-striped" id="laboratory">
+                                                <table class="table table-striped table-bordered" id="laboratory">
                                                     <thead>
                                                         <tr class="table-info">
                                                             <th class="table-plus">Date</th>
@@ -331,7 +335,7 @@
 
                                         <div class="tab-pane fade " id="ultrasound" role="tabpanel">
                                             <div class="pd-20">
-                                                <table class="table table-striped" id="ultrasound">
+                                                <table class="table table-striped table-bordered" id="ultrasound">
                                                     <thead>
                                                         <tr class="table-info">
                                                             <th class="table-plus">Date</th>
@@ -349,6 +353,27 @@
                                                 </table>
                                             </div>
                                         </div>
+
+                                         <!-- MEDICATION -->
+                                         <div class="tab-pane fade " id="medication" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">Date</th>
+                                                            <th>Medications</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="med_date"></td>
+                                                            <td id="medications"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
 
 
                                     </div>

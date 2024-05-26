@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('medications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('service_id');
-            $table->BigInteger('appointment_id');
+            $table->unsignedBigInteger('service_id')->nullable();
+            $table->BigInteger('appointment_id')->nullable();
             $table->string('name');
             $table->string('bed')->nullable();
             $table->string('room')->nullable();

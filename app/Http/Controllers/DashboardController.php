@@ -19,12 +19,30 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $user = Auth::user(); // Get the authenticated user
+    
+        $user = Auth::user(); // Get the authenticated user (assuming it's the patient)
+        $doctor = Auth::user(); // Get the authenticated user (assuming it's the doctor)
+        
+        // Fetch appointments for the patient
         $appointments = Appointment::with(['doctor', 'service'])
             ->where('user_id', $user->id)
-            ->get(); // Fetch appointments with related doctor and service information
-        return view('admin.dashboard', compact('appointments'));
+            ->get();
+        
+        // Fetch recent appointments for the doctor
+        $doctor = Doctor::where('user_id', $user->id)->first();
+
+        if ($doctor) {
+            // Fetch recent appointments of the doctor
+            $doc_app = Appointment::with(['patient', 'service'])
+                ->where('doctor_id', $doctor->id)
+                ->orderBy('date', 'desc')
+                ->get();
+        }
+            
+        return view('admin.dashboard', compact('appointments', 'doc_app'));
     }
+
+    
     /**
      * Show the form for creating a new resource.
      */

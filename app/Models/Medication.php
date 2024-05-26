@@ -25,4 +25,8 @@ class Medication extends Model
     protected $casts = [
         'medications' => 'array',
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'user_id', 'user_id');
+    }
 }

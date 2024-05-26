@@ -64,7 +64,7 @@
                             </ul>
                         </div>
                         <div class="profile-info">
-                            <h5 class="mb-20 h5 text-green">Husband Informations</h5>
+                            <h5 class="mb-20 h5 text-green">Spouse Informations</h5>
                             <ul>
                                 <li>
                                     <span>Full name:</span>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Medication;
 use App\Models\Patient;
@@ -45,10 +46,11 @@ class DocModuleController extends Controller
     public function store(Request $request)
     {
         try{
+       
         $validator = Validator::make($request->all(), [
-            'patient_id' => 'required|exists:users,id',
-            'service_id' => 'required|exists:services,id',
-            'appointment_id' => 'required|integer',
+            'patient_id' => 'required|integer',
+            'service_id' => 'nullable|integer',
+            'appointment_id' => 'nullable|integer',
             'patient_name' => 'required|string',
             'bed' => 'nullable|string',
             'room' => 'nullable|string',
@@ -70,8 +72,8 @@ class DocModuleController extends Controller
         // Create a new Medication instance
         $medication = new Medication();
         $medication->user_id = $request->patient_id;
-        $medication->service_id = $request->service_id;
-        $medication->appointment_id = $request->appointment_id;
+      //  $medication->service_id = $request->service_id;
+       //  $medication->appointment_id = $request->appointment_id;
         $medication->bed = $request->bed;
         $medication->room = $request->room;
         $medication->name = $request->patient_name;
@@ -83,6 +85,7 @@ class DocModuleController extends Controller
         return redirect()->back()->with('success', 'Medication added successfully');
     } catch (\Exception $e) {
         $errorMessage = $e->getMessage();
+        Log::error('Error adding medication: '.$e->getMessage());
         return redirect()->back()->with('error', $errorMessage);
     }
     }

@@ -225,7 +225,9 @@ class RecordController extends Controller
             'appointments',
             'laboratories',
             'records',
-            'ultrasounds'
+            'ultrasounds',
+            'medications'
+          
         ])->where('user_id', $id)->first();
 
         if ($patient || User::where('id', $id)->exists()) {
@@ -341,7 +343,23 @@ class RecordController extends Controller
                 ];
             }
 
-
+ 
+            $medicationData = [];
+            if ($patient && isset($patient->medications)) {
+                foreach ($patient->medications as $medication) {
+                    $medicationData[] = [
+                        'name' => $medication->name ?? 'No record',
+                        'med_date' => optional($medication->created_at)->format('Y-m-d') ?? 'No record',
+                        'medications' => $medication->medications ? json_decode($medication->medications) : 'No record'
+                    ];
+                }
+            } else {
+                $medicationData[] = [
+                    'name' => 'No record',
+                    'date' => 'No record',
+                    'medications' => 'No record'
+                ];
+            }
 
             return response()->json([
                 // USER
@@ -383,6 +401,8 @@ class RecordController extends Controller
                 'ultrasounds' => $ultrasoundData,
                 // APPOINTMENTS
                 'appointments' => $appointmentData,
+                //MEDICATIONS
+                'medications' => $medicationData,
                 // MEDICAL HISTORY
                 'hypertension' => $medical ? ($medical->hypertension == 1 ? 'Yes' : 'No') : 'No record',
                 'heartdisease' => $medical ? ($medical->heartdisease == 1 ? 'Yes' : 'No') : 'No record',

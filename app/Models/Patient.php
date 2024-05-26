@@ -90,4 +90,9 @@ class Patient extends Model
     {
         return $this->hasMany(Ultrasound::class, 'user_id', 'user_id');
     }
+  
+    public function medications()
+    {
+        return $this->hasMany(Medication::class, 'user_id', 'user_id');
+    }
 }

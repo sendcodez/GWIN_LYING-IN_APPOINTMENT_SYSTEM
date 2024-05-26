@@ -21,4 +21,12 @@ class DoctorAvailability extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+    public function doctor_services()
+    {
+        return $this->belongsTo(Doctor_service::class);
+    }
 }

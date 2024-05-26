@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DoctorAvailability;
 use App\Models\Service;
 use Illuminate\Support\Facades\Validator;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -26,7 +27,8 @@ class AppointmentController extends Controller
 
     $appointments = Appointment::where('user_id', Auth::id())->get();
 
-    $doctorAvailabilities = DoctorAvailability::all();
+    $doctorAvailabilities = DoctorAvailability::with(['doctor', 'doctor_services'])->get();
+
 
    
 
@@ -62,6 +64,7 @@ class AppointmentController extends Controller
                 'selected_day' => 'required|string',
                 'time' => 'required|string',
                 'end_time' => 'required|string',
+                'remarks' => 'required|string',
             ]);
     
             // If validation fails, return the validation errors
@@ -78,6 +81,7 @@ class AppointmentController extends Controller
                 'day' => $request->input('selected_day'),
                 'start_time' => $request->input('time'),
                 'end_time' => $request->input('end_time'),
+                'remarks' => $request->input('remarks'),
                
                 // Add other fields as needed
             ]);
@@ -119,9 +123,14 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Find the doctor record
+        $appointment = Appointment::findOrFail($id);
+        
+
+        $appointment->delete(); 
+        return redirect()->back()->with('success', 'Appointment deleted successfully.');
     }
 
     public function getAll(Request $request)
@@ -137,6 +146,54 @@ class AppointmentController extends Controller
     
         // Return JSON response with appointments including doctors' names
         return response()->json($appointments);
+    }
+
+
+    //SHOW APPOINTMENTS BY STATUS
+
+    
+    public function pendingApp(){
+
+        $user = Auth::user(); // Get the authenticated user
+        $appointments = Appointment::with(['doctor', 'service'])
+                        ->where('status', '1')
+                        ->orderBy('date', 'desc')
+                        ->get(); 
+        return view('admin.pendingapp', compact('appointments'));
+       
+    }
+
+    public function approvedApp(){
+
+        $user = Auth::user(); // Get the authenticated user
+        $appointments = Appointment::with(['doctor', 'service'])
+                        ->where('status', '2')
+                        ->orderBy('date', 'desc')
+                        ->get(); 
+        return view('admin.approvedapp', compact('appointments'));
+       
+    }
+    
+    public function completedApp(){
+
+        $user = Auth::user(); // Get the authenticated user
+        $appointments = Appointment::with(['doctor', 'service'])
+                        ->where('status', '3')
+                        ->orderBy('date', 'desc')
+                        ->get(); 
+        return view('admin.completedapp', compact('appointments'));
+       
+    }
+
+    public function cancelledApp(){
+
+        $user = Auth::user(); // Get the authenticated user
+        $appointments = Appointment::with(['doctor', 'service'])
+                        ->where('status', '4')
+                        ->orderBy('date', 'desc')
+                        ->get(); 
+        return view('admin.cancelledapp', compact('appointments'));
+       
     }
     
 

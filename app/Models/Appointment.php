@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
 {
@@ -18,6 +19,8 @@ class Appointment extends Model
         'day',
         'start_time',
         'end_time',
+        'remarks',
+        'status',
     ];
     public function doctor()
     {

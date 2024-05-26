@@ -9,6 +9,7 @@
                     <h4 class="text-blue h4">My Patients</h4>
                 </div>
                 <div class="card-box pb-10">
+                    <!--
                     <div class="col-md-2 col-sm-6">
                         <div class="form-group">
                             <label for="statusFilter">Filter by Status:</label>
@@ -21,6 +22,7 @@
                             </select>
                         </div>
                     </div>
+                    -->
                     <table class="data-table table nowrap" id="appointmentsTable">
                         <thead>
                             <tr>
@@ -81,10 +83,12 @@
                                                     href="{{ route('mypatient.show', ['userId' => $appointment->user_id]) }}">
                                                     <i class="dw dw-eye"></i> View
                                                 </a>
+                                                <!--
                                                 <button type="button" class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#showModal{{ $appointment->id }}">
                                                     <i class="dw dw-add"></i> Add Medication
                                                 </button>
+                                                -->
 
                                                 @if ($appointment->status == 2)
                                                     <form action="{{ route('appointments.complete', $appointment->id) }}"
@@ -98,7 +102,7 @@
                                                         </button>
                                                     </form>
                                                 @endif
-
+                                                <!--
                                                 @if ($appointment->status == 1 || $appointment->status == 2)
                                                     <form action="{{ route('appointments.cancel', $appointment->id) }}"
                                                         method="POST">
@@ -109,6 +113,7 @@
                                                         </button>
                                                     </form>
                                                 @endif
+                                                -->
                                             </div>
                                         </div>
                                     </td>

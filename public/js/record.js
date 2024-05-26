@@ -16,12 +16,14 @@ $(document).ready(function () {
                     var labTable = $("#laboratory tbody");
                     var ultrasoundData = data.ultrasounds; // Get the array of ultrasound records
                     var ultrasoundTable = $("#ultrasound tbody");
-
+                    var medications = data.medications;
+                    var medicationTable = $("#medication tbody");
                     // Clear existing rows
                     ultrasoundTable.empty();
                     labTable.empty();
                     appointmentTable.empty();
                     pregnancyTable.empty();
+                    medicationTable.empty();
 
                     $("#fullname").text(
                         data.firstname +
@@ -179,6 +181,13 @@ $(document).ready(function () {
                     $("#bleeding").text(data.bleeding);
                     $("#operation").text(data.operation);
                     $("#others").text(data.others);
+
+                    medications.forEach(function (medication) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(medication.med_date));
+                        row.append($("<td>").text(medication.medications));
+                        medicationTable.append(row);
+                    });
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     // Handle error if user details retrieval fails
@@ -240,6 +249,8 @@ $(document).ready(function () {
                     var labTable = $("#laboratory tbody");
                     var ultrasoundData = data.ultrasounds; // Get the array of ultrasound records
                     var ultrasoundTable = $("#ultrasound tbody");
+                    var medications = data.medications;
+                    var medicationTable = $("#medication tbody");
 
                     // Clear existing rows
                     ultrasoundTable.empty();
@@ -402,6 +413,13 @@ $(document).ready(function () {
                     $("#bleeding").text(data.bleeding);
                     $("#operation").text(data.operation);
                     $("#others").text(data.others);
+
+                    medications.forEach(function (medication) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(medication.med_date));
+                        row.append($("<td>").text(medication.medications));
+                        medicationTable.append(row);
+                    });
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     // Handle error if user details retrieval fails

@@ -9,7 +9,7 @@
             </div>
 
             <div class="row pb-10">
-                <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-20">
                     <div class="card-box height-100-p widget-style3">
                         <div class="d-flex flex-wrap">
                             <div class="widget-data">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-20">
                     <div class="card-box height-100-p widget-style3">
                         <div class="d-flex flex-wrap">
                             <div class="widget-data">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-20">
                     <div class="card-box height-100-p widget-style3">
                         <div class="d-flex flex-wrap">
                             <div class="widget-data">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-
+            <!--
                 <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
                     <div class="card-box height-100-p widget-style3">
                         <div class="d-flex flex-wrap">
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-
+            -->
             </div>
             <div class="card-box pb-10">
                 <div class="h5 pd-20 mb-0">Recent Patient</div>
@@ -88,6 +88,7 @@
                             <th>Doctor Assigned</th>
                             <th>Service</th>
                             <th>Date</th>
+                            <th>Remarks</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -120,6 +121,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $appointment->date }}</td>
+                                <td>{{ $appointment->remarks }}</td>
                                 <td>
                                     <span class="badge badge-primary">Completed</span>
                                 </td>

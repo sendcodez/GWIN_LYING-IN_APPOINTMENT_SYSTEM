@@ -14,7 +14,7 @@ return new class extends Migration
     {
        
         $currentYear = date('Y');
-        $startingId = intval($currentYear . '000001');
+        $startingId = intval($currentYear . '0001');
 
         DB::statement("ALTER TABLE users AUTO_INCREMENT = $startingId");
     }

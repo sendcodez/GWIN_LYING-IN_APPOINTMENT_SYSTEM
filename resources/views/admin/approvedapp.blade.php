@@ -1,5 +1,5 @@
 @extends('layouts.sidebar')
-@section('title', 'Show Appointments')
+@section('title', 'Approved Appointments')
 @section('contents')
     <div class="main-container">
         <div class="pd-ltr-20">
@@ -9,18 +9,6 @@
                 </div>
                 
                 <div class="card-box pb-10">
-                    <div class="col-md-2 col-sm-6">
-                        <div class="form-group">
-                        <label for="statusFilter">Filter by Status:</label>
-                        <select id="statusFilter" class="selectpicker form-control">
-                            <option value="">All</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                       </div>
-                    </div>
                     <table class="data-table table nowrap" id="appointmentsTable">
                         <thead>
                             <tr>
@@ -86,6 +74,7 @@
                                         @endphp
                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                     </td>
+                                  
                                     <td>
                                         <div class="dropdown">
                                             <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -120,6 +109,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                  
                                 </tr>
 
                                 <!-- Modal for appointment details -->

@@ -36,6 +36,12 @@ class UserController extends Controller
         return view('admin.create_user', compact('users')); 
     }
 
+    public function createpatientaccount()
+    {
+        $users = User::where('usertype', 3)->get();
+
+        return view('admin.profiling.addpatientaccount', compact('users')); 
+    }
  
     public function store(Request $request)
     {

@@ -43,6 +43,10 @@
                                             <a class="nav-link" data-toggle="tab" href="#ultrasound"
                                                 role="tab">Ultrasound Result</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#medication"
+                                                role="tab">Medications</a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content">
 
@@ -338,7 +342,6 @@
                                                             <th>Service</th>
                                                             <th>Time</th>
                                                             <th>Status</th>
-                                                            <th class="text-center">View Medication</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -349,19 +352,6 @@
                                                             <td>Dr. {{ $appointment->doctor->lastname }}</td>
                                                             <td>{{ $appointment->service->name }}</td>
                                                             <td>{{ $appointment->start_time }}</td>
-                                                            <td>
-                                                                @if($appointment->status == 3)
-                                                                    <span class="badge badge-success">Completed</span>
-                                                                @else
-                                                                    <span>No</span>
-                                                                @endif
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                                    data-bs-target="#showModal{{ $appointment->id }}">
-                                                                    <i class="dw dw-eye"></i>
-                                                                </button>
-                                                            </td>
                                                         </tr>
                                                         <div class="modal fade" id="showModal{{ $appointment->id }}" tabindex="-1" aria-labelledby="showModal{{ $appointment->id }}Label" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered">
@@ -398,7 +388,7 @@
                                                         </div>
                                                         @empty
                                                         <tr>
-                                                            <td colspan="6" style="text-align: center">No data available</td>
+                                                            <td colspan="7" style="text-align: center">No data available</td>
                                                         </tr>
                                                         @endforelse
                                                     </tbody>
@@ -436,6 +426,45 @@
                                                             @empty
                                                             <tr>
                                                                 <td colspan="4" style="text-align: center">No data available</td>
+                                                            </tr>
+                                                        @endforelse
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                           <!-- MEDICATION -->
+                                           <div class="tab-pane fade " id="medication" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped" id="medication">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th>#</th>
+                                                            <th class="table-plus">Date</th>
+                                                            <th class="table-plus">Medications</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @forelse ($medication as $medication)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $medication->created_at->format('Y-m-d') }}</td>
+                                                                <td>
+                                                                    @php
+                                                                        $medications = json_decode($medication->medications);
+                                                                        if ($medications) {
+                                                                            // If decoding is successful
+                                                                            echo implode(', ', $medications); // Display medications separated by comma
+                                                                        } else {
+                                                                            // If decoding fails or medications are empty
+                                                                            echo 'No medications';
+                                                                        }
+                                                                    @endphp
+                                                                </td>
+                                                            </tr>
+                                                            @empty
+                                                            <tr>
+                                                                <td colspan="8" style="text-align: center">No data available</td>
                                                             </tr>
                                                         @endforelse
                                                     </tbody>

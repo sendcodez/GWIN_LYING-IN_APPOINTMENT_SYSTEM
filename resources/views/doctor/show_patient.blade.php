@@ -20,7 +20,7 @@
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
                             <div class="pd-20 card-box height-100-p">
 
-                                <h1 class="text-center h1 mb-0">{{ $patient->firstname }} {{ $patient->middlename }}
+                                <h1 class="text-center h2 mb-0">{{ $patient->firstname }} {{ $patient->middlename }}
                                     {{ $patient->lastname }}</h1>
                                 <p class="text-center text-muted font-20">
                                     </strong> {{ $patient->user_id }}</p>
@@ -101,6 +101,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
                             <div class="card-box height-100-p overflow-hidden">
                                 <div class="profile-tab height-100-p">
@@ -207,88 +208,90 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-
                                             </div>
-                                            <!-- Timeline Tab End -->
-                                            <!-- Tasks Tab start -->
+                                     
                                             <div class="tab-pane fade" id="tasks" role="tabpanel">
                                                 <div class="pd-20 profile-task-wrap">
                                                     <div class="container pd-0">
-                                                        @foreach ($patient->medicalHistories as $history)
-                                                            <div class="profile-task-list pb-30">
-                                                                <br>
-                                                                <ul>
-                                                                    <li>
-                                                                        <span>Hypertension: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->hypertension ? 'color: red;' : 'color: blue;' }}">{{ $history->hypertension ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Heart Disease: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->heartdisease ? 'color: red;' : 'color: blue;' }}">{{ $history->heartdisease ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Asthma: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->asthma ? 'color: red;' : 'color: blue;' }}">{{ $history->asthma ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Tuberculosis: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->tuberculosis ? 'color: red;' : 'color: blue;' }}">{{ $history->tuberculosis ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Diabetes: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->diabetes ? 'color: red;' : 'color: blue;' }}">{{ $history->diabetes ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Goiter: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->goiter ? 'color: red;' : 'color: blue;' }}">{{ $history->goiter ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Epilepsy: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->epilepsy ? 'color: red;' : 'color: blue;' }}">{{ $history->epilepsy ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Allergy: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->allergy ? 'color: red;' : 'color: blue;' }}">{{ $history->allergy ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Hepatitis: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->hepatitis ? 'color: red;' : 'color: blue;' }}">{{ $history->hepatitis ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>VDRL: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->vdrl ? 'color: red;' : 'color: blue;' }}">{{ $history->vdrl ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Bleeding: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->bleeding ? 'color: red;' : 'color: blue;' }}">{{ $history->bleeding ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Operation: &nbsp</span>
-                                                                        <span
-                                                                            style="{{ $history->operation ? 'color: red;' : 'color: blue;' }}">{{ $history->operation ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Others:</span>
-                                                                        <span
-                                                                            style="{{ $history->others !== null ? 'color: red;' : 'color: blue;' }}">{{ $history->others !== null ? 'Yes' : 'No' }}</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
+                                                        <div class="profile-task-list pb-30">
+                                                            <table class="table table-striped table-bordered">
+                                                                <tbody>
+                                                                    @foreach ($patient->medicalHistories as $history)
+                                                                        <tr>
+                                                                            <td>Hypertension</td>
+                                                                            <td style="color: {{ $history->hypertension ? 'red' : 'blue' }}">
+                                                                                {{ $history->hypertension ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Heart Disease</td>
+                                                                            <td style="color: {{ $history->heartdisease ? 'red' : 'blue' }}">
+                                                                                {{ $history->heartdisease ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Asthma</td>
+                                                                            <td style="color: {{ $history->asthma ? 'red' : 'blue' }}">
+                                                                                {{ $history->asthma ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Tuberculosis</td>
+                                                                            <td style="color: {{ $history->tuberculosis ? 'red' : 'blue' }}">
+                                                                                {{ $history->tuberculosis ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Diabetes</td>
+                                                                            <td style="color: {{ $history->diabetes ? 'red' : 'blue' }}">
+                                                                                {{ $history->diabetes ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Goiter</td>
+                                                                            <td style="color: {{ $history->goiter ? 'red' : 'blue' }}">
+                                                                                {{ $history->goiter ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Epilepsy</td>
+                                                                            <td style="color: {{ $history->epilepsy ? 'red' : 'blue' }}">
+                                                                                {{ $history->epilepsy ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Allergy</td>
+                                                                            <td style="color: {{ $history->allergy ? 'red' : 'blue' }}">
+                                                                                {{ $history->allergy ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Hepatitis</td>
+                                                                            <td style="color: {{ $history->hepatitis ? 'red' : 'blue' }}">
+                                                                                {{ $history->hepatitis ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>VDRL</td>
+                                                                            <td style="color: {{ $history->vdrl ? 'red' : 'blue' }}">
+                                                                                {{ $history->vdrl ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Bleeding</td>
+                                                                            <td style="color: {{ $history->bleeding ? 'red' : 'blue' }}">
+                                                                                {{ $history->bleeding ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Operation</td>
+                                                                            <td style="color: {{ $history->operation ? 'red' : 'blue' }}">
+                                                                                {{ $history->operation ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Others</td>
+                                                                            <td style="color: {{ $history->others !== null ? 'red' : 'blue' }}">
+                                                                                {{ $history->others !== null ? 'Yes' : 'No' }}</td>
+                                                                        </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                        </div>
+                        
                                             
                 @endforeach
                 @else

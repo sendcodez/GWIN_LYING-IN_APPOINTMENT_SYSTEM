@@ -15,13 +15,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'firstname' => 'Admin',
+            'firstname' => 'Super',
             'middlename' => 'Admin',
             'lastname' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin123'),
             'status' => '1',
-            'usertype' => '1'
+            'usertype' => '0'
         ]);
         DB::table('users')->insert([
             'firstname' => 'Doctor',
@@ -41,8 +41,9 @@ class UserSeeder extends Seeder
             'status' => '1',
             'usertype' => '3'
         ]);
+        /*
         DB::table('doctors')->insert([
-            'user_id' => '202401',
+            'user_id' => '20240001',
             'firstname' => 'Pedro',
             'middlename' => '',
             'lastname' => 'Cruz',
@@ -55,7 +56,7 @@ class UserSeeder extends Seeder
             'status' => '1',
             'usertype' => '2'
         ]);
-
+        */
         DB::table('website')->insert([
             'logo' => 'gwinlogo.png',
             'business_name' => 'GWIN LYING-IN',

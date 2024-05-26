@@ -76,8 +76,9 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/home', [HomeController::class, 'index'])->name('admin.home');
 
     //CALENDAR ROUTE
-    Route::get('admin/calendar', [CalendarController::class, 'index'])->name('calendar.index');
-    Route::get('/calendar', [AppointmentController::class, 'showCalendar'])->name('calendar');
+
+    Route::get('/calendar', [CalendarController::class, 'showCalendar'])->name('admin.calendar');
+    Route::post('/walkin-appointments/store', [CalendarController::class, 'store'])->name('calendar.store');
 
 
     //PATIENT ROUTE
@@ -103,15 +104,21 @@ Route::middleware('auth')->group(function () {
 
 
     //APPOINTMENT/PATIENTS ROUTE
-    Route::get('/appointments',  [AppointmentController::class, 'showCalendar'])->name('appointment.index');
+    Route::get('/show-appointments',  [AppointmentController::class, 'showCalendar'])->name('appointment.index');
     Route::get('/doctors/{serviceId}', [DoctorController::class, 'getDoctorsByService']);
     Route::get('/doctor-availability/{doctorId}', [DoctorController::class, 'getDoctorAvailability']);
     Route::post('/appointments/store', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::put('/appointments/{id}/cancel',[DashboardController::class, 'cancel'])->name('appointments.cancel');
     Route::put('/appointments/{id}/approve',[DashboardController::class, 'approve'])->name('appointments.approve');
     Route::put('/appointments/{id}/complete',[DashboardController::class, 'complete'])->name('appointments.complete');
-    Route::get('admin/appointments',  [AppointmentController::class, 'showAppointments'])->name('appointments.show');
+    Route::get('/appointments',  [AppointmentController::class, 'showAppointments'])->name('appointments.show');
     Route::get('/getAllAppointments', [AppointmentController::class, 'getAll']);
+    Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+
+    Route::get('/pending-appointments',  [AppointmentController::class, 'pendingApp'])->name('appointments.pending');
+    Route::get('/approved-appointments',  [AppointmentController::class, 'approvedApp'])->name('appointments.approved');
+    Route::get('/completed-appointments',  [AppointmentController::class, 'completedApp'])->name('appointments.completed');
+    Route::get('/cancelled-appointments',  [AppointmentController::class, 'cancelledApp'])->name('appointments.cancelled');
 
 
     //WEBSITE ROUTE
@@ -149,10 +156,13 @@ Route::middleware('auth')->group(function () {
 
 
     //USERS ROUTE
-    Route::get('admin/create_user', [UserController::class, 'create'])->name('user.create');
-    Route::post('admin/create_user', [UserController::class, 'store'])->name('user.store');
+    Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
+    Route::post('/create_user', [UserController::class, 'store'])->name('user.store');
     Route::patch('/update-user-status/{id}', [UserController::class, 'updateStatus'])->name('update-user-status');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    Route::get('/create-patient', [UserController::class, 'createpatientaccount'])->name('create-patient-account');
+
 
     //REPORTS ROUTE 
     Route::get('admin/reports', [ReportController::class, 'index'])->name('report.index');

@@ -62,6 +62,12 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 
+                                                    <button type="button" class="dropdown-item add-medication-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                        <i class="dw dw-add"></i> Add Medication
+                                                    </button>
+
                                                     <button type="button" class="dropdown-item add-record-btn"
                                                         data-patient-id="{{ $patient->user_id }}"
                                                         data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
@@ -371,6 +377,83 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Add Medication Modal -->
+                    <div class="modal fade" id="addMedicationModal" tabindex="-1" role="dialog"
+                        aria-labelledby="addMedicationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="text-center">Add Medication</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="multiStepForm" method="POST" action="{{ route('medication.store') }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Patient Name</label>
+                                                <div class="form-group">
+                                                    <input type="text" name="patient_name" class="form-control"
+                                                        id="medication_patient_name" readonly>
+                                                </div>
+                                                <label>Patient ID</label>
+                                                <div class="form-group">
+                                                    <input type="text" name="patient_id" class="form-control"
+                                                        id="medication_patient_id" readonly>
+                                                </div>
+
+                                                <label>Appointment Date</label>
+                                                <div class="form-group">
+                                                    <input type="date" name="date" class="form-control">
+                                                </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Bed</label>
+                                                    <div class="form-group">
+                                                        <input type="text" name="bed" value="" class="form-control">
+                                                    </div>
+                                                </div>
+                                           
+                                                <div class="col-md-6">
+                                                    <label>Room</label>
+                                                    <div class="form-group">
+                                                        <input type="text" name="room" value="" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <div class="col-md-12">
+                                                    <label>Medication/Treatment</label>
+                                                    <div class="form-group medications-container">
+                                                        <a href="javascript:void(0)" class="text-success font-18 add-medication"
+                                                            title="Add">
+                                                            <i class="fa fa-plus"></i> Add another medication
+                                                        </a>
+                                                        <input type="text" name="medications[0][medications]" value=""
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="reset" class="btn btn-danger">
+                                                <i class="bx bx-x d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Reset</span>
+                                            </button>
+                                            <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                                                <i class="bx bx-check d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Submit</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -404,6 +487,14 @@
                 $('#laboratory_patient_id').val(patientId);
                 $('#addLaboratoryModal').modal('show');
             });
+            $('.add-medication-btn').click(function() {
+                var patientId = $(this).data('patient-id');
+                var patientName = $(this).data('patient-name');
+                $('#medication_patient_name').val(patientName);
+                $('#medication_patient_id').val(patientId);
+                $('#addMedicationModal').modal('show');
+            });
+
             $('.modal .close').click(function() {
                 $(this).closest('.modal').modal('hide');
             });
@@ -423,6 +514,26 @@
                 var removeBtn = document.createElement('button');
                 removeBtn.innerHTML = 'Remove';
                 removeBtn.className = 'btn btn-danger btn-sm remove-plan';
+                removeBtn.addEventListener('click', function() {
+                    container.removeChild(clone); // Remove the associated input field
+                    container.removeChild(removeBtn); // Remove the remove button
+                });
+                container.appendChild(removeBtn);
+            });
+        });
+
+        document.querySelectorAll('.add-medication').forEach(button => {
+            button.addEventListener("click", function() {
+                var container = this.parentElement;
+                var input = container.querySelector("input[name^='medications']");
+                var clone = input.cloneNode(true);
+                var newIndex = container.querySelectorAll("input[name^='medications']").length;
+                clone.name = "medications[" + newIndex + "][medications]";
+                container.appendChild(clone);
+
+                var removeBtn = document.createElement('button');
+                removeBtn.innerHTML = 'Remove';
+                removeBtn.className = 'btn btn-danger btn-sm remove-medication';
                 removeBtn.addEventListener('click', function() {
                     container.removeChild(clone); // Remove the associated input field
                     container.removeChild(removeBtn); // Remove the remove button

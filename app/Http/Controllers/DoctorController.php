@@ -140,8 +140,9 @@ class DoctorController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            $doctor = Doctor::with('availabilities')->findOrFail($id);
-
+            $doctor = Doctor::findOrFail($id);
+            logger()->info('Request data:', $request->all());
+            // Validate request data
             $request->validate([
                 'firstname' => 'required|string',
                 'middlename' => 'nullable|string',
@@ -149,13 +150,16 @@ class DoctorController extends Controller
                 'contact_number' => 'required|string',
                 'address' => 'required|string',
                 'description' => 'required|string',
-                'expertise' => 'required|string',
+                'expertise' => 'required|integer',
                 'email' => 'required|email|unique:doctors,email,' . $doctor->id,
                 'password' => 'required|string|min:8',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:30748',
-                // You may need to add more validation rules for day and time inputs
+                'day' => 'required|array', // Ensure day is provided as an array
+                'day.*' => 'required|string', // Validate each day value
+                'sched_in' => 'required|array', // Ensure sched_in is provided as an array
+                'sched_out' => 'required|array', // Ensure sched_out is provided as an array
             ]);
-
+    
             // Update doctor properties
             $doctor->firstname = $request->input('firstname');
             $doctor->middlename = $request->input('middlename');
@@ -166,7 +170,7 @@ class DoctorController extends Controller
             $doctor->description = $request->input('description');
             $doctor->email = $request->input('email');
             $doctor->password = $request->input('password');
-
+    
             // Upload new image if provided
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
@@ -174,43 +178,54 @@ class DoctorController extends Controller
                 $image->move(public_path('doc_image'), $imageName);
                 $doctor->image = $imageName;
             }
-            $user = Auth::user();
-            $action = 'update_doctor';
-            $description = 'Updated an information for: Dr. ' . $doctor->firstname . ' ' . $doctor->lastname;
     
-            ActivityLog::create([
-                'user_id' => $user->id,
-                'name' => $user->firstname,
-                'action' => $action,
-                'description' => $description,
-            ]);
-            $doctor->save();
-
-
-            $days = $request->input('day');
-            $startTimes = $request->input('start_time');
-            $endTimes = $request->input('end_time');
-
-            // Delete existing availabilities
-            $doctor->availabilities()->delete();
-
-            // Save new availabilities
-            foreach ($days as $key => $day) {
-                DoctorAvailability::create([
-                    'doctor_id' => $doctor->id,
-                    'day' => $day,
-                    'start_time' => $startTimes[$key],
-                    'end_time' => $endTimes[$key],
+            // Begin database transaction
+            DB::beginTransaction();
+    
+            try {
+                // Update doctor
+                $doctor->save();
+    
+                // Delete existing availabilities
+                $doctor->availabilities()->delete();
+    
+                // Insert new availabilities
+                $availabilities = [];
+                foreach ($request->input('day') as $key => $day) {
+                    $availabilities[] = [
+                        'doctor_id' => $doctor->id,
+                        'day' => $day,
+                        'start_time' => $request->input('sched_in')[$key],
+                        'end_time' => $request->input('sched_out')[$key],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+                DB::table('doctor_availabilities')->insert($availabilities);
+    
+                // Commit transaction
+                DB::commit();
+    
+                // Log activity
+                ActivityLog::create([
+                    'user_id' => Auth::id(),
+                    'name' => Auth::user()->firstname,
+                    'action' => 'update_doctor',
+                    'description' => 'Updated information for: Dr. ' . $doctor->firstname . ' ' . $doctor->lastname,
                 ]);
+    
+                return redirect()->back()->with('success', 'Doctor updated successfully.');
+            } catch (\Exception $e) {
+                // Rollback transaction if an error occurred
+                DB::rollBack();
+                Log::error('Error occurred while updating doctor: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'An error occurred while updating the doctor. Please try again.');
             }
-
-            return redirect()->back()->with('success', 'Doctor updated successfully.');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Log::error('Error occurred while updating doctor: ' . $e->getMessage());
             return redirect()->back()->with('error', 'An error occurred while updating the doctor. Please try again.');
         }
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -218,7 +233,8 @@ class DoctorController extends Controller
     {
         // Find the doctor record
         $doctor = Doctor::findOrFail($id);
-
+        
+        DoctorAvailability::where('doctor_id', $doctor->id)->delete();
         // Soft delete the doctor
         $doctor->delete();
 

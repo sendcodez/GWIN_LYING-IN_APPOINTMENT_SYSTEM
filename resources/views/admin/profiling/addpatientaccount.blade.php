@@ -1,5 +1,5 @@
 @extends ('layouts.sidebar')
-@section('title', 'Add Users')
+@section('title', 'Create Patient Account')
 @section('contents')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

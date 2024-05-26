@@ -10,14 +10,6 @@
                         <img src="vendors/images/banner-img.png" alt="" />
                     </div>
                     <div class="col-md-8">
-                        <h4 class="font-20 weight-500 mb-10 text-capitalize">
-                            Welcome back
-                            <div class="weight-600 font-30 text-blue">
-                                @if (Auth::user()->usertype == 2)
-                                    Dr.
-                                @endif{{ Auth::user()->firstname }}
-                                {{ Auth::user()->lastname }}
-                            </div>
                             @if (Auth::user()->usertype == 3)
                                 <h5>{{ Auth::user()->id }}</h5>
                                 <p class="font-12 max-width-600">Patient ID </p>
@@ -25,15 +17,15 @@
                                 <div class="col-md-12">
                                     <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download>
                                         <p
-                                            style="float: right;margin-bottom:3%;margin-right:100px; margin-top:-12.56%; max-width: 150px;">
+                                            style="float: right;margin-bottom:3%;margin-right:100px; margin-top:-5.56%; max-width: 150px;">
                                             Click to download</p>
                                         <img src="{{ asset('qr_image/' . Auth::user()->qr_name) }}" alt="QR Code"
-                                            style="float: right; margin-right:90px;margin-bottom:3%; margin-top:-10%; max-width: 150px;">
+                                            style="float: right; margin-right:90px;margin-bottom:3%; margin-top:-1%; max-width: 150px;">
                                     </a>
                                 </div>
                             @endif
                         </h4>
-                        <p class="font-18 max-width-600">
+                        <p class="font-20 max-width-1000">
                             Thank you for trusting us with your healthcare needs. We are dedicated to providing you with the best possible care. 
                             If you have any questions or need assistance, please don't hesitate to reach out.
                         </p>
@@ -192,7 +184,7 @@
                                                                     echo '<span class="badge badge-danger">Cancelled</span>';
                                                                     break;
                                                                 default:
-                                                                    echo '<span class="badge badge-secondary">Unknown</span>';
+                                                                     echo '<span class="badge badge-secondary">Unknown</span>';
                                                                     break;
                                                             }
                                                         @endphp
@@ -206,6 +198,86 @@
                         </table>
                     </div>
                 </div>
+                @endif
+
+                @if (Auth::user()->usertype == 2)
+                <div class="card-box mb-30">
+                    <div class="pd-20">
+                        <h4 class="text-blue h4">My Recent Patients</h4>
+                    </div>
+                    <div class="card-box pb-10">
+                        <div class="col-md-2 col-sm-6">
+                            <div class="form-group">
+                                <label for="statusFilter">Filter by Status:</label>
+                                <select id="statusFilter" class="selectpicker form-control">
+                                    <option value="">All</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                        <table class="data-table table nowrap" id="appointmentsTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Patient Name</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if($doc_app)
+                                @foreach($doc_app as $index => $appointment)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td> <!-- Index starts from 0, so add 1 for display -->
+                                        <td>{{ $appointment->patient->firstname}} {{ $appointment->patient->lastname}}</td> <!-- Assuming there's a 'fullname' attribute in the Patient model -->
+                                        <td>{{ $appointment->date }}</td> <!-- Assuming 'date' attribute exists in Appointment model -->
+                                        <td>{{ date('g:i A', strtotime($appointment->start_time)) }}</td>
+                                        <!-- Assuming 'time' attribute exists in Appointment model -->
+                                        <td>
+                                            @php
+                                                $statusWord = '';
+                                                $badgeClass = '';
+                                                switch ($appointment->status) {
+                                                    case 1:
+                                                        $statusWord = 'Pending';
+                                                        $badgeClass = 'badge badge-warning';
+                                                        break;
+                                                    case 2:
+                                                        $statusWord = 'Approved';
+                                                        $badgeClass = 'badge badge-success';
+                                                        break;
+                                                    case 3:
+                                                        $statusWord = 'Completed';
+                                                        $badgeClass = 'badge badge-primary';
+                                                        break;
+                                                    case 4:
+                                                        $statusWord = 'Cancelled';
+                                                        $badgeClass = 'badge badge-danger';
+                                                        break;
+                                                    default:
+                                                        $statusWord = 'Unknown';
+                                                        $badgeClass = 'badge badge-secondary';
+                                                        break;
+                                                }
+                                            @endphp
+                                            <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
+                                        </td> <!-- Assuming 'status' attribute exists in Appointment model -->
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="5">No appointments found for this doctor.</td>
+                                </tr>
+                            @endif
+                            
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+             
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

@@ -48,18 +48,198 @@
                 <div class="page-header">
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
-                            <div class="title">
-                                <h3>Please Click the Calendar Cell to Book an Appointment</h3>
-                            </div>
-
+                            
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <img src="vendors/images/banner-img.png" alt="" />
+                                    </div>
+                                    <div class="col-md-8">
+                                            @if (Auth::user()->usertype == 3)
+                                                <h5>{{ Auth::user()->id }}</h5>
+                                                <p class="font-12 max-width-600">Patient ID </p>
+                
+                                                <div class="col-md-12">
+                                                    <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download>
+                                                        <p
+                                                            style="float: right;margin-bottom:3%;margin-right:100px; margin-top:-5.56%; max-width: 150px;">
+                                                            Click to download</p>
+                                                        <img src="{{ asset('qr_image/' . Auth::user()->qr_name) }}" alt="QR Code"
+                                                            style="float: right; margin-right:90px;margin-bottom:3%; margin-top:-1%; max-width: 150px;">
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        </h4>
+                                        <p class="font-20 max-width-1000">
+                                            Thank you for trusting us with your healthcare needs. We are dedicated to providing you with the best possible care. 
+                                            If you have any questions or need assistance, please don't hesitate to reach out.
+                                        </p>
+                                    </div>
+                                </div>
+       
                         </div>
 
                     </div>
                 </div>
                 <div class="pd-20 card-box mb-30">
-                    <div class="calendar-wrap">
-                        <div id="calendar"></div>
+                    <div class="row">
+                        <!-- Calendar Section -->
+                        <div class="calendar-wrap col-md-6 col-sm-6">
+                            <p>Please Click the Calendar Cell to Book an Appointment</p>
+                            <div id="calendar"></div>
+                        </div>
+                        <!-- Table Section -->
+                        <div class="table-wrap col-md-6 col-sm-6">
+                            <table class="table table-striped">
+                                <thead>
+                                    <center><h3>DOCTORS SCHEDULE</h3></center>
+                                    <tr>
+                                        <th>NAME</th>
+                                        <th>SERVICE</th>
+                                        <th>DAY AVAILABILITY</th>
+                                        <th>TIME AVAILABILITY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($doctorAvailabilities as $availability)
+                                    <tr>
+                                        <td>{{ $availability->doctor->firstname }} {{ $availability->doctor->lastname }}</td>
+                                        <td>
+                                            @foreach($availability->doctor->services as $service)
+                                                {{ $service->name }}
+                                                {{-- If you want to separate multiple services with commas --}}
+                                                @if(!$loop->last), @endif
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $availability->day }}</td>
+                                        <td>{{ $availability->start_time }} - {{ $availability->end_time }}</td>
+                                    </tr>
+                                @endforeach
+                                
+                                </tbody>
+                            </table>
+
+                            <div class="pd-20">
+                                <center><h3>MY RECENT APPOINTMENTS</h3></center>
+                            </div>
+                            <div class="card-box pb-10">
+                                <!--
+                                <div class="col-md-2 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="statusFilter">Filter by Status:</label>
+                                        <select id="statusFilter" class="selectpicker form-control">
+                                            <option value="">All</option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Completed">Completed</option>
+                                            <option value="Cancelled">Cancelled</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            -->
+                                <table class="data-table table" id="appointmentsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Doctor Name</th>
+                                            <th>Service</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($appointments as $key => $appointment)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>
+                                                    @if ($appointment->doctor && $appointment->doctor->lastname)
+                                                        Dr. {{ ucfirst($appointment->doctor->lastname) }}
+                                                    @else
+                                                        <span style="color:red">Doctor Not Found</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($appointment->service && $appointment->service->name)
+                                                        {{ $appointment->service->name }}
+                                                    @else
+                                                        <span style="color:red">Service Not Found</span>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $appointment->date }}</td>
+                                                <td>{{ $appointment->start_time }}</td>
+                                                <td>
+                                                    @php
+                                                        $statusWord = '';
+                                                        $badgeClass = '';
+                                                        switch ($appointment->status) {
+                                                            case 1:
+                                                                $statusWord = 'Pending';
+                                                                $badgeClass = 'badge badge-warning';
+                                                                break;
+                                                            case 2:
+                                                                $statusWord = 'Approved';
+                                                                $badgeClass = 'badge badge-success';
+                                                                break;
+                                                            case 3:
+                                                                $statusWord = 'Completed';
+                                                                $badgeClass = 'badge badge-primary';
+                                                                break;
+                                                            case 4:
+                                                                $statusWord = 'Cancelled';
+                                                                $badgeClass = 'badge badge-danger';
+                                                                break;
+                                                            default:
+                                                                $statusWord = 'Unknown';
+                                                                $badgeClass = 'badge badge-secondary';
+                                                                break;
+                                                        }
+                                                    @endphp
+                                                    <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
+                                                </td>
+                                                <td>
+
+                                                    <div class="dropdown">
+                                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                            href="#" role="button" data-toggle="dropdown">
+                                                            <i class="dw dw-more"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                     @if ($appointment->status == 4)
+                                                     <form action="{{ route('appointments.destroy', $appointment->id) }}"
+                                                        method="POST" style="display: inline;"
+                                                        id="deleteForm{{ $appointment->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="dropdown-item delete-btn"
+                                                            data-user-id="{{ $appointment->id }}">
+                                                            <i class="dw dw-delete-3"></i> Delete
+                                                            <!-- Example using Bootstrap Icons -->
+                                                        </button>
+                                                    </form>
+                                                    @endif
+                                                       
+                                                            @if ($appointment->status == 1 || $appointment->status == 2)
+                                                                <form action="{{ route('appointments.cancel', $appointment->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <button type="submit" class="dropdown-item cancel-btn">
+                                                                        <i class="bi bi-x-circle"></i> Cancel
+                                                                    </button>
+                                                                </form>
+                                                            @endif
+                                                            </div>
+                                                        </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+
                     <!-- calendar modal -->
                     <div id="modal-view-event" class="modal modal-top fade calendar-modal">
                         <div class="modal-dialog modal-dialog-centered">
@@ -138,6 +318,12 @@
                                             <input type="hidden" class="form-control" name="end_time" id="end_time"
                                                 value="" readonly />
                                         </div>
+                                       
+                                        <div class="form-group">
+                                            <input type="hidden" class="form-control" name="remarks" id="remarks"
+                                            value="Online" readonly />
+                                        </div>
+
 
 
                                     </div>
@@ -157,6 +343,7 @@
             </div>
         @endsection
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var serviceSelect = document.getElementById('serviceSelect');
@@ -281,7 +468,32 @@
                         document.getElementById('end_time').value = '';
                     }
                 });
-
-
             });
+
+            $(document).ready(function() {
+            $('#addUserModal .close').click(function() {
+                $('#addUserModal').modal('hide');
+            });
+            $('.modal .close').click(function() {
+                $(this).closest('.modal').modal('hide');
+            });
+        });
+        document.querySelectorAll('.dropdown-item[data-bs-toggle="modal"]').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('Show button clicked');
+                const modalId = this.getAttribute('data-bs-target');
+                console.log('Modal ID:', modalId);
+                const modal = document.querySelector(modalId);
+                console.log('Modal Element:', modal);
+            });
+        });
+
+        $('#statusFilter').change(function() {
+            var status = $(this).val();
+            $('#appointmentsTable tbody tr').show(); // Show all rows
+            if (status) {
+                $('#appointmentsTable tbody tr').not(':contains(' + status + ')')
+                    .hide(); // Hide rows not matching selected status
+            }
+        });
         </script>
