@@ -111,6 +111,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/appointments/{id}/cancel',[DashboardController::class, 'cancel'])->name('appointments.cancel');
     Route::put('/appointments/{id}/approve',[DashboardController::class, 'approve'])->name('appointments.approve');
     Route::put('/appointments/{id}/complete',[DashboardController::class, 'complete'])->name('appointments.complete');
+    Route::put('/appointments/{id}/disapprove',[DashboardController::class, 'disapprove'])->name('appointments.disapprove');
     Route::get('/appointments',  [AppointmentController::class, 'showAppointments'])->name('appointments.show');
     Route::get('/getAllAppointments', [AppointmentController::class, 'getAll']);
     Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
@@ -119,6 +120,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/approved-appointments',  [AppointmentController::class, 'approvedApp'])->name('appointments.approved');
     Route::get('/completed-appointments',  [AppointmentController::class, 'completedApp'])->name('appointments.completed');
     Route::get('/cancelled-appointments',  [AppointmentController::class, 'cancelledApp'])->name('appointments.cancelled');
+    Route::get('/disapproved-appointments',  [AppointmentController::class, 'disapprovedApp'])->name('appointments.disapproved');
 
 
     //WEBSITE ROUTE

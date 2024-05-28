@@ -1,5 +1,5 @@
 @extends('layouts.sidebar')
-@section('title', 'Pending Appointments')
+@section('title', 'Disapproved Appointments')
 @section('contents')
     <div class="main-container">
         <div class="pd-ltr-20">
@@ -20,8 +20,9 @@
                                 <th>Time</th>
                                 <th>Status</th>
                                 <th>Remarks</th>
+                               
                                 <th>Action</th>
-
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -67,6 +68,10 @@
                                                     $statusWord = 'Cancelled';
                                                     $badgeClass = 'badge badge-danger';
                                                     break;
+                                                case 5:
+                                                    $statusWord = 'Disapproved';
+                                                    $badgeClass = 'badge badge-warning';
+                                                    break;
                                                 default:
                                                     $statusWord = 'Unknown';
                                                     $badgeClass = 'badge badge-secondary';
@@ -75,7 +80,7 @@
                                         @endphp
                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                     </td>
-                   
+                                   
                                     <td>
                                         <div class="dropdown">
                                             <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -96,15 +101,6 @@
                                                             <i class="dw dw-check"></i> Approve
                                                         </button>
                                                     </form>
-
-                                                    <form action="{{ route('appointments.disapprove', $appointment->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="dropdown-item">
-                                                            <i class="dw dw-cancel"></i> Disapprove
-                                                        </button>
-                                                    </form>
                                                 @endif
 
                                                 <form action="{{ route('appointments.cancel', $appointment->id) }}"
@@ -119,7 +115,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    
+                                   
                                 </tr>
 
                                 <!-- Modal for appointment details -->
@@ -168,6 +164,9 @@
                                                                 break;
                                                             case 4:
                                                                 echo '<span class="badge badge-danger">Cancelled</span>';
+                                                                break;
+                                                            case 5:
+                                                                echo '<span class="badge badge-warning">Disapproved</span>';
                                                                 break;
                                                             default:
                                                                 echo '<span class="badge badge-secondary">Unknown</span>';

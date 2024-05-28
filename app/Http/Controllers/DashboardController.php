@@ -37,6 +37,7 @@ class DashboardController extends Controller
             // Fetch recent appointments of the doctor
             $doc_app = Appointment::with(['patient', 'service'])
                 ->where('doctor_id', $user->doctor->id)
+                ->where('status', '!=', 5)
                 ->orderBy('date', 'desc')
                 ->get();
         }
@@ -159,5 +160,26 @@ class DashboardController extends Controller
 
         // Optionally, you can redirect the user back or return a response
         return redirect()->back()->with('success', 'Appointment completed successfully');
+    }
+
+    public function disapprove($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+
+        $appointment->status = 5;
+        $appointment->save();
+        Mail::to($appointment->patient->email)->send(new AppointmentApproved($appointment));
+
+        $user = Auth::user();
+        $action = 'disapproved_appointment';
+        $description = 'DIsapproved an appointment for: ' . $appointment->doctor->firstname . ' ' . $appointment->doctor->lastname . ' with ' . $appointment->patient->firstname . ' '. $appointment->patient->lastname;
+
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
+        return redirect()->back()->with('success', 'Appointment disapproved successfully');
     }
 }

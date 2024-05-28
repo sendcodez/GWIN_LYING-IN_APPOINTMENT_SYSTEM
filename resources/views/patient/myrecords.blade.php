@@ -352,6 +352,39 @@
                                                             <td>Dr. {{ $appointment->doctor->lastname }}</td>
                                                             <td>{{ $appointment->service->name }}</td>
                                                             <td>{{ $appointment->start_time }}</td>
+                                                            <td>
+                                                                @php
+                                                                    $statusWord = '';
+                                                                    $badgeClass = '';
+                                                                    switch ($appointment->status) {
+                                                                        case 1:
+                                                                            $statusWord = 'Pending';
+                                                                            $badgeClass = 'badge badge-warning';
+                                                                            break;
+                                                                        case 2:
+                                                                            $statusWord = 'Approved';
+                                                                            $badgeClass = 'badge badge-success';
+                                                                            break;
+                                                                        case 3:
+                                                                            $statusWord = 'Completed';
+                                                                            $badgeClass = 'badge badge-primary';
+                                                                            break;
+                                                                        case 4:
+                                                                            $statusWord = 'Cancelled';
+                                                                            $badgeClass = 'badge badge-danger';
+                                                                            break;
+                                                                        case 5:
+                                                                            $statusWord = 'Disapproved';
+                                                                            $badgeClass = 'badge badge-warning';
+                                                                            break;
+                                                                        default:
+                                                                            $statusWord = 'Unknown';
+                                                                            $badgeClass = 'badge badge-secondary';
+                                                                            break;
+                                                                    }
+                                                                @endphp
+                                                                <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
+                                                            </td>   
                                                         </tr>
                                                         <div class="modal fade" id="showModal{{ $appointment->id }}" tabindex="-1" aria-labelledby="showModal{{ $appointment->id }}Label" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered">

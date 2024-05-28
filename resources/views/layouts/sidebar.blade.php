@@ -282,17 +282,22 @@
                                     Cancelled
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('appointments.disapproved') }}" class="@isActiveRoute('appointments.disapproved')">
+                                    Disapproved
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     
 
                     @if (Auth::user()->usertype == '1')
-                    <li class="dropdown">
+                    <li class="dropdown" >
                         <a href="{{ route('admin.calendar') }}" class="dropdown-toggle no-arrow @isActiveRoute('admin.calendar')">
                             <span class="micon bi bi-person-walking"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" class="bi bi-person-walking" viewBox="0 0 16 16">
                                 <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6.44 3.752A.75.75 0 0 1 7 3.5h1.445c.742 0 1.32.643 1.243 1.38l-.43 4.083a1.8 1.8 0 0 1-.088.395l-.318.906.213.242a.8.8 0 0 1 .114.175l2 4.25a.75.75 0 1 1-1.357.638l-1.956-4.154-1.68-1.921A.75.75 0 0 1 6 8.96l.138-2.613-.435.489-.464 2.786a.75.75 0 1 1-1.48-.246l.5-3a.75.75 0 0 1 .18-.375l2-2.25Z"/>
                                 <path d="M6.25 11.745v-1.418l1.204 1.375.261.524a.8.8 0 0 1-.12.231l-2.5 3.25a.75.75 0 1 1-1.19-.914zm4.22-4.215-.494-.494.205-1.843.006-.067 1.124 1.124h1.44a.75.75 0 0 1 0 1.5H11a.75.75 0 0 1-.531-.22Z"/>
-                              </svg></span><span class="mtext">Add Walk In Appointments</span>
+                              </svg></span><span class="mtext" style="font-size:13px">Add Walk In Appointments</span>
                         </a>
                     </li>
                     @endif
@@ -405,6 +410,20 @@
 							<span class="micon bi bi-files"></span><span class="mtext">My Records</span>
 						</a>
 					</li>
+                    <li class="dropdown">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download>
+                            <center> <p
+                                style="margin-top:-5.56%; max-width: 250px;">
+                                Click to download</p></center> 
+                           <center><img src="{{ asset('qr_image/' . Auth::user()->qr_name) }}" alt="QR Code"
+                                style="margin-bottom:3%; margin-top:-1%; max-width: 170px;"></center> 
+                        </a>
+
+                    </li>
 					@endif
                     <!--
                     @if (Auth::user()->usertype == '2')

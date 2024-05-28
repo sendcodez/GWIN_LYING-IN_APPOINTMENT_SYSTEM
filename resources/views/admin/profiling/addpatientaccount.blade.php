@@ -132,9 +132,6 @@
                                     </div>
                                     <label>User type</label>
                                     <select name="usertype" class="form-control" required>
-                                        @if (Auth::user()->usertype == '0')
-                                        <option value="1" selected>Admin</option>
-                                        @endif
                                     <!-- <option value="2">Doctor</option> -->
                                         <option value="3">Patient</option>
                                     </select>

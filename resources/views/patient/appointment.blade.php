@@ -58,15 +58,6 @@
                                                 <h5>{{ Auth::user()->id }}</h5>
                                                 <p class="font-12 max-width-600">Patient ID </p>
                 
-                                                <div class="col-md-12">
-                                                    <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download>
-                                                        <p
-                                                            style="float: right;margin-bottom:3%;margin-right:100px; margin-top:-5.56%; max-width: 150px;">
-                                                            Click to download</p>
-                                                        <img src="{{ asset('qr_image/' . Auth::user()->qr_name) }}" alt="QR Code"
-                                                            style="float: right; margin-right:90px;margin-bottom:3%; margin-top:-1%; max-width: 150px;">
-                                                    </a>
-                                                </div>
                                             @endif
                                         </h4>
                                         <p class="font-20 max-width-1000">
@@ -189,6 +180,10 @@
                                                                 $statusWord = 'Cancelled';
                                                                 $badgeClass = 'badge badge-danger';
                                                                 break;
+                                                            case 5:
+                                                                $statusWord = 'Disapproved';
+                                                                $badgeClass = 'badge badge-warning';
+                                                                break;
                                                             default:
                                                                 $statusWord = 'Unknown';
                                                                 $badgeClass = 'badge badge-secondary';
@@ -205,7 +200,7 @@
                                                             <i class="dw dw-more"></i>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                     @if ($appointment->status == 4)
+                                                     @if ($appointment->status == 4 || $appointment->status == 5)
                                                      <form action="{{ route('appointments.destroy', $appointment->id) }}"
                                                         method="POST" style="display: inline;"
                                                         id="deleteForm{{ $appointment->id }}">

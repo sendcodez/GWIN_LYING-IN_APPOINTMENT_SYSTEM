@@ -136,7 +136,7 @@
                                         <option value="1" selected>Admin</option>
                                         @endif
                                     <!-- <option value="2">Doctor</option> -->
-                                        <option value="3">Patient</option>
+                                       
                                     </select>
                                 </div>
                             </div>

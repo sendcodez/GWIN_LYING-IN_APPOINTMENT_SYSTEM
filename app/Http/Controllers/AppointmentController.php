@@ -196,5 +196,15 @@ class AppointmentController extends Controller
        
     }
     
+    public function disapprovedApp(){
+
+        $user = Auth::user(); // Get the authenticated user
+        $appointments = Appointment::with(['doctor', 'service'])
+                        ->where('status', '5')
+                        ->orderBy('date', 'desc')
+                        ->get(); 
+        return view('admin.disapprovedapp', compact('appointments'));
+       
+    }
 
 }
