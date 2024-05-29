@@ -102,7 +102,7 @@
                                                         </button>
                                                     </form>
                                                 @endif
-
+                                                @if ($appointment->status == 2)
                                                 <form action="{{ route('appointments.cancel', $appointment->id) }}"
                                                     method="POST">
                                                     @csrf
@@ -111,6 +111,7 @@
                                                         <i class="dw dw-trash"></i> Cancel
                                                     </button>
                                                 </form>
+                                                @endif
 
                                             </div>
                                         </div>

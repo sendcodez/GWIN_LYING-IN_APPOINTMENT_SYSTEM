@@ -96,7 +96,8 @@
                                                             <i class="dw dw-check"></i> Approve
                                                         </button>
                                                     </form>
-
+                                                @endif
+                                                @if ($appointment->status == 1)
                                                     <form action="{{ route('appointments.disapprove', $appointment->id) }}"
                                                         method="POST">
                                                         @csrf
@@ -106,7 +107,7 @@
                                                         </button>
                                                     </form>
                                                 @endif
-
+                                                @if ($appointment->status == 2)
                                                 <form action="{{ route('appointments.cancel', $appointment->id) }}"
                                                     method="POST">
                                                     @csrf
@@ -115,6 +116,7 @@
                                                         <i class="dw dw-trash"></i> Cancel
                                                     </button>
                                                 </form>
+                                                @endif
 
                                             </div>
                                         </div>

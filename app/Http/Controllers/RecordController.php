@@ -109,7 +109,7 @@ class RecordController extends Controller
                 'patient_name' => 'required|string',
                 'date' => 'nullable|date',
                 'result' => 'nullable|string',
-                'attachment' => 'nullable|file',
+                'attachment' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf,doc,docx|max:5120',
             ]);
 
             // Check if a file has been uploaded
