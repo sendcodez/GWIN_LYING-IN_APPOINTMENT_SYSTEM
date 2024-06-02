@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;  
 use Illuminate\Support\Facades\Crypt;
+use App\Exports\PatientsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PatientController extends Controller
 {
@@ -78,6 +80,9 @@ class PatientController extends Controller
                 'province' => 'required|string',
                 'city' => 'required|string',
                 'barangay' => 'required|string',
+                'husband_province' => 'required|string',
+                'husband_city' => 'required|string',
+                'husband_barangay' => 'required|string',
 
                 'pregnancies' => 'array|nullable',
                 'pregnancies.*.pregnancy' => 'nullable|integer',
@@ -318,6 +323,10 @@ class PatientController extends Controller
             // Redirect back with an error message
             return redirect()->back()->with('error', 'Failed to delete patient.');
         }
+    }
+    public function export()
+    {
+        return Excel::download(new PatientsExport, 'patients.xlsx');
     }
 
 }

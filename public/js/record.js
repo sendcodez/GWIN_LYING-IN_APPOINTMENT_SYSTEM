@@ -18,13 +18,31 @@ $(document).ready(function () {
                     var ultrasoundTable = $("#ultrasound tbody");
                     var medications = data.medications;
                     var medicationTable = $("#medication tbody");
+                    var delivery = data.delivery;
+                    var deliveryTable1 = $("#delivery1 tbody");
+                    var delivery2 = data.delivery;
+                    var deliveryTable2 = $("#delivery2 tbody");
+                    var delivery3 = data.delivery;
+                    var deliveryTable3 = $("#delivery3 tbody");
+                    var newborn = data.newborn;
+                    var newbornTable1 = $("#newborn1 tbody");
+                    var newborn2 = data.newborn;
+                    var newbornTable2 = $("#newborn2 tbody");
+                    var newborn3 = data.newborn;
+                    var newbornTable3 = $("#newborn3 tbody");
                     // Clear existing rows
                     ultrasoundTable.empty();
                     labTable.empty();
                     appointmentTable.empty();
                     pregnancyTable.empty();
                     medicationTable.empty();
-
+                    deliveryTable1.empty();
+                    deliveryTable2.empty();
+                    deliveryTable3.empty();
+                    newbornTable1.empty();
+                    newbornTable2.empty();
+                    newbornTable3.empty();
+                    
                     $("#fullname").text(
                         data.firstname +
                             " " +
@@ -43,6 +61,15 @@ $(document).ready(function () {
                     $("#religion").text(data.religion);
                     $("#occupation").text(data.occupation);
                     $("#nationality").text(data.nationality);
+                    $("#address").text(
+                        "Barangay " +
+                            data.barangay +
+                            "," +
+                            data.city +
+                            "," +
+                            data.province
+                    );
+
                     $("#husband_fullname").text(
                         data.husband_firstname +
                             " " +
@@ -57,13 +84,13 @@ $(document).ready(function () {
                     $("#husband_age").text(data.husband_age);
                     $("#husband_occupation").text(data.husband_occupation);
                     $("#husband_birthday").text(data.husband_birthday);
-                    $("#address").text(
+                    $("#husband_address").text(
                         "Barangay " +
-                            data.barangay +
+                            data.husband_barangay +
                             "," +
-                            data.city +
+                            data.husband_city +
                             "," +
-                            data.province
+                            data.husband_province
                     );
                     //TERMS
                     $("#gravida").text(data.gravida);
@@ -119,6 +146,76 @@ $(document).ready(function () {
                         ultrasoundTable.append(row);
                     });
 
+                    //DELIVERY DATA
+                    delivery.forEach(function (delivery) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(delivery.name));
+                        row.append($("<td>").text(delivery.birthday));
+                        row.append($("<td>").text(delivery.birthtime));
+                        row.append($("<td>").text(delivery.sex));
+                        row.append($("<td>").text(delivery.weight));
+                        row.append($("<td>").text(delivery.birth_order));
+                        row.append($("<td>").text(delivery.aog));
+                        deliveryTable1.append(row);
+                    });
+
+                    delivery.forEach(function (delivery) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(delivery.hc));
+                        row.append($("<td>").text(delivery.cc));
+                        row.append($("<td>").text(delivery.ac));
+                        row.append($("<td>").text(delivery.bl));
+                        row.append($("<td>").text(delivery.hepa));
+                        row.append($("<td>").text(delivery.bcg));
+                        row.append($("<td>").text(delivery.nbs));
+                        deliveryTable2.append(row);
+                    });
+                    delivery.forEach(function (delivery) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(delivery.hearing));
+                        row.append($("<td>").text(delivery.handle));
+                        row.append($("<td>").text(delivery.assist));
+                        row.append($("<td>").text(delivery.referral));
+                        deliveryTable3.append(row);
+                    });
+
+                     //nEWBORN DATA
+                     newborn.forEach(function (newborn) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(newborn.card));
+                        row.append($("<td>").text(newborn.bln));
+                        row.append($("<td>").text(newborn.mln));
+                        row.append($("<td>").text(newborn.mfn));
+                        row.append($("<td>").text(newborn.dob));
+                        row.append($("<td>").text(newborn.dot));
+                        row.append($("<td>").text(newborn.doc));
+                        row.append($("<td>").text(newborn.toc));
+                        newbornTable1.append(row);
+                    });
+
+                    newborn.forEach(function (newborn) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(newborn.baby_weight));
+                        row.append($("<td>").text(newborn.baby_sex));
+                        row.append($("<td>").text(newborn.baby_aog));
+                        row.append($("<td>").text(newborn.baby_feeding));
+                        row.append($("<td>").text(newborn.baby_status));
+                        row.append($("<td>").text(newborn.baby_birthplace));
+                        row.append($("<td>").text(newborn.baby_address));
+                        newbornTable2.append(row);
+                    });
+                    newborn.forEach(function (newborn) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(newborn.baby_contact));
+                        row.append($("<td>").text(newborn.baby_blood));
+                        row.append($("<td>").text(newborn.baby_staff));
+                        row.append($("<td>").text(newborn.drr));
+                        row.append($("<td>").text(newborn.baby_result));
+                        row.append($("<td>").text(newborn.dc));
+                        row.append($("<td>").text(newborn.cb));
+                        newbornTable3.append(row);
+                    });
+
                     //APPOINTMENT
                     appointments.forEach(function (appointment) {
                         var row = $("<tr>");
@@ -130,43 +227,49 @@ $(document).ready(function () {
                         appointmentTable.append(row);
                     });
 
-                   
                     var today = new Date(); // Current date
-                    console.log('Today\'s date:', today.toLocaleDateString());
-                    var hasAppointmentToday = appointments.some(function (appointment) {
+                    console.log("Today's date:", today.toLocaleDateString());
+                    var hasAppointmentToday = appointments.some(function (
+                        appointment
+                    ) {
                         // Convert the appointment date to a Date object for comparison
                         var appointmentDate = new Date(appointment.app_date);
-                        
+
                         // Compare only the date part (not time)
-                        var appointmentDateString = appointmentDate.toLocaleDateString();
+                        var appointmentDateString =
+                            appointmentDate.toLocaleDateString();
                         var todayDateString = today.toLocaleDateString();
-                        console.log('Comparing dates:', appointmentDateString, 'and', todayDateString); // Log the comparison of dates
+                        console.log(
+                            "Comparing dates:",
+                            appointmentDateString,
+                            "and",
+                            todayDateString
+                        ); // Log the comparison of dates
                         if (appointmentDateString === todayDateString) {
                             // Extract the time part of the appointment
                             var appointmentStartTime = appointment.start_time;
-                            
+
                             // Show SweetAlert with appointment time
                             Swal.fire({
                                 icon: "success",
                                 title: "Appointment Today",
-                                text: "You have an appointment scheduled for today at " + appointmentStartTime,
+                                text:
+                                    "You have an appointment scheduled for today at " +
+                                    appointmentStartTime,
                                 showConfirmButton: false,
                                 timer: 3000,
                             });
-                            
-
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "No Appointment for Today",
+                                text: "You have no appointment scheduled for today!",
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
                         }
-                    else{
-                        Swal.fire({
-                            icon: "error",
-                            title: "No Appointment for Today",
-                            text: "You have no appointment scheduled for today!",
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                    }
-                });
-                
+                    });
+
                     //MEDICAL HISTORY
                     $("#hypertension").text(data.hypertension);
                     $("#asthma").text(data.asthma);
@@ -182,6 +285,7 @@ $(document).ready(function () {
                     $("#operation").text(data.operation);
                     $("#others").text(data.others);
 
+                    //MEDICATION
                     medications.forEach(function (medication) {
                         var row = $("<tr>");
                         row.append($("<td>").text(medication.med_date));
@@ -251,12 +355,30 @@ $(document).ready(function () {
                     var ultrasoundTable = $("#ultrasound tbody");
                     var medications = data.medications;
                     var medicationTable = $("#medication tbody");
+                    var delivery = data.delivery;
+                    var deliveryTable1 = $("#delivery1 tbody");
+                    var delivery2 = data.delivery;
+                    var deliveryTable2 = $("#delivery2 tbody");
+                    var delivery3 = data.delivery;
+                    var deliveryTable3 = $("#delivery3 tbody");
+                    var newborn = data.newborn;
+                    var newbornTable1 = $("#newborn1 tbody");
+                    var newborn2 = data.newborn;
+                    var newbornTable2 = $("#newborn2 tbody");
+                    var newborn3 = data.newborn;
+                    var newbornTable3 = $("#newborn3 tbody");
 
                     // Clear existing rows
                     ultrasoundTable.empty();
                     labTable.empty();
                     appointmentTable.empty();
                     pregnancyTable.empty();
+                    deliveryTable1.empty();
+                    deliveryTable2.empty();
+                    deliveryTable3.empty(); 
+                    newbornTable1.empty();
+                    newbornTable2.empty();
+                    newbornTable3.empty();
 
                     $("#fullname").text(
                         data.firstname +
@@ -352,6 +474,76 @@ $(document).ready(function () {
                         ultrasoundTable.append(row);
                     });
 
+                     //DELIVERY DATA
+                    delivery.forEach(function (delivery) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(delivery.name));
+                        row.append($("<td>").text(delivery.birthday));
+                        row.append($("<td>").text(delivery.birthtime));
+                        row.append($("<td>").text(delivery.sex));
+                        row.append($("<td>").text(delivery.weight));
+                        row.append($("<td>").text(delivery.birth_order));
+                        row.append($("<td>").text(delivery.aog));
+                        deliveryTable1.append(row);
+                    });
+
+                    delivery.forEach(function (delivery) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(delivery.hc));
+                        row.append($("<td>").text(delivery.cc));
+                        row.append($("<td>").text(delivery.ac));
+                        row.append($("<td>").text(delivery.bl));
+                        row.append($("<td>").text(delivery.hepa));
+                        row.append($("<td>").text(delivery.bcg));
+                        row.append($("<td>").text(delivery.nbs));
+                        deliveryTable2.append(row);
+                    });
+                    delivery.forEach(function (delivery) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(delivery.hearing));
+                        row.append($("<td>").text(delivery.handle));
+                        row.append($("<td>").text(delivery.assist));
+                        row.append($("<td>").text(delivery.referral));
+                        deliveryTable3.append(row);
+                    });
+
+                       //nEWBORN DATA
+                       newborn.forEach(function (newborn) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(newborn.card));
+                        row.append($("<td>").text(newborn.bln));
+                        row.append($("<td>").text(newborn.mln));
+                        row.append($("<td>").text(newborn.mfn));
+                        row.append($("<td>").text(newborn.dob));
+                        row.append($("<td>").text(newborn.dot));
+                        row.append($("<td>").text(newborn.doc));
+                        row.append($("<td>").text(newborn.toc));
+                        newbornTable1.append(row);
+                    });
+
+                    newborn.forEach(function (newborn) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(newborn.baby_weight));
+                        row.append($("<td>").text(newborn.baby_sex));
+                        row.append($("<td>").text(newborn.baby_aog));
+                        row.append($("<td>").text(newborn.baby_feeding));
+                        row.append($("<td>").text(newborn.baby_status));
+                        row.append($("<td>").text(newborn.baby_birthplace));
+                        row.append($("<td>").text(newborn.baby_address));
+                        newbornTable2.append(row);
+                    });
+                    newborn.forEach(function (newborn) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(newborn.baby_contact));
+                        row.append($("<td>").text(newborn.baby_blood));
+                        row.append($("<td>").text(newborn.baby_staff));
+                        row.append($("<td>").text(newborn.drr));
+                        row.append($("<td>").text(newborn.baby_result));
+                        row.append($("<td>").text(newborn.dc));
+                        row.append($("<td>").text(newborn.cb));
+                        newbornTable3.append(row);
+                    }); 
+
                     //APPOINTMENT
                     appointments.forEach(function (appointment) {
                         var row = $("<tr>");
@@ -362,42 +554,43 @@ $(document).ready(function () {
                         row.append($("<td>").text(appointment.status));
                         appointmentTable.append(row);
                     });
-                    
+
                     var today = new Date(); // Current date
-                    var hasAppointmentToday = appointments.some(function (appointment) {
+                    var hasAppointmentToday = appointments.some(function (
+                        appointment
+                    ) {
                         // Convert the appointment date to a Date object for comparison
                         var appointmentDate = new Date(appointment.app_date);
-                        
+
                         // Compare only the date part (not time)
-                        var appointmentDateString = appointmentDate.toLocaleDateString();
+                        var appointmentDateString =
+                            appointmentDate.toLocaleDateString();
                         var todayDateString = today.toLocaleDateString();
-                        
+
                         if (appointmentDateString === todayDateString) {
                             // Extract the time part of the appointment
                             var appointmentStartTime = appointment.start_time;
-                            
+
                             // Show SweetAlert with appointment time
                             Swal.fire({
                                 icon: "success",
                                 title: "Appointment Today",
-                                text: "You have an appointment scheduled for today at " + appointmentStartTime,
+                                text:
+                                    "You have an appointment scheduled for today at " +
+                                    appointmentStartTime,
                                 showConfirmButton: false,
                                 timer: 3000,
                             });
-                            
-
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "No Appointment for Today",
+                                text: "You have no appointment scheduled for today!",
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
                         }
-                    else{
-                        Swal.fire({
-                            icon: "error",
-                            title: "No Appointment for Today",
-                            text: "You have no appointment scheduled for today!",
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                    }
-                });
-                
+                    });
 
                     //MEDICAL HISTORY
                     $("#hypertension").text(data.hypertension);

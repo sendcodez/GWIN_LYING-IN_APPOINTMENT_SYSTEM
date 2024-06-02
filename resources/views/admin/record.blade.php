@@ -65,6 +65,14 @@
                                             <a class="nav-link" data-toggle="tab" href="#medication"
                                                 role="tab">Medications</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#delivery"
+                                                role="tab">Delivery Record</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#newborn"
+                                                role="tab">Newborn Record</a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content">
 
@@ -78,40 +86,44 @@
                                                                 <h5 class="mb-20 h5 text-green">Patient Informations</h5>
                                                                 <ul>
                                                                     <li>
-                                                                        <span>Full Name:</span>
+                                                                        <span style="font-weight:700">Full Name:</span>
                                                                         <span id="fullname" style="color: black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Phone Number:</span>
+                                                                        <span style="font-weight:700">Phone Number:</span>
                                                                         <span id="contact_number" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Birthplace:</span>
+                                                                        <span style="font-weight:700">Birthplace:</span>
                                                                         <span id="birthplace" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Birthday:</span>
+                                                                        <span style="font-weight:700">Birthday:</span>
                                                                         <span id="birthday" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Age:</span>
+                                                                        <span style="font-weight:700">Age:</span>
                                                                         <span id="age" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Civil Status:</span>
+                                                                        <span style="font-weight:700">Civil Status:</span>
                                                                         <span id="civil" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Religion:</span>
+                                                                        <span style="font-weight:700">Religion:</span>
                                                                         <span id="religion" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Occupation:</span>
+                                                                        <span style="font-weight:700">Occupation:</span>
                                                                         <span id="occupation" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Nationality:</span>
+                                                                        <span style="font-weight:700">Nationality:</span>
                                                                         <span id="nationality" style="color:black"></span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <span style="font-weight:700">Address:</span>
+                                                                        <span id="address" style="color:black"></span>
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -120,35 +132,35 @@
                                                     <div class="col-md-6">
                                                         <div class="pd-20 card-box height-100-p">
                                                             <div class="profile-info">
-                                                                <h5 class="mb-20 h5 text-green">Husband Informations</h5>
+                                                                <h5 class="mb-20 h5 text-green">Spouse Informations</h5>
                                                                 <ul>
                                                                     <li>
-                                                                        <span>Full Name:</span>
+                                                                        <span style="font-weight:700">Full Name:</span>
                                                                         <span id="husband_fullname" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Contact Number:</span>
+                                                                        <span style="font-weight:700">Contact Number:</span>
                                                                         <span id="husband_contact_number" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Birthday:</span>
+                                                                        <span style="font-weight:700">Birthday:</span>
                                                                         <span id="husband_birthday" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Age:</span>
+                                                                        <span style="font-weight:700">Age:</span>
                                                                         <span id="husband_age" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Occupation:</span>
+                                                                        <span style="font-weight:700">Occupation:</span>
                                                                         <span id="husband_occupation" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Religion:</span>
+                                                                        <span style="font-weight:700">Religion:</span>
                                                                         <span id="husband_religion" style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span>Address:</span>
-                                                                        <span id="address" style="color:black"></span>
+                                                                        <span style="font-weight:700">Address:</span>
+                                                                        <span id="husband_address" style="color:black"></span>
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -373,7 +385,171 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        
 
+                                        <!-- DELIVERY -->
+                                          <div class="tab-pane fade " id="delivery" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered" id="delivery1">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="">Name of Baby</th>
+                                                            <th class="">Date of Birth</th>
+                                                            <th style="">Time of Birth</th>
+                                                            <th>Sex</th>
+                                                            <th>Weight</th>
+                                                            <th>Birth Order</th>
+                                                            <th>AOG</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="name"></td>
+                                                            <td id="birthday"></td>
+                                                            <td id="birthtime"></td>
+                                                            <td id="sex"></td>
+                                                            <td id="weight"></td>
+                                                            <td id="birth_order"></td>
+                                                            <td id="aog"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <table class="table table-striped table-bordered" id="delivery2">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">HC</th>
+                                                            <th class="table-plus">CC</th>
+                                                            <th style="text-align: center">AC</th>
+                                                            <th>BL</th>
+                                                            <th>HEPA B1</th>
+                                                            <th>BCG</th>
+                                                            <th>NBS</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="hc"></td>
+                                                            <td id="cc"></td>
+                                                            <td id="ac"></td>
+                                                            <td id="bl"></td>
+                                                            <td id="hepa"></td>
+                                                            <td id="bcg"></td>
+                                                            <td id="nbs"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <table class="table table-striped table-bordered" id="delivery3">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">Hearing</th>
+                                                            <th class="table-plus">Handle</th>
+                                                            <th style="text-align: center">Assist</th>
+                                                            <th>Referral</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="hearing"></td>
+                                                            <td id="handle"></td>
+                                                            <td id="assist"></td>
+                                                            <td id="referral"></td>
+                                                           
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                           <!-- NEWBORN -->
+                                           <div class="tab-pane fade " id="newborn" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered" id="newborn1">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="">Filter Card Number</th>
+                                                            <th class="">Baby's Last Name</th>
+                                                            <th class="">Mother's Last Name</th>
+                                                            <th style="">Mothers' First Name</th>
+                                                            <th>Date of Birth</th>
+                                                            <th>Time of Birth</th>
+                                                            <th>Date of Collection</th>
+                                                            <th>Time of Collection</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="card"></td>
+                                                            <td id="bln"></td>
+                                                            <td id="mln"></td>
+                                                            <td id="mfn"></td>
+                                                            <td id="dob"></td>
+                                                            <td id="dot"></td>
+                                                            <td id="doc"></td>
+                                                            <td id="toc"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <table class="table table-striped table-bordered" id="newborn2">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">Baby's Weight</th>
+                                                            <th class="table-plus">Sex</th>
+                                                            <th style="text-align: center">AOG</th>
+                                                            <th>Feeding</th>
+                                                            <th>Status</th>
+                                                            <th>Birthplace</th>
+                                                            <th>Address</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="baby_weight"></td>
+                                                            <td id="baby_sex"></td>
+                                                            <td id="baby_aog"></td>
+                                                            <td id="baby_feeding"></td>
+                                                            <td id="baby_status"></td>
+                                                            <td id="baby_birthplace"></td>
+                                                            <td id="baby_address"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <table class="table table-striped table-bordered" id="newborn3">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">Contact Number</th>
+                                                            <th class="table-plus">Name of Blood Collector</th>
+                                                            <th style="">Name of Staff who will fill out the form</th>
+                                                            <th>Date Result Received</th>
+                                                            <th>Result</th>
+                                                            <th>Date Claimed</th>
+                                                            <th>Claimed By</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="baby_contact"></td>
+                                                            <td id="baby_blood"></td>
+                                                            <td id="baby_staff"></td>
+                                                            <td id="drr"></td>
+                                                            <td id="baby_result"></td>
+                                                            <td id="dc"></td>
+                                                            <td id="cb"></td>
+                                                           
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
 
 
                                     </div>

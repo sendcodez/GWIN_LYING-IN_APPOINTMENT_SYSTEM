@@ -12,6 +12,8 @@ use App\Models\Patient;
 use App\Models\Record;
 use App\Models\Laboratory;
 use App\Models\Ultrasound;
+use App\Models\Delivery;
+use App\Models\Newborn;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 
@@ -191,6 +193,102 @@ class RecordController extends Controller
         }
     }
 
+    public function storeDelivery(Request $request)
+    {
+        try {
+           // dd($request->all());
+            $validatedData = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'name' => 'required|string',
+                'birthday' => 'required|required',
+                'birthtime' => 'required|string',
+                'sex' => 'required|string',
+                'weight' => 'required|string',
+                'birth_order' => 'required|string',
+                'hc' => 'required|string',
+                'cc' => 'required|string',
+                'bl' => 'required|string',
+                'ac' => 'required|string',
+                'aog' => 'required|string',
+                'hepa' => 'required|string',
+                'bcg' => 'required|string',
+                'nbs' => 'required|string',
+                'hearing' => 'required|string',
+                'handle' => 'required|string',
+                'assist' => 'required|string',
+                'referral' => 'required|string',
+            ]);
+
+
+            $delivery = Delivery::create($validatedData);
+
+
+            $user = Auth::user();
+            $action = 'added_delivery';
+            $description = 'Added a delivery record for patient: ' . $delivery->patient_name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+            return back()->with('success', 'Delivery Record added successfully.');
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
+
+    public function storeNewborn(Request $request)
+    {
+        try {
+           // dd($request->all());
+            $validatedData = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'card' => 'required|string',
+                'baby_lastname' => 'required|required',
+                'mother_lastname' => 'required|string',
+                'mother_firstname' => 'required|string',
+                'birthday' => 'required|string',
+                'birthtime' => 'required|string',
+                'date_collection' => 'required|string',
+                'time_collection' => 'required|string',
+                'weight' => 'required|string',
+                'sex' => 'required|string',
+                'aog' => 'required|string',
+                'feeding' => 'required|string',
+                'status' => 'required|string',
+                'birthplace' => 'required|string',
+                'address' => 'required|string',
+                'contact' => 'required|string',
+                'blood_collector' => 'required|string',
+                'staff' => 'required|string',
+                'result_received' => 'required|string',
+                'result' => 'required|string',
+                'date_claimed' => 'required|string',
+                'claimed_by' => 'required|string',
+            ]);
+
+
+            $newborn = Newborn::create($validatedData);
+
+
+            $user = Auth::user();
+            $action = 'added_newborn';
+            $description = 'Added a newborn record for patient: ' . $newborn->patient_name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+            return back()->with('success', 'Newborn Record added successfully.');
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
+
 
     public function show(string $id)
     {
@@ -226,7 +324,9 @@ class RecordController extends Controller
             'laboratories',
             'records',
             'ultrasounds',
-            'medications'
+            'medications',
+            'delivery',
+            'newborn',
           
         ])->where('user_id', $id)->first();
 
@@ -361,6 +461,111 @@ class RecordController extends Controller
                 ];
             }
 
+            $deliveryData = [];
+            if ($patient && isset($patient->delivery)) {
+                foreach ($patient->delivery as $delivery) {
+                    $deliveryData[] = [
+                        'name' => $delivery->name ?? 'No record',
+                        'birthday' => $delivery->birthday ?? 'No record',
+                        'birthtime' => $delivery->birthtime ?? 'No record',
+                        'sex' => $delivery->sex ?? 'No record',
+                        'weight' => $delivery->weight ?? 'No record',
+                        'hc' => $delivery->hc ?? 'No record',
+                        'cc' => $delivery->cc ?? 'No record',
+                        'ac' => $delivery->ac ?? 'No record',
+                        'bl' => $delivery->bl ?? 'No record',
+                        'birth_order' => $delivery->birth_order ?? 'No record',
+                        'aog' => $delivery->aog ?? 'No record',
+                        'hepa' => $delivery->hepa ?? 'No record',
+                        'bcg' => $delivery->bcg ?? 'No record',
+                        'nbs' => $delivery->nbs ?? 'No record',
+                        'hearing' => $delivery->hearing ?? 'No record',
+                        'handle' => $delivery->handle ?? 'No record',
+                        'assist' => $delivery->assist ?? 'No record',
+                        'referral' => $delivery->referral ?? 'No record',
+
+                    ];
+                }
+            } else {
+                $deliveryData[] = [
+                    'name' => 'No record',
+                    'birthday' => 'No record',
+                    'birthtime' => 'No record',
+                    'sex' => 'No record',
+                    'weight' => 'No record',
+                    'hc' => 'No record',
+                    'cc' => 'No record',
+                    'ac' => 'No record',
+                    'bl' => 'No record',
+                    'birth_order' => 'No record',
+                    'aog' => 'No record',
+                    'hepa' => 'No record',
+                    'bcg' => 'No record',
+                    'nbs' => 'No record',
+                    'hearing' => 'No record',
+                    'handle' => 'No record',
+                    'assist' => 'No record',
+                    'referral' => 'No record',
+                ];
+            }
+
+            $newbornData = [];
+            if ($patient && isset($patient->newborn)) {
+                foreach ($patient->newborn as $newborn) {
+                    $newbornData[] = [
+                        'card' => $newborn->card ?? 'No record',
+                        'bln' => $newborn->baby_lastname ?? 'No record',
+                        'mln' => $newborn->mother_lastname ?? 'No record',
+                        'mfn' => $newborn->mother_firstname ?? 'No record',
+                        'dob' => $newborn->birthday ?? 'No record',
+                        'dot' => $newborn->birthtime ?? 'No record',
+                        'doc' => $newborn->date_collection ?? 'No record',
+                        'toc' => $newborn->time_collection ?? 'No record',
+                        'baby_weight' => $newborn->weight ?? 'No record',
+                        'baby_sex' => $newborn->sex ?? 'No record',
+                        'baby_aog' => $newborn->aog ?? 'No record',
+                        'baby_feeding' => $newborn->feeding ?? 'No record',
+                        'baby_status' => $newborn->status ?? 'No record',
+                        'baby_birthplace' => $newborn->birthplace ?? 'No record',
+                        'baby_address' => $newborn->address ?? 'No record',
+                        'baby_contact' => $newborn->contact ?? 'No record',
+                        'baby_blood' => $newborn->blood_collector   ?? 'No record',
+                        'baby_staff' => $newborn->staff ?? 'No record',
+                        'drr' => $newborn->result_received ?? 'No record',
+                        'baby_result' => $newborn->result ?? 'No record',
+                        'dc' => $newborn->date_claimed ?? 'No record',
+                        'cb' => $newborn->claimed_by     ?? 'No record',
+
+
+                    ];
+                }
+            } else {
+                $newbornData[] = [
+                    'card' => 'No record',
+                    'baby_lastname' => 'No record',
+                    'mother_lastname' => 'No record',
+                    'mother_firstname' => 'No record',
+                    'birthday' => 'No record',
+                    'birthtime' => 'No record',
+                    'date_collection' => 'No record',
+                    'time_collection' => 'No record',
+                    'weight' => 'No record',
+                    'sex' => 'No record',
+                    'aog' => 'No record',
+                    'feeding' => 'No record',
+                    'status' => 'No record',
+                    'birthplace' => 'No record',
+                    'address' => 'No record',
+                    'contact' => 'No record',
+                    'blood_collector' => 'No record',
+                    'staff' => 'No record',
+                    'result_received' => 'No record',
+                    'result' => 'No record',
+                    'date_claimed' => 'No record',
+                    'claimed_by' => 'No record',
+                ];
+            }
+
             return response()->json([
                 // USER
                 'firstname' => $user->firstname,
@@ -386,6 +591,9 @@ class RecordController extends Controller
                 'province' => $patient ? $patient->province : 'No record',
                 'city' => $patient ? $patient->city : 'No record',
                 'barangay' => $patient ? $patient->barangay : 'No record',
+                'husband_province' => $patient ? $patient->husband_province : 'No record',
+                'husband_city' => $patient ? $patient->husband_city : 'No record',
+                'husband_barangay' => $patient ? $patient->husband_barangay : 'No record',
                 // TERMS
                 'gravida' => $terms ? $terms->gravida : 'No record',
                 'para' => $terms ? $terms->para : 'No record',
@@ -403,6 +611,10 @@ class RecordController extends Controller
                 'appointments' => $appointmentData,
                 //MEDICATIONS
                 'medications' => $medicationData,
+                //DELIVERY
+                'delivery' => $deliveryData,
+                //NEWBORN
+                'newborn' => $newbornData,
                 // MEDICAL HISTORY
                 'hypertension' => $medical ? ($medical->hypertension == 1 ? 'Yes' : 'No') : 'No record',
                 'heartdisease' => $medical ? ($medical->heartdisease == 1 ? 'Yes' : 'No') : 'No record',

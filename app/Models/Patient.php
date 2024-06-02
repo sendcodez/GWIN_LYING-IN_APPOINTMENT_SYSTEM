@@ -37,6 +37,9 @@ class Patient extends Model
         'province',
         'city',
         'barangay',
+        'husband_province',
+        'husband_city',
+        'husband_barangay',
 
     ];
 
@@ -94,5 +97,13 @@ class Patient extends Model
     public function medications()
     {
         return $this->hasMany(Medication::class, 'user_id', 'user_id');
+    }
+    public function delivery()
+    {
+        return $this->hasMany(Delivery::class, 'user_id', 'user_id');
+    }
+    public function newborn()
+    {
+        return $this->hasMany(Newborn::class, 'user_id', 'user_id');
     }
 }

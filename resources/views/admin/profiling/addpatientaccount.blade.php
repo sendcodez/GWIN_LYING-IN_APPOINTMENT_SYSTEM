@@ -15,16 +15,16 @@
                             data-bs-target="#addUserModal">
                             ADD USER
                         </button>
-                        <h4 class="text-blue h4">USERS</h4>
+                        <h4 class="text-blue h4">PATIENTS</h4>
                     </div>
                     <div class="card-box pb-10">
                         <table class="data-table table nowrap">
                             <thead> 
                                 <tr>
                                     <th>#</th>
+                                    <th>Patient ID</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Usertype</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -33,17 +33,9 @@
                                 @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{$user->id}}</td>
                                     <td>{{$user->firstname}} {{$user->lastname}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>
-                                        @if($user->usertype == 1)
-                                            <span>Admin</span>
-                                        @elseif($user->usertype == 2)
-                                            <span>Doctor</span>
-                                        @elseif($user->usertype == 3)
-                                            <span>Patient</span>
-                                        @endif
-                                    </td>
                                     <td>
                                         <form method="POST" action="{{ route('update-user-status', ['id' => $user->id]) }}">
                                             @csrf

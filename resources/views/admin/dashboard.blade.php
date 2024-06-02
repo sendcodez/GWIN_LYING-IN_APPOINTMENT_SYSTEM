@@ -4,36 +4,7 @@
 
     <div class="main-container">
         <div class="pd-ltr-20">
-            <div class="card-box pd-20 height-100-p mb-30">
-                <div class="row align-items-center">
-                    <div class="col-md-4">
-                        <img src="vendors/images/banner-img.png" alt="" />
-                    </div>
-                    <div class="col-md-8">
-                        @if (Auth::user()->usertype == 3)
-                            <h5>{{ Auth::user()->id }}</h5>
-                            <p class="font-12 max-width-600">Patient ID </p>
-
-                            <div class="col-md-12">
-                                <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download>
-                                    <p
-                                        style="float: right;margin-bottom:3%;margin-right:100px; margin-top:-5.56%; max-width: 150px;">
-                                        Click to download</p>
-                                    <img src="{{ asset('qr_image/' . Auth::user()->qr_name) }}" alt="QR Code"
-                                        style="float: right; margin-right:90px;margin-bottom:3%; margin-top:-1%; max-width: 150px;">
-                                </a>
-                            </div>
-                        @endif
-                        </h4>
-                        <p class="font-20 max-width-1000">
-                            Thank you for trusting us with your healthcare needs. We are dedicated to providing you with the
-                            best possible care.
-                            If you have any questions or need assistance, please don't hesitate to reach out.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
+ 
             @if (Auth::user()->usertype == 3)
                 <div class="card-box mb-30">
                     <div class="pd-20">

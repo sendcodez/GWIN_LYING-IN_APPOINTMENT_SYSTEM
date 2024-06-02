@@ -62,10 +62,24 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 
+                                                    <button type="button" class="dropdown-item add-delivery-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                        <i class="dw dw-add"></i> Add Delivery Record
+                                                    </button>
+
                                                     <button type="button" class="dropdown-item add-medication-btn"
                                                         data-patient-id="{{ $patient->user_id }}"
                                                         data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
                                                         <i class="dw dw-add"></i> Add Medication
+                                                    </button>
+
+                                                    <button type="button" class="dropdown-item add-newborn-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
+                                                        data-patient-lastname="{{ $patient->lastname }}"
+                                                        data-patient-firstname="{{ $patient->firstname }}">
+                                                        <i class="dw dw-add"></i> Add Newborn Record
                                                     </button>
 
                                                     <button type="button" class="dropdown-item add-record-btn"
@@ -454,6 +468,297 @@
                         </div>
                     </div>
 
+     <!-- Add Delivery Modal -->
+     <div class="modal fade" id="addDeliveryModal" tabindex="-1" role="dialog"
+     aria-labelledby="addDeliveryModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered modal-lg">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h3 class="text-center">Add Delivery Record</h3>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+             <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                <form id="multiStepForm" method="POST" action="{{ route('delivery.store') }}"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Patient Name</label>
+                            <div class="form-group">
+                                <input type="text" name="patient_name" class="form-control"
+                                    id="delivery_patient_name" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Patient ID</label>
+                            <div class="form-group">
+                                <input type="text" name="user_id" class="form-control"
+                                    id="delivery_patient_id" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Name of Baby</label>
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control">
+                            </div>
+                            <label>Sex</label>
+                            <div class="form-group">
+                                <select class="form-control" name="sex">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <label>HC</label>
+                            <div class="form-group">
+                                <input type="text" name="hc" class="form-control">
+                            </div>
+                            <label>AC</label>
+                            <div class="form-group">
+                                <input type="text" name="ac" class="form-control">
+                            </div>
+                            <label>BCG</label>
+                            <div class="form-group">
+                                <input type="text" name="bcg" class="form-control">
+                            </div>
+                            <label>Handle</label>
+                            <div class="form-group">
+                                <input type="text" name="handle" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Date of Birth</label>
+                            <div class="form-group">
+                                <input type="date" name="birthday" class="form-control">
+                            </div>
+                        
+                            <label>Weight (kgs)</label>
+                            <div class="form-group">
+                                <input type="number" name="weight" class="form-control">
+                            </div>
+                            <label>CC</label>
+                            <div class="form-group">
+                                <input type="text" name="cc" class="form-control">
+                            </div>
+                            <label>AOG</label>
+                            <div class="form-group">
+                                <input type="text" name="aog" class="form-control">
+                            </div>
+                            <label>NBS</label>
+                            <div class="form-group">
+                                <input type="text" name="nbs" class="form-control">
+                            </div>
+                            <label>Assist</label>
+                            <div class="form-group">
+                                <input type="text" name="assist" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Time of Birth</label>
+                            <div class="form-group">
+                                <input type="time" name="birthtime" class="form-control">
+                            </div>
+                            <label>Birth Order</label>
+                            <div class="form-group">
+                                <input type="text" name="birth_order" class="form-control">
+                            </div>
+                            <label>BL</label>
+                            <div class="form-group">
+                                <input type="text" name="bl" class="form-control">
+                            </div>
+                            <label>HEPA B1</label>
+                            <div class="form-group">
+                                <input type="text" name="hepa" class="form-control">
+                            </div>
+                            <label>Hearing Test</label>
+                            <div class="form-group">
+                                <input type="text" name="hearing" class="form-control">
+                            </div>
+                            <label>Referral</label>
+                            <div class="form-group">
+                                <input type="text" name="referral" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                 
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Reset</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Submit</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+         </div>
+     </div>
+ </div>
+
+  <!-- Add Newborn Modal -->
+  <div class="modal fade" id="addNewbornModal" tabindex="-1" role="dialog"
+  aria-labelledby="addNewbornModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="text-center">Add Newborn Record</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+             <form id="multiStepForm" method="POST" action="{{ route('newborn.store') }}"
+                 enctype="multipart/form-data">
+                 @csrf
+                 <div class="row">
+                     <div class="col-md-4">
+                         <label>Patient Name</label>
+                         <div class="form-group">
+                             <input type="text" name="patient_name" class="form-control"
+                                 id="newborn_patient_name" readonly>
+                         </div>
+                     </div>
+
+                     <div class="col-md-4">
+                         <label>Patient ID</label>
+                         <div class="form-group">
+                             <input type="text" name="user_id" class="form-control"
+                                 id="newborn_patient_id" readonly>
+                         </div>
+                     </div>
+                     <div class="col-md-4">
+                        <label>Filter Card Number</label>
+                        <div class="form-group">
+                            <input type="number" name="card" class="form-control"
+                                id="card">
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                     <div class="col-md-4">
+                         <label>Baby's Last Name</label>
+                         <div class="form-group">
+                             <input type="text" name="baby_lastname" class="form-control">
+                         </div>
+                         <label>Sex</label>
+                         <div class="form-group">
+                             <select class="form-control" name="sex">
+                                 <option value="male">Male</option>
+                                 <option value="female">Female</option>
+                             </select>
+                         </div>
+                         <label>Date of Collection</label>
+                         <div class="form-group">
+                             <input type="date" name="date_collection" class="form-control">
+                         </div>
+                         <label>Baby's Weight (kgs)</label>
+                         <div class="form-group">
+                             <input type="number" name="weight" class="form-control">
+                         </div>
+                         <label>Place of Birth</label>
+                         <div class="form-group">
+                             <input type="text" name="birthplace" class="form-control">
+                         </div>
+                         <label>Address</label>
+                         <div class="form-group">
+                             <input type="text" name="address" class="form-control">
+                         </div>
+                         <label>Date Result Received</label>
+                         <div class="form-group">
+                             <input type="date" name="result_received" class="form-control">
+                         </div>
+                     </div>
+
+                     <div class="col-md-4">
+                        <label>Mother's Fist Name</label>
+                        <div class="form-group">
+                            <input type="text" name="mother_firstname" id="mother_firstname" class="form-control" readonly>
+                        </div>
+                     
+                         <label>Date of Birth</label>
+                         <div class="form-group">
+                             <input type="date" name="birthday" class="form-control">
+                         </div>
+                         <label>Time of Collection</label>
+                         <div class="form-group">
+                             <input type="time" name="time_collection" class="form-control">
+                         </div>
+                         <label>AOG</label>
+                         <div class="form-group">
+                             <input type="text" name="aog" class="form-control">
+                         </div>
+                         <label>Concact Number</label>
+                         <div class="form-group">
+                             <input type="text" name="contact" class="form-control">
+                         </div>
+                         <label>Name of Blood Collector</label>
+                         <div class="form-group">
+                             <input type="text" name="blood_collector" class="form-control">
+                         </div>
+                         <label>Date Claimed</label>
+                         <div class="form-group">
+                             <input type="date" name="date_claimed" class="form-control">
+                         </div>
+                     </div>
+
+                     <div class="col-md-4">
+                         <label>Mother's Last Name</label>
+                         <div class="form-group">
+                             <input type="text" name="mother_lastname" id="mother_lastname" class="form-control" readonly>
+                         </div>
+                         <label>Time of Birth</label>
+                         <div class="form-group">
+                             <input type="text" name="birthtime" class="form-control">
+                         </div>
+                         <label>Feeding</label>
+                         <div class="form-group">
+                             <input type="text" name="feeding" class="form-control">
+                         </div>
+                         <label>Baby's Status</label>
+                         <div class="form-group">
+                             <input type="text" name="status" class="form-control">
+                         </div>
+                         <label><small>Name of Staff who fill out the form</small></label>
+                         <div class="form-group">
+                             <input type="text" name="staff" class="form-control">
+                         </div>
+                         <label>Result</label>
+                         <div class="form-group">
+                             <input type="text" name="result" class="form-control">
+                         </div>
+                         <label>Claimed by</label>
+                         <div class="form-group">
+                             <input type="text" name="claimed_by" class="form-control">
+                         </div>
+                     </div>
+                 </div>
+              
+                 <div class="modal-footer">
+                     <button type="reset" class="btn btn-danger">
+                         <i class="bx bx-x d-block d-sm-none"></i>
+                         <span class="d-none d-sm-block">Reset</span>
+                     </button>
+                     <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                         <i class="bx bx-check d-block d-sm-none"></i>
+                         <span class="d-none d-sm-block">Submit</span>
+                     </button>
+                 </div>
+             </form>
+         </div>
+      </div>
+  </div>
+</div>
+
+
+
                 </div>
             </div>
         </div>
@@ -487,12 +792,36 @@
                 $('#laboratory_patient_id').val(patientId);
                 $('#addLaboratoryModal').modal('show');
             });
+
+            //Show Add  Medication Modal
             $('.add-medication-btn').click(function() {
                 var patientId = $(this).data('patient-id');
                 var patientName = $(this).data('patient-name');
                 $('#medication_patient_name').val(patientName);
                 $('#medication_patient_id').val(patientId);
                 $('#addMedicationModal').modal('show');
+            });
+
+             //Show Add  Delivery Modal
+             $('.add-delivery-btn').click(function() {
+                var patientId = $(this).data('patient-id');
+                var patientName = $(this).data('patient-name');
+                $('#delivery_patient_name').val(patientName);
+                $('#delivery_patient_id').val(patientId);
+                $('#addDeliveryModal').modal('show');
+            });
+
+            //Show Add Newborn Modal
+            $('.add-newborn-btn').click(function() {
+                var patientId = $(this).data('patient-id');
+                var patientName = $(this).data('patient-name');
+                var patientLastName = $(this).data('patient-lastname');
+                var patientFirstName = $(this).data('patient-firstname');
+                $('#newborn_patient_name').val(patientName);
+                $('#newborn_patient_id').val(patientId);
+                $('#mother_lastname').val(patientLastName);
+                $('#mother_firstname').val(patientFirstName);
+                $('#addNewbornModal').modal('show');
             });
 
             $('.modal .close').click(function() {

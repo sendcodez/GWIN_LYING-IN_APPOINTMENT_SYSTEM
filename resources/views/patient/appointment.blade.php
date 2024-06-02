@@ -41,48 +41,24 @@
             margin-right: 10px;
             /* Optional: Add margin to separate the input fields */
         }
+     
     </style>
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
-                <div class="page-header">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            
-                                <div class="row align-items-center">
-                                    <div class="col-md-4">
-                                        <img src="vendors/images/banner-img.png" alt="" />
-                                    </div>
-                                    <div class="col-md-8">
-                                            @if (Auth::user()->usertype == 3)
-                                                <h5>{{ Auth::user()->id }}</h5>
-                                                <p class="font-12 max-width-600">Patient ID </p>
                 
-                                            @endif
-                                        </h4>
-                                        <p class="font-20 max-width-1000">
-                                            Thank you for trusting us with your healthcare needs. We are dedicated to providing you with the best possible care. 
-                                            If you have any questions or need assistance, please don't hesitate to reach out.
-                                        </p>
-                                    </div>
-                                </div>
-       
-                        </div>
-
-                    </div>
-                </div>
                 <div class="pd-20 card-box mb-30">
                     <div class="row">
                         <!-- Calendar Section -->
-                        <div class="calendar-wrap col-md-6 col-sm-6">
+                        <div class="calendar-wrap col-md-6 col-sm-6 custom-bordered-table">
                             <p>Please Click the Calendar Cell to Book an Appointment</p>
                             <div id="calendar"></div>
                         </div>
                         <!-- Table Section -->
                         <div class="table-wrap col-md-6 col-sm-6">
-                            <table class="table table-striped">
-                                <thead>
-                                    <center><h3>DOCTORS SCHEDULE</h3></center>
+                            <table class="table table-striped custom-bordered-table">
+                                <thead> 
+                                    <center><h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3></center>
                                     <tr>
                                         <th>NAME</th>
                                         <th>SERVICE</th>
@@ -108,11 +84,13 @@
                                 
                                 </tbody>
                             </table>
-
-                            <div class="pd-20">
-                                <center><h3>MY RECENT APPOINTMENTS</h3></center>
-                            </div>
-                            <div class="card-box pb-10">
+                            <br>
+                            <hr>
+                            <vr>
+                            <div class="card-box pb-10 custom-bordered-table">
+                                <div class="pd-20">
+                                    <center><h3 class="">MY RECENT APPOINTMENTS</h3></center>
+                                </div>
                                 <!--
                                 <div class="col-md-2 col-sm-6">
                                     <div class="form-group">

@@ -38,6 +38,9 @@ return new class extends Migration
             $table->string('province');
             $table->string('city');
             $table->string('barangay');
+            $table->string('husband_province');
+            $table->string('husband_city');
+            $table->string('husband_barangay');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

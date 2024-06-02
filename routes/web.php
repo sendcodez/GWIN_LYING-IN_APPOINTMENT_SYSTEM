@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/profiling/add_patient', [PatientController::class, 'store'])->name('patient.store');
     Route::put('/admin/profiling/edit_patient/{userId}', [PatientController::class, 'update'])->name('patient.update');
     Route::delete('admin/profiling/manage_patient/{patient}', [PatientController::class, 'destroy'])->name('patient.destroy');
+    Route::get('patients/export', [PatientController::class, 'export'])->name('patients.export');
 
 
 
@@ -151,6 +152,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/add-records', [RecordController::class, 'storeRecords'])->name('record.store');
     Route::post('/admin/add-laboratories', [RecordController::class, 'storeLaboratory'])->name('laboratory.store');
     Route::post('/admin/add-ultrasounds', [RecordController::class, 'storeUltrasound'])->name('ultrasound.store');
+    Route::post('/admin/add-delivery', [RecordController::class, 'storeDelivery'])->name('delivery.store');
+    Route::post('/admin/add-newborn', [RecordController::class, 'storeNewborn'])->name('newborn.store');
     Route::get('/patient/{id}', [RecordController::class, 'getPatientDetails']);
 
     //MYRECORDS ROUTE
