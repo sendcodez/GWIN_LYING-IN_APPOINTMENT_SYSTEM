@@ -68,6 +68,18 @@
                                                         <i class="dw dw-add"></i> Add Delivery Record
                                                     </button>
 
+                                                    <button type="button" class="dropdown-item add-labor-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                        <i class="dw dw-add"></i> Add Labor Monitoring
+                                                    </button>
+
+                                                    <button type="button" class="dropdown-item add-laboratory-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                        <i class="dw dw-add"></i> Add Laboratory Result
+                                                    </button>
+
                                                     <button type="button" class="dropdown-item add-medication-btn"
                                                         data-patient-id="{{ $patient->user_id }}"
                                                         data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
@@ -88,16 +100,16 @@
                                                         <i class="dw dw-add"></i> Add Record
                                                     </button>
 
+                                                    <button type="button" class="dropdown-item add-postpartum-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                        <i class="dw dw-add"></i> Add Postpartum Monitoring
+                                                    </button>
+
                                                     <button type="button" class="dropdown-item add-ultrasound-btn"
                                                         data-patient-id="{{ $patient->user_id }}"
                                                         data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
                                                         <i class="dw dw-add"></i> Add Ultrasound Result
-                                                    </button>
-
-                                                    <button type="button" class="dropdown-item add-laboratory-btn"
-                                                        data-patient-id="{{ $patient->user_id }}"
-                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                        <i class="dw dw-add"></i> Add Laboratory Result
                                                     </button>
 
                                                 </div>
@@ -757,6 +769,207 @@
   </div>
 </div>
 
+<!-- Add Postpartum Modal -->
+<div class="modal fade" id="addPostpartumModal" tabindex="-1" role="dialog"
+aria-labelledby="addPostpartumModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="text-center">Add Postpartum</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="multiStepForm" method="POST" action="{{ route('postpartum.store') }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Patient Name</label>
+                        <div class="form-group">
+                            <input type="text" name="patient_name" class="form-control"
+                                id="postpartum_patient_name" readonly>
+                        </div>
+                        <label>Patient ID</label>
+                        <div class="form-group">
+                            <input type="text" name="user_id" class="form-control"
+                                id="postpartum_patient_id" readonly>
+                        </div>
+
+                        <label>Date</label>
+                        <div class="form-group">
+                            <input type="date" name="date" class="form-control">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Time</label>
+                            <div class="form-group">
+                                <input type="time" name="time" value="" class="form-control">
+                            </div>
+                        </div>
+                   
+                        <div class="col-md-6">
+                            <label>Temperature</label>
+                            <div class="form-group">
+                                <input type="text" name="temperature" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>PR</label>
+                            <div class="form-group">
+                                <input type="text" name="pr" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>RR</label>
+                            <div class="form-group">
+                                <input type="text" name="rr" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>BP</label>
+                            <div class="form-group">
+                                <input type="text" name="bp" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>U</label>
+                            <div class="form-group">
+                                <input type="text" name="u" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>S</label>
+                            <div class="form-group">
+                                <input type="text" name="s" value="" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Reset</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Submit</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Add Labor Modal -->
+<div class="modal fade" id="addLaborModal" tabindex="-1" role="dialog"
+aria-labelledby="addLaborModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="text-center">Add Labor Monitoring</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="multiStepForm" method="POST" action="{{ route('labor.store') }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Patient Name</label>
+                        <div class="form-group">
+                            <input type="text" name="patient_name" class="form-control"
+                                id="labor_patient_name" readonly>
+                        </div>
+                        <label>Patient ID</label>
+                        <div class="form-group">
+                            <input type="text" name="user_id" class="form-control"
+                                id="labor_patient_id" readonly>
+                        </div>
+
+                        <label>Date</label>
+                        <div class="form-group">
+                            <input type="date" name="date" class="form-control">
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Time</label>
+                            <div class="form-group">
+                                <input type="time" name="time" value="" class="form-control">
+                            </div>
+                        </div>
+                   
+                        <div class="col-md-6">
+                            <label>Temperature</label>
+                            <div class="form-group">
+                                <input type="text" name="temperature" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>PR</label>
+                            <div class="form-group">
+                                <input type="text" name="pr" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>RR</label>
+                            <div class="form-group">
+                                <input type="text" name="rr" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>BP</label>
+                            <div class="form-group">
+                                <input type="text" name="bp" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>FMT</label>
+                            <div class="form-group">
+                                <input type="text" name="fmt" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Intensity</label>
+                            <div class="form-group">
+                                <input type="text" name="intensity" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Interval</label>
+                            <div class="form-group">
+                                <input type="text" name="interval" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Frequency</label>
+                            <div class="form-group">
+                                <input type="text" name="frequency" value="" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Reset</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Submit</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 
 
                 </div>
@@ -822,6 +1035,23 @@
                 $('#mother_lastname').val(patientLastName);
                 $('#mother_firstname').val(patientFirstName);
                 $('#addNewbornModal').modal('show');
+            });
+
+            //Show Add Postpartum Modal
+            $('.add-postpartum-btn').click(function() {
+                var patientId = $(this).data('patient-id');
+                var patientName = $(this).data('patient-name');
+                $('#postpartum_patient_name').val(patientName);
+                $('#postpartum_patient_id').val(patientId);
+                $('#addPostpartumModal').modal('show');
+            });
+            //Show Add Labor Modal
+            $('.add-labor-btn').click(function() {
+                var patientId = $(this).data('patient-id');
+                var patientName = $(this).data('patient-name');
+                $('#labor_patient_name').val(patientName);
+                $('#labor_patient_id').val(patientId);
+                $('#addLaborModal').modal('show');
             });
 
             $('.modal .close').click(function() {

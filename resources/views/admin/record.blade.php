@@ -73,6 +73,14 @@
                                             <a class="nav-link" data-toggle="tab" href="#newborn"
                                                 role="tab">Newborn Record</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#postpartum"
+                                                role="tab">Postpartum Monitoring</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#labor"
+                                                role="tab">Labor Monitoring</a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content">
 
@@ -548,6 +556,74 @@
                                                     </tbody>
                                                 </table>
 
+                                            </div>
+                                        </div>
+
+                                         <!-- POSTPARTUM -->
+                                         <div class="tab-pane fade " id="postpartum" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">Date</th>
+                                                            <th>Time</th>
+                                                            <th>Temperature</th>
+                                                            <th>PR</th>
+                                                            <th>RR</th>
+                                                            <th>BP</th>
+                                                            <th>U</th>
+                                                            <th>S</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="post_date"></td>
+                                                            <td id="post_time"></td>
+                                                            <td id="post_temp"></td>
+                                                            <td id="pr"></td>
+                                                            <td id="rr"></td>
+                                                            <td id="bp"></td>
+                                                            <td id="u"></td>
+                                                            <td id="s"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                          <!-- LABOR -->
+                                          <div class="tab-pane fade " id="labor" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">Date</th>
+                                                            <th>Time</th>
+                                                            <th>Temperature</th>
+                                                            <th>PR</th>
+                                                            <th>RR</th>
+                                                            <th>BP</th>
+                                                            <th>FMT</th>
+                                                            <th>Intensity</th>
+                                                            <th>Interval</th>
+                                                            <th>Frequency</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="labor_date"></td>
+                                                            <td id="labor_time"></td>
+                                                            <td id="labor_temp"></td>
+                                                            <td id="labor_pr"></td>
+                                                            <td id="labor_rr"></td>
+                                                            <td id="labor_bp"></td>
+                                                            <td id="fmt"></td>
+                                                            <td id="intensity"></td>
+                                                            <td id="interval"></td>
+                                                            <td id="frequency"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
 

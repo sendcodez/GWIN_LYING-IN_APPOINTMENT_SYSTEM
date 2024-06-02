@@ -154,6 +154,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/add-ultrasounds', [RecordController::class, 'storeUltrasound'])->name('ultrasound.store');
     Route::post('/admin/add-delivery', [RecordController::class, 'storeDelivery'])->name('delivery.store');
     Route::post('/admin/add-newborn', [RecordController::class, 'storeNewborn'])->name('newborn.store');
+    Route::post('/admin/add-postpartum', [RecordController::class, 'storePostpartum'])->name('postpartum.store');
+    Route::post('/admin/add-labor', [RecordController::class, 'storeLabor'])->name('labor.store');
     Route::get('/patient/{id}', [RecordController::class, 'getPatientDetails']);
 
     //MYRECORDS ROUTE

@@ -30,6 +30,10 @@ $(document).ready(function () {
                     var newbornTable2 = $("#newborn2 tbody");
                     var newborn3 = data.newborn;
                     var newbornTable3 = $("#newborn3 tbody");
+                    var postpartum = data.postpartum;
+                    var postpartumTable = $("#postpartum tbody");
+                    var labor = data.labor;
+                    var laborTable = $("#labor tbody");
                     // Clear existing rows
                     ultrasoundTable.empty();
                     labTable.empty();
@@ -42,6 +46,8 @@ $(document).ready(function () {
                     newbornTable1.empty();
                     newbornTable2.empty();
                     newbornTable3.empty();
+                    postpartumTable.empty();
+                    laborTable.empty();
                     
                     $("#fullname").text(
                         data.firstname +
@@ -216,6 +222,36 @@ $(document).ready(function () {
                         newbornTable3.append(row);
                     });
 
+                    //POSTPARTUM
+                    postpartum.forEach(function (postpartum) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(postpartum.post_date));
+                        row.append($("<td>").text(postpartum.post_time));
+                        row.append($("<td>").text(postpartum.post_temp));
+                        row.append($("<td>").text(postpartum.pr));
+                        row.append($("<td>").text(postpartum.rr));
+                        row.append($("<td>").text(postpartum.bp));
+                        row.append($("<td>").text(postpartum.u));
+                        row.append($("<td>").text(postpartum.s));
+                        postpartumTable.append(row);
+                    });
+
+                      //POSTPARTUM
+                    labor.forEach(function (labor) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(labor.labor_date));
+                        row.append($("<td>").text(labor.labor_time));
+                        row.append($("<td>").text(labor.labor_temp));
+                        row.append($("<td>").text(labor.labor_pr));
+                        row.append($("<td>").text(labor.labor_rr));
+                        row.append($("<td>").text(labor.labor_bp));
+                        row.append($("<td>").text(labor.fmt));
+                        row.append($("<td>").text(labor.intensity));
+                        row.append($("<td>").text(labor.interval));
+                        row.append($("<td>").text(labor.frequency));
+                        laborTable.append(row);
+                    });
+
                     //APPOINTMENT
                     appointments.forEach(function (appointment) {
                         var row = $("<tr>");
@@ -367,18 +403,24 @@ $(document).ready(function () {
                     var newbornTable2 = $("#newborn2 tbody");
                     var newborn3 = data.newborn;
                     var newbornTable3 = $("#newborn3 tbody");
-
+                    var postpartum = data.postpartum;
+                    var postpartumTable = $("#postpartum tbody");
+                    var labor = data.labor;
+                    var laborTable = $("#labor tbody");
                     // Clear existing rows
                     ultrasoundTable.empty();
                     labTable.empty();
                     appointmentTable.empty();
                     pregnancyTable.empty();
+                    medicationTable.empty();
                     deliveryTable1.empty();
                     deliveryTable2.empty();
-                    deliveryTable3.empty(); 
+                    deliveryTable3.empty();
                     newbornTable1.empty();
                     newbornTable2.empty();
                     newbornTable3.empty();
+                    postpartumTable.empty();
+                    laborTable.empty();
 
                     $("#fullname").text(
                         data.firstname +
@@ -544,6 +586,37 @@ $(document).ready(function () {
                         newbornTable3.append(row);
                     }); 
 
+
+                    //POSTPARTUM
+                    postpartum.forEach(function (postpartum) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(postpartum.post_date));
+                        row.append($("<td>").text(postpartum.post_time));
+                        row.append($("<td>").text(postpartum.post_temp));
+                        row.append($("<td>").text(postpartum.pr));
+                        row.append($("<td>").text(postpartum.rr));
+                        row.append($("<td>").text(postpartum.bp));
+                        row.append($("<td>").text(postpartum.u));
+                        row.append($("<td>").text(postpartum.s));
+                        postpartumTable.append(row);
+                    });
+
+                      //POSTPARTUM
+                    labor.forEach(function (labor) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(labor.labor_date));
+                        row.append($("<td>").text(labor.labor_time));
+                        row.append($("<td>").text(labor.labor_temp));
+                        row.append($("<td>").text(labor.labor_pr));
+                        row.append($("<td>").text(labor.labor_rr));
+                        row.append($("<td>").text(labor.labor_bp));
+                        row.append($("<td>").text(labor.fmt));
+                        row.append($("<td>").text(labor.intensity));
+                        row.append($("<td>").text(labor.interval));
+                        row.append($("<td>").text(labor.frequency));
+                        laborTable.append(row);
+                    });
+             
                     //APPOINTMENT
                     appointments.forEach(function (appointment) {
                         var row = $("<tr>");

@@ -106,4 +106,12 @@ class Patient extends Model
     {
         return $this->hasMany(Newborn::class, 'user_id', 'user_id');
     }
+    public function postpartum()
+    {
+        return $this->hasMany(Postpartum::class, 'user_id', 'user_id');
+    }
+    public function labor()
+    {
+        return $this->hasMany(Labor::class, 'user_id', 'user_id');
+    }
 }

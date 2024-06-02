@@ -13,6 +13,8 @@ use App\Models\Record;
 use App\Models\Laboratory;
 use App\Models\Ultrasound;
 use App\Models\Delivery;
+use App\Models\Postpartum;
+use App\Models\Labor;
 use App\Models\Newborn;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Auth;
@@ -289,6 +291,82 @@ class RecordController extends Controller
         }
     }
 
+    //STORE POSTPARTUM
+    public function storePostpartum(Request $request)
+    {
+        try {
+           // dd($request->all());
+            $validatedData = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'date' => 'required|date',
+                'time' => 'required|string',
+                'temperature' => 'required|string',
+                'pr' => 'required|string',
+                'rr' => 'required|string',
+                'bp' => 'required|string',
+                'u' => 'required|string',
+                's' => 'required|string',
+               
+            ]);
+
+
+            $postpartum = Postpartum::create($validatedData);
+
+
+            $user = Auth::user();
+            $action = 'added_postpartum';
+            $description = 'Added a postpartum record for patient: ' . $postpartum->patient_name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+            return back()->with('success', 'Postpartum record added successfully.');
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
+
+    public function storeLabor(Request $request)
+    {
+        try {
+           // dd($request->all());
+            $validatedData = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'date' => 'required|date',
+                'time' => 'required|string',
+                'temperature' => 'required|string',
+                'pr' => 'required|string',
+                'rr' => 'required|string',
+                'bp' => 'required|string',
+                'fmt' => 'required|string',
+                'intensity' => 'required|string',
+                'interval' => 'required|string',
+                'frequency' => 'required|string',
+            ]);
+
+
+            $labor = labor::create($validatedData);
+
+
+            $user = Auth::user();
+            $action = 'added_labor';
+            $description = 'Added a Labor record for patient: ' . $labor->patient_name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+            return back()->with('success', 'Labor record added successfully.');
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
+
 
     public function show(string $id)
     {
@@ -327,6 +405,8 @@ class RecordController extends Controller
             'medications',
             'delivery',
             'newborn',
+            'postpartum',
+            'labor',
           
         ])->where('user_id', $id)->first();
 
@@ -566,6 +646,66 @@ class RecordController extends Controller
                 ];
             }
 
+            $postpartumData = [];
+            if ($patient && isset($patient->postpartum)) {
+                foreach ($patient->postpartum as $postpartum) {
+                    $postpartumData[] = [
+                        'post_date' => optional($postpartum->created_at)->format('Y-m-d') ?? 'No record',
+                        'post_time' => $postpartum->time ?? 'No record',
+                        'post_temp' => $postpartum->temperature ?? 'No record',
+                        'pr' => $postpartum->pr ?? 'No record',
+                        'rr' => $postpartum->rr ?? 'No record',
+                        'bp' => $postpartum->bp ?? 'No record',
+                        'u' => $postpartum->u ?? 'No record',
+                        's' => $postpartum->s ?? 'No record',
+                    ];
+                }
+            } else {
+                $postpartumData[] = [
+                    'post_date' => 'No record',
+                    'post_time' => 'No record',
+                    'post_temp' => 'No record',
+                    'pr' => 'No record',
+                    'rr' => 'No record',
+                    'bp' => 'No record',
+                    'u' => 'No record',
+                    's' => 'No record',
+                ];
+            }
+
+            $laborData = [];
+            if ($patient && isset($patient->labor)) {
+                foreach ($patient->labor as $labor) {
+                    $laborData[] = [
+                        'labor_date' => optional($labor->created_at)->format('Y-m-d') ?? 'No record',
+                        'labor_time' => $labor->time ?? 'No record',
+                        'labor_temp' => $labor->temperature ?? 'No record',
+                        'labor_pr' => $labor->pr ?? 'No record',
+                        'labor_rr' => $labor->rr ?? 'No record',
+                        'labor_bp' => $labor->bp ?? 'No record',
+                        'fmt' => $labor->fmt ?? 'No record',
+                        'intensity' => $labor->intensity ?? 'No record',
+                        'interval' => $labor->interval ?? 'No record',
+                        'frequency' => $labor->frequency ?? 'No record',
+                    ];
+                }
+            } else {
+                $laborData[] = [
+                    'labor_date' => 'No record',
+                    'labor_time' => 'No record',
+                    'labor_temp' => 'No record',
+                    'labor_pr' => 'No record',
+                    'labor_rr' => 'No record',
+                    'labor_bp' => 'No record',
+                    'fmt' => 'No record',
+                    'intensity' => 'No record',
+                    'interval' => 'No record',
+                    'frequency' => 'No record',
+                    
+                ];
+            }
+
+
             return response()->json([
                 // USER
                 'firstname' => $user->firstname,
@@ -615,6 +755,10 @@ class RecordController extends Controller
                 'delivery' => $deliveryData,
                 //NEWBORN
                 'newborn' => $newbornData,
+                //POSTPARTUM
+                'postpartum' => $postpartumData,
+                //LABOR
+                'labor' => $laborData,
                 // MEDICAL HISTORY
                 'hypertension' => $medical ? ($medical->hypertension == 1 ? 'Yes' : 'No') : 'No record',
                 'heartdisease' => $medical ? ($medical->heartdisease == 1 ? 'Yes' : 'No') : 'No record',
