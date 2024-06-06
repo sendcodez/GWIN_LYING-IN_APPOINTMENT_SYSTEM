@@ -17,6 +17,8 @@ use App\Models\Postpartum;
 use App\Models\Labor;
 use App\Models\Newborn;
 use App\Models\ActivityLog;
+use App\Models\Staffnotes;
+use App\Models\Physician;
 use Illuminate\Support\Facades\Auth;
 
 class RecordController extends Controller
@@ -367,6 +369,74 @@ class RecordController extends Controller
         }
     }
 
+    public function storeStaffnotes(Request $request)
+    {
+        try {
+           // dd($request->all());
+            $validatedData = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'date' => 'required|date',
+                'time' => 'required|string',
+                'bed' => 'required|integer',
+                'remarks' => 'required|string',
+
+            ]);
+
+
+            $staffnotes = Staffnotes::create($validatedData);
+
+
+            $user = Auth::user();
+            $action = 'added_staffnotes';
+            $description = 'Added a Staff notes  for patient: ' . $staffnotes->patient_name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+            return back()->with('success', 'Staff notes added successfully.');
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
+
+    public function storePhysician(Request $request)
+    {
+        try {
+           // dd($request->all());
+            $validatedData = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'date' => 'required|date',
+                'time' => 'required|string',
+                'bed' => 'required|integer',
+                'physician' => 'required|string',
+                'order' => 'required|string',
+                'time_noted' => 'required|string',
+
+            ]);
+
+
+            $physician = Physician::create($validatedData);
+
+
+            $user = Auth::user();
+            $action = 'added_physician';
+            $description = 'Added a Physician Order  for patient: ' . $physician->patient_name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+            return back()->with('success', 'Physician Order added successfully.');
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
+
 
     public function show(string $id)
     {
@@ -407,6 +477,8 @@ class RecordController extends Controller
             'newborn',
             'postpartum',
             'labor',
+            'staffnotes',
+            'physician',
           
         ])->where('user_id', $id)->first();
 
@@ -705,6 +777,90 @@ class RecordController extends Controller
                 ];
             }
 
+            $staffnotesData = [];
+            if ($patient && isset($patient->staffnotes)) {
+                foreach ($patient->staffnotes as $staffnotes) {
+                    $staffnotesData[] = [
+                        'staff_date' => optional($staffnotes->created_at)->format('Y-m-d') ?? 'No record',
+                        'staff_time' => $staffnotes->time ?? 'No record',
+                        'staff_bed' => $staffnotes->bed ?? 'No record',
+                        'staff_remarks' => $staffnotes->remarks ?? 'No record',
+                    ];
+                }
+            } else {
+                $staffnotesData[] = [
+                    'staff_date' => 'No record',
+                    'staff_time' => 'No record',
+                    'staff_bed' => 'No record',
+                    'staff_remarks' => 'No record',
+                    
+                ];
+            }
+
+            $physicianData = [];
+            if ($patient && isset($patient->physician)) {
+                foreach ($patient->physician as $physician) {
+                    $physicianData[] = [
+                        'physician_date' => optional($physician->created_at)->format('Y-m-d') ?? 'No record',
+                        'physician_time' => $physician->time ?? 'No record',
+                        'physician_bed' => $physician->bed ?? 'No record',
+                        'physician_order' => $physician->order ?? 'No record',
+                        'physician_physician' => $physician->physician ?? 'No record',
+                        'physician_time_noted' => $physician->time_noted ?? 'No record',
+                    ];
+                }
+            } else {
+                $physicianData[] = [
+                    'physician_date' => 'No record',
+                    'physician_time' => 'No record',
+                    'physician_bed' => 'No record',
+                    'physician_order' => 'No record',
+                    'physician_physician' => 'No record',
+                    'physician_time_noted' => 'No record',
+                    
+                ];
+            }
+
+            $recordsData = [];
+            if ($patient && isset($patient->records)) {
+                foreach ($patient->records as $records) {
+                    $recordsData[] = [
+                        'records_date' => optional($records->created_at)->format('Y-m-d') ?? 'No record',
+                        'records_aog' => $records->aog ?? 'No record',
+                        'records_chief' => $records->chief ?? 'No record',
+                        'records_blood_pressure' => $records->blood_pressure ?? 'No record',
+                        'records_weight' => $records->weight ?? 'No record',
+                        'records_temperature' => $records->temperature ?? 'No record',
+                        'records_cardiac' => $records->cardiac ?? 'No record',
+                        'records_respiratory' => $records->respiratory ?? 'No record',
+                        'records_fundic' => $records->fundic ?? 'No record',
+                        'records_fht' => $records->fht ?? 'No record',
+                        'records_ie' => $records->ie ?? 'No record',
+                        'records_diagnosis' => $records->diagnosis ?? 'No record',
+                        'records_follow_up' => $records->follow_up ?? 'No record',
+                        'records_plan' => $records->plan ? json_decode($records->plan) : 'No record'
+                    ];
+                }
+            } else {
+                $recordsData[] = [
+                    'records_date' => 'No record',
+                    'records_aog' => 'No record',
+                    'records_chief' => 'No record',
+                    'records_blood_pressure' => 'No record',
+                    'records_weight' => 'No record',
+                    'records_temperature' => 'No record',
+                    'records_cardiac' => 'No record',
+                    'records_respiratory' => 'No record',
+                    'records_fundic' => 'No record',
+                    'records_fht' => 'No record',
+                    'records_ie' => 'No record',
+                    'records_diagnosis' => 'No record',
+                    'records_follow_up' => 'No record',
+                    'records_plan' => 'No record',
+                    
+                ];
+            }
+
 
             return response()->json([
                 // USER
@@ -759,6 +915,12 @@ class RecordController extends Controller
                 'postpartum' => $postpartumData,
                 //LABOR
                 'labor' => $laborData,
+                //STAFFNOTES
+                'staffnotes' => $staffnotesData,
+                //PHYSICIAN ORDER
+                'physician' => $physicianData,
+                //PNCU RECORDS
+                'records' => $recordsData,
                 // MEDICAL HISTORY
                 'hypertension' => $medical ? ($medical->hypertension == 1 ? 'Yes' : 'No') : 'No record',
                 'heartdisease' => $medical ? ($medical->heartdisease == 1 ? 'Yes' : 'No') : 'No record',

@@ -114,4 +114,12 @@ class Patient extends Model
     {
         return $this->hasMany(Labor::class, 'user_id', 'user_id');
     }
+    public function staffnotes()
+    {
+        return $this->hasMany(Staffnotes::class, 'user_id', 'user_id');
+    }
+    public function physician()
+    {
+        return $this->hasMany(Physician::class, 'user_id', 'user_id');
+    }
 }

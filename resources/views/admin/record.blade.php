@@ -78,8 +78,20 @@
                                                 role="tab">Postpartum Monitoring</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#records"
+                                                role="tab">PNCU Record</a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#labor"
                                                 role="tab">Labor Monitoring</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#staffnotes"
+                                                role="tab">Staff Notes</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#physician"
+                                                role="tab">Physician's Order</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
@@ -626,6 +638,114 @@
                                                 </table>
                                             </div>
                                         </div>
+
+                                         <!-- STAFF NOTES -->
+                                         <div class="tab-pane fade" id="staffnotes" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">Date</th>
+                                                            <th>Time</th>
+                                                            <th>Bed</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="staff_date"></td>
+                                                            <td id="staff_time"></td>
+                                                            <td id="staff_bed"></td>
+                                                            <td id="staff_remarks"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- PHYSICIAN ORDER -->
+                                        <div class="tab-pane fade" id="physician" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">Date</th>
+                                                            <th>Time</th>
+                                                            <th>Bed</th>
+                                                            <th>Attending Physician</th>
+                                                            <th>Order</th>
+                                                            <th>Time Noted</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="physician_date"></td>
+                                                            <td id="physician_time"></td>
+                                                            <td id="physician_bed"></td>
+                                                            <td id="physician_physician"></td>
+                                                            <td id="physician_order"></td>
+                                                            <td id="physician_time_noted"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                         <!-- PNCU -->
+                                         <div class="tab-pane fade " id="records" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered" id="records1">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="">Date</th>
+                                                            <th class="">AOG</th>
+                                                            <th class="">Chief Complaint</th>
+                                                            <th style="">Blood Pressure</th>
+                                                            <th>Weight</th>
+                                                            <th>Temperature</th>
+                                                            <th>Cardiac Rate</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="records_date"></td>
+                                                            <td id="records_aog"></td>
+                                                            <td id="records_chief"></td>
+                                                            <td id="records_blood_pressure"></td>
+                                                            <td id="records_weight"></td>
+                                                            <td id="records_temperature"></td>
+                                                            <td id="records_cardiac"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <table class="table table-striped table-bordered" id="records2">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th>Respiratory Rate</th>
+                                                            <th class="table-plus">Fundic Height</th>
+                                                            <th class="table-plus">FHT</th>
+                                                            <th style="text-align: center">IE</th>
+                                                            <th>Diagnosis</th>
+                                                            <th>Plan</th>
+                                                            <th>Follow Up Check</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="records_respiratory"></td>
+                                                            <td id="records_fundic"></td>
+                                                            <td id="records_fht"></td>
+                                                            <td id="records_ie"></td>
+                                                            <td id="records_diagnosis"></td>
+                                                            <td id="records_plan"></td>
+                                                            <td id="records_follow_up"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
 
 
                                     </div>

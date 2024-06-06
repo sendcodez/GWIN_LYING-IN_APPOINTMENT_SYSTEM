@@ -94,16 +94,33 @@
                                                         <i class="dw dw-add"></i> Add Newborn Record
                                                     </button>
 
-                                                    <button type="button" class="dropdown-item add-record-btn"
-                                                        data-patient-id="{{ $patient->user_id }}"
-                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                        <i class="dw dw-add"></i> Add Record
-                                                    </button>
-
                                                     <button type="button" class="dropdown-item add-postpartum-btn"
                                                         data-patient-id="{{ $patient->user_id }}"
                                                         data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
                                                         <i class="dw dw-add"></i> Add Postpartum Monitoring
+                                                    </button>
+
+                                                    <button type="button" class="dropdown-item add-physician-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
+                                                        data-patient-age="{{ $patient->age }}"
+                                                        data-patient-address="{{ $patient->barangay }} {{ $patient->city }} {{ $patient->province }}">
+                                                        <i class="dw dw-add"></i> Add Physician's Order
+                                                    </button>
+
+                                                    <button type="button" class="dropdown-item add-record-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                        <i class="dw dw-add"></i> Add PNCU Record
+                                                    </button>
+
+                                                    <button type="button" class="dropdown-item add-staff-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
+                                                        data-patient-age="{{ $patient->age }}"
+                                                        data-patient-sex="{{ $patient->sex }}"
+                                                        data-patient-civil="{{ $patient->civil }}">
+                                                        <i class="dw dw-add"></i> Add Staff Notes
                                                     </button>
 
                                                     <button type="button" class="dropdown-item add-ultrasound-btn"
@@ -149,13 +166,13 @@
                             </tbody>
                         </table>
                     </div>
-                    <!--ADD RECORD-->
+                    <!--ADD PNCU RECORD-->
                     <div class="modal fade" id="addRecordModal" tabindex="-1" role="dialog"
                         aria-labelledby="addRecordModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3 class="text-center">Add Record</h3>
+                                    <h3 class="text-center">Add PNC Record</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -867,7 +884,7 @@ aria-labelledby="addPostpartumModalLabel" aria-hidden="true">
 <!-- Add Labor Modal -->
 <div class="modal fade" id="addLaborModal" tabindex="-1" role="dialog"
 aria-labelledby="addLaborModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
+<div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
         <div class="modal-header">
             <h3 class="text-center">Add Labor Monitoring</h3>
@@ -972,6 +989,184 @@ aria-labelledby="addLaborModalLabel" aria-hidden="true">
 </div>
 
 
+<!-- Add Staff Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog"
+aria-labelledby="addStaffModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="text-center">Add Staff Notes</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+           <form id="multiStepForm" method="POST" action="{{ route('staffnotes.store') }}"
+               enctype="multipart/form-data">
+               @csrf
+               <div class="row">
+                   <div class="col-md-6">
+                       <label>Patient Name</label>
+                       <div class="form-group">
+                           <input type="text" name="patient_name" class="form-control"
+                               id="staff_patient_name" readonly>
+                       </div>
+                   </div>
+
+                   <div class="col-md-6">
+                       <label>Patient ID</label>
+                       <div class="form-group">
+                           <input type="text" name="user_id" class="form-control"
+                               id="staff_patient_id" readonly>
+                       </div>
+                   </div>
+                <div class="col-md-6">
+                    <label>Patient Age</label>
+                    <div class="form-group">
+                        <input type="text" name="age" class="form-control"
+                            id="staff_patient_age" readonly>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Patient Civil Status</label>
+                    <div class="form-group">
+                        <input type="text" name="civil" class="form-control"
+                            id="staff_patient_civil" readonly>
+                    </div>
+                </div>
+               </div>
+               <div class="row">
+                   <div class="col-md-12">
+                       <label>Bed Number</label>
+                       <div class="form-group">
+                           <input type="number" name="bed" class="form-control" required>
+                       </div>
+                       <label>Date</label>
+                       <div class="form-group">
+                           <input type="date" name="date" class="form-control" required>
+                       </div>
+                       <label>Time</label>
+                       <div class="form-group">
+                           <input type="time" name="time" class="form-control" required>
+                       </div>
+                       <label>Remarks</label>
+                       <div class="form-group">
+                        <textarea class="form-control" name="remarks" required></textarea>
+                       </div>
+                   </div>
+
+                   </div>
+               </div>
+            
+               <div class="modal-footer">
+                   <button type="reset" class="btn btn-danger">
+                       <i class="bx bx-x d-block d-sm-none"></i>
+                       <span class="d-none d-sm-block">Reset</span>
+                   </button>
+                   <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                       <i class="bx bx-check d-block d-sm-none"></i>
+                       <span class="d-none d-sm-block">Submit</span>
+                   </button>
+               </div>
+           </form>
+       </div>
+    </div>
+</div>
+
+<!-- Add Physician's Order -->
+<div class="modal fade" id="addPhysicianModal" tabindex="-1" role="dialog"
+aria-labelledby="addPhysicianModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="text-center">Add Physician Order</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+           <form id="multiStepForm" method="POST" action="{{ route('physician.store') }}"
+               enctype="multipart/form-data">
+               @csrf
+               <div class="row">
+                   <div class="col-md-6">
+                       <label>Patient Name</label>
+                       <div class="form-group">
+                           <input type="text" name="patient_name" class="form-control"
+                               id="physician_patient_name" readonly>
+                       </div>
+                   </div>
+
+                   <div class="col-md-6">
+                       <label>Patient ID</label>
+                       <div class="form-group">
+                           <input type="text" name="user_id" class="form-control"
+                               id="physician_patient_id" readonly>
+                       </div>
+                   </div>
+                <div class="col-md-6">
+                    <label>Patient Age</label>
+                    <div class="form-group">
+                        <input type="text" name="age" class="form-control"
+                            id="physician_patient_age" readonly>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Patient Address</label>
+                    <div class="form-group">
+                        <input type="text" name="address" class="form-control"
+                            id="physician_patient_address" readonly>
+                    </div>
+                </div>
+               </div>
+               <div class="row">
+                   <div class="col-md-12">
+                       <label>Bed Number</label>
+                       <div class="form-group">
+                           <input type="number" name="bed" class="form-control" required>
+                       </div>
+                       <label>Attending Physician</label>
+                       <div class="form-group">
+                           <input type="text" name="physician" class="form-control" required>
+                       </div>
+                       <label>Date</label>
+                       <div class="form-group">
+                           <input type="date" name="date" class="form-control" required>
+                       </div>
+                       <label>Time</label>
+                       <div class="form-group">
+                           <input type="time" name="time" class="form-control" required>
+                       </div>
+                       <label>Order</label>
+                       <div class="form-group">
+                            <textarea class="form-control" name="order" required></textarea>
+                       </div>
+                       <label>Time Noted</label>
+                       <div class="form-group">
+                            <input type="time" name="time_noted" class="form-control" required>
+                       </div>
+                   </div>
+
+                   </div>
+               </div>
+            
+               <div class="modal-footer">
+                   <button type="reset" class="btn btn-danger">
+                       <i class="bx bx-x d-block d-sm-none"></i>
+                       <span class="d-none d-sm-block">Reset</span>
+                   </button>
+                   <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                       <i class="bx bx-check d-block d-sm-none"></i>
+                       <span class="d-none d-sm-block">Submit</span>
+                   </button>
+               </div>
+           </form>
+       </div>
+    </div>
+</div>
+
+
+
                 </div>
             </div>
         </div>
@@ -1052,6 +1247,34 @@ aria-labelledby="addLaborModalLabel" aria-hidden="true">
                 $('#labor_patient_name').val(patientName);
                 $('#labor_patient_id').val(patientId);
                 $('#addLaborModal').modal('show');
+            });
+
+            //Show Add Labor Modal
+            $('.add-staff-btn').click(function() {
+                var patientId = $(this).data('patient-id');
+                var patientName = $(this).data('patient-name');
+                var patientAge = $(this).data('patient-age');
+                var patientSex = $(this).data('patient-sex');
+                var patientCivil = $(this).data('patient-civil');
+                $('#staff_patient_name').val(patientName);
+                $('#staff_patient_id').val(patientId);
+                $('#staff_patient_sex').val(patientSex);
+                $('#staff_patient_age').val(patientAge);
+                $('#staff_patient_civil').val(patientCivil);
+                $('#addStaffModal').modal('show');
+            });
+
+            //Show Add Physician Order Modal
+            $('.add-physician-btn').click(function() {
+                var patientId = $(this).data('patient-id');
+                var patientName = $(this).data('patient-name');
+                var patientAge = $(this).data('patient-age');
+                var patientAddress = $(this).data('patient-address');
+                $('#physician_patient_name').val(patientName);
+                $('#physician_patient_id').val(patientId);
+                $('#physician_patient_address').val(patientAddress);
+                $('#physician_patient_age').val(patientAge);
+                $('#addPhysicianModal').modal('show');
             });
 
             $('.modal .close').click(function() {
