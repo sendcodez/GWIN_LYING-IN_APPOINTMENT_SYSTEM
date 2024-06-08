@@ -22,6 +22,26 @@ class IndexController extends Controller
     {
         return view ('auth.login');
     }
+    public function services()
+    {
+        $website = Website::first();
+        $doctors = Doctor::all(); 
+        return view('services', compact('website', 'doctors'));
+    }
+
+    public function about()
+    {
+        $website = Website::first();
+        $doctors = Doctor::all(); 
+        return view('about', compact('website', 'doctors'));
+    }
+
+    public function pricing()
+    {
+        $website = Website::first();
+        $doctors = Doctor::all(); 
+        return view('pricing', compact('website', 'doctors'));
+    }
 
 
     /**

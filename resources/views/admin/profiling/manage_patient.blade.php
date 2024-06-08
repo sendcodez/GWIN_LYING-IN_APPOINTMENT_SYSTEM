@@ -62,6 +62,12 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 
+                                                    <button type="button" class="dropdown-item add-attachment-btn"
+                                                        data-patient-id="{{ $patient->user_id }}"
+                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                        <i class="dw dw-add"></i> Add Attachment
+                                                    </button>
+
                                                     <button type="button" class="dropdown-item add-delivery-btn"
                                                         data-patient-id="{{ $patient->user_id }}"
                                                         data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
@@ -1165,6 +1171,68 @@ aria-labelledby="addPhysicianModalLabel" aria-hidden="true">
     </div>
 </div>
 
+ <!-- Add Attachment Modal -->
+ <div class="modal fade" id="addAttachmentModal" tabindex="-1" role="dialog"
+ aria-labelledby="addAttachmentModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered ">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h3 class="text-center">Add Attachment</h3>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body">
+             <form id="multiStepForm" method="POST" action="{{ route('attachment.store') }}"
+                 enctype="multipart/form-data">
+                 @csrf
+                 <div class="row">
+                     <div class="col-md-12">
+                         <label>Patient Name</label>
+                         <div class="form-group">
+                             <input type="text" name="patient_name" class="form-control"
+                                 id="attachment_patient_name" readonly>
+                         </div>
+                         <label>Patient ID</label>
+                         <div class="form-group">
+                             <input type="text" name="patient_id" class="form-control"
+                                 id="attachment_patient_id" readonly>
+                         </div>
+
+                         <label>Date</label>
+                         <div class="form-group">
+                             <input type="date" name="date" class="form-control">
+                         </div>
+                         <label>Name</label>
+                         <div class="form-group">
+                             <input type="text" name="name" class="form-control">
+                         </div>
+                         <label>Description</label>
+                         <div class="form-group">
+                             <input type="text" name="description" class="form-control">
+                         </div>
+                         <label>Attachment</label>
+                         <div class="form-group">
+                             <input type="file" name="attachment" class="form-control">
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="reset" class="btn btn-danger">
+                         <i class="bx bx-x d-block d-sm-none"></i>
+                         <span class="d-none d-sm-block">Reset</span>
+                     </button>
+                     <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                         <i class="bx bx-check d-block d-sm-none"></i>
+                         <span class="d-none d-sm-block">Submit</span>
+                     </button>
+                 </div>
+             </form>
+         </div>
+     </div>
+ </div>
+</div>
+
 
 
                 </div>
@@ -1275,6 +1343,15 @@ aria-labelledby="addPhysicianModalLabel" aria-hidden="true">
                 $('#physician_patient_address').val(patientAddress);
                 $('#physician_patient_age').val(patientAge);
                 $('#addPhysicianModal').modal('show');
+            });
+
+            // Show Add Attachment Modal
+            $('.add-attachment-btn').click(function() {
+                var patientId = $(this).data('patient-id');
+                var patientName = $(this).data('patient-name');
+                $('#attachment_patient_name').val(patientName);
+                $('#attachment_patient_id').val(patientId);
+                $('#addAttachmentModal').modal('show');
             });
 
             $('.modal .close').click(function() {

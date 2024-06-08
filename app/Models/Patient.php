@@ -122,4 +122,8 @@ class Patient extends Model
     {
         return $this->hasMany(Physician::class, 'user_id', 'user_id');
     }
+    public function attachment()
+    {
+        return $this->hasMany(Attachment::class, 'user_id', 'user_id');
+    }
 }

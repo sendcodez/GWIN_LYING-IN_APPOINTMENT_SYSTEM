@@ -42,6 +42,8 @@ $(document).ready(function () {
                     var recordsTable1 = $("#records1 tbody");
                     var records2 = data.records;
                     var recordsTable2 = $("#records2 tbody");
+                    var attachmentData = data.attachment; // Get the array of attachment records
+                    var attachmentTable = $("#attachment tbody");
                     // Clear existing rows
                     ultrasoundTable.empty();
                     labTable.empty();
@@ -60,6 +62,7 @@ $(document).ready(function () {
                     physicianTable.empty();
                     recordsTable1.empty();
                     recordsTable2.empty();
+                    attachmentTable.empty();
                     
                     $("#fullname").text(
                         data.firstname +
@@ -150,18 +153,62 @@ $(document).ready(function () {
                         var row = $("<tr>");
                         row.append($("<td>").text(record.ultra_date));
                         row.append($("<td>").text(record.result));
-
+                    
                         // Create an image element for the attachment
                         var img = $("<img>")
                             .attr("src", record.attachment)
-                            .attr("alt", "ultrasound")
                             .css("max-width", "100px");
+                    
+                        // Create a link element for the file
+                        var link = $("<a>")
+                            .attr("href", record.attachment)
+                            .attr("target", "_blank")
+                            .text("View File");
+                    
+                        // Create a div to contain both the image and the link
+                        var attachmentDiv = $("<div>")
+                            .append(img)
+                            .append("<br>") // Line break between the image and the link
+                            .append(link);
+                    
                         var attachmentCell = $("<td>")
                             .addClass("text-center")
-                            .append(img);
-
+                            .append(attachmentDiv);
+                    
                         row.append(attachmentCell);
                         ultrasoundTable.append(row);
+                    });
+
+                    //ATTACHMENT
+                    attachmentData.forEach(function (attachment) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(attachment.attachment_date));
+                        row.append($("<td>").text(attachment.attachment_name));
+                        row.append($("<td>").text(attachment.attachment_description));
+                    
+                        // Create an image element for the attachment
+                        var img = $("<img>")
+                            .attr("src", attachment.attachment_file)
+                            .css("max-width", "100px");
+                    
+                        // Create a link element for the file
+                        var link = $("<a>")
+                            .attr("href", attachment.attachment_file)
+                            .attr("target", "_blank")
+                            .text("View File");
+                    
+                        // Create a div to contain both the image and the link
+                        var attachmentDiv = $("<div>")
+                            .append(img)
+                            .append("<br>") // Line break between the image and the link
+                            .append(link);
+                    
+                        var attachmentCell = $("<td>")
+                            .addClass("text-center")
+                            .append(attachmentDiv);
+                    
+                        row.append(attachmentCell);
+                        attachmentTable.append(row);
                     });
 
                     //DELIVERY DATA
@@ -574,16 +621,28 @@ $(document).ready(function () {
                         var row = $("<tr>");
                         row.append($("<td>").text(record.ultra_date));
                         row.append($("<td>").text(record.result));
-
+                    
                         // Create an image element for the attachment
                         var img = $("<img>")
                             .attr("src", record.attachment)
-                            .attr("alt", "ultrasound")
                             .css("max-width", "100px");
+                    
+                        // Create a link element for the file
+                        var link = $("<a>")
+                            .attr("href", record.attachment)
+                            .attr("target", "_blank")
+                            .text("View File");
+                    
+                        // Create a div to contain both the image and the link
+                        var attachmentDiv = $("<div>")
+                            .append(img)
+                            .append("<br>") // Line break between the image and the link
+                            .append(link);
+                    
                         var attachmentCell = $("<td>")
                             .addClass("text-center")
-                            .append(img);
-
+                            .append(attachmentDiv);
+                    
                         row.append(attachmentCell);
                         ultrasoundTable.append(row);
                     });

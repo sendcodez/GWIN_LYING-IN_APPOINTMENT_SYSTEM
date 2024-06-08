@@ -81,9 +81,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="{{ route('index') }}" class="nav-item nav-link active">Home</a>
+                        <a href="{{ route('index') }}" class="nav-item nav-link">Home</a>
                         <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
-                        <a href="{{ route('services') }}" class="nav-item nav-link">Service</a>
+                        <a href="javascript:void(0);" class="nav-item nav-link active">Service</a>
                         <a href="{{ route('pricing') }}" class="nav-item nav-link">Pricing</a>
                         <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
                     </div>
@@ -93,72 +93,6 @@
     </div>
     <!-- Navbar End --> 
 
-
-    <!-- Hero Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
-        <div class="container py-5">
-            <div class="row justify-content-start">
-                <div class="col-lg-8 text-center text-lg-start">
-                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5" style="border-color: rgba(256, 256, 256, .3) !important;">Welcome To {{$website->business_name}}</h5>
-                    <h1 class="display-1 text-white mb-md-4">{{ $website->tagline}}</h1>
-                    <div class="pt-2">
-                      
-                        <a href="{{route('login')}}" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Appointment</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Hero End -->
-
-
-    <!-- About Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="row gx-5">
-                <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded" src="img/midwife.jpg" style="object-fit: cover;">
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="mb-4">
-                        <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">About Us</h5>
-                        <h1 class="display-4">{{$website->tagline2}}</h1>
-                    </div>
-                    <p>{{$website->about_us}}</p>
-                    <div class="row g-3 pt-3">
-                        <div class="col-sm-3 col-6">
-                            <div class="bg-light text-center rounded-circle py-4">
-                                <i class="fa fa-3x fa-user-md text-primary mb-3"></i>
-                                <h6 class="mb-0">Qualified<small class="d-block text-primary">Doctors</small></h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-6">
-                            <div class="bg-light text-center rounded-circle py-4">
-                                <i class="fa fa-3x fa-procedures text-primary mb-3"></i>
-                                <h6 class="mb-0">Emergency<small class="d-block text-primary">Services</small></h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-6">
-                            <div class="bg-light text-center rounded-circle py-4">
-                                <i class="fa fa-3x fa-microscope text-primary mb-3"></i>
-                                <h6 class="mb-0">Accurate<small class="d-block text-primary">Testing</small></h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-6">
-                            <div class="bg-light text-center rounded-circle py-4">
-                                <i class="fa fa-3x fa-ambulance text-primary mb-3"></i>
-                                <h6 class="mb-0">Free<small class="d-block text-primary">Ambulance</small></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- About End -->
-    
 
     <!-- Services Start -->
     <div class="container-fluid py-5">
@@ -234,98 +168,6 @@
         </div>
     </div>
     <!-- Services End -->
-
-
-    <!-- Appointment Start -->
-    
-    <!-- Appointment End -->
-
-
-    <!-- Pricing Plan Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5" style="max-width: 500px;">
-                <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Clinical Packages</h5>
-                <h1 class="display-4">Awesome Clinical Programs</h1>
-            </div>
-            <div class="owl-carousel price-carousel position-relative" style="padding: 0 45px 45px 45px;">
-                <div class="bg-light rounded text-center">
-                    <div class="position-relative">
-                        <img class="img-fluid rounded-top" src="img/price-1.jpg" alt="">
-                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center" style="background: rgba(29, 42, 77, .8);">
-                            <h3 class="text-white">MIDWIFE PACKAGE</h3>
-                            <h1 class="display-4 text-white mb-0">
-                                <small class="align-top fw-normal" style="font-size: 22px; line-height: 45px;">₱</small>3,000<small class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">.    00</small>
-                                
-                            </h1>
-                            <small class="align-bottom fw-normal" style="font-size: 12px; line-height: 45px;color:white;">with PHILHEALTH</small>
-                        </div>
-                    </div>
-                    <div class="text-center py-5">
-                        <p>₱ 13,000 - 15,000 without PHILHEALTH</p>
-                        <p>Expanded Newbord Screening</p>
-                        <p>Newborn Hearing Test</p>
-                        <p>Newborn vaccines (Hepa B, BCG, Vitamin K)</p>
-                        <p>Birth Certificate & Affidavit processing</p>
-                        <p>Baby Laboratory (CBC, Blood Typing)</p>
-                    </div>
-                </div>
-                <div class="bg-light rounded text-center">
-                    <div class="position-relative">
-                        <img class="img-fluid rounded-top" src="img/price-2.jpg" alt="">
-                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center" style="background: rgba(29, 42, 77, .8);">
-                            <h3 class="text-white">OBGYNE PACKAGE</h3>
-                            <h1 class="display-4 text-white mb-0">
-                                <small class="align-top fw-normal" style="font-size: 22px; line-height: 45px;">₱</small>15,000<small class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">.00</small>
-                            </h1>
-                            <small class="align-bottom fw-normal" style="font-size: 12px; line-height: 45px;color:white;">with PHILHEALTH</small>
-                        </div>
-                    </div>
-                    <div class="text-center py-5">
-                        <p>₱ 25, 000 without PHILHEALTH</p>
-                        <p>Expanded Newbord Screening</p>
-                        <p>Newborn Hearing Test</p>
-                        <p>Newborn vaccines (Hepa B, BCG, Vitamin K)</p>
-                        <p>Birth Certificate & Affidavit processing</p>
-                        <p>Baby Laboratory (CBC, Blood Typing)</p>
-                    </div>
-                </div>
-               
-        </div>
-    </div>
-    <!-- Pricing Plan End -->
-
-
-    <!-- Team Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5" style="max-width: 500px;">
-                <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Our Doctors</h5>
-                <h1 class="display-4">Qualified Healthcare Professionals</h1>
-            </div>
-            <div class="owl-carousel team-carousel position-relative">
-                @foreach ($doctors as $doctor)
-                <div class="team-item">
-                    <div class="row g-0 bg-light rounded overflow-hidden">
-                        <div class="col-12 col-sm-5 h-100">
-                            <img class="img-fluid h-100" src="{{ asset('doc_image/' . $doctor->image) }}" style="object-fit: cover;">
-                        </div>
-                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
-                            <div class="mt-auto p-4">
-                                <h3>{{ $doctor->firstname }} {{ $doctor->lastname}}</h3>
-                                <h6 class="fw-normal fst-italic text-primary mb-4">{{ $doctor->expertise }}</h6>
-                                <p class="m-0">{{ $doctor->description}}</p>
-                            </div>
-                            <div class="d-flex mt-auto border-top p-4">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
 
     <div class="container-fluid bg-dark text-light border-top border-secondary py-4">
         <div class="container">

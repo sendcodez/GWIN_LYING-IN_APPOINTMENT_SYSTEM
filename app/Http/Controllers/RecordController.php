@@ -18,6 +18,7 @@ use App\Models\Labor;
 use App\Models\Newborn;
 use App\Models\ActivityLog;
 use App\Models\Staffnotes;
+use App\Models\Attachment;
 use App\Models\Physician;
 use Illuminate\Support\Facades\Auth;
 
@@ -154,6 +155,59 @@ class RecordController extends Controller
             ]);
 
             return back()->with('success', 'Ultrasound added successfully.');
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
+
+    public function storeAttachment(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'patient_id' => 'required|exists:users,id',
+                'date' => 'required|date',
+                'name' => 'required|string',
+                'description' => 'required|string',
+                'attachment' => 'required|file|mimes:jpeg,png,jpg,gif,svg,pdf,doc,docx|max:5120',
+            ]);
+
+            // Check if a file has been uploaded
+            if ($request->hasFile('attachment')) {
+                // Retrieve the uploaded file
+                $attachment = $request->file('attachment');
+
+                // Generate the filename using patient ID and current timestamp
+                $imageName = 'attachment_' . $validatedData['patient_id'] . '_' . time() . '.' . $attachment->getClientOriginalExtension();
+
+                // Move the uploaded file to the desired directory
+                $attachment->move(public_path('attachments'), $imageName);
+            } else {
+                // If no file has been uploaded, set imageName to null
+                $imageName = null;
+            }
+
+            // Create the ultrasound record with the filename
+            $attachment = Attachment::create([
+                'user_id' => $validatedData['patient_id'],
+                'name' => $validatedData['name'],
+                'date' => $validatedData['date'],
+                'description' => $validatedData['description'],
+                'attachment' => $imageName,
+            ]);
+
+            // Log the activity
+            $user = Auth::user();
+            $action = 'added_attachment';
+            $description = 'Added a attachment for patient: ' . $attachment->patient_name;
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+
+            return back()->with('success', 'Attachment added successfully.');
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
             return redirect()->back()->with('error', $errorMessage);
@@ -479,6 +533,7 @@ class RecordController extends Controller
             'labor',
             'staffnotes',
             'physician',
+            'attachment',
           
         ])->where('user_id', $id)->first();
 
@@ -861,6 +916,27 @@ class RecordController extends Controller
                 ];
             }
 
+            $attachmentData = [];
+
+            if ($patient && isset($patient->attachment)) {
+                foreach ($patient->attachment as $attachment) {
+                    $attachmentData[] = [
+                        'attachment_date' => $attachment->date ? date('m-d-Y', strtotime($attachment->date)) : 'No record',
+                        'attachment_name' => $attachment->name ?? 'No record',
+                        'attachment_description' => $attachment->description ?? 'No record',
+                        'attachment_file' => $attachment->attachment ? asset('attachments/' . $attachment->attachment) : 'No record'
+                    ];
+                }
+            } else {
+                // Handle the case when $patient is null or attachments is not set
+                $attachmentData[] = [
+                    'attachment_date' => 'No record',
+                    'attachment_name' => 'No record',
+                    'attachment_description' => 'No record',
+                    'attachment_file' => 'No record'
+                ];
+            }
+
 
             return response()->json([
                 // USER
@@ -921,6 +997,8 @@ class RecordController extends Controller
                 'physician' => $physicianData,
                 //PNCU RECORDS
                 'records' => $recordsData,
+                //ATTACHMENT
+                'attachment' => $attachmentData,
                 // MEDICAL HISTORY
                 'hypertension' => $medical ? ($medical->hypertension == 1 ? 'Yes' : 'No') : 'No record',
                 'heartdisease' => $medical ? ($medical->heartdisease == 1 ? 'Yes' : 'No') : 'No record',

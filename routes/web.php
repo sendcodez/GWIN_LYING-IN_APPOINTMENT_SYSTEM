@@ -33,6 +33,9 @@ use App\Models\Patient;
 
 */
 Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/services', [IndexController::class, 'services'])->name('services');
+Route::get('/about', [IndexController::class, 'about'])->name('about');
+Route::get('/pricing', [IndexController::class, 'pricing'])->name('pricing');
 Route::get('/login', function () {
     return view('auth.login');
 });
@@ -158,6 +161,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/add-labor', [RecordController::class, 'storeLabor'])->name('labor.store');
     Route::post('/admin/add-staff-notes', [RecordController::class, 'storeStaffnotes'])->name('staffnotes.store');
     Route::post('/admin/add-physician-order', [RecordController::class, 'storePhysician'])->name('physician.store');
+    Route::post('/admin/add-attachment', [RecordController::class, 'storeAttachment'])->name('attachment.store');
     Route::get('/patient/{id}', [RecordController::class, 'getPatientDetails']);
 
     //MYRECORDS ROUTE

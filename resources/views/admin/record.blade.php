@@ -46,6 +46,10 @@
                                                 Appointment</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#attachment" role="tab">
+                                               Attachments</a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#pregnancy" role="tab">Pregnancy
                                                 History</a>
                                         </li>
@@ -746,6 +750,30 @@
                                             </div>
                                         </div>
 
+                                            <!-- ATTACHMENT -->
+
+                                            <div class="tab-pane fade " id="attachment" role="tabpanel">
+                                                <div class="pd-20">
+                                                    <table class="table table-striped table-bordered" id="attachment">
+                                                        <thead>
+                                                            <tr class="table-info">
+                                                                <th class="table-plus">Date</th>
+                                                                <th class="table-plus">Name</th>
+                                                                <th class="table-plus">Description</th>
+                                                                <th style="text-align: center">Attachment</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td id="attachment_date"></td>
+                                                                <td id="attachment_name"></td>
+                                                                <td id="attachment_description"></td>
+                                                                <td class="text-center" id="attachment_file"> <img src="{{ asset('') }}" style="max-width: 100px;" /></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
 
 
                                     </div>
