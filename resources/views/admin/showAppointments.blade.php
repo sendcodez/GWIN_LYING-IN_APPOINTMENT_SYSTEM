@@ -78,6 +78,10 @@
                                                     $statusWord = 'Cancelled';
                                                     $badgeClass = 'badge badge-danger';
                                                     break;
+                                                case 5:
+                                                    $statusWord = 'Disapproved';
+                                                    $badgeClass = 'badge badge-info';
+                                                    break;
                                                 default:
                                                     $statusWord = 'Unknown';
                                                     $badgeClass = 'badge badge-secondary';
@@ -168,6 +172,9 @@
                                                                 break;
                                                             case 4:
                                                                 echo '<span class="badge badge-danger">Cancelled</span>';
+                                                                break;
+                                                            case 5:
+                                                                echo '<span class="badge badge-info">Disapproved</span>';
                                                                 break;
                                                             default:
                                                                 echo '<span class="badge badge-secondary">Unknown</span>';

@@ -254,7 +254,7 @@ class RecordController extends Controller
     public function storeDelivery(Request $request)
     {
         try {
-           // dd($request->all());
+            // dd($request->all());
             $validatedData = $request->validate([
                 'user_id' => 'required|exists:users,id',
                 'name' => 'required|string',
@@ -300,7 +300,7 @@ class RecordController extends Controller
     public function storeNewborn(Request $request)
     {
         try {
-           // dd($request->all());
+            // dd($request->all());
             $validatedData = $request->validate([
                 'user_id' => 'required|exists:users,id',
                 'card' => 'required|string',
@@ -351,7 +351,7 @@ class RecordController extends Controller
     public function storePostpartum(Request $request)
     {
         try {
-           // dd($request->all());
+            // dd($request->all());
             $validatedData = $request->validate([
                 'user_id' => 'required|exists:users,id',
                 'date' => 'required|date',
@@ -362,7 +362,7 @@ class RecordController extends Controller
                 'bp' => 'required|string',
                 'u' => 'required|string',
                 's' => 'required|string',
-               
+
             ]);
 
 
@@ -388,7 +388,7 @@ class RecordController extends Controller
     public function storeLabor(Request $request)
     {
         try {
-           // dd($request->all());
+            // dd($request->all());
             $validatedData = $request->validate([
                 'user_id' => 'required|exists:users,id',
                 'date' => 'required|date',
@@ -426,7 +426,7 @@ class RecordController extends Controller
     public function storeStaffnotes(Request $request)
     {
         try {
-           // dd($request->all());
+            // dd($request->all());
             $validatedData = $request->validate([
                 'user_id' => 'required|exists:users,id',
                 'date' => 'required|date',
@@ -459,7 +459,7 @@ class RecordController extends Controller
     public function storePhysician(Request $request)
     {
         try {
-           // dd($request->all());
+            // dd($request->all());
             $validatedData = $request->validate([
                 'user_id' => 'required|exists:users,id',
                 'date' => 'required|date',
@@ -534,7 +534,7 @@ class RecordController extends Controller
             'staffnotes',
             'physician',
             'attachment',
-          
+
         ])->where('user_id', $id)->first();
 
         if ($patient || User::where('id', $id)->exists()) {
@@ -636,7 +636,11 @@ class RecordController extends Controller
                         'doctor' => $app->doctor ? 'Dr. ' . $app->doctor->lastname : 'No record',
                         'service' => $app->service ? $app->service->name : 'No record',
                         'start_time' => $app->start_time ? date('h:i A', strtotime($app->start_time)) : 'No record',
-                        'status' => $app->status == 1 ? 'Pending' : ($app->status == 2 ? 'Approved' : ($app->status == 3 ? 'Completed' : ($app->status == 4 ? 'Cancelled' : 'No record')))
+                        'status' => $app->status == 1 ? 'Pending' :
+                            ($app->status == 2 ? 'Approved' :
+                                ($app->status == 3 ? 'Completed' :
+                                    ($app->status == 4 ? 'Cancelled' :
+                                        ($app->status == 5 ? 'Disapproved' : 'No record'))))
                     ];
                 }
             } else {
@@ -650,7 +654,7 @@ class RecordController extends Controller
                 ];
             }
 
- 
+
             $medicationData = [];
             if ($patient && isset($patient->medications)) {
                 foreach ($patient->medications as $medication) {
@@ -736,12 +740,12 @@ class RecordController extends Controller
                         'baby_birthplace' => $newborn->birthplace ?? 'No record',
                         'baby_address' => $newborn->address ?? 'No record',
                         'baby_contact' => $newborn->contact ?? 'No record',
-                        'baby_blood' => $newborn->blood_collector   ?? 'No record',
+                        'baby_blood' => $newborn->blood_collector ?? 'No record',
                         'baby_staff' => $newborn->staff ?? 'No record',
                         'drr' => $newborn->result_received ?? 'No record',
                         'baby_result' => $newborn->result ?? 'No record',
                         'dc' => $newborn->date_claimed ?? 'No record',
-                        'cb' => $newborn->claimed_by     ?? 'No record',
+                        'cb' => $newborn->claimed_by ?? 'No record',
 
 
                     ];
@@ -828,7 +832,7 @@ class RecordController extends Controller
                     'intensity' => 'No record',
                     'interval' => 'No record',
                     'frequency' => 'No record',
-                    
+
                 ];
             }
 
@@ -848,7 +852,7 @@ class RecordController extends Controller
                     'staff_time' => 'No record',
                     'staff_bed' => 'No record',
                     'staff_remarks' => 'No record',
-                    
+
                 ];
             }
 
@@ -872,7 +876,7 @@ class RecordController extends Controller
                     'physician_order' => 'No record',
                     'physician_physician' => 'No record',
                     'physician_time_noted' => 'No record',
-                    
+
                 ];
             }
 
@@ -912,7 +916,7 @@ class RecordController extends Controller
                     'records_diagnosis' => 'No record',
                     'records_follow_up' => 'No record',
                     'records_plan' => 'No record',
-                    
+
                 ];
             }
 

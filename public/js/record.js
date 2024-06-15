@@ -369,49 +369,49 @@ $(document).ready(function () {
                         row.append($("<td>").text(appointment.status));
                         appointmentTable.append(row);
                     });
-
+                    
                     var today = new Date(); // Current date
                     console.log("Today's date:", today.toLocaleDateString());
-                    var hasAppointmentToday = appointments.some(function (
-                        appointment
-                    ) {
+                    var hasAppointmentToday = false;
+                    
+                    appointments.forEach(function (appointment) {
                         // Convert the appointment date to a Date object for comparison
                         var appointmentDate = new Date(appointment.app_date);
-
+                        var appointmentStatus = appointment.status;
+                    
                         // Compare only the date part (not time)
-                        var appointmentDateString =
-                            appointmentDate.toLocaleDateString();
+                        var appointmentDateString = appointmentDate.toLocaleDateString();
                         var todayDateString = today.toLocaleDateString();
-                        console.log(
-                            "Comparing dates:",
-                            appointmentDateString,
-                            "and",
-                            todayDateString
-                        ); // Log the comparison of dates
-                        if (appointmentDateString === todayDateString) {
+                        console.log("Comparing dates:", appointmentDateString, "and", todayDateString); // Log the comparison of dates
+                        console.log("Appointment status:", appointmentStatus);
+
+                        if (appointmentDateString === todayDateString && appointmentStatus !== 'Cancelled' && appointmentStatus !== 'Disapproved' && appointmentStatus !== 'Completed') {
+                            console.log("Valid appointment found: ", appointment);
                             // Extract the time part of the appointment
                             var appointmentStartTime = appointment.start_time;
-
+                    
                             // Show SweetAlert with appointment time
                             Swal.fire({
                                 icon: "success",
                                 title: "Appointment Today",
-                                text:
-                                    "You have an appointment scheduled for today at " +
-                                    appointmentStartTime,
+                                text: "You have an appointment scheduled for today at " + appointmentStartTime,
                                 showConfirmButton: false,
                                 timer: 3000,
                             });
-                        } else {
-                            Swal.fire({
-                                icon: "error",
-                                title: "No Appointment for Today",
-                                text: "You have no appointment scheduled for today!",
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                            hasAppointmentToday = true; // Set flag to true if a valid appointment is found
                         }
                     });
+                    
+                    if (!hasAppointmentToday) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "No Appointment for Today",
+                            text: "You have no appointment scheduled for today!",
+                            showConfirmButton: false,
+                            timer: 3000,
+                        });
+                    }
+                    
 
                     //MEDICAL HISTORY
                     $("#hypertension").text(data.hypertension);
@@ -841,43 +841,48 @@ $(document).ready(function () {
                         row.append($("<td>").text(appointment.status));
                         appointmentTable.append(row);
                     });
-
+                    
                     var today = new Date(); // Current date
-                    var hasAppointmentToday = appointments.some(function (
-                        appointment
-                    ) {
+                    console.log("Today's date:", today.toLocaleDateString());
+                    var hasAppointmentToday = false;
+                    
+                    appointments.forEach(function (appointment) {
                         // Convert the appointment date to a Date object for comparison
                         var appointmentDate = new Date(appointment.app_date);
-
+                        var appointmentStatus = appointment.status;
+                    
                         // Compare only the date part (not time)
-                        var appointmentDateString =
-                            appointmentDate.toLocaleDateString();
+                        var appointmentDateString = appointmentDate.toLocaleDateString();
                         var todayDateString = today.toLocaleDateString();
+                        console.log("Comparing dates:", appointmentDateString, "and", todayDateString); // Log the comparison of dates
+                        console.log("Appointment status:", appointmentStatus);
 
-                        if (appointmentDateString === todayDateString) {
+                        if (appointmentDateString === todayDateString && appointmentStatus !== 'Cancelled' && appointmentStatus !== 'Disapproved' && appointmentStatus !== 'Completed') {
+                            console.log("Valid appointment found: ", appointment);
                             // Extract the time part of the appointment
                             var appointmentStartTime = appointment.start_time;
-
+                    
                             // Show SweetAlert with appointment time
                             Swal.fire({
                                 icon: "success",
                                 title: "Appointment Today",
-                                text:
-                                    "You have an appointment scheduled for today at " +
-                                    appointmentStartTime,
+                                text: "You have an appointment scheduled for today at " + appointmentStartTime,
                                 showConfirmButton: false,
                                 timer: 3000,
                             });
-                        } else {
-                            Swal.fire({
-                                icon: "error",
-                                title: "No Appointment for Today",
-                                text: "You have no appointment scheduled for today!",
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                            hasAppointmentToday = true; // Set flag to true if a valid appointment is found
                         }
                     });
+                    
+                    if (!hasAppointmentToday) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "No Appointment for Today",
+                            text: "You have no appointment scheduled for today!",
+                            showConfirmButton: false,
+                            timer: 3000,
+                        });
+                    }
 
                     //MEDICAL HISTORY
                     $("#hypertension").text(data.hypertension);
