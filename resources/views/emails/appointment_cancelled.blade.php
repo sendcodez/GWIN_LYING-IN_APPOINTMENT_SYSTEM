@@ -6,7 +6,14 @@ We sincerely apologize for the inconvenience caused by the cancellation of your 
 Here are the details of the cancelled appointment:
 
 - **Doctor Name:** Dr. {{ $appointment->doctor->firstname }} {{ $appointment->doctor->lastname }}
-- **Service:** {{ $appointment->service->name }}
+- **Service:**
+    @if($appointment->services->isNotEmpty())
+        @foreach($appointment->services as $service)
+            {{ $service->name }}@if(!$loop->last), @endif
+        @endforeach
+    @else
+        <span style="color:red">Service Not Found</span>
+    @endif
 - **Date:** {{ $appointment->date }}
 - **Time:** {{ \Carbon\Carbon::parse($appointment->start_time)->format('h:i A') }}
 

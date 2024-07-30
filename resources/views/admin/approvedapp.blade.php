@@ -36,8 +36,12 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($appointment->service && $appointment->service->name)
-                                            {{ $appointment->service->name }}
+                                        @if ($appointment->services->isNotEmpty())
+                                            @foreach ($appointment->services as $service)
+                                                {{ $service->name }}@if (!$loop->last)
+                                                    ,
+                                                @endif
+                                            @endforeach
                                         @else
                                             <span style="color:red">Service Not Found</span>
                                         @endif
@@ -137,11 +141,17 @@
                                                     {{ $appointment->patient->firstname }}
                                                     {{ $appointment->patient->lastname }}
                                                 </p>
-                                                <p><strong>Service:</strong>   @if($appointment->service && $appointment->service->name)
-                                                    {{ $appointment->service->name }}
-                                                @else
-                                                    <span style="color:red">Service Not Found</span>
-                                                @endif</p>
+                                                <p><strong>Service:</strong>
+                                                    @if ($appointment->services->isNotEmpty())
+                                                        @foreach ($appointment->services as $service)
+                                                            {{ $service->name }}@if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        @endforeach
+                                                    @else
+                                                        <span style="color:red">Service Not Found</span>
+                                                    @endif
+                                                </p>
                                                 <p><strong>Date:</strong> {{ $appointment->date }}</p>
                                                 <p><strong>Time:</strong> {{ $appointment->start_time }}</p>
                                                 <p><strong>Status:</strong>

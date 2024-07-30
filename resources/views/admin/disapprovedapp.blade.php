@@ -19,7 +19,7 @@
                                 <th>Date</th>
                                 <th>Time</th>
                                 <th>Status</th>
-                                <th>Remarks</th>
+                               <!-- <th>Remarks</th> -->
                                
                                 <th>Action</th>
                                 
@@ -38,15 +38,17 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($appointment->service && $appointment->service->name)
-                                            {{ $appointment->service->name }}
+                                        @if($appointment->services->isNotEmpty())
+                                            @foreach($appointment->services as $service)
+                                                {{ $service->name }}@if(!$loop->last), @endif
+                                            @endforeach
                                         @else
                                             <span style="color:red">Service Not Found</span>
                                         @endif
                                     </td>
                                     <td>{{ $appointment->date }}</td>
                                     <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
-                                    <td>{{ $appointment->remarks }}</td>
+                                   <!-- <td>{{ $appointment->remarks }}</td> -->
                                     <td>
                                         @php
                                             $statusWord = '';
@@ -74,7 +76,7 @@
                                                     break;
                                                 default:
                                                     $statusWord = 'Unknown';
-                                                    $badgeClass = 'badge badge-secondary';
+                                                    $badgeClass = 'badge badge-info';
                                                     break;
                                             }
                                         @endphp
@@ -144,11 +146,17 @@
                                                     {{ $appointment->patient->firstname }}
                                                     {{ $appointment->patient->lastname }}
                                                 </p>
-                                                <p><strong>Service:</strong>   @if($appointment->service && $appointment->service->name)
-                                                    {{ $appointment->service->name }}
-                                                @else
-                                                    <span style="color:red">Service Not Found</span>
-                                                @endif</p>
+                                                <p><strong>Service:</strong>
+                                                    @if ($appointment->services->isNotEmpty())
+                                                        @foreach ($appointment->services as $service)
+                                                            {{ $service->name }}@if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        @endforeach
+                                                    @else
+                                                        <span style="color:red">Service Not Found</span>
+                                                    @endif
+                                                </p>
                                                 <p><strong>Date:</strong> {{ $appointment->date }}</p>
                                                 <p><strong>Time:</strong> {{ $appointment->start_time }}</p>
                                                 <p><strong>Status:</strong>

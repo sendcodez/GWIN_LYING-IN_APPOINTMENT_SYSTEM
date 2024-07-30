@@ -87,13 +87,53 @@
         object-fit: cover;
         /* Ensures the image covers the entire container */
     }
+
+    .sidebar-menu .dropdown-toggle.no-arrow.active {
+        background-color: #4CAF50 !important;
+        /* Replace with your desired active color */
+    }
+
+    /* Sidebar Link Hover */
+    .sidebar-menu .dropdown-toggle.no-arrow:hover {
+        background-color: #A1DD70 !important;
+        /* Replace with your desired hover color */
+    }
+
+    .sidebar-menu .dropdown-toggle.active {
+        background-color: #4CAF50 !important;
+        /* Replace with your desired active color */
+    }
+
+    .sidebar-menu .dropdown-toggle:hover {
+        background-color: #A1DD70 !important;
+        /* Replace with your desired hover color */
+    }
+
+    /* Sidebar Submenu Active Link */
+    .sidebar-menu .submenu .active {
+        background-color: #4CAF50 !important;
+        /* Replace with your desired active color */
+    }
+
+    .sidebar-light .sidebar-menu .show>.dropdown-toggle {
+        background-color: #A1DD70 !important;
+    }
+
+    /* Sidebar Submenu Link Hover */
+    .sidebar-menu .submenu a:hover {
+        background-color: #A1DD70 !important;
+        /* Replace with your desired hover color */
+    }
 </style>
 
 <body>
     <div class="pre-loader">
         <div class="pre-loader-box">
             <div class="loader-logo">
-                <img src="{{ asset('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="logo-image">
+                <img src="{{ asset('img/loading.gif') }}" alt="Logo 1" class="logo-image" style="display: none;">
+                <img src="{{ asset('img/loading2.gif') }}" alt="Logo 2" class="logo-image" style="display: none;">
+                <img src="{{ asset('img/loading3.gif') }}" alt="Logo 3" class="logo-image" style="display: none;">
+                <!-- Add more logos as needed -->
             </div>
             <div class="loader-progress" id="progress_div">
                 <div class="bar" id="bar1"></div>
@@ -247,7 +287,7 @@
         <div class="brand-logo">
             <a href="#">
                 <img src="{{ asset('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="gwin">
-                <h1>GWIN</h1>
+                <h1 style="color:#4CAF50">GWIN</h1>
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
                 <i class="ion-close-round"></i>
@@ -445,11 +485,11 @@
                             <br>
                             <br>
                             <center>
-                            @if (Auth::user()->usertype == 3)
-                                <h5>{{ Auth::user()->id }}</h5>
-                                <p class="font-12 max-width-600">Patient ID </p>
-                            @endif
-                        </center>
+                                @if (Auth::user()->usertype == 3)
+                                    <h5>{{ Auth::user()->id }}</h5>
+                                    <p class="font-12 max-width-600">Patient ID </p>
+                                @endif
+                            </center>
                             <a href="{{ asset('qr_image/' . Auth::user()->qr_name) }}" download>
                                 <center>
                                     <p style="margin-top:-5.56%; max-width: 250px;">
@@ -505,6 +545,19 @@
             toastr.error('{{ session('error') }}');
         </script>
     @endif
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get all the logo images
+            var logos = document.querySelectorAll('.loader-logo .logo-image');
+            
+            // Randomly select a logo
+            var randomIndex = Math.floor(Math.random() * logos.length);
+            
+            // Display the selected logo
+            logos[randomIndex].style.display = 'block';
+        });
+    </script>
+    
     <script>
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', function(event) {

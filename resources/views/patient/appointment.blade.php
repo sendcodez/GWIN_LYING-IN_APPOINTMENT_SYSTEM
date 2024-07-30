@@ -5,6 +5,7 @@
         var allAppointments = @json($allAppointments);
         var doctorAvailabilities = {!! json_encode($doctorAvailabilities) !!};
         var appointments = {!! json_encode($appointments) !!};
+        var restDays = @json($restDays);
     </script>
     <script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -55,10 +56,18 @@
                             <div id="calendar"></div>
                         </div>
                         <!-- Table Section -->
+                        
                         <div class="table-wrap col-md-6 col-sm-6">
-                            <table class="table table-striped custom-bordered-table">
+                            
+                            <table class="table table-striped custom-bordered-table" >
                                 <thead> 
                                     <center><h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3></center>
+                                    <select id="serviceFilter" onchange="filterTable()" class="form-control">
+                                        <option value="all">All Services</option>
+                                        @foreach ($services as $service)
+                                            <option value="{{ $service->name }}">{{ $service->name }}</option>
+                                        @endforeach
+                                    </select>
                                     <tr>
                                         <th>NAME</th>
                                         <th>SERVICE</th>
@@ -66,22 +75,20 @@
                                         <th>TIME AVAILABILITY</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="doctorScheduleTable">
                                     @foreach($doctorAvailabilities as $availability)
-                                    <tr>
+                                    <tr data-services="@foreach($availability->doctor->services as $service){{ $service->name }}@if(!$loop->last), @endif @endforeach">
                                         <td>{{ $availability->doctor->firstname }} {{ $availability->doctor->lastname }}</td>
                                         <td>
                                             @foreach($availability->doctor->services as $service)
                                                 {{ $service->name }}
-                                                {{-- If you want to separate multiple services with commas --}}
                                                 @if(!$loop->last), @endif
                                             @endforeach
                                         </td>
                                         <td>{{ $availability->day }}</td>
                                         <td>{{ $availability->start_time }} - {{ $availability->end_time }}</td>
                                     </tr>
-                                @endforeach
-                                
+                                    @endforeach
                                 </tbody>
                             </table>
                             <br>
@@ -108,19 +115,19 @@
                                 <table class="data-table table" id="appointmentsTable">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Doctor Name</th>
-                                            <th>Service</th>
-                                            <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                         
+                                            <th>DOCTOR NAME</th>
+                                            <th>SERVICE</th>
+                                            <th>DATE</th>
+                                            <th>TIME</th>
+                                            <th>STATUS</th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($appointments as $key => $appointment)
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
+                                               
                                                 <td>
                                                     @if ($appointment->doctor && $appointment->doctor->lastname)
                                                         Dr. {{ ucfirst($appointment->doctor->lastname) }}
@@ -129,14 +136,16 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if ($appointment->service && $appointment->service->name)
-                                                        {{ $appointment->service->name }}
+                                                    @if($appointment->services->isNotEmpty())
+                                                        @foreach($appointment->services as $service)
+                                                            {{ $service->name }}@if(!$loop->last), @endif
+                                                        @endforeach
                                                     @else
                                                         <span style="color:red">Service Not Found</span>
                                                     @endif
                                                 </td>
                                                 <td>{{ $appointment->date }}</td>
-                                                <td>{{ $appointment->start_time }}</td>
+                                                <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                                 <td>
                                                     @php
                                                         $statusWord = '';
@@ -267,8 +276,12 @@
 
                                         <label>Select Service</label>
                                         <div class="form-group">
-                                            <select id="serviceSelect" name="service" class="form-control" required>
-                                                <option value="">Select Service</option>
+                                            <select id="serviceSelect" name="service[]" class="selectpicker form-control"
+											data-size="5"
+											data-style="btn-outline-secondary"
+											multiple
+											data-max-options="3" required>
+                                                
                                                 @foreach ($services as $service)
                                                     <option value="{{ $service->id }}">{{ $service->name }}</option>
                                                 @endforeach
@@ -282,7 +295,7 @@
                                             </select>
                                         </div>
 
-                                        <label>Select Time</label>
+                                     <!--   <label>Select Time</label>
                                         <div class="form-group">
                                             <select id="timeSelect" name="time" id="time" class="form-control"
                                                 required>
@@ -291,7 +304,7 @@
                                             <input type="hidden" class="form-control" name="end_time" id="end_time"
                                                 value="" readonly />
                                         </div>
-                                       
+                                    -->
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" name="remarks" id="remarks"
                                             value="Online" readonly />
@@ -316,157 +329,158 @@
             </div>
         @endsection
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var serviceSelect = document.getElementById('serviceSelect');
-                var doctorSelect = document.getElementById('doctorSelect');
-
-                serviceSelect.addEventListener('change', function() {
-                    var serviceId = this.value;
-
+            // Function to filter the doctor schedule table based on selected services
+            function filterTable() {
+                const select = document.getElementById("serviceFilter");
+                const filter = select.value;
+                const table = document.getElementById("doctorScheduleTable");
+                const rows = table.getElementsByTagName("tr");
+        
+                Array.from(rows).forEach(row => {
+                    const services = row.getAttribute("data-services");
+                    row.style.display = (filter === "all" || services.includes(filter)) ? "" : "none";
+                });
+            }
+        
+            // Function to fetch doctors based on selected services and date
+            function fetchDoctors() {
+                const serviceSelect = document.getElementById('serviceSelect');
+                const doctorSelect = document.getElementById('doctorSelect');
+                const selectedDateInput = document.getElementById('selected_date');
+                const selectedDayInput = document.getElementById('selected_day');
+        
+                const selectedServices = Array.from(serviceSelect.selectedOptions).map(option => option.value);
+                const selectedDate = selectedDateInput.value;
+                const selectedDay = moment(selectedDate).format('dddd').toLowerCase();
+        
+                selectedDayInput.value = selectedDay;
+        
+                axios.get('/doctors', {
+                    params: {
+                        services: selectedServices,
+                        selected_day: selectedDay,
+                        selected_date: selectedDate
+                    }
+                })
+                .then(response => {
+                    const doctors = response.data;
                     doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
-
-                    // Assuming you have an input field with the ID 'selected_day'
-                    var selectedDay = document.getElementById('selected_day').value;
-
-                    axios.get('/doctors/' + serviceId, {
-                            params: {
-                                selected_day: selectedDay
-                            }
-                        })
-                        .then(function(response) {
-                            var doctors = response.data;
-                            console.log('Response Data:', doctors);
-
-                            if (Array.isArray(doctors)) {
-                                doctors.forEach(function(doctor) {
-                                    var option = document.createElement('option');
-                                    option.value = doctor.id;
-                                    option.text = doctor.firstname + ' ' + doctor.lastname;
-                                    doctorSelect.appendChild(option);
-                                });
-                            } else if (typeof doctors === 'object' && Object.keys(doctors).length > 0) {
-                                // Handle object with numeric keys
-                                Object.values(doctors).forEach(function(doctor) {
-                                    var option = document.createElement('option');
-                                    option.value = doctor.id;
-                                    option.text = doctor.firstname + ' ' + doctor.lastname;
-                                    doctorSelect.appendChild(option);
-                                });
-                            } else {
-                                console.log('No doctors available.');
-                            }
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching doctors: ' + error);
+                    if (Array.isArray(doctors)) {
+                        doctors.forEach(doctor => {
+                            const option = document.createElement('option');
+                            option.value = doctor.id;
+                            option.text = `${doctor.firstname} ${doctor.lastname}`;
+                            doctorSelect.appendChild(option);
                         });
-
-                });
-
-                doctorSelect.addEventListener('change', function() {
-                    var doctorId = this.value;
-                    var selectedDate = document.getElementById('selected_date').value;
-                    var selectedDay = moment(selectedDate).format('dddd').toLowerCase();
-
-                    axios.get('/doctor-availability/' + doctorId, {
-                            params: {
-                                day: selectedDay,
-                                selected_date: selectedDate // Pass the selected date to the backend
-                            }
-                        })
-                        .then(function(response) {
-                            var availability = response.data;
-
-                            // Check if availability data exists
-                            if (availability) {
-                                var start = new Date('2024-01-01 ' + availability.start_time);
-                                var end = new Date('2024-01-01 ' + availability.end_time);
-                                var interval = 30 * 60 * 1000; // 30 minutes in milliseconds
-                                var options = '';
-
-                                for (var time = start.getTime(); time < end.getTime(); time += interval) {
-                                    var hour = new Date(time).getHours();
-                                    var minute = new Date(time).getMinutes();
-                                    var formattedHour = hour % 12 ||
-                                    12; // Convert 24-hour to 12-hour format
-                                    var period = hour < 12 ? 'AM' : 'PM'; // Determine AM or PM
-                                    var formattedMinute = ('0' + minute).slice(-2);
-                                    var timeString = formattedHour + ':' + formattedMinute + ' ' +
-                                    period; // Concatenate with AM/PM
-                                    var optionValue = ('0' + hour).slice(-2) + ':' +
-                                    formattedMinute; // Option value in 24-hour format
-
-                                    // Check if the option value exists in booked or cancelled appointments, if not, add the option
-                                    if (!availability.booked_times.includes(optionValue)) {
-                                        options += '<option value="' + optionValue + '">' + timeString +
-                                            '</option>';
-                                    }
-                                }
-                                if (options === '') {
-                                    document.getElementById('selected_date').classList.add('unavailable');
-                                    document.getElementById('timeSelect').innerHTML =
-                                        '<option value="">No available times</option>';
-                                    document.getElementById('end_time').value = ''; // Clear end time field
-                                } else {
-                                    document.getElementById('selected_date').classList.remove(
-                                    'unavailable');
-                                    document.getElementById('timeSelect').innerHTML = options;
-                                    // Calculate and set the initial end time based on the selected start time
-                                    var selectedStartTime = document.getElementById('timeSelect').value;
-                                    var selectedEndTime = moment(selectedStartTime, 'HH:mm').add(1, 'hour')
-                                        .format('HH:mm');
-                                    document.getElementById('end_time').value = selectedEndTime;
-                                }
-                            } else {
-                                console.error('Doctor availability not found');
-                            }
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching doctor availability: ' + error);
-                        });
-                });
-
-
-                // Event listener for timeSelect dropdown
-                document.getElementById('timeSelect').addEventListener('change', function() {
-                    var selectedStartTime = this.value;
-                    if (selectedStartTime) {
-                        // Calculate the end time to be 1 hour after the selected start time
-                        var selectedEndTime = moment(selectedStartTime, 'HH:mm').add(1, 'hour').format('HH:mm');
-                        // Set the value of the end time field to the calculated end time
-                        document.getElementById('end_time').value = selectedEndTime;
                     } else {
-                        // If no time is selected, clear the end time field
-                        document.getElementById('end_time').value = '';
+                        console.log('No doctors available.');
+                    }
+                })
+                .catch(error => console.error('Error fetching doctors:', error));
+            }
+        
+            // Function to fetch doctor availability based on selected doctor and date
+            function fetchDoctorAvailability() {
+                const doctorSelect = document.getElementById('doctorSelect');
+                const selectedDate = document.getElementById('selected_date').value;
+                const selectedDay = moment(selectedDate).format('dddd').toLowerCase();
+        
+                const doctorId = doctorSelect.value;
+        
+                axios.get(`/doctor-availability/${doctorId}`, {
+                    params: {
+                        day: selectedDay,
+                        selected_date: selectedDate
+                    }
+                })
+                .then(response => {
+                    const availability = response.data;
+        
+                    if (availability) {
+                        const start = new Date(`2024-01-01 ${availability.start_time}`);
+                        const end = new Date(`2024-01-01 ${availability.end_time}`);
+                        const interval = 30 * 60 * 1000; // 30 minutes in milliseconds
+                        let options = '';
+        
+                        for (let time = start.getTime(); time < end.getTime(); time += interval) {
+                            const date = new Date(time);
+                            const hour = date.getHours();
+                            const minute = date.getMinutes();
+                            const formattedHour = hour % 12 || 12;
+                            const period = hour < 12 ? 'AM' : 'PM';
+                            const formattedMinute = (`0${minute}`).slice(-2);
+                            const timeString = `${formattedHour}:${formattedMinute} ${period}`;
+                            const optionValue = (`0${hour}`).slice(-2) + ':' + formattedMinute;
+        
+                            if (!availability.booked_times.includes(optionValue)) {
+                                options += `<option value="${optionValue}">${timeString}</option>`;
+                            }
+                        }
+        
+                        const timeSelect = document.getElementById('timeSelect');
+                        const endTimeInput = document.getElementById('end_time');
+                        if (options === '') {
+                            selectedDateInput.classList.add('unavailable');
+                            timeSelect.innerHTML = '<option value="">No available times</option>';
+                            endTimeInput.value = '';
+                        } else {
+                            selectedDateInput.classList.remove('unavailable');
+                            timeSelect.innerHTML = options;
+                            updateEndTime();
+                        }
+                    } else {
+                        console.error('Doctor availability not found');
+                    }
+                })
+                .catch(error => console.error('Error fetching doctor availability:', error));
+            }
+        
+            // Function to update end time based on selected start time
+            function updateEndTime() {
+                const timeSelect = document.getElementById('timeSelect');
+                const endTimeInput = document.getElementById('end_time');
+                const selectedStartTime = timeSelect.value;
+        
+                if (selectedStartTime) {
+                    const selectedEndTime = moment(selectedStartTime, 'HH:mm').add(1, 'hour').format('HH:mm');
+                    endTimeInput.value = selectedEndTime;
+                } else {
+                    endTimeInput.value = '';
+                }
+            }
+        
+            // Event listeners
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('serviceSelect').addEventListener('change', fetchDoctors);
+                document.getElementById('doctorSelect').addEventListener('change', fetchDoctorAvailability);
+                document.getElementById('timeSelect').addEventListener('change', updateEndTime);
+        
+                // Modal handling
+                $(document).ready(function() {
+                    $('#addUserModal .close, .modal .close').click(function() {
+                        $(this).closest('.modal').modal('hide');
+                    });
+                });
+        
+                // Dropdown item modal trigger
+                document.querySelectorAll('.dropdown-item[data-bs-toggle="modal"]').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const modalId = this.getAttribute('data-bs-target');
+                        const modal = document.querySelector(modalId);
+                    });
+                });
+        
+                // Status filter
+                $('#statusFilter').change(function() {
+                    const status = $(this).val();
+                    const rows = $('#appointmentsTable tbody tr');
+                    rows.show();
+                    if (status) {
+                        rows.not(':contains(' + status + ')').hide();
                     }
                 });
             });
-
-            $(document).ready(function() {
-            $('#addUserModal .close').click(function() {
-                $('#addUserModal').modal('hide');
-            });
-            $('.modal .close').click(function() {
-                $(this).closest('.modal').modal('hide');
-            });
-        });
-        document.querySelectorAll('.dropdown-item[data-bs-toggle="modal"]').forEach(button => {
-            button.addEventListener('click', function() {
-                console.log('Show button clicked');
-                const modalId = this.getAttribute('data-bs-target');
-                console.log('Modal ID:', modalId);
-                const modal = document.querySelector(modalId);
-                console.log('Modal Element:', modal);
-            });
-        });
-
-        $('#statusFilter').change(function() {
-            var status = $(this).val();
-            $('#appointmentsTable tbody tr').show(); // Show all rows
-            if (status) {
-                $('#appointmentsTable tbody tr').not(':contains(' + status + ')')
-                    .hide(); // Hide rows not matching selected status
-            }
-        });
         </script>
+        

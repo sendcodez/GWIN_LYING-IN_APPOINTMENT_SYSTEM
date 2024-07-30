@@ -38,13 +38,13 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Patient Name</th>
-                                <th>Doctor Name</th>
-                                <th>Service</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>Price</th>
+                                <th>PATIENT NAME</th>
+                                <th>DOCTOR NAME</th>
+                                <th>SERVICE</th>
+                                <th>DATE</th>
+                                <th>TIME</th>
+                                <th>STATUS</th>
+                                <th>REMARKS</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,11 +98,7 @@
                                         @endphp
                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                     </td>
-                                    <td> @if ($appointment->service && $appointment->service->name)
-                                        ₱ {{ $appointment->service->name }}
-                                    @else
-                                        <span style="color:red">Service Not Found</span>
-                                    @endif</td>
+                                    <td> {{ $appointment->remarks }} </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Patient;
 use App\Models\Appointment;
+use Illuminate\Support\Facades\DB;
+
 class HomeController extends Controller
 {
     /**
@@ -13,24 +15,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        
+
         $totalAppointments = Appointment::count();
-    
+
         $totalPatients = Patient::count();
-    
+
         $completedAppointments = Appointment::with(['doctor', 'service'])
-        ->orderBy('date', 'desc')
-        ->where('status', 3)
-        ->get(); 
-        
+            ->orderBy('date', 'desc')
+            ->where('status', 3)
+            ->get();
+
         $totalDoctors = User::where('usertype', 2)->count();
-    
-        $totalEarnings = Appointment::join('services', 'appointments.service_id', '=', 'services.id')
+
+        $totalEarnings = DB::table('appointments')
+            ->join('appointment_service', 'appointments.id', '=', 'appointment_service.appointment_id')
+            ->join('services', 'appointment_service.service_id', '=', 'services.id')
             ->sum('services.price');
-      
         $recentPatients = Patient::orderBy('created_at', 'desc')->take(5)->get();
-    
-        return view('admin.home', compact('totalAppointments', 'totalPatients','totalEarnings', 'totalDoctors','completedAppointments', 'recentPatients'));
+
+        return view('admin.home', compact('totalAppointments', 'totalPatients', 'totalEarnings', 'totalDoctors', 'completedAppointments', 'recentPatients'));
     }
 
     /**

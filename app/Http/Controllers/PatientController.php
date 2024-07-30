@@ -57,33 +57,6 @@ class PatientController extends Controller
             // Validate request data
             $validatedData = $request->validate([
                 'user_id' => 'required|exists:users,id',
-                'firstname' => 'required|string',
-                'middlename' => 'nullable|string',
-                'lastname' => 'required|string',
-                'maiden' => 'nullable|string',
-                'birthday' => 'required|string',
-                'birthplace' => 'required|string',
-                'age' => 'required|integer',
-                'civil' => 'required|string',
-                'contact_number' => 'nullable|string',
-                'religion' => 'required|string',
-                'occupation' => 'nullable|string',
-                'nationality' => 'required|string',
-                'husband_firstname' => 'required|string',
-                'husband_middlename' => 'nullable|string',
-                'husband_lastname' => 'required|string',
-                'husband_occupation' => 'nullable|string',
-                'husband_birthday' => 'required|string',
-                'husband_age' => 'required|integer',
-                'husband_contact_number' => 'nullable|string',
-                'husband_religion' => 'required|string',
-                'province' => 'required|string',
-                'city' => 'required|string',
-                'barangay' => 'required|string',
-                'husband_province' => 'required|string',
-                'husband_city' => 'required|string',
-                'husband_barangay' => 'required|string',
-
                 'pregnancies' => 'array|nullable',
                 'pregnancies.*.pregnancy' => 'nullable|integer',
                 'pregnancies.*.pregnancy_date' => 'nullable|date',
@@ -99,25 +72,12 @@ class PatientController extends Controller
                 'user_id.exists' => 'The selected user ID does not exist in the users table.',
             ]);
 
-            
-            $existingPatient = Patient::where('user_id', $validatedData['user_id'])->first();
 
-            // If patient with the provided user_id exists, return a response indicating so
-            if ($existingPatient) {
-                return back()->with('error', 'Patient already added.');
-            }
-            
 
 
             // Save patient information
             $patient = new Patient();
-            $patient->fill($validatedData);
-
             $patient->user_id = $request->user_id;
-
-            $patient->save();
-
-
             //PREGNANCY_TERM
             $pregnancy_term = new Pregnancy_term();
             $user_id = $patient->user->id;

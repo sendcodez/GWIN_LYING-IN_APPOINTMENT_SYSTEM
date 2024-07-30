@@ -40,7 +40,15 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $appointment->patient->firstname }} {{ $appointment->patient->lastname }}</td>
-                                    <td>{{ $appointment->service->name }}</td>
+                                    <td>
+                                        @if($appointment->services->isNotEmpty())
+                                            @foreach($appointment->services as $service)
+                                                {{ $service->name }}@if(!$loop->last), @endif
+                                            @endforeach
+                                        @else
+                                            <span style="color:red">Service Not Found</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $appointment->date }}</td>
                                     <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                     <td>
@@ -154,8 +162,12 @@
                                     <div class="form-group">
                                         <input type="text" name="patient_id" value="{{ $appointment->patient->id }}"
                                             class="form-control" readonly>
-                                        <input type="hidden" name="service_id" value="{{ $appointment->service->id }}"
-                                            class="form-control" readonly>
+                                            @if($appointment->services->isNotEmpty())
+                                            <input type="hidden" name="service_id" value="{{ $appointment->services->first()->id }}" class="form-control" readonly>
+                                        @else
+                                            <input type="hidden" name="service_id" value="" class="form-control" readonly>
+                                        @endif
+                                        
                                         <input type="hidden" name="appointment_id" value="{{ $appointment->id }}"
                                             class="form-control" readonly>
                                     </div>

@@ -46,4 +46,17 @@ public function patient()
 {
     return $this->belongsTo(Patient::class);
 }
+public function rest_days()
+{
+    return $this->hasMany(RestDay::class);
 }
+public function availability()
+    {
+        return $this->hasMany(DoctorAvailability::class);
+    }
+    public function restDays()
+    {
+        return $this->hasMany(RestDay::class);
+    }
+}
+

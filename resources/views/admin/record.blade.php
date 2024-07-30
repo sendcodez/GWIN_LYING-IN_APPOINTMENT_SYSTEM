@@ -19,85 +19,50 @@
                 <div class="row">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
                         <div class="pd-20 card-box height-50-p">
-                                <video id="scanner" width="100%" height="auto"></video>
-                                <div class="form-group">
-                                    <label>ID Search / QR Code Scan</label>
-                                    <div class="input-group">
-                                        <input type="text" id="user_id" name="user_id" class="form-control"
-                                            placeholder="Enter user ID" />
-                                        <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary" id="searchButton">Search</button>
-                                        </div>
+                            <video id="scanner" width="100%" height="auto"></video>
+                            <div class="form-group">
+                                <label>ID Search / QR Code Scan</label>
+                                <div class="input-group">
+                                    <input type="text" id="user_id" name="user_id" class="form-control"
+                                        placeholder="Enter user ID" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary" id="searchButton">Search</button>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
                         <div class="card-box height-100-p overflow-hidden">
                             <div class="profile-tab height-100-p">
                                 <div class="tab height-100-p">
-                                    <ul class="nav nav-tabs customtab" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="tab" href="#personal"
-                                                role="tab">Personal Information</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#appointment" role="tab">Recent
+                                    <div class="col-lg-8 col-md-8 dropdown">
+                                        <button class="btn btn-primary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Personal Information
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#personal" data-toggle="tab">Personal
+                                                Information</a>
+                                            <a class="dropdown-item" href="#appointment" data-toggle="tab">Recent
                                                 Appointment</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#attachment" role="tab">
-                                               Attachments</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#pregnancy" role="tab">Pregnancy
+                                            <!--  -<a class="dropdown-item" href="#attachment" data-toggle="tab">Attachments</a> -->
+                                            <a class="dropdown-item" href="#pregnancy" data-toggle="tab">Pregnancy
                                                 History</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#medical" role="tab">Medical
-                                                History</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#laboratory"
-                                                role="tab">Laboratory Result</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#ultrasound"
-                                                role="tab">Ultrasound Result</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#medication"
-                                                role="tab">Medications</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#delivery"
-                                                role="tab">Delivery Record</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#newborn"
-                                                role="tab">Newborn Record</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#postpartum"
-                                                role="tab">Postpartum Monitoring</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#records"
-                                                role="tab">PNCU Record</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#labor"
-                                                role="tab">Labor Monitoring</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#staffnotes"
-                                                role="tab">Staff Notes</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#physician"
-                                                role="tab">Physician's Order</a>
-                                        </li>
-                                    </ul>
+                                            <a class="dropdown-item" href="#medical" data-toggle="tab">Medical History</a>
+                                            <!--  <a class="dropdown-item" href="#laboratory" data-toggle="tab">Laboratory Result</a> -->
+                                            <!--  <a class="dropdown-item" href="#ultrasound" data-toggle="tab">Ultrasound Result</a> -->
+                                            <!--  <a class="dropdown-item" href="#medication" data-toggle="tab">Medications</a> -->
+                                            <!--  <a class="dropdown-item" href="#delivery" data-toggle="tab">Delivery Record</a> -->
+                                            <!--  <a class="dropdown-item" href="#newborn" data-toggle="tab">Newborn Record</a> -->
+                                            <!--  <a class="dropdown-item" href="#postpartum" data-toggle="tab">Postpartum Monitoring</a> -->
+                                            <a class="dropdown-item" href="#records" data-toggle="tab">PNCU Record</a>
+                                            <!--  <a class="dropdown-item" href="#labor" data-toggle="tab">Labor Monitoring</a> -->
+                                            <!--  <a class="dropdown-item" href="#staffnotes" data-toggle="tab">Staff Notes</a> -->
+                                            <!--  <a class="dropdown-item" href="#physician" data-toggle="tab">Physician's Order</a> -->
+                                        </div>
+                                    </div>
                                     <div class="tab-content">
 
                                         <!-- PERSONAL -->
@@ -115,7 +80,8 @@
                                                                     </li>
                                                                     <li>
                                                                         <span style="font-weight:700">Phone Number:</span>
-                                                                        <span id="contact_number" style="color:black"></span>
+                                                                        <span id="contact_number"
+                                                                            style="color:black"></span>
                                                                     </li>
                                                                     <li>
                                                                         <span style="font-weight:700">Birthplace:</span>
@@ -160,15 +126,19 @@
                                                                 <ul>
                                                                     <li>
                                                                         <span style="font-weight:700">Full Name:</span>
-                                                                        <span id="husband_fullname" style="color:black"></span>
+                                                                        <span id="husband_fullname"
+                                                                            style="color:black"></span>
                                                                     </li>
                                                                     <li>
-                                                                        <span style="font-weight:700">Contact Number:</span>
-                                                                        <span id="husband_contact_number" style="color:black"></span>
+                                                                        <span style="font-weight:700">Contact
+                                                                            Number:</span>
+                                                                        <span id="husband_contact_number"
+                                                                            style="color:black"></span>
                                                                     </li>
                                                                     <li>
                                                                         <span style="font-weight:700">Birthday:</span>
-                                                                        <span id="husband_birthday" style="color:black"></span>
+                                                                        <span id="husband_birthday"
+                                                                            style="color:black"></span>
                                                                     </li>
                                                                     <li>
                                                                         <span style="font-weight:700">Age:</span>
@@ -176,28 +146,31 @@
                                                                     </li>
                                                                     <li>
                                                                         <span style="font-weight:700">Occupation:</span>
-                                                                        <span id="husband_occupation" style="color:black"></span>
+                                                                        <span id="husband_occupation"
+                                                                            style="color:black"></span>
                                                                     </li>
                                                                     <li>
                                                                         <span style="font-weight:700">Religion:</span>
-                                                                        <span id="husband_religion" style="color:black"></span>
+                                                                        <span id="husband_religion"
+                                                                            style="color:black"></span>
                                                                     </li>
                                                                     <li>
                                                                         <span style="font-weight:700">Address:</span>
-                                                                        <span id="husband_address" style="color:black"></span>
+                                                                        <span id="husband_address"
+                                                                            style="color:black"></span>
                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                </div>
                                             </div>
-                    
+                                        </div>
 
 
-                                          <!-- APPOINTMENT -->
-                                          <div class="tab-pane fade " id="appointment" role="tabpanel">
+
+                                        <!-- APPOINTMENT -->
+                                        <div class="tab-pane fade " id="appointment" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped table-bordered">
                                                     <thead>
@@ -249,7 +222,8 @@
                                                     </tbody>
                                                 </table>
                                                 <br>
-                                                <table class="table table-striped table-bordered" id="pregnancy_histories">
+                                                <table class="table table-striped table-bordered"
+                                                    id="pregnancy_histories">
                                                     <thead>
                                                         <tr class="table-success">
                                                             <th class="table-plus">Pregnancy number</th>
@@ -383,15 +357,17 @@
                                                         <tr>
                                                             <td id="ultra_date"></td>
                                                             <td id="result"></td>
-                                                            <td class="text-center" id="attachment"> <img src="{{ asset('') }}" alt="ultrasound" style="max-width: 100px;" /></td>
+                                                            <td class="text-center" id="attachment"> <img
+                                                                    src="{{ asset('') }}" alt="ultrasound"
+                                                                    style="max-width: 100px;" /></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
 
-                                         <!-- MEDICATION -->
-                                         <div class="tab-pane fade " id="medication" role="tabpanel">
+                                        <!-- MEDICATION -->
+                                        <div class="tab-pane fade " id="medication" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped table-bordered">
                                                     <thead>
@@ -409,10 +385,10 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        
+
 
                                         <!-- DELIVERY -->
-                                          <div class="tab-pane fade " id="delivery" role="tabpanel">
+                                        <div class="tab-pane fade " id="delivery" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped table-bordered" id="delivery1">
                                                     <thead>
@@ -472,7 +448,7 @@
                                                             <th class="table-plus">Handle</th>
                                                             <th style="text-align: center">Assist</th>
                                                             <th>Referral</th>
-                                                            
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -481,7 +457,7 @@
                                                             <td id="handle"></td>
                                                             <td id="assist"></td>
                                                             <td id="referral"></td>
-                                                           
+
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -489,8 +465,8 @@
                                             </div>
                                         </div>
 
-                                           <!-- NEWBORN -->
-                                           <div class="tab-pane fade " id="newborn" role="tabpanel">
+                                        <!-- NEWBORN -->
+                                        <div class="tab-pane fade " id="newborn" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped table-bordered" id="newborn1">
                                                     <thead>
@@ -550,12 +526,13 @@
                                                         <tr class="table-info">
                                                             <th class="table-plus">Contact Number</th>
                                                             <th class="table-plus">Name of Blood Collector</th>
-                                                            <th style="">Name of Staff who will fill out the form</th>
+                                                            <th style="">Name of Staff who will fill out the form
+                                                            </th>
                                                             <th>Date Result Received</th>
                                                             <th>Result</th>
                                                             <th>Date Claimed</th>
                                                             <th>Claimed By</th>
-                                                            
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -567,7 +544,7 @@
                                                             <td id="baby_result"></td>
                                                             <td id="dc"></td>
                                                             <td id="cb"></td>
-                                                           
+
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -575,8 +552,8 @@
                                             </div>
                                         </div>
 
-                                         <!-- POSTPARTUM -->
-                                         <div class="tab-pane fade " id="postpartum" role="tabpanel">
+                                        <!-- POSTPARTUM -->
+                                        <div class="tab-pane fade " id="postpartum" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped table-bordered">
                                                     <thead>
@@ -607,8 +584,8 @@
                                             </div>
                                         </div>
 
-                                          <!-- LABOR -->
-                                          <div class="tab-pane fade " id="labor" role="tabpanel">
+                                        <!-- LABOR -->
+                                        <div class="tab-pane fade " id="labor" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped table-bordered">
                                                     <thead>
@@ -643,8 +620,8 @@
                                             </div>
                                         </div>
 
-                                         <!-- STAFF NOTES -->
-                                         <div class="tab-pane fade" id="staffnotes" role="tabpanel">
+                                        <!-- STAFF NOTES -->
+                                        <div class="tab-pane fade" id="staffnotes" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped table-bordered">
                                                     <thead>
@@ -695,8 +672,8 @@
                                             </div>
                                         </div>
 
-                                         <!-- PNCU -->
-                                         <div class="tab-pane fade " id="records" role="tabpanel">
+                                        <!-- PNCU -->
+                                        <div class="tab-pane fade " id="records" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped table-bordered" id="records1">
                                                     <thead>
@@ -750,30 +727,32 @@
                                             </div>
                                         </div>
 
-                                            <!-- ATTACHMENT -->
+                                        <!-- ATTACHMENT -->
 
-                                            <div class="tab-pane fade " id="attachment" role="tabpanel">
-                                                <div class="pd-20">
-                                                    <table class="table table-striped table-bordered" id="attachment">
-                                                        <thead>
-                                                            <tr class="table-info">
-                                                                <th class="table-plus">Date</th>
-                                                                <th class="table-plus">Name</th>
-                                                                <th class="table-plus">Description</th>
-                                                                <th style="text-align: center">Attachment</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td id="attachment_date"></td>
-                                                                <td id="attachment_name"></td>
-                                                                <td id="attachment_description"></td>
-                                                                <td class="text-center" id="attachment_file"> <img src="{{ asset('') }}" style="max-width: 100px;" /></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                        <div class="tab-pane fade " id="attachment" role="tabpanel">
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered" id="attachment">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="table-plus">Date</th>
+                                                            <th class="table-plus">Name</th>
+                                                            <th class="table-plus">Description</th>
+                                                            <th style="text-align: center">Attachment</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="attachment_date"></td>
+                                                            <td id="attachment_name"></td>
+                                                            <td id="attachment_description"></td>
+                                                            <td class="text-center" id="attachment_file"> <img
+                                                                    src="{{ asset('') }}" style="max-width: 100px;" />
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
+                                        </div>
 
 
                                     </div>
@@ -788,4 +767,44 @@
             </div>
         </div>
         <script src="{{ asset('js/record.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Include Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                // Handle dropdown item click
+                $('.dropdown-item').click(function(e) {
+                    e.preventDefault();
+                    var target = $(this).attr('href');
+
+                    // Remove active class from all dropdown items
+                    $('.dropdown-item').removeClass('active');
+                    // Add active class to the clicked item
+                    $(this).addClass('active');
+
+                    // Activate the corresponding tab
+                    $('.tab-pane').removeClass('show active');
+                    $(target).addClass('show active');
+                });
+            });
+            $(document).ready(function() {
+                // Function to update the dropdown button text
+                function updateDropdownText() {
+                    // Get the text of the active tab pane's corresponding dropdown item
+                    var activeTabId = $('.tab-pane.active').attr('id');
+                    var activeTabText = $(`.dropdown-item[href="#${activeTabId}"]`).text();
+                    $('#dropdownMenuButton').text(activeTabText);
+                }
+
+                // Initialize button text
+                updateDropdownText();
+
+                // Event handler for tab change
+                $('a[data-toggle="tab"]').on('click', function() {
+                    // Wait for the tab to become active
+                    setTimeout(updateDropdownText, 10);
+                });
+            });
+        </script>
     @endsection

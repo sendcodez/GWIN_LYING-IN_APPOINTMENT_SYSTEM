@@ -18,9 +18,9 @@
                                     Appointments
                                 </div>
                             </div>
-                            <div class="widget-icon">
+                            <div class="widget-icon" style="background-color:#B0EBB4">
                                 <div class="icon" data-color="#00eccf">
-                                    <i class="icon-copy dw dw-calendar1"></i>
+                                    <i class="icon-copy dw dw-calendar1" style="color:black" ></i>
                                 </div>
                             </div>
                         </div>
@@ -35,9 +35,9 @@
                                     Profiled Patient
                                 </div>
                             </div>
-                            <div class="widget-icon">
+                            <div class="widget-icon" style="background-color:#B0EBB4">
                                 <div class="icon" data-color="#ff5b5b">
-                                    <span class="icon-copy ti-heart"></span>
+                                    <span class="icon-copy ti-heart" style="color:black"></span>
                                 </div>
                             </div>
                         </div>
@@ -52,9 +52,9 @@
                                     Doctors
                                 </div>
                             </div>
-                            <div class="widget-icon">
+                            <div class="widget-icon" style="background-color:#B0EBB4">
                                 <div class="icon">
-                                    <i class="icon-copy fa fa-stethoscope" aria-hidden="true"></i>
+                                    <i class="icon-copy fa fa-stethoscope" aria-hidden="true" style="color:black"></i>
                                 </div>
                             </div>
                         </div>

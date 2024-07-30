@@ -33,38 +33,48 @@ jQuery(document).ready(function () {
                 appointments.forEach(function (appointment) {
                     if (appointment.status !== 4) {
                         // Fetch appointments only if status is not cancelled
-                        console.log("Start Time:", appointment.start_time);
-
                         var startTime = appointment.start_time;
-                        var timeParts = startTime.split(":");
-                        var hour = parseInt(timeParts[0], 10);
-                        var minute = parseInt(timeParts[1], 10);
-                        var period = "AM";
-                        if (hour >= 12) {
-                            period = "PM";
-                            if (hour > 12) {
-                                hour -= 12;
+            
+                        // Check if startTime is valid
+                        if (startTime) {
+                            console.log("Start Time:", startTime);
+            
+                            // Split and format time if startTime is not null or empty
+                            var timeParts = startTime.split(":");
+                            var hour = parseInt(timeParts[0], 10);
+                            var minute = parseInt(timeParts[1], 10);
+                            var period = "AM";
+            
+                            if (hour >= 12) {
+                                period = "PM";
+                                if (hour > 12) {
+                                    hour -= 12;
+                                }
                             }
+            
+                            var timeString =
+                                hour +
+                                ":" +
+                                ("0" + minute).slice(-2) +
+                                " " +
+                                period;
+            
+                            var title = timeString; // Construct the event title
+            
+                            var event = {
+                                title: title,
+                                start: appointment.date,
+                                service_id: appointment.service_id,
+                            };
+                            events.push(event);
+                        } else {
+                            console.error("Invalid start time:", startTime);
                         }
-                        var timeString =
-                            hour +
-                            ":" +
-                            ("0" + minute).slice(-2) +
-                            " " +
-                            period;
-
-                        var title = timeString; // Construct the event title
-
-                        var event = {
-                            title: title,
-                            start: appointment.date,
-                            service_id: appointment.service_id,
-                        };
-                        events.push(event);
                     }
                 });
                 callback(events);
             },
+            
 
             /*
             eventClick: function (event, jsEvent, view) {

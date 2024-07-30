@@ -54,9 +54,18 @@
                         </div>
                         <!-- Table Section -->
                         <div class="table-wrap col-md-6 col-sm-6">
-                            <table class="table table-striped">
+                            <table class="table table-striped custom-bordered-table">
                                 <thead>
-                                    <center><h3>DOCTORS SCHEDULE</h3></center>
+                                    <center>
+                                        <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
+                                    </center>
+                                    <select id="serviceFilter" onchange="filterTable()" class="form-control">
+                                        <option value="all">All Services</option>
+                                        @foreach ($services as $service)
+                                            <option value="{{ $service->name }}">{{ $service->name }}</option>
+                                        @endforeach
+                                    </select>
+
                                     <tr>
                                         <th>NAME</th>
                                         <th>SERVICE</th>
@@ -64,22 +73,20 @@
                                         <th>TIME AVAILABILITY</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="doctorScheduleTable">
                                     @foreach($doctorAvailabilities as $availability)
-                                    <tr>
+                                    <tr data-services="@foreach($availability->doctor->services as $service){{ $service->name }}@if(!$loop->last), @endif @endforeach">
                                         <td>{{ $availability->doctor->firstname }} {{ $availability->doctor->lastname }}</td>
                                         <td>
                                             @foreach($availability->doctor->services as $service)
                                                 {{ $service->name }}
-                                                {{-- If you want to separate multiple services with commas --}}
                                                 @if(!$loop->last), @endif
                                             @endforeach
                                         </td>
                                         <td>{{ $availability->day }}</td>
                                         <td>{{ $availability->start_time }} - {{ $availability->end_time }}</td>
                                     </tr>
-                                @endforeach
-                                
+                                    @endforeach
                                 </tbody>
                             </table>
 
@@ -193,6 +200,23 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         
         <script>
+            function filterTable() {
+                var select = document.getElementById("serviceFilter");
+                var filter = select.value;
+                var table = document.getElementById("doctorScheduleTable");
+                var rows = table.getElementsByTagName("tr");
+
+                for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i];
+                    var services = row.getAttribute("data-services");
+
+                    if (filter === "all" || services.includes(filter)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                }
+            }  
             document.addEventListener('DOMContentLoaded', function() {
                 var serviceSelect = document.getElementById('serviceSelect');
                 var doctorSelect = document.getElementById('doctorSelect');
