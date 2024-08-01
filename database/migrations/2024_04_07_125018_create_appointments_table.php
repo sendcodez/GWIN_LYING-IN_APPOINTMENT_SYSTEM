@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('service_id');
             $table->date('date');
             $table->string('day');
-            $table->string('start_time');
+            $table->string('start_time')->nullable();
             $table->integer('status')->default('1');
             $table->string('remarks')->nullable();
             $table->string('end_time')->nullable();
