@@ -81,11 +81,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="{{ route('index') }}" class="nav-item nav-link active">Home</a>
+                        <a href="{{ route('index') }}" class="nav-item nav-link ">Home</a>
                         <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
                         <a href="{{ route('services') }}" class="nav-item nav-link">Service</a>
-                        <a href="{{ route('pricing') }}" class="nav-item nav-link">Pricing</a>
-                        <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
+                        <a href="{{ route('pricing') }}" class="nav-item nav-link active">Pricing</a>
+                        <a href="{{ route('login') }}" class="nav-item nav-link ">Login</a>
                     </div>
                 </div>
             </nav>

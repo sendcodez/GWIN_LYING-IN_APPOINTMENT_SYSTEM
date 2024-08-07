@@ -66,9 +66,9 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
                         <a href="{{ route('index') }}" class="nav-item nav-link ">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Service</a>
-                        <a href="price.html" class="nav-item nav-link">Pricing</a>
+                        <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
+                        <a href="{{ route('services') }}" class="nav-item nav-link">Service</a>
+                        <a href="{{ route('pricing') }}" class="nav-item nav-link">Pricing</a>
                         <a href="{{ route('login') }}" class="nav-item nav-link active">Login</a>
                     </div>
                 </div>
