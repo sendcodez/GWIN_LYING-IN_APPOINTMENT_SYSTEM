@@ -51,8 +51,10 @@
                                             <a class="dropdown-item" href="#pregnancy" data-toggle="tab">Pregnancy
                                                 History</a>
                                             <a class="dropdown-item" href="#medical" data-toggle="tab">Medical History</a>
-                                            <!--  <a class="dropdown-item" href="#laboratory" data-toggle="tab">Laboratory Result</a> -->
-                                            <!--  <a class="dropdown-item" href="#ultrasound" data-toggle="tab">Ultrasound Result</a> -->
+                                            <a class="dropdown-item" href="#laboratory" data-toggle="tab">Laboratory
+                                                Result</a>
+                                            <a class="dropdown-item" href="#ultrasound" data-toggle="tab">Ultrasound
+                                                Result</a>
                                             <!--  <a class="dropdown-item" href="#medication" data-toggle="tab">Medications</a> -->
                                             <!--  <a class="dropdown-item" href="#delivery" data-toggle="tab">Delivery Record</a> -->
                                             <!--  <a class="dropdown-item" href="#newborn" data-toggle="tab">Newborn Record</a> -->
@@ -808,3 +810,4 @@
             });
         </script>
     @endsection
+        

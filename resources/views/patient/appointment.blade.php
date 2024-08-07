@@ -77,14 +77,31 @@
                                 </thead>
                                 <tbody id="doctorScheduleTable">
                                     @foreach($doctorAvailabilities as $availability)
-                                    <tr data-services="@foreach($availability->doctor->services as $service){{ $service->name }}@if(!$loop->last), @endif @endforeach">
-                                        <td>{{ $availability->doctor->firstname }} {{ $availability->doctor->lastname }}</td>
-                                        <td>
+                                    <tr data-services="@if($availability->doctor)
+                                        @foreach($availability->doctor->services as $service)
+                                            {{ $service->name }}@if(!$loop->last), @endif
+                                        @endforeach
+                                    @endif">
+                    
+                                    <td>
+                                        @if($availability->doctor)
+                                            {{ $availability->doctor->firstname }} {{ $availability->doctor->lastname }}
+                                        @else
+                                            Doctor not found
+                                        @endif
+                                    </td>
+                                    
+                                    <td>
+                                        @if($availability->doctor)
                                             @foreach($availability->doctor->services as $service)
                                                 {{ $service->name }}
                                                 @if(!$loop->last), @endif
                                             @endforeach
-                                        </td>
+                                        @else
+                                            No services available
+                                        @endif
+                                    </td>
+                                    
                                         <td>{{ $availability->day }}</td>
                                         <td>{{ $availability->start_time }} - {{ $availability->end_time }}</td>
                                     </tr>

@@ -18,7 +18,7 @@
 
     <!-- Template Stylesheet -->
     <link href=" {{ asset('css/style.css') }}" rel="stylesheet"> 
-    <title>Login</title>
+    <title>Register</title>
 </head>
 <style>
     .logo-image {

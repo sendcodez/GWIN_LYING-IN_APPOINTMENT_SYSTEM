@@ -18,6 +18,8 @@ use App\Http\Controllers\DocModuleController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\MyRecordsController;
 use App\Http\Controllers\AcitivityLogController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Patient;
 
@@ -43,6 +45,21 @@ Route::get('/login', function () {
 
 
 Route::get('login', [IndexController::class, 'login'])->name('login');
+
+// Email Verification Routes
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/dashboard');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 //AUTH
 Route::post('/password/hash', 'PasswordController@hash')->name('password.hash');

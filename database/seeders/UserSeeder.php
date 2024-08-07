@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'middlename' => 'Admin',
             'lastname' => 'Admin',
             'email' => 'admin@gmail.com',
+            'email_verified_at' => '2024-08-01 09:34:57',
             'password' => Hash::make('admin123'),
             'status' => '1',
             'usertype' => '0'
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
             'middlename' => 'Doctor',
             'lastname' => 'Doctor',
             'email' => 'doctor@gmail.com',
+            'email_verified_at' => '2024-08-01 09:34:57',
             'password' => Hash::make('doctor123'),
             'status' => '1',
             'usertype' => '2'
@@ -37,6 +39,7 @@ class UserSeeder extends Seeder
             'middlename' => 'Patient',
             'lastname' => 'Patient',
             'email' => 'patient@gmail.com',
+            'email_verified_at' => '2024-08-01 09:34:57',
             'password' => Hash::make('patient123'),
             'status' => '1',
             'usertype' => '3'
