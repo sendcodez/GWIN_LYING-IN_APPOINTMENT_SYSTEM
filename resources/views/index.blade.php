@@ -313,7 +313,9 @@
                         <div class="col-12 col-sm-7 h-100 d-flex flex-column">
                             <div class="mt-auto p-4">
                                 <h3>{{ $doctor->firstname }} {{ $doctor->lastname}}</h3>
-                                <h6 class="fw-normal fst-italic text-primary mb-4">{{ $doctor->expertise }}</h6>
+                                <h6 class="fw-normal fst-italic text-primary mb-4">   @foreach ($doctor->services as $service)
+                                    {{ $service->name }}@if (!$loop->last), @endif
+                                @endforeach</h6>
                                 <p class="m-0">{{ $doctor->description}}</p>
                             </div>
                             <div class="d-flex mt-auto border-top p-4">
