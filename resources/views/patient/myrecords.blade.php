@@ -350,7 +350,13 @@
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $appointment->date }}</td>
                                                             <td>Dr. {{ $appointment->doctor->lastname }}</td>
-                                                            <td>{{ $appointment->service->name }}</td>
+                                                            <td>
+                                                                @if($appointment->service && $appointment->service->name)
+                                                                    {{ $appointment->service->name }}
+                                                                @else
+                                                                    <span style="color:red">Service Not Found</span>
+                                                                @endif
+                                                            </td>
                                                             <td>{{ $appointment->start_time }}</td>
                                                             <td>
                                                                 @php
