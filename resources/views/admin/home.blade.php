@@ -114,8 +114,10 @@
                                 </td>
 
                                 <td>
-                                    @if ($appointment->service && $appointment->service->name)
-                                        {{ $appointment->service->name }}
+                                    @if($appointment->services && $appointment->services->count() > 0)
+                                        @foreach($appointment->services as $service)
+                                            {{ $service->name }}<br>
+                                        @endforeach
                                     @else
                                         <span style="color:red">Service Not Found</span>
                                     @endif
