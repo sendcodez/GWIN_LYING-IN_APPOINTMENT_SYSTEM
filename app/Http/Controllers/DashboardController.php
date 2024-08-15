@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $doctor = Auth::user(); // Get the authenticated user (assuming it's the doctor)
         
         // Fetch appointments for the patient
-        $appointments = Appointment::with(['doctor', 'service'])
+        $appointments = Appointment::with(['doctor', 'services'])
             ->where('user_id', $user->id)
             ->get();
         

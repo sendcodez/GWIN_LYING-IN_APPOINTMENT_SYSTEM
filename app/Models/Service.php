@@ -18,11 +18,15 @@ class Service extends Model
         'status',
     ];
 
-    public function appointments()
+   /* public function appointments()
     {
         return $this->hasMany(Appointment::class);
     }
-
+*/
+public function appointments()
+{
+    return $this->belongsToMany(Appointment::class, 'appointment_service', 'service_id', 'appointment_id');
+}
     public function doctorsAppointments()
     {
         return $this->hasManyThrough(Doctor::class, Appointment::class);

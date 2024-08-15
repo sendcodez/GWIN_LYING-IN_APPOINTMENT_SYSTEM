@@ -21,8 +21,9 @@ class MyRecordsController extends Controller
     public function index()
     {
 
-    $appointments = Appointment::where('user_id', Auth::id())
+        $appointments = Appointment::where('user_id', Auth::id())
         ->where('status', 3)
+        ->with('services')
         ->get();
 
     $patient = Patient::where('user_id', Auth::id())->get();   

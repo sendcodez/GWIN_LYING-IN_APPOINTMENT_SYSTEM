@@ -44,9 +44,9 @@ public function medications()
     return $this->hasMany(Medication::class);
 }   
 public function services()
-{
-    return $this->belongsToMany(Service::class, 'appointment_service');
-}
+    {
+        return $this->belongsToMany(Service::class, 'appointment_service', 'appointment_id', 'service_id');
+    }
 
     
 }
