@@ -83,19 +83,18 @@
                 <table class="data-table table nowrap">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Patient Name</th>
-                            <th>Doctor Assigned</th>
-                            <th>Service</th>
-                            <th>Date</th>
-                            <th>Remarks</th>
-                            <th>Status</th>
+                            
+                            <th>PATIENT NAME</th>
+                            <th>DOCTOR ASSIGNED</th>
+                            <th>SERVICE</th>
+                            <th>DATE</th>
+                            <th>STATUS</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($completedAppointments as $key => $appointment)
                             <tr>
-                                <td>{{ $key + 1 }}</td>
+                               
                                 <td class="table-plus">
                                     <div class="name-avatar d-flex align-items-center">
                                         <div class="txt">
@@ -123,7 +122,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $appointment->date }}</td>
-                                <td>{{ $appointment->remarks }}</td>
+                               
                                 <td>
                                     <span class="badge badge-primary">Completed</span>
                                 </td>

@@ -12,15 +12,16 @@
                     <table class="data-table table nowrap" id="appointmentsTable">
                         <thead>
                             <tr>
-                                <th>#</th>
+                             <!--   <th>#</th>-->
                                 <th>PATIENT NAME</th>
                                 <th>DOCTOR NAME</th>
                                 <th>SERVICE</th>
                                 <th>DATE</th>
                                 <th>TIME</th>
                                 <th>DAY</th>
+                             <!--    <th class="text-center">MODE OF APPOINTMENT</th> -->
                                 <th>STATUS</th>
-                                <!--<th>Remarks</th>-->
+                              
                                 <th>ACTION</th>
 
                             </tr>
@@ -28,7 +29,7 @@
                         <tbody>
                             @foreach ($appointments as $key => $appointment)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                <!--    <td>{{ $key + 1 }}</td> -->
                                     <td>{{ ucfirst($appointment->patient->firstname) }}
                                         {{ ucfirst($appointment->patient->lastname) }}</td>
                                     <td>
@@ -60,7 +61,7 @@
                                     </td>
 
                                     <td>{{ $appointment->day }}</td>
-                                    <!--<td>{{ $appointment->remarks }}</td>-->
+                                  <!--   <td class="text-center">{{ $appointment->remarks }}</td> -->
                                     <td>
                                         @php
                                             $statusWord = '';
@@ -94,7 +95,7 @@
                                         @endphp
                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                     </td>
-
+                                    
                                     <td>
                                         <div class="dropdown">
                                             <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"

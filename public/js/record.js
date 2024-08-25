@@ -921,4 +921,95 @@ $(document).ready(function () {
             });
         }
     });
+    document.getElementById("print").addEventListener("click", function () {
+        var activeTab = $(".tab-pane.active");
+        var selectedItem = $(".dropdown-item.active"); 
+        var patientName = $("#fullname").text();
+        var patientAddress = $("#address").text();
+        var patientContact = $("#contact_number").text();
+    
+        function getCurrentDate() {
+            var now = new Date();
+            var day = now.getDate();
+            var month = now.getMonth() + 1; // Months are zero-based
+            var year = now.getFullYear();
+            return month + '/' + day + '/' + year;
+        }
+    
+        var currentDate = getCurrentDate();
+    
+        if (activeTab.length > 0 && selectedItem.length > 0) {
+            // Select all tables within the active tab
+            var tables = activeTab.find("table").clone(); // Clone all tables from the active tab
+            var header = selectedItem.text().toUpperCase();
+            
+            if (tables.length > 0) {
+                // Create an iframe and append it to the body
+                var iframe = document.createElement('iframe');
+                iframe.style.position = 'absolute';
+                iframe.style.width = '0px';
+                iframe.style.height = '0px';
+                iframe.style.border = 'none';
+                document.body.appendChild(iframe);
+    
+                // Get the iframe document and write the content
+                var iframeDoc = iframe.contentWindow.document;
+                iframeDoc.open();
+                iframeDoc.write('<html><head><title>Print</title>');
+                
+                // Add inline CSS for styling the content
+                iframeDoc.write('<style>');
+                iframeDoc.write('table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }');
+                iframeDoc.write('th, td { border: 1px solid #000; padding: 8px; text-align: left; }');
+                iframeDoc.write('th { background-color: #f2f2f2; }');
+                iframeDoc.write('h3 { font-family: Arial, sans-serif; text-align: center; }');
+                iframeDoc.write('.container { display: flex; justify-content: space-between; margin-bottom: 10px; }');
+                iframeDoc.write('.container .left { width: 45%; }');
+                iframeDoc.write('.container .right { width: 45%; text-align: right; }');
+                iframeDoc.write('.small-text { font-size: 12px; text-align; left; margin: 0; padding: 0;}');
+                iframeDoc.write('</style>');
+                
+                iframeDoc.write('</head><body>');
+                iframeDoc.write('<h1>GWIN LYING-IN</h1>');
+                iframeDoc.write('<div class="small-text">');
+                iframeDoc.write('<p>Address: Brgy. Ipil-1, Silang, Cavite</p>');
+                iframeDoc.write('<p>Contact Number: 0956-255-2872</p>');
+                iframeDoc.write('</div>');
+                iframeDoc.write('<br>');
+                iframeDoc.write('<div class="container">');
+                iframeDoc.write('<div class="left">');
+                
+                iframeDoc.write('<p><b>Patient Name:</b> ' + patientName + '</p>');
+                iframeDoc.write('<p><b>Address:</b> ' + patientAddress + '</p>');
+                iframeDoc.write('</div>');
+                iframeDoc.write('<div class="right">');
+                iframeDoc.write('<p><b>Contact Number:</b> ' + patientContact + '</p>');
+                iframeDoc.write('<p><b>Date:</b> ' + currentDate + '</p>');
+                iframeDoc.write('</div>');
+                iframeDoc.write('</div>');
+                iframeDoc.write('<h3>' + header + '</h3>');
+    
+                // Write each table's HTML
+                tables.each(function() {
+                    iframeDoc.write($(this).prop('outerHTML'));
+                });
+    
+                iframeDoc.write('</body></html>');
+                iframeDoc.close();
+    
+                // Wait for the iframe to load and then print
+                iframe.onload = function () {
+                    iframe.contentWindow.focus(); // Focus the iframe
+                    iframe.contentWindow.print(); // Trigger print
+                    document.body.removeChild(iframe); // Remove the iframe after printing
+                };
+            } else {
+                alert("No tables found to print.");
+            }
+        } else {
+            alert("No active tab or selected item found.");
+        }
+    });
+    
+    
 });

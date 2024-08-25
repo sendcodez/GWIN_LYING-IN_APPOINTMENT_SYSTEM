@@ -25,7 +25,8 @@
                                                 role="tab">Personal Information</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#appointment" role="tab">Completed Appointments</a>
+                                            <a class="nav-link" data-toggle="tab" href="#appointment"
+                                                role="tab">Completed Appointments</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#pregnancy" role="tab">Pregnancy
@@ -43,109 +44,113 @@
                                             <a class="nav-link" data-toggle="tab" href="#ultrasound"
                                                 role="tab">Ultrasound Result</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#medication"
-                                                role="tab">Medications</a>
-                                        </li>
+                                        <!--
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#medication"
+                                                    role="tab">Medications</a>
+                                            </li>
+                                        -->
                                     </ul>
                                     <div class="tab-content">
 
                                         <!-- PERSONAL -->
                                         <div class="tab-pane fade show active" id="personal" role="tabpanel">
                                             <div class="pd-20 profile-task-wrap">
-                                             @if($patient->isNotEmpty())
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="pd-20 card-box height-100-p">
-                                                            <div class="profile-info">
-                                                                <h5 class="mb-20 h5 text-green">Patient Informations</h5>
-                                                           
-                                                                <ul>
-                                                                    <li>
-                                                                        <span>Full Name:</span>
-                                                                        {{ $patient->first()->firstname }}
-                                                                        {{ $patient->first()->lastname }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Phone Number:</span>
-                                                                        {{ $patient->first()->contact_number }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Birthplace:</span>
-                                                                        {{ $patient->first()->birthplace }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Birthday:</span>
-                                                                        {{ $patient->first()->birthday }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Age:</span>
-                                                                        {{ $patient->first()->age }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Civil Status:</span>
-                                                                        {{ $patient->first()->civil }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Religion:</span>
-                                                                        {{ $patient->first()->religion }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Occupation:</span>
-                                                                        {{ $patient->first()->occupation }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Nationality:</span>
-                                                                        {{ $patient->first()->nationality }}
-                                                                    </li>
-                                                                </ul>
+                                                @if ($patient->isNotEmpty())
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="pd-20 card-box height-100-p">
+                                                                <div class="profile-info">
+                                                                    <h5 class="mb-20 h5 text-green">Patient Informations
+                                                                    </h5>
+
+                                                                    <ul>
+                                                                        <li>
+                                                                            <span>Full Name:</span>
+                                                                            {{ $patient->first()->firstname }}
+                                                                            {{ $patient->first()->lastname }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Phone Number:</span>
+                                                                            {{ $patient->first()->contact_number }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Birthplace:</span>
+                                                                            {{ $patient->first()->birthplace }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Birthday:</span>
+                                                                            {{ $patient->first()->birthday }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Age:</span>
+                                                                            {{ $patient->first()->age }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Civil Status:</span>
+                                                                            {{ $patient->first()->civil }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Religion:</span>
+                                                                            {{ $patient->first()->religion }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Occupation:</span>
+                                                                            {{ $patient->first()->occupation }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Nationality:</span>
+                                                                            {{ $patient->first()->nationality }}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="pd-20 card-box height-100-p">
+                                                                <div class="profile-info">
+                                                                    <h5 class="mb-20 h5 text-green">Husband Informations
+                                                                    </h5>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <span>Full Name:</span>
+                                                                            {{ $patient->first()->husband_firstname }}
+                                                                            {{ $patient->first()->husband_lastname }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Contact Number:</span>
+                                                                            {{ $patient->first()->husband_contact_number }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Birthday:</span>
+                                                                            {{ $patient->first()->husband_birthday }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Age:</span>
+                                                                            {{ $patient->first()->husband_age }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Occupation:</span>
+                                                                            {{ $patient->first()->husband_occupation }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Religion:</span>
+                                                                            {{ $patient->first()->husband_religion }}
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>Address:</span>
+                                                                            Barangay {{ $patient->first()->barangay }},
+                                                                            {{ $patient->first()->city }},
+                                                                            {{ $patient->first()->province }}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="pd-20 card-box height-100-p">
-                                                            <div class="profile-info">
-                                                                <h5 class="mb-20 h5 text-green">Husband Informations</h5>
-                                                                <ul>
-                                                                    <li>
-                                                                        <span>Full Name:</span>
-                                                                        {{ $patient->first()->husband_firstname }}
-                                                                        {{ $patient->first()->husband_lastname }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Contact Number:</span>
-                                                                        {{ $patient->first()->husband_contact_number }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Birthday:</span>
-                                                                        {{ $patient->first()->husband_birthday }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Age:</span>
-                                                                        {{ $patient->first()->husband_age }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Occupation:</span>
-                                                                        {{ $patient->first()->husband_occupation }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Religion:</span>
-                                                                        {{ $patient->first()->husband_religion }}
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Address:</span>
-                                                                        Barangay {{ $patient->first()->barangay }},
-                                                                        {{ $patient->first()->city }},
-                                                                        {{ $patient->first()->province }}
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @else
-                                               <center>No Data Available</center>
-                                            @endif
+                                                @else
+                                                    <center>No Data Available</center>
+                                                @endif
                                             </div>
                                         </div>
 
@@ -168,20 +173,21 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @if($pregterm->isNotEmpty())
-                                                        <tr>
-                                                            <td id="gravida">{{ $pregterm->first()->gravida }}</td>
-                                                            <td id="para">{{ $pregterm->first()->para }}</td>
-                                                            <td id="t">{{ $pregterm->first()->t }}</td>
-                                                            <td id="p">{{ $pregterm->first()->p }}</td>
-                                                            <td id="a">{{ $pregterm->first()->a }}</td>
-                                                            <td id="l">{{ $pregterm->first()->l }}</td>
-                                                        </tr>
-                                                    @else
-                                                        <tr>
-                                                            <td colspan="6" class="text-center">No data available</td>
-                                                        </tr>
-                                                    @endif
+                                                        @if ($pregterm->isNotEmpty())
+                                                            <tr>
+                                                                <td id="gravida">{{ $pregterm->first()->gravida }}</td>
+                                                                <td id="para">{{ $pregterm->first()->para }}</td>
+                                                                <td id="t">{{ $pregterm->first()->t }}</td>
+                                                                <td id="p">{{ $pregterm->first()->p }}</td>
+                                                                <td id="a">{{ $pregterm->first()->a }}</td>
+                                                                <td id="l">{{ $pregterm->first()->l }}</td>
+                                                            </tr>
+                                                        @else
+                                                            <tr>
+                                                                <td colspan="6" class="text-center">No data available
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                                 <br>
@@ -211,9 +217,10 @@
                                                                 <td>{{ $history->present_status }}</td>
                                                                 <td>{{ $history->complications }}</td>
                                                             </tr>
-                                                            @empty
+                                                        @empty
                                                             <tr>
-                                                                <td colspan="8" style="text-align: center">No data available</td>
+                                                                <td colspan="8" style="text-align: center">No data
+                                                                    available</td>
                                                             </tr>
                                                         @endforelse
                                                     </tbody>
@@ -227,7 +234,7 @@
                                             <div class="pd-20">
                                                 <table class="table table-striped">
                                                     <thead>
-                                                    
+
                                                         <tr class="table-info">
                                                             <th class="text-center">Hypertension</th>
                                                             <th class="text-center">Heart Disease</th>
@@ -238,20 +245,30 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @if($medical->isNotEmpty())
-                                                        <tr>
-                                                            <td id="hypertension" class="text-center">{{ $medical->first()->hypertension ? 'Yes' : 'No' }}</td>
-                                                            <td id="heartdisease" class="text-center">{{ $medical->first()->heart_disease ? 'Yes' : 'No' }}</td>
-                                                            <td id="asthma" class="text-center">{{ $medical->first()->asthma ? 'Yes' : 'No' }}</td>
-                                                            <td id="tuberculosis" class="text-center">{{ $medical->first()->tuberculosis ? 'Yes' : 'No' }}</td>
-                                                            <td id="diabetes" class="text-center">{{ $medical->first()->diabetes ? 'Yes' : 'No' }}</td>
-                                                            <td id="goiter" class="text-center">{{ $medical->first()->goiter ? 'Yes' : 'No' }}</td>
-                                                        </tr>
-                                                    @else
-                                                        <tr>
-                                                            <td colspan="6" class="text-center">No data available</td>
-                                                        </tr>
-                                                    @endif
+                                                        @if ($medical->isNotEmpty())
+                                                            <tr>
+                                                                <td id="hypertension" class="text-center">
+                                                                    {{ $medical->first()->hypertension ? 'Yes' : 'No' }}
+                                                                </td>
+                                                                <td id="heartdisease" class="text-center">
+                                                                    {{ $medical->first()->heart_disease ? 'Yes' : 'No' }}
+                                                                </td>
+                                                                <td id="asthma" class="text-center">
+                                                                    {{ $medical->first()->asthma ? 'Yes' : 'No' }}</td>
+                                                                <td id="tuberculosis" class="text-center">
+                                                                    {{ $medical->first()->tuberculosis ? 'Yes' : 'No' }}
+                                                                </td>
+                                                                <td id="diabetes" class="text-center">
+                                                                    {{ $medical->first()->diabetes ? 'Yes' : 'No' }}</td>
+                                                                <td id="goiter" class="text-center">
+                                                                    {{ $medical->first()->goiter ? 'Yes' : 'No' }}</td>
+                                                            </tr>
+                                                        @else
+                                                            <tr>
+                                                                <td colspan="6" class="text-center">No data available
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -270,21 +287,29 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @if($medical->isNotEmpty())
-                                                        <tr>
-                                                            <td id="hypertension" class="text-center">{{ $medical->first()->epilepsy ? 'Yes' : 'No' }}</td>
-                                                            <td id="heartdisease" class="text-center">{{ $medical->first()->allergy ? 'Yes' : 'No' }}</td>
-                                                            <td id="asthma" class="text-center">{{ $medical->first()->hepatitis ? 'Yes' : 'No' }}</td>
-                                                            <td id="tuberculosis" class="text-center">{{ $medical->first()->vdrl ? 'Yes' : 'No' }}</td>
-                                                            <td id="diabetes" class="text-center">{{ $medical->first()->bleeding ? 'Yes' : 'No' }}</td>
-                                                            <td id="goiter" class="text-center">{{ $medical->first()->operation ? 'Yes' : 'No' }}</td>
-                                                            <td id="others" class="text-center">{{ $medical->first()->others ?: 'No' }}</td>
-                                                        </tr>
+                                                        @if ($medical->isNotEmpty())
+                                                            <tr>
+                                                                <td id="hypertension" class="text-center">
+                                                                    {{ $medical->first()->epilepsy ? 'Yes' : 'No' }}</td>
+                                                                <td id="heartdisease" class="text-center">
+                                                                    {{ $medical->first()->allergy ? 'Yes' : 'No' }}</td>
+                                                                <td id="asthma" class="text-center">
+                                                                    {{ $medical->first()->hepatitis ? 'Yes' : 'No' }}</td>
+                                                                <td id="tuberculosis" class="text-center">
+                                                                    {{ $medical->first()->vdrl ? 'Yes' : 'No' }}</td>
+                                                                <td id="diabetes" class="text-center">
+                                                                    {{ $medical->first()->bleeding ? 'Yes' : 'No' }}</td>
+                                                                <td id="goiter" class="text-center">
+                                                                    {{ $medical->first()->operation ? 'Yes' : 'No' }}</td>
+                                                                <td id="others" class="text-center">
+                                                                    {{ $medical->first()->others ?: 'No' }}</td>
+                                                            </tr>
                                                         @else
-                                                        <tr>
-                                                            <td colspan="7" class="text-center">No data available</td>
-                                                        </tr>
-                                                    @endif
+                                                            <tr>
+                                                                <td colspan="7" class="text-center">No data available
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -320,9 +345,10 @@
                                                                 <td>{{ $laboratory->vdrl }}</td>
                                                                 <td>{{ $laboratory->fbs }}</td>
                                                             </tr>
-                                                            @empty
+                                                        @empty
                                                             <tr>
-                                                                <td colspan="8" style="text-align: center">No data available</td>
+                                                                <td colspan="8" style="text-align: center">No data
+                                                                    available</td>
                                                             </tr>
                                                         @endforelse
                                                     </tbody>
@@ -330,13 +356,13 @@
                                             </div>
                                         </div>
 
-                                         <!-- APPOINTMENT -->
-                                         <div class="tab-pane fade " id="appointment" role="tabpanel">
+                                        <!-- APPOINTMENT -->
+                                        <div class="tab-pane fade " id="appointment" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped" id="appointment">
                                                     <thead>
                                                         <tr class="table-info">
-                                                            <th>#</th>
+                                                           
                                                             <th class="table-plus">Date</th>
                                                             <th class="table-plus">Doctor</th>
                                                             <th>Service</th>
@@ -345,93 +371,105 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @forelse ($app as $appointment)
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $appointment->date }}</td>
-                                                            <td>Dr. {{ $appointment->doctor->lastname }}</td>
-                                                            <td>
-                                                                @if($appointment->services && $appointment->services->count() > 0)
-                                                                    @foreach($appointment->services as $service)
-                                                                        {{ $service->name }}<br>
-                                                                    @endforeach
-                                                                @else
-                                                                    <span style="color:red">Service Not Found</span>
-                                                                @endif
-                                                            </td>
-                                                            
-                                                            <td>{{ $appointment->start_time }}</td>
-                                                            <td>
-                                                                @php
-                                                                    $statusWord = '';
-                                                                    $badgeClass = '';
-                                                                    switch ($appointment->status) {
-                                                                        case 1:
-                                                                            $statusWord = 'Pending';
-                                                                            $badgeClass = 'badge badge-warning';
-                                                                            break;
-                                                                        case 2:
-                                                                            $statusWord = 'Approved';
-                                                                            $badgeClass = 'badge badge-success';
-                                                                            break;
-                                                                        case 3:
-                                                                            $statusWord = 'Completed';
-                                                                            $badgeClass = 'badge badge-primary';
-                                                                            break;
-                                                                        case 4:
-                                                                            $statusWord = 'Cancelled';
-                                                                            $badgeClass = 'badge badge-danger';
-                                                                            break;
-                                                                        case 5:
-                                                                            $statusWord = 'Disapproved';
-                                                                            $badgeClass = 'badge badge-warning';
-                                                                            break;
-                                                                        default:
-                                                                            $statusWord = 'Unknown';
-                                                                            $badgeClass = 'badge badge-secondary';
-                                                                            break;
-                                                                    }
-                                                                @endphp
-                                                                <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
-                                                            </td>   
-                                                        </tr>
-                                                        <div class="modal fade" id="showModal{{ $appointment->id }}" tabindex="-1" aria-labelledby="showModal{{ $appointment->id }}Label" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered">
-                                                                <div class="modal-content">
+                                                        @forelse ($app as $appointment)
+                                                            <tr>
+                                                                <!--<td>{{ $loop->iteration }}</td>-->
+                                                                <td>{{ $appointment->date }}</td>
+                                                                <td>Dr. {{ $appointment->doctor->lastname }}</td>
+                                                                <td>
+                                                                    @if ($appointment->services && $appointment->services->count() > 0)
+                                                                        @foreach ($appointment->services as $service)
+                                                                            {{ $service->name }}<br>
+                                                                        @endforeach
+                                                                    @else
+                                                                        <span style="color:red">Service Not Found</span>
+                                                                    @endif
+                                                                </td>
+
+                                                                <td>{{ $appointment->start_time }}</td>
+                                                                <td>
+                                                                    @php
+                                                                        $statusWord = '';
+                                                                        $badgeClass = '';
+                                                                        switch ($appointment->status) {
+                                                                            case 1:
+                                                                                $statusWord = 'Pending';
+                                                                                $badgeClass = 'badge badge-warning';
+                                                                                break;
+                                                                            case 2:
+                                                                                $statusWord = 'Approved';
+                                                                                $badgeClass = 'badge badge-success';
+                                                                                break;
+                                                                            case 3:
+                                                                                $statusWord = 'Completed';
+                                                                                $badgeClass = 'badge badge-primary';
+                                                                                break;
+                                                                            case 4:
+                                                                                $statusWord = 'Cancelled';
+                                                                                $badgeClass = 'badge badge-danger';
+                                                                                break;
+                                                                            case 5:
+                                                                                $statusWord = 'Disapproved';
+                                                                                $badgeClass = 'badge badge-warning';
+                                                                                break;
+                                                                            default:
+                                                                                $statusWord = 'Unknown';
+                                                                                $badgeClass = 'badge badge-secondary';
+                                                                                break;
+                                                                        }
+                                                                    @endphp
+                                                                    <span
+                                                                        class="{{ $badgeClass }}">{{ $statusWord }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <div class="modal fade" id="showModal{{ $appointment->id }}"
+                                                                tabindex="-1"
+                                                                aria-labelledby="showModal{{ $appointment->id }}Label"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
                                                                         <div class="modal-header">
-                                                                            <h3 class="text-center">Appointment Information</h3>
-                                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                                aria-label="Close">
+                                                                            <h3 class="text-center">Appointment Information
+                                                                            </h3>
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">&times;</span>
                                                                             </button>
                                                                         </div>
-                                                                    <div class="modal-body">
-                                                                        <p><strong>Doctor Name:</strong> Dr.
-                                                                            {{ $appointment->doctor->firstname }}
-                                                                            {{ $appointment->doctor->lastname }}
-                                                                        </p>
-                                                                        <p><strong>Patient Name:</strong>
-                                                                            {{ $appointment->patient->firstname }}
-                                                                            {{ $appointment->patient->lastname }}
-                                                                        </p>
-                                                                    @foreach($appointment->medications as $medication)
-                                                                        <p><strong>Bed:</strong> {{  $medication->bed }}</p>
-                                                                        <p><strong>Room:</strong> {{ $medication->room }}</p>
-                                                                        <p><strong>Date:</strong> {{ $medication->date }}</p>
-                                                                        <p><strong>Medications:</strong> {{ implode(", ", json_decode($medication->medications)) }}</p>
-
-                                                                     @endforeach
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        <div class="modal-body">
+                                                                            <p><strong>Doctor Name:</strong> Dr.
+                                                                                {{ $appointment->doctor->firstname }}
+                                                                                {{ $appointment->doctor->lastname }}
+                                                                            </p>
+                                                                            <p><strong>Patient Name:</strong>
+                                                                                {{ $appointment->patient->firstname }}
+                                                                                {{ $appointment->patient->lastname }}
+                                                                            </p>
+                                                                            @foreach ($appointment->medications as $medication)
+                                                                                <p><strong>Bed:</strong>
+                                                                                    {{ $medication->bed }}</p>
+                                                                                <p><strong>Room:</strong>
+                                                                                    {{ $medication->room }}</p>
+                                                                                <p><strong>Date:</strong>
+                                                                                    {{ $medication->date }}</p>
+                                                                                <p><strong>Medications:</strong>
+                                                                                    {{ implode(', ', json_decode($medication->medications)) }}
+                                                                                </p>
+                                                                            @endforeach
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                         @empty
-                                                        <tr>
-                                                            <td colspan="7" style="text-align: center">No data available</td>
-                                                        </tr>
+                                                            <tr>
+                                                                <td colspan="7" style="text-align: center">No data
+                                                                    available</td>
+                                                            </tr>
                                                         @endforelse
                                                     </tbody>
                                                 </table>
@@ -445,29 +483,37 @@
                                             <div class="pd-20">
                                                 <table class="table table-striped" id="ultrasound">
                                                     <thead>
-                                                        <tr class="table-info"> 
+                                                        <tr class="table-info">
                                                             <th>#</th>
                                                             <th class="table-plus" style="text-align: center">Date</th>
                                                             <th class="table-plus" style="text-align: center">Result</th>
-                                                            <th style="text-align: center">Attachment <i style="color:red"><small>(Click image to download)</small> </i></th>
+                                                            <th style="text-align: center">Attachment <i
+                                                                    style="color:red"><small>(Click image to
+                                                                        download)</small> </i></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @forelse ($ultra as $ultrasound)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
-                                                                <td style="text-align: center">{{ $ultrasound->date }}</td>
-                                                                <td style="text-align: center">{{ $ultrasound->result }}</td>
+                                                                <td style="text-align: center">{{ $ultrasound->date }}
+                                                                </td>
+                                                                <td style="text-align: center">{{ $ultrasound->result }}
+                                                                </td>
                                                                 <td style="text-align: center">
-                                                                    <a href="{{ asset('ultrasound_image/' . $ultrasound->attachment) }}" download="{{ $ultrasound->attachment }}">
-                                                                        <img src="{{ asset('ultrasound_image/' . $ultrasound->attachment) }}" alt="Ultrasound Image" style="max-width: 100px;">
+                                                                    <a href="{{ asset('ultrasound_image/' . $ultrasound->attachment) }}"
+                                                                        download="{{ $ultrasound->attachment }}">
+                                                                        <img src="{{ asset('ultrasound_image/' . $ultrasound->attachment) }}"
+                                                                            alt="Ultrasound Image"
+                                                                            style="max-width: 100px;">
                                                                     </a>
                                                                 </td>
-                                                                
+
                                                             </tr>
-                                                            @empty
+                                                        @empty
                                                             <tr>
-                                                                <td colspan="4" style="text-align: center">No data available</td>
+                                                                <td colspan="4" style="text-align: center">No data
+                                                                    available</td>
                                                             </tr>
                                                         @endforelse
                                                     </tbody>
@@ -475,8 +521,8 @@
                                             </div>
                                         </div>
 
-                                           <!-- MEDICATION -->
-                                           <div class="tab-pane fade " id="medication" role="tabpanel">
+                                        <!-- MEDICATION -->
+                                        <div class="tab-pane fade " id="medication" role="tabpanel">
                                             <div class="pd-20">
                                                 <table class="table table-striped" id="medication">
                                                     <thead>
@@ -493,7 +539,9 @@
                                                                 <td>{{ $medication->created_at->format('Y-m-d') }}</td>
                                                                 <td>
                                                                     @php
-                                                                        $medications = json_decode($medication->medications);
+                                                                        $medications = json_decode(
+                                                                            $medication->medications,
+                                                                        );
                                                                         if ($medications) {
                                                                             // If decoding is successful
                                                                             echo implode(', ', $medications); // Display medications separated by comma
@@ -504,9 +552,10 @@
                                                                     @endphp
                                                                 </td>
                                                             </tr>
-                                                            @empty
+                                                        @empty
                                                             <tr>
-                                                                <td colspan="8" style="text-align: center">No data available</td>
+                                                                <td colspan="8" style="text-align: center">No data
+                                                                    available</td>
                                                             </tr>
                                                         @endforelse
                                                     </tbody>

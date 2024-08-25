@@ -36,7 +36,9 @@
                         <div class="card-box height-100-p overflow-hidden">
                             <div class="profile-tab height-100-p">
                                 <div class="tab height-100-p">
+                                    <button id="print" class="btn btn-success float-right">Print</button>
                                     <div class="col-lg-8 col-md-8 dropdown">
+                                      
                                         <button class="btn btn-primary dropdown-toggle" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
@@ -45,7 +47,7 @@
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item" href="#personal" data-toggle="tab">Personal
                                                 Information</a>
-                                            <a class="dropdown-item" href="#appointment" data-toggle="tab">Recent
+                                            <a class="dropdown-item" href="#appointment" id="appointment-tab" data-toggle="tab">Recent
                                                 Appointment</a>
                                             <!--  -<a class="dropdown-item" href="#attachment" data-toggle="tab">Attachments</a> -->
                                             <a class="dropdown-item" href="#pregnancy" data-toggle="tab">Pregnancy
@@ -67,113 +69,108 @@
                                     </div>
                                     <div class="tab-content">
 
-                                        <!-- PERSONAL -->
-                                        <div class="tab-pane fade show active" id="personal" role="tabpanel">
-                                            <div class="pd-20 profile-task-wrap">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="pd-20 card-box height-100-p">
-                                                            <div class="profile-info">
-                                                                <h5 class="mb-20 h5 text-green">Patient Informations</h5>
-                                                                <ul>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Full Name:</span>
-                                                                        <span id="fullname" style="color: black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Phone Number:</span>
-                                                                        <span id="contact_number"
-                                                                            style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Birthplace:</span>
-                                                                        <span id="birthplace" style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Birthday:</span>
-                                                                        <span id="birthday" style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Age:</span>
-                                                                        <span id="age" style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Civil Status:</span>
-                                                                        <span id="civil" style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Religion:</span>
-                                                                        <span id="religion" style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Occupation:</span>
-                                                                        <span id="occupation" style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Nationality:</span>
-                                                                        <span id="nationality" style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Address:</span>
-                                                                        <span id="address" style="color:black"></span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="pd-20 card-box height-100-p">
-                                                            <div class="profile-info">
-                                                                <h5 class="mb-20 h5 text-green">Spouse Informations</h5>
-                                                                <ul>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Full Name:</span>
-                                                                        <span id="husband_fullname"
-                                                                            style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Contact
-                                                                            Number:</span>
-                                                                        <span id="husband_contact_number"
-                                                                            style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Birthday:</span>
-                                                                        <span id="husband_birthday"
-                                                                            style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Age:</span>
-                                                                        <span id="husband_age" style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Occupation:</span>
-                                                                        <span id="husband_occupation"
-                                                                            style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Religion:</span>
-                                                                        <span id="husband_religion"
-                                                                            style="color:black"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span style="font-weight:700">Address:</span>
-                                                                        <span id="husband_address"
-                                                                            style="color:black"></span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
+                                       <!-- PERSONAL -->
+<div class="tab-pane fade show active" id="personal" role="tabpanel">
+    <div class="pd-20 profile-task-wrap">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pd-20 card-box height-100-p">
+                    <div class="profile-info">
+                        
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <td id="fullname" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Phone Number</th>
+                                    <td id="contact_number" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Birthplace</th>
+                                    <td id="birthplace" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Birthday</th>
+                                    <td id="birthday" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Age</th>
+                                    <td id="age" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Civil Status</th>
+                                    <td id="civil" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Religion</th>
+                                    <td id="religion" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Occupation</th>
+                                    <td id="occupation" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Nationality</th>
+                                    <td id="nationality" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td id="address" style="color:black"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="pd-20 card-box height-100-p">
+                    <div class="profile-info">
+                        
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Spouse Full Name</th>
+                                    <td id="husband_fullname" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Spouse Contact Number</th>
+                                    <td id="husband_contact_number" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Spouse Birthday</th>
+                                    <td id="husband_birthday" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Spouse Age</th>
+                                    <td id="husband_age" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Spouse Occupation</th>
+                                    <td id="husband_occupation" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Spouse Religion</th>
+                                    <td id="husband_religion" style="color:black"></td>
+                                </tr>
+                                <tr>
+                                    <th>Spouse Address</th>
+                                    <td id="husband_address" style="color:black"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
                                         <!-- APPOINTMENT -->
                                         <div class="tab-pane fade " id="appointment" role="tabpanel">
                                             <div class="pd-20">
+                                   
                                                 <table class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr class="table-info">
@@ -200,6 +197,7 @@
                                         <!-- PREGNANCY -->
                                         <div class="tab-pane fade " id="pregnancy" role="tabpanel">
                                             <div class="pd-20">
+                                                
                                                 <table class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr class="table-info">
@@ -315,6 +313,7 @@
                                         <!-- LABORATORY -->
                                         <div class="tab-pane fade " id="laboratory" role="tabpanel">
                                             <div class="pd-20">
+                                                
                                                 <table class="table table-striped table-bordered" id="laboratory">
                                                     <thead>
                                                         <tr class="table-info">
@@ -808,6 +807,7 @@
                     setTimeout(updateDropdownText, 10);
                 });
             });
+            
         </script>
     @endsection
         

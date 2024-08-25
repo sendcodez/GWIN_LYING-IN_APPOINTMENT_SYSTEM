@@ -43,8 +43,9 @@
                                 <th>SERVICE</th>
                                 <th>DATE</th>
                                 <th>TIME</th>
+                                <th class="text-center">MODE OF APPOINTMENT</th>
                                 <th>STATUS</th>
-                                <th>REMARKS</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -69,6 +70,7 @@
                                     </td>
                                     <td>{{ $appointment->date }}</td>
                                     <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
+                                    <td class="text-center"> {{ $appointment->remarks }} </td>
                                     <td>
                                         @php
                                             $statusWord = '';
@@ -98,7 +100,7 @@
                                         @endphp
                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                     </td>
-                                    <td> {{ $appointment->remarks }} </td>
+                                  
                                 </tr>
                             @endforeach
                         </tbody>

@@ -53,6 +53,29 @@
                         <div class="calendar-wrap col-md-6 col-sm-6 custom-bordered-table">
                             <p>Please Click the Calendar Cell to Book an Appointment</p>
                             <p>Please refer to the availability of doctors and services before scheduling</p>
+                            <b> SCHEDULE POLICIES</b>
+                            <p>
+
+                                1.<b> Appointment Booking</b>
+                                <br>
+                                Appointments can be booked online or through our office during business hours.
+                                <br>
+                                2. <b>Late Arrival</b>
+                                <br>
+                                Patients are requested to arrive at least 10 minutes before their scheduled appointment
+                                time. Late arrivals may result in a shortened appointment or rescheduling, depending on
+                                availability.
+                                <br>
+                                3. <b>Policy Changes</b>
+                                <br>
+                                The schedule policy is subject to change. Any changes will be communicated to patients
+                                through email or posted on our website.
+                                <br>
+                                4. <b>Contact Information</b>
+                                <br>
+                                For any questions regarding this policy or to make changes to your appointment, please
+                                contact our office at gwinlying@gmail.com.
+                            </p>
                             <div id="calendar"></div>
                         </div>
                         <!-- Table Section -->
@@ -149,19 +172,19 @@
                                         </center>
                                     </div>
                                     <!--
-                                        <div class="col-md-2 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="statusFilter">Filter by Status:</label>
-                                                <select id="statusFilter" class="selectpicker form-control">
-                                                    <option value="">All</option>
-                                                    <option value="Pending">Pending</option>
-                                                    <option value="Approved">Approved</option>
-                                                    <option value="Completed">Completed</option>
-                                                    <option value="Cancelled">Cancelled</option>
-                                                </select>
+                                            <div class="col-md-2 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="statusFilter">Filter by Status:</label>
+                                                    <select id="statusFilter" class="selectpicker form-control">
+                                                        <option value="">All</option>
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Approved">Approved</option>
+                                                        <option value="Completed">Completed</option>
+                                                        <option value="Cancelled">Cancelled</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                    -->
+                                        -->
                                     <table class="data-table table" id="appointmentsTable">
                                         <thead>
                                             <tr>
@@ -299,7 +322,7 @@
                         </div>
                     </div>
 
-                   
+
                     <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -313,8 +336,8 @@
                                             <input type="date" class="form-control" name="selected_date"
                                                 id="selected_date" value="" readonly />
                                             <!-- Place "Selected Day" input field here -->
-                                            <input type="text" class="form-control" name="selected_day"
-                                                id="selected_day" value="" readonly />
+                                            <input type="text" class="form-control" name="selected_day" id="selected_day"
+                                                value="" readonly />
                                         </div>
                                         <div class="form-group">
                                             <label>Patient Name</label>
@@ -349,30 +372,30 @@
                                         </div>
 
                                         <!--   <label>Select Time</label>
-                                                <div class="form-group">
-                                                    <select id="timeSelect" name="time" id="time" class="form-control"
-                                                        required>
-                                                        <option value="">Select time</option>
-                                                    </select>
-                                                    <input type="hidden" class="form-control" name="end_time" id="end_time"
-                                                        value="" readonly />
-                                                </div>
-                                            -->
+                                                    <div class="form-group">
+                                                        <select id="timeSelect" name="time" id="time" class="form-control"
+                                                            required>
+                                                            <option value="">Select time</option>
+                                                        </select>
+                                                        <input type="hidden" class="form-control" name="end_time" id="end_time"
+                                                            value="" readonly />
+                                                    </div>
+                                                -->
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" name="remarks" id="remarks"
                                                 value="Online" readonly />
                                         </div>
-
-                                        <div class="form-group">
-                                            <input type="checkbox" id="policyCheckbox">
-                                            <label for="policyCheckbox">I agree to the <a href="#"
-                                                    data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
-                                                    policy</span></a></label>
-                                        </div>
-
+                                        <!--
+                                            <div class="form-group">
+                                                <input type="checkbox" id="policyCheckbox">
+                                                <label for="policyCheckbox">I agree to the <a href="#"
+                                                        data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
+                                                        policy</span></a></label>
+                                            </div>
+                                        -->
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" id="saveButton" disabled  >
+                                        <button type="submit" class="btn btn-primary" id="saveButton">
                                             Save
                                         </button>
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">
@@ -385,8 +408,8 @@
                     </div>
                 </div>
             </div>
-             <!-- Modal for Schedule Policy -->
-             <div id="modal-schedule-policy" class="modal fade" tabindex="-1" role="dialog">
+            <!-- Modal for Schedule Policy -->
+            <div id="modal-schedule-policy" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -398,7 +421,7 @@
                         <div class="modal-body">
                             <!-- Your policy content goes here -->
 
-                
+
                             <p>
 
                                 1.<b> Appointment Booking</b>
@@ -407,16 +430,20 @@
                                 <br>
                                 2. <b>Late Arrival</b>
                                 <br>
-                                Patients are requested to arrive at least 10 minutes before their scheduled appointment time. Late arrivals may result in a shortened appointment or rescheduling, depending on availability.
+                                Patients are requested to arrive at least 10 minutes before their scheduled appointment
+                                time. Late arrivals may result in a shortened appointment or rescheduling, depending on
+                                availability.
                                 <br>
                                 3. <b>Policy Changes</b>
                                 <br>
-                                The schedule policy is subject to change. Any changes will be communicated to patients through email or posted on our website.
-                               <br>
+                                The schedule policy is subject to change. Any changes will be communicated to patients
+                                through email or posted on our website.
+                                <br>
                                 4. <b>Contact Information</b>
                                 <br>
-                                For any questions regarding this policy or to make changes to your appointment, please contact our office at gwinlying@gmail.com.
-                                </p>
+                                For any questions regarding this policy or to make changes to your appointment, please
+                                contact our office at gwinlying@gmail.com.
+                            </p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -585,6 +612,7 @@
                     cell.classList.add('red-day');
                 });
             });
+            /*
             document.addEventListener('DOMContentLoaded', (event) => {
                 const policyCheckbox = document.getElementById('policyCheckbox');
                 const saveButton = document.getElementById('saveButton');
@@ -592,5 +620,6 @@
                 policyCheckbox.addEventListener('change', () => {
                     saveButton.disabled = !policyCheckbox.checked;
                 });
-            });     
+            });
+            */
         </script>

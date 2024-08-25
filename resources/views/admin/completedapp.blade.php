@@ -12,23 +12,22 @@
                     <table class="data-table table nowrap" id="appointmentsTable">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Patient Name</th>
-                                <th>Doctor Name</th>
-                                <th>Service</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>Remarks</th>
-                              
-                                <th>Action</th>
+                                <!--<th>#</th>-->
+                                <th>PATIENT NAME</th>
+                                <th>DOCTOR NAME</th>
+                                <th>SERVICE</th>
+                                <th>DATE</th>
+                                <th>TIME</th>
+                             <!--  <th class="text-center">MODE OF APPOINMENT</th> -->
+                                <th>STATUS</th>
+                                <th>ACTION</th>
                              
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($appointments as $key => $appointment)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <!--<td>{{ $key + 1 }}</td>-->
                                     <td>{{ ucfirst($appointment->patient->firstname) }} {{ ucfirst($appointment->patient->lastname) }}</td>
                                     <td>
                                         @if($appointment->doctor && $appointment->doctor->lastname)
@@ -48,7 +47,7 @@
                                     </td>
                                     <td>{{ $appointment->date }}</td>
                                     <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
-                                    <!--<td>{{ $appointment->remarks }}</td>-->
+                                  <!--  <td class="text-center">{{ $appointment->remarks }}</td> -->
                                     <td>
                                         @php
                                             $statusWord = '';

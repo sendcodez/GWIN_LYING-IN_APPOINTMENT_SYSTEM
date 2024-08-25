@@ -144,9 +144,9 @@ jQuery(document).ready(function () {
                 });
             
                 if (!isAvailable) {
-                    cell.addClass("red-day");
+                   // cell.addClass("red-day");
                     cell.addClass("unclick");
-                    cell.append("<span class='not-available'>Not Available</span>");
+                    cell.append("<span class='not-available' style='color:red;font-size:.8rem'>UNAVAILABLE</span>");
                 }
             
             },

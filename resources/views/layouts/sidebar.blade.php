@@ -166,11 +166,22 @@
                         <span class="user-icon">
                             <img src="{{ asset('vendors/images/avatar.png') }}" alt="" />
                         </span>
-                        <span class="user-name"> {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
+                        <span class="user-name">
+                            @if(Auth::user()->usertype == 0)
+                                Admin
+                            @elseif(Auth::user()->usertype == 1)
+                                Staff
+                            @else
+                                {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
+                            @endif
+                        </span>
+                        
+                        
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="dw dw-user1"></i> Profile</a>
+                       <!-- <a class="dropdown-item" href="javascript:void(0);"><i class="dw dw-user1"></i> Profile</a>
                         <a class="dropdown-item" href="javascript:void(0);"><i class="dw dw-settings2"></i> Setting</a>
+                       -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
