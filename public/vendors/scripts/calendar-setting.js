@@ -107,6 +107,13 @@ jQuery(document).ready(function () {
             dayRender: function(date, cell) {
                 var dayName = date.format("dddd").toLowerCase();
                 var isAvailable = false;
+                
+                if (date.isBefore(moment(), "day")) {
+                    cell.addClass("past-date"); // Add class for past dates
+                    cell.addClass("unclick"); // Make it unclickable
+                    return; // Exit early if it's a past date
+                }
+            
             
                 doctorAvailabilities.forEach(function(availability) {
                     if (availability.day === dayName && availability.status !== 4) {

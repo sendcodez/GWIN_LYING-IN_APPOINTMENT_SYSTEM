@@ -18,6 +18,20 @@
             /* Change text color to white */
         }
 
+        .past-date {
+            background-color: #d3d3d3 !important;
+            /* Light grey background */
+            color: #666666;
+            /* Dark grey text color */
+            transform: scale(.9);
+            /* Shrinks the size of the cell to 80% of its original size */
+            transition: transform 0.12s ease;
+            /* Smooth transition for visual appeal */
+            opacity: 1;
+            /* Make the past date less prominent */
+            pointer-events: none;
+        }
+
         .unclick {
             pointer-events: none
         }
@@ -172,19 +186,19 @@
                                         </center>
                                     </div>
                                     <!--
-                                            <div class="col-md-2 col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="statusFilter">Filter by Status:</label>
-                                                    <select id="statusFilter" class="selectpicker form-control">
-                                                        <option value="">All</option>
-                                                        <option value="Pending">Pending</option>
-                                                        <option value="Approved">Approved</option>
-                                                        <option value="Completed">Completed</option>
-                                                        <option value="Cancelled">Cancelled</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        -->
+                                                    <div class="col-md-2 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="statusFilter">Filter by Status:</label>
+                                                            <select id="statusFilter" class="selectpicker form-control">
+                                                                <option value="">All</option>
+                                                                <option value="Pending">Pending</option>
+                                                                <option value="Approved">Approved</option>
+                                                                <option value="Completed">Completed</option>
+                                                                <option value="Cancelled">Cancelled</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                -->
                                     <table class="data-table table" id="appointmentsTable">
                                         <thead>
                                             <tr>
@@ -372,27 +386,27 @@
                                         </div>
 
                                         <!--   <label>Select Time</label>
-                                                    <div class="form-group">
-                                                        <select id="timeSelect" name="time" id="time" class="form-control"
-                                                            required>
-                                                            <option value="">Select time</option>
-                                                        </select>
-                                                        <input type="hidden" class="form-control" name="end_time" id="end_time"
-                                                            value="" readonly />
-                                                    </div>
-                                                -->
+                                                            <div class="form-group">
+                                                                <select id="timeSelect" name="time" id="time" class="form-control"
+                                                                    required>
+                                                                    <option value="">Select time</option>
+                                                                </select>
+                                                                <input type="hidden" class="form-control" name="end_time" id="end_time"
+                                                                    value="" readonly />
+                                                            </div>
+                                                        -->
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" name="remarks" id="remarks"
                                                 value="Online" readonly />
                                         </div>
                                         <!--
-                                            <div class="form-group">
-                                                <input type="checkbox" id="policyCheckbox">
-                                                <label for="policyCheckbox">I agree to the <a href="#"
-                                                        data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
-                                                        policy</span></a></label>
-                                            </div>
-                                        -->
+                                                    <div class="form-group">
+                                                        <input type="checkbox" id="policyCheckbox">
+                                                        <label for="policyCheckbox">I agree to the <a href="#"
+                                                                data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
+                                                                policy</span></a></label>
+                                                    </div>
+                                                -->
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary" id="saveButton">

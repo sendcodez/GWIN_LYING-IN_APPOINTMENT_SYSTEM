@@ -41,8 +41,9 @@ class DashboardController extends Controller
                 ->orderBy('date', 'desc')
                 ->get();
         }
+        $appointmentCounts = $this->getAppointmentCounts();
             
-        return view('admin.dashboard', compact('appointments', 'doc_app'));
+        return view('admin.dashboard', compact('appointments', 'doc_app','appointmentCounts'));
     }
 
     
@@ -182,4 +183,15 @@ class DashboardController extends Controller
         ]);
         return redirect()->back()->with('success', 'Appointment disapproved successfully');
     }
+    public function getAppointmentCounts()
+{
+    return [
+        'pending' => Appointment::where('status', 1)->count(),
+        'approved' => Appointment::where('status', 2)->count(),
+        'completed' => Appointment::where('status', 3)->count(),
+        'cancelled' => Appointment::where('status', 4)->count(),
+        'disapproved' => Appointment::where('status', 5)->count(),
+    ];
+}
+
 }

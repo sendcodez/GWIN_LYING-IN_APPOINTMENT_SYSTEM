@@ -13,7 +13,7 @@ use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
+use App\Models\RestDay;
 
 class CalendarController extends Controller
 {
@@ -32,6 +32,8 @@ class CalendarController extends Controller
     $appointments = Appointment::all();
 
     $doctorAvailabilities = DoctorAvailability::with(['doctor', 'doctor_services'])->get();
+    $restDays = RestDay::pluck('rest_day')->toArray();
+    $rd = RestDay::all();
 
 
    
@@ -42,6 +44,8 @@ class CalendarController extends Controller
         'services' => $services,
         'allAppointments' => $allAppointments,
         'appointments' => $appointments,
+        'restDays' => $restDays,
+        'rd' => $rd,
     ]);
 }
     /**

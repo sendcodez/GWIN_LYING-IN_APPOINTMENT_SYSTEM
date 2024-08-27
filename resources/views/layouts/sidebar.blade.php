@@ -124,6 +124,15 @@
         background-color: #A1DD70 !important;
         /* Replace with your desired hover color */
     }
+    .badge {
+    background-color: rgb(49, 55, 233);
+    color: white;
+    border-radius: 12px;
+    padding: 3px 7px;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
 </style>
 
 <body>
@@ -330,29 +339,45 @@
                                 <li>
                                     <a href="{{ route('appointments.pending') }}" class="@isActiveRoute('appointments.pending')">
                                         Pending
+                                        @if($appointmentCounts['pending'] > 0)
+                                            <span class="badge">{{ $appointmentCounts['pending'] }}</span>
+                                        @endif
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('appointments.approved') }}" class="@isActiveRoute('appointments.approved')">
                                         Approved
+                                        @if($appointmentCounts['approved'] > 0)
+                                            <span class="badge">{{ $appointmentCounts['approved'] }}</span>
+                                        @endif
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('appointments.completed') }}" class="@isActiveRoute('appointments.completed')">
                                         Completed
+                                        @if($appointmentCounts['completed'] > 0)
+                                            <span class="badge">{{ $appointmentCounts['completed'] }}</span>
+                                        @endif
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('appointments.cancelled') }}" class="@isActiveRoute('appointments.cancelled')">
                                         Cancelled
+                                        @if($appointmentCounts['cancelled'] > 0)
+                                            <span class="badge">{{ $appointmentCounts['cancelled'] }}</span>
+                                        @endif
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('appointments.disapproved') }}" class="@isActiveRoute('appointments.disapproved')">
                                         Disapproved
+                                        @if($appointmentCounts['disapproved'] > 0)
+                                            <span class="badge">{{ $appointmentCounts['disapproved'] }}</span>
+                                        @endif
                                     </a>
                                 </li>
                             </ul>
+                            
                         </li>
 
 
