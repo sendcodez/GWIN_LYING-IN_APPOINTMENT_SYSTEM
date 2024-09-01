@@ -7,18 +7,19 @@
                 <div class="pd-20">
                     <h4 class="text-blue h4">Appointments</h4>
                 </div>
-                
+
                 <div class="card-box pb-10">
                     <table class="data-table table nowrap" id="appointmentsTable">
                         <thead>
                             <tr>
-                               <!-- <th>#</th> -->
+                                <!-- <th>#</th> -->
+                                <th>DATE</th>
                                 <th>PATIENT NAME</th>
                                 <th>DOCTOR NAME</th>
                                 <th>SERVICE</th>
-                                <th>DATE</th>
+
                                 <th>TIME</th>
-                               <!-- <th class="text-center">MODE OF APPOINTMENT</th> -->
+                                <!-- <th class="text-center">MODE OF APPOINTMENT</th> -->
                                 <th>STATUS</th>
                                 <th>ACTION</th>
                             </tr>
@@ -26,10 +27,12 @@
                         <tbody>
                             @foreach ($appointments as $key => $appointment)
                                 <tr>
-                                  <!--  <td>{{ $key + 1 }}</td> -->
-                                    <td>{{ ucfirst($appointment->patient->firstname) }} {{ ucfirst($appointment->patient->lastname) }}</td>
+                                    <!--  <td>{{ $key + 1 }}</td> -->
+                                    <td>{{ $appointment->date }}</td>
+                                    <td>{{ ucfirst($appointment->patient->firstname) }}
+                                        {{ ucfirst($appointment->patient->lastname) }}</td>
                                     <td>
-                                        @if($appointment->doctor && $appointment->doctor->lastname)
+                                        @if ($appointment->doctor && $appointment->doctor->lastname)
                                             Dr. {{ ucfirst($appointment->doctor->lastname) }}
                                         @else
                                             <span style="color:red">Doctor Not Found</span>
@@ -46,9 +49,9 @@
                                             <span style="color:red">Service Not Found</span>
                                         @endif
                                     </td>
-                                    <td>{{ $appointment->date }}</td>
+
                                     <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
-                                   <!--  <td class="text-center">{{ $appointment->remarks }}</td> -->
+                                    <!--  <td class="text-center">{{ $appointment->remarks }}</td> -->
                                     <td>
                                         @php
                                             $statusWord = '';
@@ -78,7 +81,7 @@
                                         @endphp
                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                     </td>
-                                  
+
                                     <td>
                                         <div class="dropdown">
                                             <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -113,7 +116,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                  
+
                                 </tr>
 
                                 <!-- Modal for appointment details -->
@@ -130,13 +133,14 @@
                                             </div>
                                             <div class="modal-body">
                                                 <p><strong>Doctor Name:</strong>
-                                                    @if($appointment->doctor && $appointment->doctor->firstname && $appointment->doctor->lastname)
-                                                        Dr. {{ $appointment->doctor->firstname }} {{ ucfirst($appointment->doctor->lastname) }}
+                                                    @if ($appointment->doctor && $appointment->doctor->firstname && $appointment->doctor->lastname)
+                                                        Dr. {{ $appointment->doctor->firstname }}
+                                                        {{ ucfirst($appointment->doctor->lastname) }}
                                                     @else
                                                         N/A
                                                     @endif
                                                 </p>
-                                                
+
                                                 <p><strong>Patient Name:</strong>
                                                     {{ $appointment->patient->firstname }}
                                                     {{ $appointment->patient->lastname }}
@@ -207,11 +211,12 @@
             });
         });
         $('#statusFilter').change(function() {
-        var status = $(this).val();
-        $('#appointmentsTable tbody tr').show(); // Show all rows
-        if (status) {
-            $('#appointmentsTable tbody tr').not(':contains(' + status + ')').hide(); // Hide rows not matching selected status
-        }
-    });
+            var status = $(this).val();
+            $('#appointmentsTable tbody tr').show(); // Show all rows
+            if (status) {
+                $('#appointmentsTable tbody tr').not(':contains(' + status + ')')
+            .hide(); // Hide rows not matching selected status
+            }
+        });
     </script>
 @endsection

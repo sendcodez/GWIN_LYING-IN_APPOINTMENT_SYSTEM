@@ -13,10 +13,11 @@
                         <thead>
                             <tr>
                              <!--   <th>#</th>-->
+                             <th>DATE</th>
                                 <th>PATIENT NAME</th>
                                 <th>DOCTOR NAME</th>
                                 <th>SERVICE</th>
-                                <th>DATE</th>
+                               
                                 <th>TIME</th>
                                 <th>DAY</th>
                              <!--    <th class="text-center">MODE OF APPOINTMENT</th> -->
@@ -30,6 +31,7 @@
                             @foreach ($appointments as $key => $appointment)
                                 <tr>
                                 <!--    <td>{{ $key + 1 }}</td> -->
+                                <td>{{ $appointment->date }}</td>
                                     <td>{{ ucfirst($appointment->patient->firstname) }}
                                         {{ ucfirst($appointment->patient->lastname) }}</td>
                                     <td>
@@ -51,7 +53,7 @@
                                         @endif
                                     </td>
 
-                                    <td>{{ $appointment->date }}</td>
+                                  
                                     <td>
                                         @if ($appointment->start_time)
                                             {{ date('h:i A', strtotime($appointment->start_time)) }}

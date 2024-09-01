@@ -37,11 +37,11 @@
                     <table class="data-table table nowrap" id="appointmentsTable">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>DATE</th>
                                 <th>PATIENT NAME</th>
                                 <th>DOCTOR NAME</th>
                                 <th>SERVICE</th>
-                                <th>DATE</th>
+                              
                                 <th>TIME</th>
                                 <th class="text-center">MODE OF APPOINTMENT</th>
                                 <th>STATUS</th>
@@ -51,7 +51,8 @@
                         <tbody>
                             @foreach ($appointments as $key => $appointment)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                   <!-- <td>{{ $key + 1 }}</td> -->
+                                   <td>{{ $appointment->date }}</td>
                                     <td>{{ ucfirst($appointment->patient->firstname) }}
                                         {{ ucfirst($appointment->patient->lastname) }}</td>
                                     <td>
@@ -68,7 +69,7 @@
                                             <span style="color:red">Service Not Found</span>
                                         @endif
                                     </td>
-                                    <td>{{ $appointment->date }}</td>
+                                   
                                     <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                     <td class="text-center"> {{ $appointment->remarks }} </td>
                                     <td>

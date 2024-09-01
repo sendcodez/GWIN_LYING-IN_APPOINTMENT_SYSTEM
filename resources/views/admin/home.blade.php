@@ -83,18 +83,17 @@
                 <table class="data-table table nowrap">
                     <thead>
                         <tr>
-                            
+                            <th>DATE</th>
                             <th>PATIENT NAME</th>
                             <th>DOCTOR ASSIGNED</th>
                             <th>SERVICE</th>
-                            <th>DATE</th>
                             <th>STATUS</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($completedAppointments as $key => $appointment)
                             <tr>
-                               
+                                <td>{{ $appointment->date }}</td>
                                 <td class="table-plus">
                                     <div class="name-avatar d-flex align-items-center">
                                         <div class="txt">
@@ -121,7 +120,7 @@
                                         <span style="color:red">Service Not Found</span>
                                     @endif
                                 </td>
-                                <td>{{ $appointment->date }}</td>
+                              
                                
                                 <td>
                                     <span class="badge badge-primary">Completed</span>

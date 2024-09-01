@@ -21,20 +21,20 @@ class AppointmentController extends Controller
 {
 
     public function showCalendar(Request $request)
-{
-    $doctorId = $request->input('doctor_id');
+    {
+        $doctorId = $request->input('doctor_id');
 
-    $allAppointments = Appointment::all();
-    $appointments = Appointment::where('user_id', Auth::id())->get();
-    $doctorAvailabilities = DoctorAvailability::with(['doctor', 'doctor_services'])->get();
-    $services = Service::all();
+        $allAppointments = Appointment::all();
+        $appointments = Appointment::where('user_id', Auth::id())->get();
+        $doctorAvailabilities = DoctorAvailability::with(['doctor', 'doctor_services'])->get();
+        $services = Service::all();
 
-    // Retrieve rest days from the RestDay model
-    $restDays = RestDay::pluck('rest_day')->toArray();
-    $rd = RestDay::all();
+        // Retrieve rest days from the RestDay model
+        $restDays = RestDay::pluck('rest_day')->toArray();
+        $rd = RestDay::all();
 
-    return view('patient.appointment', compact('allAppointments', 'appointments', 'doctorAvailabilities', 'services', 'restDays','rd'));
-}
+        return view('patient.appointment', compact('allAppointments', 'appointments', 'doctorAvailabilities', 'services', 'restDays', 'rd'));
+    }
 
 
 
@@ -56,8 +56,9 @@ class AppointmentController extends Controller
             $validator = Validator::make($request->all(), [
                 'patient_id' => 'required|exists:users,id',
                 'doctor' => 'required|exists:doctors,id',
-                'service' => 'required|array',
-                'service.*' => 'exists:services,id',
+                //  'service' => 'required|array',
+                //  'service.*' => 'exists:services,id',
+                'service' => 'required|exists:services,id', 
                 'selected_date' => 'required|date',
                 'selected_day' => 'required|string',
                 'time' => 'nullable|string',
@@ -153,38 +154,38 @@ class AppointmentController extends Controller
 
 
     public function pendingApp()
-{
-    $user = Auth::user(); // Get the authenticated user
+    {
+        $user = Auth::user(); // Get the authenticated user
 
-    // Get all pending appointments with doctors and services
-    $appointments = Appointment::with(['doctor', 'services'])
-        ->where('status', '1')
-        ->orderBy('date', 'desc')
-        ->get();
+        // Get all pending appointments with doctors and services
+        $appointments = Appointment::with(['doctor', 'services'])
+            ->where('status', '1')
+            ->orderBy('date', 'desc')
+            ->get();
 
-    // Get all unique doctor IDs from the appointments
-    $doctorIds = $appointments->pluck('doctor_id')->unique();
+        // Get all unique doctor IDs from the appointments
+        $doctorIds = $appointments->pluck('doctor_id')->unique();
 
-    // Fetch all availabilities for these doctors
-    $availabilities = DoctorAvailability::whereIn('doctor_id', $doctorIds)->get();
+        // Fetch all availabilities for these doctors
+        $availabilities = DoctorAvailability::whereIn('doctor_id', $doctorIds)->get();
 
-    // Group availabilities by doctor ID and day
-    $groupedAvailabilities = $availabilities->groupBy('doctor_id')->mapWithKeys(function ($items, $doctorId) {
-        return [$doctorId => $items->groupBy('day')];
-    });
+        // Group availabilities by doctor ID and day
+        $groupedAvailabilities = $availabilities->groupBy('doctor_id')->mapWithKeys(function ($items, $doctorId) {
+            return [$doctorId => $items->groupBy('day')];
+        });
 
-    // Fetch existing appointments for these doctors
-    $existingAppointments = Appointment::whereIn('doctor_id', $doctorIds)
-        ->whereIn('status', ['1', '2']) // Pending or approved
-        ->get()
-        ->groupBy('doctor_id');
+        // Fetch existing appointments for these doctors
+        $existingAppointments = Appointment::whereIn('doctor_id', $doctorIds)
+            ->whereIn('status', ['1', '2']) // Pending or approved
+            ->get()
+            ->groupBy('doctor_id');
 
-    // Log grouped availabilities to verify structure
-    Log::info('Grouped Availabilities:', $groupedAvailabilities->toArray());
-    Log::info('Existing Appointments:', $existingAppointments->toArray());
+        // Log grouped availabilities to verify structure
+        Log::info('Grouped Availabilities:', $groupedAvailabilities->toArray());
+        Log::info('Existing Appointments:', $existingAppointments->toArray());
 
-    return view('admin.pendingapp', compact('appointments', 'groupedAvailabilities', 'existingAppointments'));
-}
+        return view('admin.pendingapp', compact('appointments', 'groupedAvailabilities', 'existingAppointments'));
+    }
 
 
 

@@ -186,26 +186,26 @@
                                         </center>
                                     </div>
                                     <!--
-                                                    <div class="col-md-2 col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="statusFilter">Filter by Status:</label>
-                                                            <select id="statusFilter" class="selectpicker form-control">
-                                                                <option value="">All</option>
-                                                                <option value="Pending">Pending</option>
-                                                                <option value="Approved">Approved</option>
-                                                                <option value="Completed">Completed</option>
-                                                                <option value="Cancelled">Cancelled</option>
-                                                            </select>
+                                                        <div class="col-md-2 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="statusFilter">Filter by Status:</label>
+                                                                <select id="statusFilter" class="selectpicker form-control">
+                                                                    <option value="">All</option>
+                                                                    <option value="Pending">Pending</option>
+                                                                    <option value="Approved">Approved</option>
+                                                                    <option value="Completed">Completed</option>
+                                                                    <option value="Cancelled">Cancelled</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                -->
+                                                    -->
                                     <table class="data-table table" id="appointmentsTable">
                                         <thead>
                                             <tr>
-
+                                                <th>DATE</th>
                                                 <th>DOCTOR NAME</th>
                                                 <th>SERVICE</th>
-                                                <th>DATE</th>
+
                                                 <th>TIME</th>
                                                 <th>STATUS</th>
                                                 <th>ACTION</th>
@@ -214,7 +214,7 @@
                                         <tbody>
                                             @foreach ($appointments as $key => $appointment)
                                                 <tr>
-
+                                                    <td>{{ $appointment->date }}</td>
                                                     <td>
                                                         @if ($appointment->doctor && $appointment->doctor->lastname)
                                                             Dr. {{ ucfirst($appointment->doctor->lastname) }}
@@ -231,7 +231,7 @@
                                                             <span style="color:red">Service Not Found</span>
                                                         @endif
                                                     </td>
-                                                    <td>{{ $appointment->date }}</td>
+
                                                     <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                                     <td>
                                                         @php
@@ -240,23 +240,23 @@
                                                             switch ($appointment->status) {
                                                                 case 1:
                                                                     $statusWord = 'Pending';
-                                                                    $badgeClass = 'badge badge-warning';
+                                                                    //  $badgeClass = 'badge badge-warning';
                                                                     break;
                                                                 case 2:
                                                                     $statusWord = 'Approved';
-                                                                    $badgeClass = 'badge badge-success';
+                                                                    // $badgeClass = 'badge badge-success';
                                                                     break;
                                                                 case 3:
                                                                     $statusWord = 'Completed';
-                                                                    $badgeClass = 'badge badge-primary';
+                                                                    //  $badgeClass = 'badge badge-primary';
                                                                     break;
                                                                 case 4:
                                                                     $statusWord = 'Cancelled';
-                                                                    $badgeClass = 'badge badge-danger';
+                                                                    //  $badgeClass = 'badge badge-danger';
                                                                     break;
                                                                 case 5:
                                                                     $statusWord = 'Disapproved';
-                                                                    $badgeClass = 'badge badge-warning';
+                                                                    //  $badgeClass = 'badge badge-warning';
                                                                     break;
                                                                 default:
                                                                     $statusWord = 'Unknown';
@@ -366,17 +366,28 @@
                                         </div>
 
 
+                                        <!-- <label>Select Service</label>
+                                            <div class="form-group">
+                                                <select id="serviceSelect" name="service[]" class="selectpicker form-control"
+                                                    data-size="5" data-style="btn-outline-secondary" multiple
+                                                    data-max-options="3" required>
+
+                                                    @foreach ($services as $service)
+                                                        <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        -->
                                         <label>Select Service</label>
                                         <div class="form-group">
-                                            <select id="serviceSelect" name="service[]" class="selectpicker form-control"
-                                                data-size="5" data-style="btn-outline-secondary" multiple
-                                                data-max-options="3" required>
-
+                                            <select id="serviceSelect" name="service" class="selectpicker form-control"
+                                                data-size="5" data-style="btn-outline-secondary" required>
                                                 @foreach ($services as $service)
                                                     <option value="{{ $service->id }}">{{ $service->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
+
 
                                         <label>Select Doctor</label>
                                         <div class="form-group">
@@ -386,27 +397,27 @@
                                         </div>
 
                                         <!--   <label>Select Time</label>
-                                                            <div class="form-group">
-                                                                <select id="timeSelect" name="time" id="time" class="form-control"
-                                                                    required>
-                                                                    <option value="">Select time</option>
-                                                                </select>
-                                                                <input type="hidden" class="form-control" name="end_time" id="end_time"
-                                                                    value="" readonly />
-                                                            </div>
-                                                        -->
+                                                                <div class="form-group">
+                                                                    <select id="timeSelect" name="time" id="time" class="form-control"
+                                                                        required>
+                                                                        <option value="">Select time</option>
+                                                                    </select>
+                                                                    <input type="hidden" class="form-control" name="end_time" id="end_time"
+                                                                        value="" readonly />
+                                                                </div>
+                                                            -->
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" name="remarks" id="remarks"
                                                 value="Online" readonly />
                                         </div>
                                         <!--
-                                                    <div class="form-group">
-                                                        <input type="checkbox" id="policyCheckbox">
-                                                        <label for="policyCheckbox">I agree to the <a href="#"
-                                                                data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
-                                                                policy</span></a></label>
-                                                    </div>
-                                                -->
+                                                        <div class="form-group">
+                                                            <input type="checkbox" id="policyCheckbox">
+                                                            <label for="policyCheckbox">I agree to the <a href="#"
+                                                                    data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
+                                                                    policy</span></a></label>
+                                                        </div>
+                                                    -->
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary" id="saveButton">
