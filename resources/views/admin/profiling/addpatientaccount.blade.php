@@ -22,11 +22,11 @@
                             <thead> 
                                 <tr>
                                     <th>#</th>
-                                    <th>Patient ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>PATIENT ID</th>
+                                    <th>NAME</th>
+                                    <th>EMAIL</th>
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>

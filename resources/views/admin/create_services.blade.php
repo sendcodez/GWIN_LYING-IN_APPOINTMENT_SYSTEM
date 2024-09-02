@@ -22,12 +22,12 @@
                             <thead> 
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Description</th>
-                                    <th>Package</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>NAME</th>
+                                    <th>PRICE</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>PACKAGE</th>
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>

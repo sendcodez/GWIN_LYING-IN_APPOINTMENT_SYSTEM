@@ -24,13 +24,13 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Contact Number</th>
-                                    <th>Service Offered</th>
-                                    <th>Email</th>
+                                    <th>NAME</th>
+                                    <th>CONTACT NUMBER</th>
+                                    <th>SERVICE OFFERED</th>
+                                    <th>EMAIL</th>
                                     @if (Auth::user()->usertype == '0')
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>STATUS</th>
+                                        <th>ACTION</th>
                                     @endif
                                 </tr>
                             </thead>

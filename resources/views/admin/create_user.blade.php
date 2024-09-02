@@ -19,68 +19,71 @@
                     </div>
                     <div class="card-box pb-10">
                         <table class="data-table table nowrap">
-                            <thead> 
+                            <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Usertype</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>NAME</th>
+                                    <th>EMAIL</th>
+                                    <th>USERTYPE</th>
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{$user->firstname}} {{$user->lastname}}</td>
-                                    <td>{{$user->email}}</td>
-                                    <td>
-                                        @if($user->usertype == 1)
-                                            <span>Admin</span>
-                                        @elseif($user->usertype == 2)
-                                            <span>Doctor</span>
-                                        @elseif($user->usertype == 3)
-                                            <span>Patient</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <form method="POST" action="{{ route('update-user-status', ['id' => $user->id]) }}">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="{{ $user->status == 1 ? 0 : 1 }}">
-                                            <button type="submit" class="btn btn-link" style="text-decoration: none;">
-                                                @if($user->status == 1)
-                                                    <span class="badge badge-success">Active</span>
-                                                @else
-                                                    <span class="badge badge-danger">Inactive</span>
-                                                @endif
-                                            </button>
-                                        </form>
-                                    </td>
-                                                                  
-                                    
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                               
-                                                <form action="{{ route('user.destroy', $user->id) }}"
-                                                    method="POST" style="display: inline;"
-                                                    id="deleteForm{{ $user->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                <button type="button" class="dropdown-item delete-btn">
-                                                    <i class="dw dw-trash"></i>Delete
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $user->firstname }} {{ $user->lastname }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>
+                                            @if ($user->usertype == 1)
+                                                <span>Staff</span>
+                                            @elseif($user->usertype == 2)
+                                                <span>Doctor</span>
+                                            @elseif($user->usertype == 3)
+                                                <span>Patient</span>
+                                            @elseif($user->usertype == 0)
+                                                <span>Admin</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <form method="POST"
+                                                action="{{ route('update-user-status', ['id' => $user->id]) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status"
+                                                    value="{{ $user->status == 1 ? 0 : 1 }}">
+                                                <button type="submit" class="btn btn-link" style="text-decoration: none;">
+                                                    @if ($user->status == 1)
+                                                        <span class="badge badge-success">Active</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Inactive</span>
+                                                    @endif
                                                 </button>
                                             </form>
+                                        </td>
+
+
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                    href="#" role="button" data-toggle="dropdown">
+                                                    <i class="dw dw-more"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+
+                                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                                        style="display: inline;" id="deleteForm{{ $user->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="dropdown-item delete-btn">
+                                                            <i class="dw dw-trash"></i>Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -104,7 +107,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="multiStepForm" method="POST" action="{{route('user.store')}}"  enctype="multipart/form-data">
+                    <form id="multiStepForm" method="POST" action="{{ route('user.store') }}"
+                        enctype="multipart/form-data">
                         @csrf
                         <div id="step1">
 
@@ -117,15 +121,15 @@
                                     <label>Middlename</label>
                                     <div class="form-group">
                                         <input type="text" name="middlename" class="form-control">
-                                    </div> 
+                                    </div>
                                     <label>Lastname</label>
                                     <div class="form-group">
                                         <input type="text" name="lastname" class="form-control">
-                                    </div> 
+                                    </div>
                                     <label>Email</label>
                                     <div class="form-group">
                                         <input type="email" name="email" class="form-control">
-                                    </div> 
+                                    </div>
                                     <label>Password</label>
                                     <div class="form-group">
                                         <input type="password" name="password" class="form-control">
@@ -133,10 +137,10 @@
                                     <label>User type</label>
                                     <select name="usertype" class="form-control" required>
                                         @if (Auth::user()->usertype == '0')
-                                        <option value="1" selected>Admin</option>
+                                            <option value="1" selected>Staff</option>
                                         @endif
-                                    <!-- <option value="2">Doctor</option> -->
-                                       
+                                        <!-- <option value="2">Doctor</option> -->
+
                                     </select>
                                 </div>
                             </div>
@@ -171,45 +175,49 @@
             $(this).closest('.modal').modal('hide');
         });
     });
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const checkbox = document.getElementById('type');
         const hiddenInput = document.querySelector('input[name="type"][type="hidden"]');
 
-        checkbox.addEventListener('change', function () {
+        checkbox.addEventListener('change', function() {
             hiddenInput.value = this.checked ? 1 : 0;
         });
     });
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const statusCells = document.querySelectorAll('.user-status');
 
         statusCells.forEach(cell => {
-            cell.addEventListener('click', function () {
+            cell.addEventListener('click', function() {
                 const userId = this.getAttribute('data-user-id');
                 const newStatus = this.textContent.trim() === 'Active' ? 0 : 1;
 
                 // Send AJAX request to update status
                 fetch(`/update-user-status/${userId}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ status: newStatus })
-                })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                    throw new Error('Failed to update status');
-                })
-                .then(data => {
-                    // Update UI based on response
-                    const badge = data.status === 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>';
-                    this.innerHTML = badge;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            status: newStatus
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Failed to update status');
+                    })
+                    .then(data => {
+                        // Update UI based on response
+                        const badge = data.status === 1 ?
+                            '<span class="badge badge-success">Active</span>' :
+                            '<span class="badge badge-danger">Inactive</span>';
+                        this.innerHTML = badge;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             });
         });
     });

@@ -18,10 +18,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
+                                    <th>NAME</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>DATE</th>
+                                    <th>TIME</th>
                                 </tr>
                             </thead>
                             <tbody>
