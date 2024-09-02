@@ -224,15 +224,15 @@
                                 <!-- Step 1: Personal Information -->
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>First name</label>
+                                        <label>First Name</label>
                                         <div class="form-group">
                                             <input type="text" name="firstname" class="form-control" required>
                                         </div>
-                                        <label>Middle name</label>
+                                        <label>Middle Name</label>
                                         <div class="form-group">
                                             <input type="text" name="middlename" class="form-control">
                                         </div>
-                                        <label>Last name</label>
+                                        <label>Last Name</label>
                                         <div class="form-group">
                                             <input type="text" name="lastname" class="form-control" required>
                                         </div>

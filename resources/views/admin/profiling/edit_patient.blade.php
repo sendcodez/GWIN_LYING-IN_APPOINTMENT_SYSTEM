@@ -23,20 +23,20 @@
                     <div class="row">
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
-                                <label>First name</label>
+                                <label>First Name</label>
                                 <input type="text" id="firstname" name="firstname" class="form-control" value="{{ $patient->firstname }}" required="true" />
 
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
-                                <label>Middle name</label>
+                                <label>Middle Name</label>
                                 <input type="text" id="middlename" name="middlename" value="{{ $patient->middlename }}" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
-                                <label>Last name</label>
+                                <label>Last Name</label>
                                 <input type="text" id="lastname" name="lastname"  value="{{ $patient->lastname }}" class="form-control" required="true" />
                             </div>
                         </div>

@@ -68,20 +68,20 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
                             <div class="form-group">
-                                <label style="font-weight:700">First name</label>
+                                <label style="font-weight:700">First Name</label>
                                 <input type="text" id="firstname" name="firstname" class="form-control"
                                     required="true" />
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <div class="form-group">
-                                <label style="font-weight:700">Middle name</label>
+                                <label style="font-weight:700">Middle Name</label>
                                 <input type="text" id="middlename" name="middlename" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <div class="form-group">
-                                <label style="font-weight:700">Last name</label>
+                                <label style="font-weight:700">Last Name</label>
                                 <input type="text" id="lastname" name="lastname" class="form-control" required="true" />
                             </div>
                         </div>

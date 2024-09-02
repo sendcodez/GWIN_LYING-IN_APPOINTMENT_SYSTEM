@@ -102,15 +102,15 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Firstname</label>
+                                    <label>First Name</label>
                                     <div class="form-group">
                                         <input type="text" name="firstname" class="form-control" required>
                                     </div>
-                                    <label>Middlename</label>
+                                    <label>Middle Name</label>
                                     <div class="form-group">
                                         <input type="text" name="middlename" class="form-control">
                                     </div> 
-                                    <label>Lastname</label>
+                                    <label>Last Name</label>
                                     <div class="form-group">
                                         <input type="text" name="lastname" class="form-control">
                                     </div> 
