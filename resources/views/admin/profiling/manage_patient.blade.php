@@ -62,74 +62,74 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                     <!--
-                                                        <button type="button" class="dropdown-item add-attachment-btn"
-                                                            data-patient-id="{{ $patient->user_id }}"
-                                                            data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                            <i class="dw dw-add"></i> Add Attachment
-                                                        </button>
-                                                        
-                                                        <button type="button" class="dropdown-item add-delivery-btn"
-                                                            data-patient-id="{{ $patient->user_id }}"
-                                                            data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                            <i class="dw dw-add"></i> Add Delivery Record
-                                                        </button>
+                                                            <button type="button" class="dropdown-item add-attachment-btn"
+                                                                data-patient-id="{{ $patient->user_id }}"
+                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                                <i class="dw dw-add"></i> Add Attachment
+                                                            </button>
+                                                            
+                                                            <button type="button" class="dropdown-item add-delivery-btn"
+                                                                data-patient-id="{{ $patient->user_id }}"
+                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                                <i class="dw dw-add"></i> Add Delivery Record
+                                                            </button>
 
-                                                        <button type="button" class="dropdown-item add-labor-btn"
-                                                            data-patient-id="{{ $patient->user_id }}"
-                                                            data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                            <i class="dw dw-add"></i> Add Labor Monitoring
-                                                        </button>
-                                                        -->
+                                                            <button type="button" class="dropdown-item add-labor-btn"
+                                                                data-patient-id="{{ $patient->user_id }}"
+                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                                <i class="dw dw-add"></i> Add Labor Monitoring
+                                                            </button>
+                                                            -->
                                                     <button type="button" class="dropdown-item add-laboratory-btn"
                                                         data-patient-id="{{ $patient->user_id }}"
                                                         data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
                                                         <i class="dw dw-add"></i> Add Laboratory Result
                                                     </button>
                                                     <!--
-                                                        <button type="button" class="dropdown-item add-medication-btn"
-                                                            data-patient-id="{{ $patient->user_id }}"
-                                                            data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                            <i class="dw dw-add"></i> Add Medication
-                                                        </button>
-                                                    -->
+                                                            <button type="button" class="dropdown-item add-medication-btn"
+                                                                data-patient-id="{{ $patient->user_id }}"
+                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                                <i class="dw dw-add"></i> Add Medication
+                                                            </button>
+                                                        -->
                                                     <!--
-                                                        <button type="button" class="dropdown-item add-newborn-btn"
-                                                            data-patient-id="{{ $patient->user_id }}"
-                                                            data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
-                                                            data-patient-lastname="{{ $patient->lastname }}"
-                                                            data-patient-firstname="{{ $patient->firstname }}">
-                                                            <i class="dw dw-add"></i> Add Newborn Record
-                                                        </button>
+                                                            <button type="button" class="dropdown-item add-newborn-btn"
+                                                                data-patient-id="{{ $patient->user_id }}"
+                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
+                                                                data-patient-lastname="{{ $patient->lastname }}"
+                                                                data-patient-firstname="{{ $patient->firstname }}">
+                                                                <i class="dw dw-add"></i> Add Newborn Record
+                                                            </button>
 
-                                                        <button type="button" class="dropdown-item add-postpartum-btn"
-                                                            data-patient-id="{{ $patient->user_id }}"
-                                                            data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                            <i class="dw dw-add"></i> Add Postpartum Monitoring
-                                                        </button>
+                                                            <button type="button" class="dropdown-item add-postpartum-btn"
+                                                                data-patient-id="{{ $patient->user_id }}"
+                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                                <i class="dw dw-add"></i> Add Postpartum Monitoring
+                                                            </button>
 
-                                                        <button type="button" class="dropdown-item add-physician-btn"
-                                                            data-patient-id="{{ $patient->user_id }}"
-                                                            data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
-                                                            data-patient-age="{{ $patient->age }}"
-                                                            data-patient-address="{{ $patient->barangay }} {{ $patient->city }} {{ $patient->province }}">
-                                                            <i class="dw dw-add"></i> Add Physician's Order
-                                                        </button>
-                                                    -->
+                                                            <button type="button" class="dropdown-item add-physician-btn"
+                                                                data-patient-id="{{ $patient->user_id }}"
+                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
+                                                                data-patient-age="{{ $patient->age }}"
+                                                                data-patient-address="{{ $patient->barangay }} {{ $patient->city }} {{ $patient->province }}">
+                                                                <i class="dw dw-add"></i> Add Physician's Order
+                                                            </button>
+                                                        -->
                                                     <button type="button" class="dropdown-item add-record-btn"
                                                         data-patient-id="{{ $patient->user_id }}"
                                                         data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
                                                         <i class="dw dw-add"></i> Add PNCU Record
                                                     </button>
                                                     <!--
-                                                        <button type="button" class="dropdown-item add-staff-btn"
-                                                            data-patient-id="{{ $patient->user_id }}"
-                                                            data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
-                                                            data-patient-age="{{ $patient->age }}"
-                                                            data-patient-sex="{{ $patient->sex }}"
-                                                            data-patient-civil="{{ $patient->civil }}">
-                                                            <i class="dw dw-add"></i> Add Staff Notes
-                                                        </button>
-                                                    -->
+                                                            <button type="button" class="dropdown-item add-staff-btn"
+                                                                data-patient-id="{{ $patient->user_id }}"
+                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
+                                                                data-patient-age="{{ $patient->age }}"
+                                                                data-patient-sex="{{ $patient->sex }}"
+                                                                data-patient-civil="{{ $patient->civil }}">
+                                                                <i class="dw dw-add"></i> Add Staff Notes
+                                                            </button>
+                                                        -->
                                                     <button type="button" class="dropdown-item add-ultrasound-btn"
                                                         data-patient-id="{{ $patient->user_id }}"
                                                         data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
@@ -146,11 +146,11 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                     <!--
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('patients.show', ['userId' => $patient->user_id]) }}">
-                                                            <i class="dw dw-eye"></i> View
-                                                        </a>
-                                                        -->
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('patients.show', ['userId' => $patient->user_id]) }}">
+                                                                <i class="dw dw-eye"></i> View
+                                                            </a>
+                                                            -->
                                                     <a class="dropdown-item"
                                                         href="{{ route('patient.edit', ['userId' => $patient->user_id]) }}">
                                                         <i class="dw dw-edit2"></i> Edit
@@ -184,7 +184,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                                <div class="modal-body" id="modalContent" style="max-height: 80vh; overflow-y: auto;">
                                     <form id="multiStepForm" method="POST" action="{{ route('record.store') }}"
                                         enctype="multipart/form-data">
                                         @csrf
@@ -287,6 +287,8 @@
                                                 <i class="bx bx-check d-block d-sm-none"></i>
                                                 <span class="d-none d-sm-block">Submit</span>
                                             </button>
+                                            <button type="button" class="btn btn-secondary"
+                                                onclick="printPNCU()">Print Form</button>
                                         </div>
                                     </form>
                                 </div>
@@ -301,11 +303,12 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h3 class="text-center">Add Laboratory Result</h3>
+
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                                <div class="modal-body" id="modalContent" style="max-height: 80vh; overflow-y: auto;">
                                     <form id="multiStepForm" method="POST" action="{{ route('laboratory.store') }}"
                                         enctype="multipart/form-data">
                                         @csrf
@@ -353,18 +356,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="reset" class="btn btn-danger">
-                                                <i class="bx bx-x d-block d-sm-none"></i>
-                                                <span class="d-none d-sm-block">Reset</span>
-                                            </button>
-                                            <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-                                                <i class="bx bx-check d-block d-sm-none"></i>
-                                                <span class="d-none d-sm-block">Submit</span>
-                                            </button>
-                                        </div>
-                                    </form>
+                                        
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn btn-danger">
+                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Reset</span>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Submit</span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="printModalContent()">Print Form</button>
+                                </div>
+                            </form>
                             </div>
                         </div>
                     </div>
@@ -421,6 +427,8 @@
                                                 <i class="bx bx-check d-block d-sm-none"></i>
                                                 <span class="d-none d-sm-block">Submit</span>
                                             </button>
+                                            <button type="button" class="btn btn-secondary"
+                                            onclick="printUltrasound()">Print Form</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1154,11 +1162,13 @@
                                                 </div>
                                                 <label>Attending Physician</label>
                                                 <div class="form-group">
-                                                    <input type="text" name="physician" class="form-control" required>
+                                                    <input type="text" name="physician" class="form-control"
+                                                        required>
                                                 </div>
                                                 <label>Date</label>
                                                 <div class="form-group">
-                                                    <input type="date" name="date" class="form-control" required>
+                                                    <input type="date" name="date" class="form-control"
+                                                        required>
                                                 </div>
                                                 <label>Time</label>
                                                 <div class="form-group">
@@ -1424,5 +1434,95 @@
                 container.appendChild(removeBtn);
             });
         });
+
+        function printModalContent() {
+        var modalContent = document.getElementById('modalContent');
+            // Print the form fields in a more readable layout
+            var printWindow = window.open();
+            printWindow.document.write('<div class="print-section"><h1 style="text-align:center">LABORATORY RESULT</h1></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>Patient Name:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>Patient ID:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>Date:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>Urinalysis:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>CBC:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>Blood Type:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>HBSAG:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>VDRL:</label></div>');
+            printWindow.document.write('<br>'); 
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>FBS/75G/OGTT/HgbA1C:</div>');
+                            
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        } 
+
+        function printPNCU() {
+        var modalContent = document.getElementById('modalContent');
+    
+            var printWindow = window.open();
+            printWindow.document.write('<div class="print-section"><h1 style="text-align:center">PNCU RECORD</h1></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Patient Name:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Patient ID:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Date of Visit:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Blood Pressure:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Cardiac Rate:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>FHT:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Follow-up Checkup:</label>        </div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>AOG in Weeks:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Weight:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Respiratory Rate:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>IE:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Chief Complaint:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Temperature:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Fundic Height:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Diagnosis:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section"><label>Plans:</label></div>');
+
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        } 
+        function printUltrasound() {
+        var modalContent = document.getElementById('modalContent');
+            // Print the form fields in a more readable layout
+            var printWindow = window.open();
+            printWindow.document.write('<div class="print-section"><h1 style="text-align:center">ULTRASOUND RESULT</h1></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>Patient Name:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>Patient ID:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>Date:</label></div>');
+            printWindow.document.write('<br>');
+            printWindow.document.write('<div class="print-section" style="font-size:1.6rem"><label>Result:</label></div>');
+                            
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        } 
     </script>
 @endsection

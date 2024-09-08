@@ -91,28 +91,36 @@ $(document).ready(function () {
                             data.province
                     );
 
+                    function formatFullName(firstname, middlename, lastname) {
+                        if (!firstname && !middlename && !lastname) {
+                            return "N/A";
+                        }
+                        return (firstname ? firstname + " " : "") +
+                               (middlename ? middlename + " " : "") +
+                               (lastname ? lastname : "").trim();
+                    }
+                    
+                    function formatAddress(barangay, city, province) {
+                        if (!barangay && !city && !province) {
+                            return "N/A";
+                        }
+                        return "Barangay " + (barangay ? barangay : "N/A") +
+                               ", " + (city ? city : "N/A") +
+                               ", " + (province ? province : "N/A");
+                    }
+                    
+                    // Assuming 'data' is your data object
                     $("#husband_fullname").text(
-                        data.husband_firstname +
-                            " " +
-                            data.husband_middlename +
-                            " " +
-                            data.husband_lastname
+                        formatFullName(data.husband_firstname, data.husband_middlename, data.husband_lastname)
                     );
-                    $("#husband_contact_number").text(
-                        data.husband_contact_number
-                    );
-                    $("#husband_religion").text(data.husband_religion);
-                    $("#husband_age").text(data.husband_age);
-                    $("#husband_occupation").text(data.husband_occupation);
-                    $("#husband_birthday").text(data.husband_birthday);
+                    $("#husband_contact_number").text(data.husband_contact_number ? data.husband_contact_number : "N/A");
+                    $("#husband_religion").text(data.husband_religion ? data.husband_religion : "N/A");
+                    $("#husband_age").text(data.husband_age ? data.husband_age : "N/A");
+                    $("#husband_occupation").text(data.husband_occupation ? data.husband_occupation : "N/A");
+                    $("#husband_birthday").text(data.husband_birthday ? data.husband_birthday : "N/A");
                     $("#husband_address").text(
-                        "Barangay " +
-                            data.husband_barangay +
-                            "," +
-                            data.husband_city +
-                            "," +
-                            data.husband_province
-                    );
+                        formatAddress(data.husband_barangay, data.husband_city, data.husband_province)
+                    );  
                     //TERMS
                     $("#gravida").text(data.gravida);
                     $("#para").text(data.para);
