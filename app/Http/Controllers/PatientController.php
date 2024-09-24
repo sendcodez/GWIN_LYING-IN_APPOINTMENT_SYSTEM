@@ -316,4 +316,142 @@ class PatientController extends Controller
         return Excel::download(new PatientsExport, 'patients.xlsx');
     }
 
+
+    public function medicalprofile(Request $request)
+    {
+
+        DB::beginTransaction();
+        try {
+
+            // Validate request data
+            $validatedData = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'pregnancies' => 'array|nullable',
+                'pregnancies.*.pregnancy' => 'nullable|integer',
+                'pregnancies.*.pregnancy_date' => 'nullable|date',
+                'pregnancies.*.aog' => 'nullable|string',
+                'pregnancies.*.manner' => 'nullable|string',
+                'pregnancies.*.bw' => 'nullable|string',
+                'pregnancies.*.sex' => 'nullable|string|in:male,female',
+                'pregnancies.*.present_status' => 'nullable|string',
+                'pregnancies.*.complications' => 'nullable|string',
+
+
+            ], [
+                'user_id.exists' => 'The selected user ID does not exist in the users table.',
+            ]);
+
+
+
+            // Save patient information
+            $patient = new Patient();
+            $patient->fill($validatedData);
+   
+            //PREGNANCY_TERM
+            $pregnancy_term = new Pregnancy_term();
+            $user_id = $patient->user->id;
+            $pregnancy_term->user_id = $user_id;
+            $pregnancy_term->gravida = $request->gravida;
+            $pregnancy_term->para = $request->para;
+            $pregnancy_term->t = $request->t;
+            $pregnancy_term->p = $request->p;
+            $pregnancy_term->a = $request->a;
+            $pregnancy_term->l = $request->l;
+
+            $pregnancy_term->save();
+
+            $history = [];
+
+            foreach ($validatedData['pregnancies'] as $key => $pregnancy) {
+                $item = [];
+                $user_id = $patient->user->id;
+                $item['user_id'] = $patient->user->id;
+                $item['pregnancy'] = $pregnancy['pregnancy'];
+                $item['pregnancy_date'] = $pregnancy['pregnancy_date'];
+                $item['aog'] = $pregnancy['aog'];
+                $item['manner'] = $pregnancy['manner'];
+                $item['bw'] = $pregnancy['bw'];
+                $item['sex'] = $pregnancy['sex'];
+                $item['present_status'] = $pregnancy['present_status'];
+                $item['complications'] = $pregnancy['complications'];
+
+                // Check if any value is null or empty, if so, skip adding this item to the $history array
+                if (!in_array(null, $item, true)) {
+                    $history[] = $item;
+                }
+            }
+
+            // Insert only the non-null items into the database
+            if (!empty($history)) {
+                PregnancyHistory::insert($history);
+            }
+
+            //Save medical history
+            $medicalHistory = new MedicalHistory();
+            $user_id = $patient->user->id;
+            $medicalHistory->user_id = $patient->user->id;
+            $booleanValues = [
+                'hypertension',
+                'heartdisease',
+                'asthma',
+                'tuberculosis',
+                'diabetes',
+                'goiter',
+                'epilepsy',
+                'allergy',
+                'hepatitis',
+                'vdrl',
+                'bleeding',
+                'operation',
+            ];
+
+            foreach ($booleanValues as $field) {
+                $medicalHistory->$field = $request->has($field) ? 1 : 0;
+            }
+
+            // If 'othersCheckbox' is checked, save the 'others' value
+            if ($request->filled('othersCheckbox')) {
+                $medicalHistory->others = $request->input('others');
+            }
+
+            // Save Tetanus Toxoid information
+            $medicalHistory->tt1 = $request->input('tt1');
+            $medicalHistory->tt2 = $request->input('tt2');
+            $medicalHistory->tt3 = $request->input('tt3');
+            $medicalHistory->tt4 = $request->input('tt4');
+            $medicalHistory->tt5 = $request->input('tt5');
+
+            $medicalHistory->save();
+
+            DB::commit();
+
+            $user = Auth::user();
+            $action = 'patient_profile';
+            $description = 'Profiled patient: ' . $patient->firstname . ' ' . $patient->lastname;
+    
+            ActivityLog::create([
+                'user_id' => $user->id,
+                'name' => $user->firstname,
+                'action' => $action,
+                'description' => $description,
+            ]);
+            return back()->with('success', 'Patient  added successfully.');
+        } catch (ValidationException $e) {
+            // Custom error message for exists validation rule failure
+            if ($e->validator->errors()->has('user_id')) {
+                return back()->with('error', 'The selected user ID does not have an account.');
+            }
+    
+            // Other validation errors
+            return redirect()->back()->withErrors($e->validator->errors());
+        } catch (\Exception $e) {
+            DB::rollback();
+            $errorMessages = $e->getMessage();
+            Log::error($errorMessages);
+            return redirect()->back()->with('error', 'Failed to add patient.');
+        }
+
+    }
+
+
 }

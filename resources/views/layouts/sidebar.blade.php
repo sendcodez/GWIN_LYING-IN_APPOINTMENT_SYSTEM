@@ -417,7 +417,7 @@
                                 </li>
                                 <li>
                                     <a href="{{ route('patient.add') }}" class="@isActiveRoute('patient.add')">
-                                        Add Patient Profile
+                                        Add Medical Profile
                                     </a>
                                 </li>
                                 <li>

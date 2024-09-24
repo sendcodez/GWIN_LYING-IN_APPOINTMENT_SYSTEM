@@ -69,8 +69,9 @@ class DoctorController extends Controller
                 'contact_number' => 'required|string',
                 'description' => 'required|string',
                 'address' => 'required|string',
-                'expertise' => 'required|array',
-                'expertise.*' => 'integer|exists:services,id',
+                //'expertise' => 'required|array',
+                //'expertise.*' => 'integer|exists:services,id',
+                'expertise' => 'required|integer|exists:services,id',
                 'email' => 'required|email|unique:doctors',
                 'password' => 'required|string|min:8',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:30748'
@@ -96,7 +97,7 @@ class DoctorController extends Controller
             ]);
 
             // Create a new doctor instance
-            $expertiseString = json_encode($validatedData['expertise']); // JSON string
+          //  $expertiseString = json_encode($validatedData['expertise']); // JSON string
             // $expertiseString = implode(',', $validatedData['expertise']); // Comma-separated string
 
             // Create a new doctor instance
@@ -111,16 +112,14 @@ class DoctorController extends Controller
                 'email' => $validatedData['email'],
                 'image' => $imageName,
                 'password' => bcrypt($validatedData['password']),
-                'expertise' => $expertiseString, // Store the expertise string
+                'expertise' => $validatedData['expertise'] // Store the expertise string
             ]);
 
 
-            foreach ($validatedData['expertise'] as $serviceId) {
-                Doctor_service::create([
-                    'doctor_id' => $doctor->id,
-                    'service_id' => $serviceId,
-                ]);
-            }
+            Doctor_service::create([
+                'doctor_id' => $doctor->id,
+                'service_id' => $validatedData['expertise'],
+            ]);
 
 
             // Save doctor availability
