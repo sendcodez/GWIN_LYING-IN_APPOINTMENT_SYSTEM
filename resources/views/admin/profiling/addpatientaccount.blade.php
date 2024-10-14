@@ -11,10 +11,10 @@
                 <div class="card-box mb-30">
 
                     <div class="pd-20">
-                        <button type="button" class="btn btn-success float-right" data-bs-toggle="modal"
-                            data-bs-target="#addUserModal">
+                        <a href="{{ route('patient.addAccount') }}" class="btn btn-success float-right">
                             ADD USER
-                        </button>
+                        </a>
+                            
                         <h4 class="text-blue h4">PATIENTS</h4>
                     </div>
                     <div class="card-box pb-10">

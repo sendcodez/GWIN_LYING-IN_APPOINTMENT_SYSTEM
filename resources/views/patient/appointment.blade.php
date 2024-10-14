@@ -102,14 +102,18 @@
                                         <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
                                     </center>
                                     <select id="serviceFilter" onchange="filterTable()" class="form-control">
-                                        <option value="all">All Services</option>
-                                        @foreach ($services as $service)
-                                            <option value="{{ $service->name }}">{{ $service->name }}</option>
+                                        <option value="all">All</option>
+                                        @foreach ($doctors as $doctor)
+                                            @php
+                                                $service = $doctor->services->first()->name; // Assuming each doctor has only one service
+                                            @endphp
+                                            <option value="{{ $doctor->lastname }} ({{ $service }})">
+                                                Dr. {{ $doctor->lastname }} | Service Offered: {{ $service }} 
+                                            </option>
                                         @endforeach
                                     </select>
+
                                     <tr>
-                                        <th>NAME</th>
-                                        <th>SERVICE</th>
                                         <th>DAY AVAILABILITY</th>
                                         <th>TIME AVAILABILITY</th>
                                         <th class="text-center">REST DAY</th>
@@ -117,46 +121,22 @@
                                 </thead>
                                 <tbody id="doctorScheduleTable">
                                     @foreach ($doctorAvailabilities as $availability)
-                                        <tr
-                                            data-services="@if ($availability->doctor) @foreach ($availability->doctor->services as $service)
-                                            {{ $service->name }}@if (!$loop->last), @endif
-                                        @endforeach
-                                    @endif">
-
-                                            <td>
-                                                @if ($availability->doctor)
-                                                    {{ $availability->doctor->firstname }}
-                                                    {{ $availability->doctor->lastname }}
-                                                @else
-                                                    Doctor not found
-                                                @endif
-                                            </td>
-
-                                            <td>
-                                                @if ($availability->doctor)
-                                                    @foreach ($availability->doctor->services as $service)
-                                                        {{ $service->name }}
-                                                        @if (!$loop->last),
-                                                        @endif
-                                                    @endforeach
-                                                @else
-                                                    No services available
-                                                @endif
-                                            </td>
-
+                                        @php
+                                            $doctor = $availability->doctor;
+                                            $service = $doctor ? $doctor->services->first()->name : 'No service'; // Single service per doctor
+                                        @endphp
+                                        <tr data-filter="Dr. {{ $doctor->lastname }} ({{ $service }})">
                                             <td>{{ ucfirst($availability->day) }}</td>
-
                                             <td>
                                                 {{ date('h:i A', strtotime($availability->start_time)) }} -
                                                 {{ date('h:i A', strtotime($availability->end_time)) }}
                                             </td>
 
-
                                             <td class="rest-day">
-                                                @if ($availability->doctor)
+                                                @if ($doctor)
                                                     @php
                                                         $doctorRestDays = $rd
-                                                            ->where('doctor_id', $availability->doctor->id)
+                                                            ->where('doctor_id', $doctor->id)
                                                             ->pluck('rest_day');
                                                     @endphp
                                                     @if ($doctorRestDays->isEmpty())
@@ -164,18 +144,21 @@
                                                     @else
                                                         @foreach ($doctorRestDays as $restDay)
                                                             {{ $restDay->format('M d, Y') }}
-                                                            @if (!$loop->last), @endif
+                                                            @if (!$loop->last)
+                                                                ,
+                                                            @endif
                                                         @endforeach
                                                     @endif
                                                 @else
                                                     No rest days available
                                                 @endif
                                             </td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+
+
                             <br>
                             <hr>
                             <vr>
@@ -186,19 +169,19 @@
                                         </center>
                                     </div>
                                     <!--
-                                                        <div class="col-md-2 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="statusFilter">Filter by Status:</label>
-                                                                <select id="statusFilter" class="selectpicker form-control">
-                                                                    <option value="">All</option>
-                                                                    <option value="Pending">Pending</option>
-                                                                    <option value="Approved">Approved</option>
-                                                                    <option value="Completed">Completed</option>
-                                                                    <option value="Cancelled">Cancelled</option>
-                                                                </select>
+                                                            <div class="col-md-2 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label for="statusFilter">Filter by Status:</label>
+                                                                    <select id="statusFilter" class="selectpicker form-control">
+                                                                        <option value="">All</option>
+                                                                        <option value="Pending">Pending</option>
+                                                                        <option value="Approved">Approved</option>
+                                                                        <option value="Completed">Completed</option>
+                                                                        <option value="Cancelled">Cancelled</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    -->
+                                                        -->
                                     <table class="data-table table" id="appointmentsTable">
                                         <thead>
                                             <tr>
@@ -225,7 +208,9 @@
                                                     <td>
                                                         @if ($appointment->services->isNotEmpty())
                                                             @foreach ($appointment->services as $service)
-                                                                {{ $service->name }}@if (!$loop->last), @endif
+                                                                {{ $service->name }}@if (!$loop->last)
+                                                                    ,
+                                                                @endif
                                                             @endforeach
                                                         @else
                                                             <span style="color:red">Service Not Found</span>
@@ -367,17 +352,17 @@
 
 
                                         <!-- <label>Select Service</label>
-                                            <div class="form-group">
-                                                <select id="serviceSelect" name="service[]" class="selectpicker form-control"
-                                                    data-size="5" data-style="btn-outline-secondary" multiple
-                                                    data-max-options="3" required>
+                                                <div class="form-group">
+                                                    <select id="serviceSelect" name="service[]" class="selectpicker form-control"
+                                                        data-size="5" data-style="btn-outline-secondary" multiple
+                                                        data-max-options="3" required>
 
-                                                    @foreach ($services as $service)
-                                                        <option value="{{ $service->id }}">{{ $service->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        -->
+                                                        @foreach ($services as $service)
+    <option value="{{ $service->id }}">{{ $service->name }}</option>
+    @endforeach
+                                                    </select>
+                                                </div>
+                                            -->
                                         <label>Select Service</label>
                                         <div class="form-group">
                                             <select id="serviceSelect" name="service" class="selectpicker form-control"
@@ -397,27 +382,27 @@
                                         </div>
 
                                         <!--   <label>Select Time</label>
-                                                                <div class="form-group">
-                                                                    <select id="timeSelect" name="time" id="time" class="form-control"
-                                                                        required>
-                                                                        <option value="">Select time</option>
-                                                                    </select>
-                                                                    <input type="hidden" class="form-control" name="end_time" id="end_time"
-                                                                        value="" readonly />
-                                                                </div>
-                                                            -->
+                                                                    <div class="form-group">
+                                                                        <select id="timeSelect" name="time" id="time" class="form-control"
+                                                                            required>
+                                                                            <option value="">Select time</option>
+                                                                        </select>
+                                                                        <input type="hidden" class="form-control" name="end_time" id="end_time"
+                                                                            value="" readonly />
+                                                                    </div>
+                                                                -->
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" name="remarks" id="remarks"
                                                 value="Online" readonly />
                                         </div>
                                         <!--
-                                                        <div class="form-group">
-                                                            <input type="checkbox" id="policyCheckbox">
-                                                            <label for="policyCheckbox">I agree to the <a href="#"
-                                                                    data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
-                                                                    policy</span></a></label>
-                                                        </div>
-                                                    -->
+                                                            <div class="form-group">
+                                                                <input type="checkbox" id="policyCheckbox">
+                                                                <label for="policyCheckbox">I agree to the <a href="#"
+                                                                        data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
+                                                                        policy</span></a></label>
+                                                            </div>
+                                                        -->
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary" id="saveButton">
@@ -483,15 +468,20 @@
             // Function to filter the doctor schedule table based on selected services
             function filterTable() {
                 const select = document.getElementById("serviceFilter");
-                const filter = select.value;
+                const filter = select.value.toLowerCase(); // Convert to lowercase for case-insensitive matching
                 const table = document.getElementById("doctorScheduleTable");
                 const rows = table.getElementsByTagName("tr");
 
                 Array.from(rows).forEach(row => {
-                    const services = row.getAttribute("data-services");
-                    row.style.display = (filter === "all" || services.includes(filter)) ? "" : "none";
+                    const dataFilter = row.getAttribute("data-filter").toLowerCase();
+                    if (filter === "all" || dataFilter.includes(filter)) {
+                        row.style.display = ""; // Show the row
+                    } else {
+                        row.style.display = "none"; // Hide the row
+                    }
                 });
             }
+
 
             // Function to fetch doctors based on selected services and date
             function fetchDoctors() {

@@ -93,11 +93,11 @@
                                                             href="{{ route('doctor.show', ['doctor' => $doctor->id]) }}"><i
                                                                 class="dw dw-eye"></i> View</a>
                                                         <!--
-                                                                            <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                                                data-bs-target="#editUserModal{{ $doctor->id }}">
-                                                                                <i class="dw dw-edit2"></i>Edit
-                                                                            </button>
-                                                                            -->
+                                                                                <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                                                    data-bs-target="#editUserModal{{ $doctor->id }}">
+                                                                                    <i class="dw dw-edit2"></i>Edit
+                                                                                </button>
+                                                                                -->
                                                         <button type="button" class="dropdown-item" data-bs-toggle="modal"
                                                             data-bs-target="#editAvailabilityModal{{ $doctor->id }}">
                                                             <i class="dw dw-edit2"></i> Edit Availability
@@ -125,50 +125,79 @@
                                             </td>
                                         @endif
                                     </tr>
-    <!-- EDIT AVAILABILITY MODAL -->
-    <div class="modal fade" id="editAvailabilityModal{{ $doctor->id }}" tabindex="-1" aria-labelledby="editAvailabilityModalLabel{{ $doctor->id }}" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="text-center">Edit Availability for Dr. {{ $doctor->firstname }} {{ $doctor->lastname }}</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="editAvailabilityForm{{ $doctor->id }}" method="POST" action="{{ route('doctor.updateAvailability', ['id' => $doctor->id]) }}">
-                        @csrf
-                        @method('PUT')
+                                    <!-- EDIT AVAILABILITY MODAL -->
+                                    <div class="modal fade" id="editAvailabilityModal{{ $doctor->id }}" tabindex="-1"
+                                        aria-labelledby="editAvailabilityModalLabel{{ $doctor->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="text-center">Edit Availability for Dr.
+                                                        {{ $doctor->firstname }} {{ $doctor->lastname }}</h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="editAvailabilityForm{{ $doctor->id }}" method="POST"
+                                                        action="{{ route('doctor.updateAvailability', ['id' => $doctor->id]) }}">
+                                                        @csrf
+                                                        @method('PUT')
 
-                        @foreach ($doctor->availability as $availability)
-                            <div class="form-group">
-                                <label for="editDaySelect{{ $availability->id }}">Select Day:</label>
-                                <select id="editDaySelect{{ $availability->id }}" class="form-control" name="day[]" required>
-                                    <option value="monday" {{ $availability->day == 'monday' ? 'selected' : '' }}>Monday</option>
-                                    <option value="tuesday" {{ $availability->day == 'tuesday' ? 'selected' : '' }}>Tuesday</option>
-                                    <option value="wednesday" {{ $availability->day == 'wednesday' ? 'selected' : '' }}>Wednesday</option>
-                                    <option value="thursday" {{ $availability->day == 'thursday' ? 'selected' : '' }}>Thursday</option>
-                                    <option value="friday" {{ $availability->day == 'friday' ? 'selected' : '' }}>Friday</option>
-                                    <option value="saturday" {{ $availability->day == 'saturday' ? 'selected' : '' }}>Saturday</option>
-                                    <option value="sunday" {{ $availability->day == 'sunday' ? 'selected' : '' }}>Sunday</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="editStartTime{{ $availability->id }}">Start Time:</label>
-                                <input type="time" id="editStartTime{{ $availability->id }}" name="start_time[]" class="form-control" value="{{ $availability->start_time }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="editEndTime{{ $availability->id }}">End Time:</label>
-                                <input type="time" id="editEndTime{{ $availability->id }}" name="end_time[]" class="form-control" value="{{ $availability->end_time }}" required>
-                            </div>
-                        @endforeach
+                                                        @foreach ($doctor->availability as $availability)
+                                                            <div class="form-group">
+                                                                <label for="editDaySelect{{ $availability->id }}">Select
+                                                                    Day:</label>
+                                                                <select id="editDaySelect{{ $availability->id }}"
+                                                                    class="form-control" name="day[]" required>
+                                                                    <option value="monday"
+                                                                        {{ $availability->day == 'monday' ? 'selected' : '' }}>
+                                                                        Monday</option>
+                                                                    <option value="tuesday"
+                                                                        {{ $availability->day == 'tuesday' ? 'selected' : '' }}>
+                                                                        Tuesday</option>
+                                                                    <option value="wednesday"
+                                                                        {{ $availability->day == 'wednesday' ? 'selected' : '' }}>
+                                                                        Wednesday</option>
+                                                                    <option value="thursday"
+                                                                        {{ $availability->day == 'thursday' ? 'selected' : '' }}>
+                                                                        Thursday</option>
+                                                                    <option value="friday"
+                                                                        {{ $availability->day == 'friday' ? 'selected' : '' }}>
+                                                                        Friday</option>
+                                                                    <option value="saturday"
+                                                                        {{ $availability->day == 'saturday' ? 'selected' : '' }}>
+                                                                        Saturday</option>
+                                                                    <option value="sunday"
+                                                                        {{ $availability->day == 'sunday' ? 'selected' : '' }}>
+                                                                        Sunday</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="editStartTime{{ $availability->id }}">Start
+                                                                    Time:</label>
+                                                                <input type="time"
+                                                                    id="editStartTime{{ $availability->id }}"
+                                                                    name="start_time[]" class="form-control"
+                                                                    value="{{ $availability->start_time }}" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="editEndTime{{ $availability->id }}">End
+                                                                    Time:</label>
+                                                                <input type="time"
+                                                                    id="editEndTime{{ $availability->id }}"
+                                                                    name="end_time[]" class="form-control"
+                                                                    value="{{ $availability->end_time }}" required>
+                                                            </div>
+                                                        @endforeach
 
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>                  <!-- ADD RESTDAY MODAL -->
+                                                        <button type="submit" class="btn btn-primary">Save
+                                                            Changes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- ADD RESTDAY MODAL -->
                                     <div class="modal fade" id="addRestDayModal{{ $doctor->id }}" tabindex="-1"
                                         aria-labelledby="addRestDayModalLabel{{ $doctor->id }}" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
@@ -207,7 +236,8 @@
         </div>
 
 
-        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -246,12 +276,11 @@
                                         <div class="form-group">
                                             <input type="text" name="address" class="form-control" required>
                                         </div>
+                                    
                                         <label>Service Offered</label>
                                         <div class="form-group">
-                                            <select name="expertise[]" class="selectpicker form-control" data-size="5"
-                                                data-style="btn-outline-secondary" multiple data-max-options="10"
-                                                required>
-
+                                            <select name="expertise" class="selectpicker form-control" data-size="5"
+                                                data-style="btn-outline-secondary" required>
                                                 @foreach ($services as $service)
                                                     <option value="{{ $service->id }}">{{ $service->name }}</option>
                                                 @endforeach

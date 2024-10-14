@@ -16,6 +16,15 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Crypt;
 use App\Exports\PatientsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rules;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
+
 
 class PatientController extends Controller
 {
@@ -43,6 +52,89 @@ class PatientController extends Controller
         return view('admin.profiling.add_patient');
     }
 
+    public function addAccount()
+    {
+        return view('admin.profiling.addpatientform');
+    }
+
+
+    public function storeAccount(Request $request): RedirectResponse
+    {
+        try {
+            $validatedData = $request->validate([
+                'firstname' => ['required', 'string', 'max:255'],
+                'middlename' => ['nullable', 'string', 'max:255'],
+                'lastname' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+                'password' => ['required'],
+                'maiden' => 'nullable|string',
+                'birthday' => 'required|string',
+                'birthplace' => 'required|string',
+                'age' => 'required|integer',
+                'civil' => 'required|string',
+                'contact_number' => 'nullable|string',
+                'religion' => 'required|string',
+                'occupation' => 'nullable|string',
+                'nationality' => 'required|string',
+                'husband_firstname' => 'nullable|string',
+                'husband_middlename' => 'nullable|string',
+                'husband_lastname' => 'nullable|string',
+                'husband_occupation' => 'nullable|string',
+                'husband_birthday' => 'nullable|string',
+                'husband_age' => 'nullable|integer',
+                'husband_contact_number' => 'nullable|string',
+                'husband_religion' => 'nullable|string',
+                'province' => 'required|string',
+                'city' => 'required|string',
+                'barangay' => 'required|string',
+                'husband_province' => 'nullable|string',
+                'husband_city' => 'nullable|string',            
+                'husband_barangay' => 'nullable|string',
+            ]);
+    
+            // Create user
+            $user = User::create([
+                'firstname' => $request->firstname,
+                'middlename' => $request->middlename,
+                'lastname' => $request->lastname,
+                'email_verified_at' => now(), // Set email_verified_at to today's date
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'usertype' => 3,
+            ]);
+    
+            // Create patient and associate with user
+            $patient = new Patient();
+            $patient->fill($validatedData);
+            $patient->user_id = $user->id;
+            $patient->save();
+    
+            // Generate QR code
+            $userId = $user->id;
+            $qrCode = QrCode::format('png')
+                ->size(200)
+                ->errorCorrection('H')
+                ->generate($userId);
+    
+            // Define the output file path
+            $output_filename = 'patient_' . $userId . '_' . time() . '.png';
+            $output_file_path = public_path('qr_image/' . $output_filename);
+    
+            // Save the QR code image to the public directory
+            File::put($output_file_path, $qrCode);
+    
+            // Update the user record with the filename of the QR code image
+            $user->qr_name = $output_filename;
+            $user->save();
+    
+            return back()->with('success', 'Patient  added successfully.');
+    
+        } catch (\Exception $e) {
+            // Handle any errors
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
 
 
     /**

@@ -28,12 +28,13 @@ class AppointmentController extends Controller
         $appointments = Appointment::where('user_id', Auth::id())->get();
         $doctorAvailabilities = DoctorAvailability::with(['doctor', 'doctor_services'])->get();
         $services = Service::all();
+        $doctors = Doctor::all();
 
         // Retrieve rest days from the RestDay model
         $restDays = RestDay::pluck('rest_day')->toArray();
         $rd = RestDay::all();
 
-        return view('patient.appointment', compact('allAppointments', 'appointments', 'doctorAvailabilities', 'services', 'restDays', 'rd'));
+        return view('patient.appointment', compact('allAppointments', 'appointments', 'doctorAvailabilities', 'services', 'restDays', 'rd','doctors'));
     }
 
 

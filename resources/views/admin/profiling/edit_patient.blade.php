@@ -120,7 +120,7 @@
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" id="firstname" name="husband_firstname" value="{{ $patient->husband_firstname }}" class="form-control" value="{{ $patient->firstname }}" required="true" />
+                                <input type="text" id="firstname" name="husband_firstname" value="{{ $patient->husband_firstname }}" class="form-control" value="{{ $patient->firstname }}" />
 
                             </div>
                         </div>
@@ -133,13 +133,13 @@
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" name="husband_lastname" class="form-control" value="{{ $patient->husband_lastname }}" required="true" />
+                                <input type="text" name="husband_lastname" class="form-control" value="{{ $patient->husband_lastname }}" />
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>Occupation</label>
-                                <input type="text" name="husband_occupation" class="form-control" value="{{ $patient->husband_occupation }}" required="true" />
+                                <input type="text" name="husband_occupation" class="form-control" value="{{ $patient->husband_occupation }}" />
                             </div>
                         </div>
                     </div>
@@ -148,13 +148,13 @@
                         <div class="col-md-3 col-sm-12">
                             <label>Birthday</label>
                             <input type="date" id="husband_birthday" name="husband_birthday" value="{{ $patient->husband_birthday }}"
-                                class="form-control" required="true" onchange="calculateHusbandAge()">
+                                class="form-control" onchange="calculateHusbandAge()">
                         </div>
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label for="company-column">Age</label>
                                 <input type="text" id="husband_age" class="form-control" name="husband_age" value="{{ $patient->husband_age}}"
-                                    placeholder="Age" required="true" readonly>
+                                    placeholder="Age" readonly>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-12">
@@ -166,7 +166,7 @@
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>Religion</label>
-                                <input type="text" name="husband_religion" value="{{ $patient->husband_religion }}" class="form-control" required="true" />
+                                <input type="text" name="husband_religion" value="{{ $patient->husband_religion }}" class="form-control" />
                             </div>
                         </div>
                     </div>

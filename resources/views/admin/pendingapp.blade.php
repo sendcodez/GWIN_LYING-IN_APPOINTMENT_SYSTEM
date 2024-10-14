@@ -293,7 +293,8 @@
                 document.getElementById('appointment_id').value = appointmentId;
             });
         });
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', function() { 
     document.querySelectorAll('.dropdown-item[data-bs-toggle="modal"]').forEach(button => {
         button.addEventListener('click', function() {
             const appointmentId = this.getAttribute('data-appointment-id');
@@ -310,30 +311,31 @@
             const availabilities = @json($groupedAvailabilities); // Pass availabilities as JSON
             const existingAppointments = @json($existingAppointments); // Pass existing appointments as JSON
 
-            console.log('Availabilities:', availabilities); // Debugging
-            console.log('Existing Appointments:', existingAppointments); // Debugging
-
             const startTimeSelect = document.getElementById('start_time');
             const endTimeSelect = document.getElementById('end_time');
-            startTimeSelect.innerHTML = ''; // Clear existing options
-            endTimeSelect.innerHTML = ''; // Clear existing options
+            
+            // Clear previous selections and reset values
+            startTimeSelect.innerHTML = ''; 
+            endTimeSelect.innerHTML = ''; 
+            startTimeSelect.value = ''; 
+            endTimeSelect.value = ''; 
+
+            // Remove old event listeners from start time dropdown
+            let newStartTimeSelect = startTimeSelect.cloneNode(true);
+            startTimeSelect.parentNode.replaceChild(newStartTimeSelect, startTimeSelect);
 
             // Convert selected date to day name
             const dayName = new Date(selectedDate).toLocaleDateString('en-US', {
                 weekday: 'long'
             }).toLowerCase();
-            console.log('Selected Day:', dayName); // Debugging
 
             const doctorAvailabilities = availabilities[doctorId];
-            console.log('Doctor Availabilities:', doctorAvailabilities); // Debugging
-
             const doctorAppointments = existingAppointments[doctorId] || [];
-            const bookedSlots = doctorAppointments.map(app => {
-                return {
-                    start: new Date(`1970-01-01T${app.start_time}`),
-                    end: new Date(`1970-01-01T${app.end_time}`)
-                };
-            });
+
+            const bookedSlots = doctorAppointments.map(app => ({
+                start: new Date(`1970-01-01T${app.start_time}`),
+                end: new Date(`1970-01-01T${app.end_time}`)
+            }));
 
             if (doctorAvailabilities && doctorAvailabilities[dayName]) {
                 const timesForDay = doctorAvailabilities[dayName];
@@ -342,30 +344,26 @@
                 timesForDay.forEach(avail => {
                     const startTime = new Date(`1970-01-01T${avail.start_time}`);
                     const endTime = new Date(`1970-01-01T${avail.end_time}`);
-                    console.log('Start Time:', startTime, 'End Time:', endTime);
 
                     // Generate 30-minute intervals
                     for (let time = startTime; time < endTime; time.setMinutes(time.getMinutes() + 30)) {
-                        let isBooked = bookedSlots.some(slot => time >= slot.start && time < slot.end);
+                        const isBooked = bookedSlots.some(slot => time >= slot.start && time < slot.end);
                         if (!isBooked) {
-                            console.log('Generated Slot:', new Date(time));
                             timeSlots.push(new Date(time));
                         }
                     }
                 });
 
-                console.log('Generated Time Slots:', timeSlots); // Debugging
-
                 timeSlots.forEach(slot => {
                     const option = document.createElement('option');
                     option.value = slot.toTimeString().slice(0, 5);
                     option.textContent = slot.toTimeString().slice(0, 5);
-                    startTimeSelect.appendChild(option);
+                    newStartTimeSelect.appendChild(option);
                 });
 
-                // End time options start from 30 minutes after the selected start time
-                startTimeSelect.addEventListener('change', function() {
-                    endTimeSelect.innerHTML = '';
+                // Add change event listener to start time dropdown
+                newStartTimeSelect.addEventListener('change', function() {
+                    endTimeSelect.innerHTML = ''; // Clear end time dropdown
                     const selectedStartTime = new Date(`1970-01-01T${this.value}:00`);
                     timeSlots.forEach(slot => {
                         if (slot > selectedStartTime) {
@@ -379,10 +377,113 @@
             } else {
                 const option = document.createElement('option');
                 option.textContent = 'No available times';
-                startTimeSelect.appendChild(option);
+                newStartTimeSelect.appendChild(option);
             }
         });
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    // Attach click event listeners to all buttons that trigger the modal
+    document.querySelectorAll('.dropdown-item[data-bs-toggle="modal"]').forEach(button => {
+        button.addEventListener('click', function() {
+            // Get relevant data from the clicked button
+            const appointmentId = this.getAttribute('data-appointment-id');
+            const doctorId = this.getAttribute('data-doctor-id');
+            const selectedDate = this.getAttribute('data-date');
+
+            const form = document.getElementById('approveForm');
+            const actionUrl = `/appointments/${appointmentId}/approve`; // Adjust this URL to match your route
+            form.action = actionUrl;
+            document.getElementById('appointment_id').value = appointmentId;
+            document.getElementById('doctor_id').value = doctorId;
+
+            // Update available times based on selected doctor and date
+            const availabilities = @json($groupedAvailabilities); // Pass availabilities as JSON from backend
+            const existingAppointments = @json($existingAppointments); // Pass existing appointments as JSON from backend
+
+            const startTimeSelect = document.getElementById('start_time');
+            const endTimeSelect = document.getElementById('end_time');
+            
+            // Clear previous selections and reset values completely
+            startTimeSelect.innerHTML = ''; 
+            endTimeSelect.innerHTML = ''; 
+            startTimeSelect.value = ''; 
+            endTimeSelect.value = '';
+
+            // Remove all event listeners from the start_time dropdown to avoid duplicates
+            let newStartTimeSelect = startTimeSelect.cloneNode(true);
+            startTimeSelect.parentNode.replaceChild(newStartTimeSelect, startTimeSelect);
+
+            // Convert selected date to day name (e.g., 'Monday')
+            const dayName = new Date(selectedDate).toLocaleDateString('en-US', {
+                weekday: 'long'
+            }).toLowerCase();
+
+            // Get the availabilities for the doctor on the selected day
+            const doctorAvailabilities = availabilities[doctorId] || {};
+            const doctorAppointments = existingAppointments[doctorId] || [];
+
+            // Filter appointments for the selected date only
+            const appointmentsForDay = doctorAppointments.filter(app => {
+                const appDate = new Date(app.date).toDateString(); // Assumes app.date holds the appointment date
+                return appDate === new Date(selectedDate).toDateString();
+            });
+
+            // Map the booked slots for the selected day
+            const bookedSlots = appointmentsForDay.map(app => ({
+                start: new Date(`1970-01-01T${app.start_time}`),
+                end: new Date(`1970-01-01T${app.end_time}`)
+            }));
+
+            if (doctorAvailabilities[dayName]) {
+                const timesForDay = doctorAvailabilities[dayName];
+                const availableSlots = [];
+
+                // Generate 30-minute intervals and check for booked slots for the selected date
+                timesForDay.forEach(avail => {
+                    const startTime = new Date(`1970-01-01T${avail.start_time}`);
+                    const endTime = new Date(`1970-01-01T${avail.end_time}`);
+
+                    for (let time = new Date(startTime); time < endTime; time.setMinutes(time.getMinutes() + 30)) {
+                        const isBooked = bookedSlots.some(slot => time >= slot.start && time < slot.end);
+                        if (!isBooked) {
+                            availableSlots.push(new Date(time));
+                        }
+                    }
+                });
+
+                // Populate start time dropdown with available slots
+                availableSlots.forEach(slot => {
+                    const option = document.createElement('option');
+                    option.value = slot.toTimeString().slice(0, 5);
+                    option.textContent = slot.toTimeString().slice(0, 5);
+                    newStartTimeSelect.appendChild(option);
+                });
+
+                // Add event listener to update end time when a start time is selected
+                newStartTimeSelect.addEventListener('change', function() {
+                    endTimeSelect.innerHTML = ''; // Clear the end time dropdown
+                    const selectedStartTime = new Date(`1970-01-01T${this.value}:00`);
+                    
+                    // Populate end time dropdown with slots after the selected start time
+                    availableSlots.forEach(slot => {
+                        if (slot > selectedStartTime) {
+                            const option = document.createElement('option');
+                            option.value = slot.toTimeString().slice(0, 5);
+                            option.textContent = slot.toTimeString().slice(0, 5);
+                            endTimeSelect.appendChild(option);
+                        }
+                    });
+                });
+            } else {
+                // If no availabilities, display "No available times"
+                const option = document.createElement('option');
+                option.textContent = 'No available times';
+                newStartTimeSelect.appendChild(option);
+            }
+        });
+    });
+});
+
     </script>
 @endsection

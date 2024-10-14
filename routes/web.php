@@ -110,6 +110,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/profiling/{userId}', [PatientController::class, 'show'])->name('patients.show');
     Route::get('admin/profiling/edit_patient/{userId}', [PatientController::class, 'edit'])->name('patient.edit');
     Route::post('admin/profiling/add_patient', [PatientController::class, 'store'])->name('patient.store');
+    Route::post('admin/profiling/add-patient-account', [PatientController::class, 'storeAccount'])->name('patient.storeAccount');
+    Route::get('/add-account', [PatientController::class, 'addAccount'])->name('patient.addAccount');
+
     Route::post('admin/profiling/medicalProfile', [PatientController::class, 'medicalprofile'])->name('patient.medicalprofile');
     Route::put('/admin/profiling/edit_patient/{userId}', [PatientController::class, 'update'])->name('patient.update');
     Route::delete('admin/profiling/manage_patient/{patient}', [PatientController::class, 'destroy'])->name('patient.destroy');
