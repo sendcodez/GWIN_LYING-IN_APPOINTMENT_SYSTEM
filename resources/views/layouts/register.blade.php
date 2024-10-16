@@ -11,7 +11,11 @@
     <link href="{{ asset('lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('img/gwinlogo2.png') }}" />
     <link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('img/gwinlogo2.png') }}" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -40,10 +44,10 @@
                 <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
                     <div class="d-inline-flex align-items-center">
                         <a class="text-decoration-none text-body pe-3" href=""><i
-                                class="bi bi-telephone me-2"></i>+012 345 6789</a>
+                                class="bi bi-telephone me-2"></i>{{ $website->contact_no }}</a>
                         <span class="text-body">|</span>
                         <a class="text-decoration-none text-body px-3" href=""><i
-                                class="bi bi-envelope me-2"></i>info@example.com</a>
+                                class="bi bi-envelope me-2"></i>{{ $website->email }}</a>
                     </div>
                 </div>
                 <div class="col-md-6 text-center text-lg-end">
@@ -118,7 +122,8 @@
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-group">
                                             <label style="font-weight:100">Maiden Name (If Married)</label>
-                                            <input type="text" name="maiden" class="form-control" />
+                                            <input type="text" name="maiden" pattern="[A-Za-z\s]+"
+                                                title="Only letters are allowed." class="form-control" />
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
@@ -154,7 +159,12 @@
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-group">
                                             <label>Contact Number</label>
-                                            <input type="text" name="contact_number" class="form-control" />
+                                            <input type="text" id="contact_number" name="contact_number"
+                                                class="form-control" pattern="^09[0-9]{9}$"
+                                                title="Enter a valid mobile number starting with 09." required
+                                                maxlength="11" oninput="validateContactNumber(event)" />
+                                            <span id="error-message-2" style="color: red; display: none;"></span>
+                                            <!-- Error message placeholder -->
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
@@ -202,7 +212,8 @@
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-group">
                                             <label style="font-weight:100">Spouse</label>
-                                            <select class="form-control" name="spouse" id="spouseDropdown" required="true">
+                                            <select class="form-control" name="spouse" id="spouseDropdown"
+                                                required="true">
                                                 <option value="with" selected>With Spouse</option>
                                                 <option value="without" selected>Without Spouse</option>
                                             </select>
@@ -222,77 +233,81 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label style="font-weight:100">First Name</label>
-                                                <input type="text" name="husband_firstname" class="form-control"
-                                                     />
+                                                <input type="text" name="husband_firstname" pattern="[A-Za-z\s]+"
+                                                    title="Only letters are allowed." class="form-control" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label style="font-weight:100">Middle Name</label>
-                                                <input type="text" name="husband_middlename"
+                                                <input type="text" pattern="[A-Za-z\s]+"
+                                                    title="Only letters are allowed." name="husband_middlename"
                                                     class="form-control" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label style="font-weight:100">Last Name</label>
-                                                <input type="text" name="husband_lastname" class="form-control"
-                                                     />
+                                                <input type="text" pattern="[A-Za-z\s]+"
+                                                    title="Only letters are allowed." name="husband_lastname"
+                                                    class="form-control" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label style="font-weight:100">Occupation</label>
-                                                <input type="text" name="husband_occupation" class="form-control"
-                                                     />
+                                                <input type="text" name="husband_occupation"
+                                                    class="form-control" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <label style="font-weight:100">Birthday</label>
                                             <input type="date" id="husband_birthday" name="husband_birthday"
-                                                class="form-control" 
-                                                onchange="calculateHusbandAge()">
+                                                class="form-control" onchange="calculateHusbandAge()">
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="company-column" style="font-weight:100">Age</label>
                                                 <input type="text" id="husband_age" class="form-control"
-                                                    name="husband_age" placeholder="Age"  readonly>
+                                                    name="husband_age" placeholder="Age" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label style="font-weight:100">Contact Number</label>
-                                                <input type="text" name="husband_contact_number"
-                                                    class="form-control" />
+                                                <input type="text" id="husband_contact_number"
+                                                    name="husband_contact_number" class="form-control"
+                                                    pattern="^09[0-9]{9}$"
+                                                    title="Enter a valid mobile number starting with 09." required
+                                                    maxlength="11" oninput="validateContactNumber(event)" />
+                                                <span id="error-message" style="color: red; display: none;"></span>
+                                                <!-- Error message placeholder -->
                                             </div>
                                         </div>
+
+
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group" style="font-weight:100">
                                                 <label>Religion</label>
-                                                <input type="text" name="husband_religion" class="form-control"
-                                                     />
+                                                <input type="text" name="husband_religion" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label style="font-weight:100">Province</label>
-                                                <input type="text" name="husband_province" class="form-control"
-                                                     />
+                                                <input type="text" name="husband_province" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label style="font-weight:100">City</label>
-                                                <input type="text" name="husband_city" class="form-control"
-                                                     />
+                                                <input type="text" name="husband_city" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label style="font-weight:100">Barangay</label>
-                                                <input type="text" name="husband_barangay" class="form-control"
-                                                     />
+                                                <input type="text" name="husband_barangay" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
@@ -328,6 +343,57 @@
             <script src="js/my-login.js"></script>
 
             <script>
+                function validateNameInput(event) {
+                    const regex = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces only
+                    const input = event.target.value;
+
+                    if (!regex.test(input)) {
+                        alert("Only letters are allowed.");
+                        event.target.value = ''; // Optionally clear the input field
+                    }
+                }
+
+                document.getElementById('firstname').addEventListener('input', validateNameInput);
+                document.getElementById('middlename').addEventListener('input', validateNameInput);
+                document.getElementById('lastname').addEventListener('input', validateNameInput);
+                document.getElementById('maiden').addEventListener('input', validateNameInput);
+                document.getElementById('husband_firstame').addEventListener('input', validateNameInput);
+                document.getElementById('husband_middlename').addEventListener('input', validateNameInput);
+                document.getElementById('husband_lastname').addEventListener('input', validateNameInput);
+
+
+                function validateContactNumber(event) {
+                    const input = event.target.value;
+                    const errorMessage = event.target.nextElementSibling; // Get the next sibling span for the error message
+
+                    // Check if the input is exactly 11 digits long and starts with 09
+                    const regex = /^09[0-9]{9}$/; // Pattern for exactly 11 digits
+
+                    if (input.length > 11) {
+                        // Trim input if length exceeds 11
+                        event.target.value = input.slice(0, 11);
+                        errorMessage.style.display = 'none'; // Clear error message
+                    } else if (input.length < 11) {
+                        // If the input is less than 11 digits, show an error message
+                        errorMessage.textContent = "The contact number must be exactly 11 digits.";
+                        errorMessage.style.display = 'block'; // Show error message
+                    } else if (!regex.test(input)) {
+                        // If the input is not valid, show an error message
+                        errorMessage.textContent = "Enter a valid mobile number starting with 09.";
+                        errorMessage.style.display = 'block'; // Show error message
+                    } else {
+                        // Hide the error message if the input is valid
+                        errorMessage.style.display = 'none';
+                    }
+                }
+
+                // Attach the event listener to both input fields
+                document.getElementById('husband_contact_number').addEventListener('input', validateContactNumber);
+                document.getElementById('contact_number').addEventListener('input', validateContactNumber);
+
+
+
+
                 function calculateAge() {
                     var birthday = new Date(document.getElementById("birthday").value);
                     var today = new Date();
@@ -369,7 +435,7 @@
                         spouseInfoDiv.style.display = 'none'; // Hide spouse form
                     }
                 };
-                </script>
+            </script>
     </body>
 
 </html>

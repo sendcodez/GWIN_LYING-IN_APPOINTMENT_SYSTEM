@@ -20,7 +20,8 @@ class IndexController extends Controller
     
     public function login()
     {
-        return view ('auth.login');
+        $website = Website::first();
+        return view ('auth.login', compact('website'));
     }
     public function services()
     {

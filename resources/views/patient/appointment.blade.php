@@ -10,6 +10,22 @@
     <script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
+
+
+
+@media (max-width: 768px) {
+        .custom-bordered-table {
+            font-size: 14px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        th, td {
+            white-space: nowrap;
+        }
+    }
         .red-day {
             background-color: #ff7b7b !important;
             /* Change background color to red */
@@ -96,67 +112,70 @@
 
                         <div class="table-wrap col-md-6 col-sm-6">
 
-                            <table class="table table-striped custom-bordered-table">
-                                <thead>
-                                    <center>
-                                        <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
-                                    </center>
-                                    <select id="serviceFilter" onchange="filterTable()" class="form-control">
-                                        <option value="all">All</option>
-                                        @foreach ($doctors as $doctor)
-                                            @php
-                                                $service = $doctor->services->first()->name; // Assuming each doctor has only one service
-                                            @endphp
-                                            <option value="{{ $doctor->lastname }} ({{ $service }})">
-                                                Dr. {{ $doctor->lastname }} | Service Offered: {{ $service }} 
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    <tr>
-                                        <th>DAY AVAILABILITY</th>
-                                        <th>TIME AVAILABILITY</th>
-                                        <th class="text-center">REST DAY</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="doctorScheduleTable">
-                                    @foreach ($doctorAvailabilities as $availability)
-                                        @php
-                                            $doctor = $availability->doctor;
-                                            $service = $doctor ? $doctor->services->first()->name : 'No service'; // Single service per doctor
-                                        @endphp
-                                        <tr data-filter="Dr. {{ $doctor->lastname }} ({{ $service }})">
-                                            <td>{{ ucfirst($availability->day) }}</td>
-                                            <td>
-                                                {{ date('h:i A', strtotime($availability->start_time)) }} -
-                                                {{ date('h:i A', strtotime($availability->end_time)) }}
-                                            </td>
-
-                                            <td class="rest-day">
-                                                @if ($doctor)
-                                                    @php
-                                                        $doctorRestDays = $rd
-                                                            ->where('doctor_id', $doctor->id)
-                                                            ->pluck('rest_day');
-                                                    @endphp
-                                                    @if ($doctorRestDays->isEmpty())
-                                                        No rest days
-                                                    @else
-                                                        @foreach ($doctorRestDays as $restDay)
-                                                            {{ $restDay->format('M d, Y') }}
-                                                            @if (!$loop->last)
-                                                                ,
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                @else
-                                                    No rest days available
-                                                @endif
-                                            </td>
+                            <div class="table-responsive">
+                                <table class="table table-striped custom-bordered-table">
+                                    <thead>
+                                        <center>
+                                            <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
+                                        </center>
+                                        <select id="serviceFilter" onchange="filterTable()" class="form-control mb-3">
+                                            <option value="all">All</option>
+                                            @foreach ($doctors as $doctor)
+                                                @php
+                                                    $service = $doctor->services->first()->name; // Assuming each doctor has only one service
+                                                @endphp
+                                                <option value="{{ $doctor->lastname }} ({{ $service }})">
+                                                    Dr. {{ $doctor->lastname }} | Service Offered: {{ $service }} 
+                                                </option>
+                                            @endforeach
+                                        </select>
+                            
+                                        <tr>
+                                            <th>DAY AVAILABILITY</th>
+                                            <th>TIME AVAILABILITY</th>
+                                            <th class="text-center">REST DAY</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody id="doctorScheduleTable">
+                                        @foreach ($doctorAvailabilities as $availability)
+                                            @php
+                                                $doctor = $availability->doctor;
+                                                $service = $doctor ? $doctor->services->first()->name : 'No service'; // Single service per doctor
+                                            @endphp
+                                            <tr data-filter="Dr. {{ $doctor->lastname }} ({{ $service }})">
+                                                <td>{{ ucfirst($availability->day) }}</td>
+                                                <td>
+                                                    {{ date('h:i A', strtotime($availability->start_time)) }} -
+                                                    {{ date('h:i A', strtotime($availability->end_time)) }}
+                                                </td>
+                            
+                                                <td class="rest-day">
+                                                    @if ($doctor)
+                                                        @php
+                                                            $doctorRestDays = $rd
+                                                                ->where('doctor_id', $doctor->id)
+                                                                ->pluck('rest_day');
+                                                        @endphp
+                                                        @if ($doctorRestDays->isEmpty())
+                                                            No rest days
+                                                        @else
+                                                            @foreach ($doctorRestDays as $restDay)
+                                                                {{ $restDay->format('M d, Y') }}
+                                                                @if (!$loop->last)
+                                                                    ,
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    @else
+                                                        No rest days available
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            
 
 
                             <br>

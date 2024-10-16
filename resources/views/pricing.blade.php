@@ -143,11 +143,131 @@
                         <p>Baby Laboratory (CBC, Blood Typing)</p>
                     </div>
                 </div>
-               
+                <div class="bg-light rounded text-center">
+                    <div class="position-relative">
+                        <img class="img-fluid rounded-top" src="img/price-1.jpg" alt="">
+                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center" style="background: rgba(29, 42, 77, .8);">
+                            <h3 class="text-white">MIDWIFE PACKAGE</h3>
+                            <h1 class="display-4 text-white mb-0">
+                                <small class="align-top fw-normal" style="font-size: 22px; line-height: 45px;">₱</small>3,000<small class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">.    00</small>
+                                
+                            </h1>
+                            <small class="align-bottom fw-normal" style="font-size: 12px; line-height: 45px;color:white;">with PHILHEALTH</small>
+                        </div>
+                    </div>
+                    <div class="text-center py-5">
+                        <p>₱ 13,000 - 15,000 without PHILHEALTH</p>
+                        <p>Expanded Newbord Screening</p>
+                        <p>Newborn Hearing Test</p>
+                        <p>Newborn vaccines (Hepa B, BCG, Vitamin K)</p>
+                        <p>Birth Certificate & Affidavit processing</p>
+                        <p>Baby Laboratory (CBC, Blood Typing)</p>
+                    </div>
+                </div>
+                <div class="bg-light rounded text-center">
+                    <div class="position-relative">
+                        <img class="img-fluid rounded-top" src="img/price-2.jpg" alt="">
+                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center" style="background: rgba(29, 42, 77, .8);">
+                            <h3 class="text-white">OBGYNE PACKAGE</h3>
+                            <h1 class="display-4 text-white mb-0">
+                                <small class="align-top fw-normal" style="font-size: 22px; line-height: 45px;">₱</small>15,000<small class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">.00</small>
+                            </h1>
+                            <small class="align-bottom fw-normal" style="font-size: 12px; line-height: 45px;color:white;">with PHILHEALTH</small>
+                        </div>
+                    </div>
+                    <div class="text-center py-5">
+                        <p>₱ 25, 000 without PHILHEALTH</p>
+                        <p>Expanded Newbord Screening</p>
+                        <p>Newborn Hearing Test</p>
+                        <p>Newborn vaccines (Hepa B, BCG, Vitamin K)</p>
+                        <p>Birth Certificate & Affidavit processing</p>
+                        <p>Baby Laboratory (CBC, Blood Typing)</p>
+                    </div>
+                </div><div class="bg-light rounded text-center">
+                    <div class="position-relative">
+                        <img class="img-fluid rounded-top" src="img/price-1.jpg" alt="">
+                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center" style="background: rgba(29, 42, 77, .8);">
+                            <h3 class="text-white">MIDWIFE PACKAGE</h3>
+                            <h1 class="display-4 text-white mb-0">
+                                <small class="align-top fw-normal" style="font-size: 22px; line-height: 45px;">₱</small>3,000<small class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">.    00</small>
+                                
+                            </h1>
+                            <small class="align-bottom fw-normal" style="font-size: 12px; line-height: 45px;color:white;">with PHILHEALTH</small>
+                        </div>
+                    </div>
+                    <div class="text-center py-5">
+                        <p>₱ 13,000 - 15,000 without PHILHEALTH</p>
+                        <p>Expanded Newbord Screening</p>
+                        <p>Newborn Hearing Test</p>
+                        <p>Newborn vaccines (Hepa B, BCG, Vitamin K)</p>
+                        <p>Birth Certificate & Affidavit processing</p>
+                        <p>Baby Laboratory (CBC, Blood Typing)</p>
+                    </div>
+                </div>
+                <div class="bg-light rounded text-center">
+                    <div class="position-relative">
+                        <img class="img-fluid rounded-top" src="img/price-2.jpg" alt="">
+                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center" style="background: rgba(29, 42, 77, .8);">
+                            <h3 class="text-white">OBGYNE PACKAGE</h3>
+                            <h1 class="display-4 text-white mb-0">
+                                <small class="align-top fw-normal" style="font-size: 22px; line-height: 45px;">₱</small>15,000<small class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">.00</small>
+                            </h1>
+                            <small class="align-bottom fw-normal" style="font-size: 12px; line-height: 45px;color:white;">with PHILHEALTH</small>
+                        </div>
+                    </div>
+                    <div class="text-center py-5">
+                        <p>₱ 25, 000 without PHILHEALTH</p>
+                        <p>Expanded Newbord Screening</p>
+                        <p>Newborn Hearing Test</p>
+                        <p>Newborn vaccines (Hepa B, BCG, Vitamin K)</p>
+                        <p>Birth Certificate & Affidavit processing</p>
+                        <p>Baby Laboratory (CBC, Blood Typing)</p>
+                    </div>
+                </div><div class="bg-light rounded text-center">
+                    <div class="position-relative">
+                        <img class="img-fluid rounded-top" src="img/price-1.jpg" alt="">
+                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center" style="background: rgba(29, 42, 77, .8);">
+                            <h3 class="text-white">MIDWIFE PACKAGE</h3>
+                            <h1 class="display-4 text-white mb-0">
+                                <small class="align-top fw-normal" style="font-size: 22px; line-height: 45px;">₱</small>3,000<small class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">.    00</small>
+                                
+                            </h1>
+                            <small class="align-bottom fw-normal" style="font-size: 12px; line-height: 45px;color:white;">with PHILHEALTH</small>
+                        </div>
+                    </div>
+                    <div class="text-center py-5">
+                        <p>₱ 13,000 - 15,000 without PHILHEALTH</p>
+                        <p>Expanded Newbord Screening</p>
+                        <p>Newborn Hearing Test</p>
+                        <p>Newborn vaccines (Hepa B, BCG, Vitamin K)</p>
+                        <p>Birth Certificate & Affidavit processing</p>
+                        <p>Baby Laboratory (CBC, Blood Typing)</p>
+                    </div>
+                </div>
+                <div class="bg-light rounded text-center">
+                    <div class="position-relative">
+                        <img class="img-fluid rounded-top" src="img/price-2.jpg" alt="">
+                        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center" style="background: rgba(29, 42, 77, .8);">
+                            <h3 class="text-white">OBGYNE PACKAGE</h3>
+                            <h1 class="display-4 text-white mb-0">
+                                <small class="align-top fw-normal" style="font-size: 22px; line-height: 45px;">₱</small>15,000<small class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">.00</small>
+                            </h1>
+                            <small class="align-bottom fw-normal" style="font-size: 12px; line-height: 45px;color:white;">with PHILHEALTH</small>
+                        </div>
+                    </div>
+                    <div class="text-center py-5">
+                        <p>₱ 25, 000 without PHILHEALTH</p>
+                        <p>Expanded Newbord Screening</p>
+                        <p>Newborn Hearing Test</p>
+                        <p>Newborn vaccines (Hepa B, BCG, Vitamin K)</p>
+                        <p>Birth Certificate & Affidavit processing</p>
+                        <p>Baby Laboratory (CBC, Blood Typing)</p>
+                    </div>
+                </div>
         </div>
     </div>
     <!-- Pricing Plan End -->
-
+</div>
 
     <div class="container-fluid bg-dark text-light border-top border-secondary py-4">
         <div class="container">

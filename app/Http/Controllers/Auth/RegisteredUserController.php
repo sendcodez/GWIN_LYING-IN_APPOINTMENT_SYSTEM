@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\Website;
 
 class RegisteredUserController extends Controller
 {
@@ -23,7 +24,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+
+        $website = Website::first();
+        return view('auth.register',compact('website'));
     }
 
     /**

@@ -16,6 +16,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('img/gwinlogo2.png') }}" />
     <!-- Template Stylesheet -->
     <link href=" {{ asset('css/style.css') }}" rel="stylesheet">
+     <!-- Icon Font Stylesheet -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <title>Login</title>
 </head>
 <style>
@@ -38,11 +41,9 @@
             <div class="row">
                 <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-decoration-none text-body pe-3" href=""><i
-                                class="bi bi-telephone me-2"></i>+012 345 6789</a>
+                        <a class="text-decoration-none text-body pe-3" href=""><i class="bi bi-telephone me-2"></i>{{$website->contact_no}}</a>
                         <span class="text-body">|</span>
-                        <a class="text-decoration-none text-body px-3" href=""><i
-                                class="bi bi-envelope me-2"></i>info@example.com</a>
+                        <a class="text-decoration-none text-body px-3" href=""><i class="bi bi-envelope me-2"></i>{{$website->email}}</a>
                     </div>
                 </div>
                 <div class="col-md-6 text-center text-lg-end">
