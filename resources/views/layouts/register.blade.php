@@ -278,7 +278,7 @@
                                                 <input type="text" id="husband_contact_number"
                                                     name="husband_contact_number" class="form-control"
                                                     pattern="^09[0-9]{9}$"
-                                                    title="Enter a valid mobile number starting with 09." required
+                                                    title="Enter a valid mobile number starting with 09."
                                                     maxlength="11" oninput="validateContactNumber(event)" />
                                                 <span id="error-message" style="color: red; display: none;"></span>
                                                 <!-- Error message placeholder -->
