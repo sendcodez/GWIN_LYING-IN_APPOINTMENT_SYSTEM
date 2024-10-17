@@ -343,6 +343,26 @@
             <script src="js/my-login.js"></script>
 
             <script>
+                document.getElementById('spouseDropdown').addEventListener('change', function() {
+                    var spouseInfoDiv = document.getElementById('spouseInfo');
+                    if (this.value === 'with') {
+                        spouseInfoDiv.style.display = 'block'; // Show spouse form
+                    } else {
+                        spouseInfoDiv.style.display = 'none'; // Hide spouse form
+                    }
+                });
+
+                // Initialize the spouse form visibility based on the selected option
+                window.onload = function() {
+                    var spouseDropdown = document.getElementById('spouseDropdown');
+                    var spouseInfoDiv = document.getElementById('spouseInfo');
+                    if (spouseDropdown.value === 'with') {
+                        spouseInfoDiv.style.display = 'block'; // Show spouse form
+                    } else {
+                        spouseInfoDiv.style.display = 'none'; // Hide spouse form
+                    }
+                };
+
                 function validateNameInput(event) {
                     const regex = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces only
                     const input = event.target.value;
@@ -415,26 +435,6 @@
                     }
                     document.getElementById("husband_age").value = age;
                 }
-
-                document.getElementById('spouseDropdown').addEventListener('change', function() {
-                    var spouseInfoDiv = document.getElementById('spouseInfo');
-                    if (this.value === 'with') {
-                        spouseInfoDiv.style.display = 'block'; // Show spouse form
-                    } else {
-                        spouseInfoDiv.style.display = 'none'; // Hide spouse form
-                    }
-                });
-
-                // Initialize the spouse form visibility based on the selected option
-                window.onload = function() {
-                    var spouseDropdown = document.getElementById('spouseDropdown');
-                    var spouseInfoDiv = document.getElementById('spouseInfo');
-                    if (spouseDropdown.value === 'with') {
-                        spouseInfoDiv.style.display = 'block'; // Show spouse form
-                    } else {
-                        spouseInfoDiv.style.display = 'none'; // Hide spouse form
-                    }
-                };
             </script>
     </body>
 

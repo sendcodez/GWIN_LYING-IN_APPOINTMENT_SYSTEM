@@ -68,6 +68,7 @@
                         </div>
                         <!-- Table Section -->
                         <div class="table-wrap col-md-6 col-sm-6">
+                            <div class="table-responsive">
                             <table class="table table-striped custom-bordered-table">
                                 <thead>
                                     <center>
@@ -151,6 +152,7 @@
                             </table>
 
                         </div>
+                    </div>
                     </div>
 
                     <!-- calendar modal -->
