@@ -19,10 +19,20 @@ class UserSeeder extends Seeder
             'middlename' => 'Admin',
             'lastname' => 'Admin',
             'email' => 'admin@gmail.com',
-            'email_verified_at' => '    2024-08-01 09:34:57',
+            'email_verified_at' => '2024-08-01 09:34:57',
             'password' => Hash::make('admin123'),
             'status' => '1',
             'usertype' => '0'
+        ]);
+        DB::table('users')->insert([
+            'firstname' => 'Staff',
+            'middlename' => 'Staff',
+            'lastname' => 'Staff',
+            'email' => 'staff@gmail.com',
+            'email_verified_at' => '2024-08-01 09:34:57',
+            'password' => Hash::make('staff123'),
+            'status' => '1',
+            'usertype' => '1'
         ]);
         DB::table('users')->insert([
             'firstname' => 'Doctor',
