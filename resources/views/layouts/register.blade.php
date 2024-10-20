@@ -22,6 +22,11 @@
 
     <!-- Template Stylesheet -->
     <link href=" {{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap JS (requires Popper.js for the dropdowns and collapse toggler) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <title>Register</title>
 </head>
 <style>
@@ -61,9 +66,10 @@
     <div class="container-fluid sticky-top bg-white shadow-sm">
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-                <a href="index.html" class="navbar-brand">
-                    <h1 class="m-0 text-uppercase text-primary"><img src="{{ asset('img/gwinlogo.png') }}"
-                            alt="GWIN Lying-in Logo" class="logo-image">GWIN Lying-In</h1>
+                <a href="{{ route('index') }}" class="navbar-brand">
+                    <h1 class="m-0 text-uppercase" style="font-weight: 700; color:#13c5dd"><img
+                            src="{{ asset('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="logo-image">GWIN
+                        Lying-In</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
@@ -366,13 +372,16 @@
                 function validateNameInput(event) {
                     const regex = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces only
                     const input = event.target.value;
+                    const errorField = document.getElementById(`${event.target.id}-error`);
 
                     if (!regex.test(input)) {
-                        alert("Only letters are allowed.");
-                        event.target.value = ''; // Optionally clear the input field
+                        errorField.textContent = "Only letters are allowed."; // Display error message
+                    } else {
+                        errorField.textContent = ''; // Clear error message if valid
                     }
                 }
 
+                // Add event listeners to the fields
                 document.getElementById('firstname').addEventListener('input', validateNameInput);
                 document.getElementById('middlename').addEventListener('input', validateNameInput);
                 document.getElementById('lastname').addEventListener('input', validateNameInput);

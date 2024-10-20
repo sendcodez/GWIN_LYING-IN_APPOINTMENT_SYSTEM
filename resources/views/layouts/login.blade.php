@@ -16,34 +16,53 @@
     <link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('img/gwinlogo2.png') }}" />
     <!-- Template Stylesheet -->
     <link href=" {{ asset('css/style.css') }}" rel="stylesheet">
-     <!-- Icon Font Stylesheet -->
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap JS (requires Popper.js for the dropdowns and collapse toggler) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
     <title>Login</title>
 </head>
 <style>
     .logo-image {
-    width: 150px; /* Adjust the size as needed */
-    height: 80px; /* Adjust the size as needed */
-    border-radius: 50%; /* Makes the image round */
-    object-fit: cover; /* Ensures the image covers the entire container */
+        width: 150px;
+        /* Adjust the size as needed */
+        height: 80px;
+        /* Adjust the size as needed */
+        border-radius: 50%;
+        /* Makes the image round */
+        object-fit: cover;
+        /* Ensures the image covers the entire container */
     }
+
     .logo {
-    width: 250px; /* Adjust the size as needed */
-    height: 280px; /* Adjust the size as needed */
-    border-radius: 50%; /* Makes the image round */
-    object-fit: cover; /* Ensures the image covers the entire container */
-}
+        width: 250px;
+        /* Adjust the size as needed */
+        height: 280px;
+        /* Adjust the size as needed */
+        border-radius: 50%;
+        /* Makes the image round */
+        object-fit: cover;
+        /* Ensures the image covers the entire container */
+    }
 </style>
+
 <body class="my-login-page">
     <div class="container-fluid py-2 border-bottom d-none d-lg-block">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-decoration-none text-body pe-3" href=""><i class="bi bi-telephone me-2"></i>{{$website->contact_no}}</a>
+                        <a class="text-decoration-none text-body pe-3" href=""><i
+                                class="bi bi-telephone me-2"></i>{{ $website->contact_no }}</a>
                         <span class="text-body">|</span>
-                        <a class="text-decoration-none text-body px-3" href=""><i class="bi bi-envelope me-2"></i>{{$website->email}}</a>
+                        <a class="text-decoration-none text-body px-3" href=""><i
+                                class="bi bi-envelope me-2"></i>{{ $website->email }}</a>
                     </div>
                 </div>
                 <div class="col-md-6 text-center text-lg-end">
@@ -57,8 +76,9 @@
     <div class="container-fluid sticky-top bg-white shadow-sm">
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-                <a href="index.html" class="navbar-brand">
-                    <h1 class="m-0 text-uppercase text-primary"><img src="{{ asset ('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="logo-image">GWIN Lying-In</h1>
+                <a href="{{ route('index') }}" class="navbar-brand">
+                    <h1 class="m-0 text-uppercase " style="font-weight: 700; color:#13c5dd"><img src="{{ asset('img/gwinlogo.png') }}"
+                            alt="GWIN Lying-in Logo" class="logo-image">GWIN Lying-In</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
@@ -83,7 +103,7 @@
                 <div class="row justify-content-md-center h-100">
                     <div class="card-wrapper">
                         <div class="brand">
-                            <img src="{{ asset ('img/GWIN.jpg') }}" alt="logo" class="logo">
+                            <img src="{{ asset('img/GWIN.jpg') }}" alt="logo" class="logo">
                         </div>
                         <div class="card fat">
                             <div class="card-body">
@@ -94,7 +114,8 @@
                                             {{ session('status') }}
                                         </div>
                                     @endif
-                                    <x-input-error :messages="$errors->get('email')" class="alert alert-danger"  role="alert" style="color: rgb(84, 31, 31);" />
+                                    <x-input-error :messages="$errors->get('email')" class="alert alert-danger" role="alert"
+                                        style="color: rgb(84, 31, 31);" />
                                 </center>
                                 <form method="POST" class="my-login-validation" novalidate="">
                                     <div class="form-group">
@@ -116,7 +137,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group m-0">
+                                    <div class="form-group m-0" >
                                         @yield ('button')
                                     </div>
                                     <div class="mt-4 text-center">

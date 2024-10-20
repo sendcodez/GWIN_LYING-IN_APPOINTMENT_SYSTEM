@@ -32,6 +32,7 @@
         <x-text-input id="firstname" class="form-control" type="text" name="firstname" :value="old('firstname')" required autofocus
             autocomplete="firstname" pattern="[A-Za-z\s]+" title="Only letters are allowed." />
         <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
+        <div id="firstname-error" class="text-danger mt-1"></div> <!-- Error message div -->
     @endsection
 
     @section('middlename')
@@ -39,6 +40,7 @@
         <x-text-input id="middlename" class="form-control" type="text" name="middlename" :value="old('middlename')"
             autocomplete="middlename" pattern="[A-Za-z\s]*" title="Only letters are allowed." />
         <x-input-error :messages="$errors->get('middlename')" class="mt-2" />
+        <div id="middlename-error" class="text-danger mt-1"></div> <!-- Error message div -->
     @endsection
 
     @section('lastname')
@@ -46,6 +48,7 @@
         <x-text-input id="lastname" class="form-control" type="text" name="lastname" :value="old('lastname')" required
             autofocus autocomplete="lastname" pattern="[A-Za-z\s]+" title="Only letters are allowed." />
         <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
+        <div id="lastname-error" class="text-danger mt-1"></div> <!-- Error message div -->
     @endsection
 
     <!-- Email Address -->
@@ -178,16 +181,20 @@
     function validateNameInput(event) {
         const regex = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces only
         const input = event.target.value;
+        const errorField = document.getElementById(`${event.target.id}-error`);
 
         if (!regex.test(input)) {
-            alert("Only letters are allowed.");
-            event.target.value = ''; // Optionally clear the input field
+            errorField.textContent = "Only letters are allowed."; // Display error message
+        } else {
+            errorField.textContent = ''; // Clear error message if valid
         }
     }
 
+    // Add event listeners to the fields
     document.getElementById('firstname').addEventListener('input', validateNameInput);
     document.getElementById('middlename').addEventListener('input', validateNameInput);
     document.getElementById('lastname').addEventListener('input', validateNameInput);
+
 
     document.addEventListener('DOMContentLoaded', function() {
         var password = document.getElementById('password');
