@@ -165,4 +165,61 @@ class UserController extends Controller
         }
         return redirect()->back()->with('error', 'No status provided.');
     }
+
+    public function addUser(Request $request)
+    {
+        try {
+  
+        $request->validate([
+            'firstname' => ['required', 'string', 'max:255'],
+            'middlename' => ['nullable', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required','min:8'],
+            'usertype' => ['required', 'integer'],
+        ]);
+
+        $user = User::create([
+            'firstname' => $request->firstname,
+            'middlename' => $request->middlename,
+            'lastname' => $request->lastname,
+            'email' => $request->email,
+            'email_verified_at' => '2024-08-01 09:34:57',
+            'password' => Hash::make($request->password),
+            'usertype' => $request->usertype,
+        ]);
+
+        $userId = $user->id;
+        $qrCode = QrCode::format('png')
+            ->size(200)
+            ->errorCorrection('H')
+            ->generate($userId);
+        
+        // Define the output file path
+        $output_filename = 'patient_' . $userId . '_' . time() . '.png';
+        $output_file_path = public_path('qr_image/' . $output_filename);
+        
+        // Save the QR code image to the public directory
+        File::put($output_file_path, $qrCode);
+        
+        // Update the patient record with the filename of the QR code image
+        $user->qr_name = $output_filename;
+        $user->save();
+
+
+        $user = Auth::user();
+        $action = 'added_user';
+        $description = 'Added a new user: ' . $user->firstname. ' '. $user->lastname;
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'name' => $user->firstname,
+            'action' => $action,
+            'description' => $description,
+        ]);
+        return redirect()->back()->with('success', 'User added successfully');
+    } catch (\Exception $e) {
+        // Handle the exception, you can log it or return a response
+        return redirect()->back()->with('error', 'An error occurred while adding the User');
+    }
+    }
 }

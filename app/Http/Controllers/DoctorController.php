@@ -92,6 +92,7 @@ class DoctorController extends Controller
                 'middlename' => $validatedData['middlename'],
                 'lastname' => $validatedData['lastname'],
                 'email' => $validatedData['email'],
+                'email_verified_at' => '2024-08-01 09:34:57',
                 'usertype' => 2,
                 'password' => bcrypt($validatedData['password']),
             ]);

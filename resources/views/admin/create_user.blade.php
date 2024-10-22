@@ -107,7 +107,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="multiStepForm" method="POST" action="{{ route('user.store') }}"
+                    <form id="multiStepForm" method="POST" action="{{ route('user.add') }}"
                         enctype="multipart/form-data">
                         @csrf
                         <div id="step1">
@@ -149,11 +149,11 @@
                         <div class="modal-footer">
                             <button type="reset" class="btn btn-danger">
                                 <i class="bx bx-x d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Reset</span>
+                                <span class="d-block">Reset</span>
                             </button>
                             <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
                                 <i class="bx bx-check d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Submit</span>
+                                <span class="d-block">Submit</span>
                             </button>
                         </div>
                 </div>

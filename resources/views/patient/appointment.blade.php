@@ -10,69 +10,70 @@
     <script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-
-
-
-@media (max-width: 768px) {
-        .custom-bordered-table {
-            font-size: 14px;
+        @media (max-width: 768px) {
+            .custom-bordered-table {
+                font-size: 14px;
+            }
+        
+            .table-responsive {
+                overflow-x: auto;
+            }
+        
+            th, td {
+                position: relative; /* Position cells relative for absolute children */
+                overflow: hidden; /* Prevent overflow */
+            }
+        
+            /* Style for not-available text */
+            .not-available {
+                font-weight: bold;
+                position: absolute; /* Change to absolute positioning */
+                z-index: 2; /* Ensure it stays on top */
+                top: 50%; /* Center vertically */
+                left: 50%; /* Center horizontally */
+                transform: translate(-50%, -50%); /* Move to the middle of the cell */
+                color: white; /* Text color */
+                
+                padding: 2px 5px; /* Optional: padding around the text */
+                border-radius: 3px; /* Optional: rounded corners */
+                pointer-events: none; /* Prevent mouse interactions */
+                white-space: nowrap; /* Prevent text wrapping */
+                max-width: 100%; /* Prevent overflow beyond the cell */
+                
+            }
         }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        th, td {
-            white-space: nowrap;
-        }
-    }
+        
         .red-day {
-            background-color: #ff7b7b !important;
-            /* Change background color to red */
-            color: white;
-
-            /* Change text color to white */
+            background-color: #ff7b7b !important; /* Change background color to red */
+            color: white; /* Change text color to white */
         }
-
+        
         .past-date {
-            background-color: #d3d3d3 !important;
-            /* Light grey background */
-            color: #666666;
-            /* Dark grey text color */
-            transform: scale(.9);
-            /* Shrinks the size of the cell to 80% of its original size */
-            transition: transform 0.12s ease;
-            /* Smooth transition for visual appeal */
-            opacity: 1;
-            /* Make the past date less prominent */
+            background-color: #d3d3d3 !important; /* Light grey background */
+            color: #666666; /* Dark grey text color */
+            transform: scale(.9); /* Shrinks the size of the cell to 80% of its original size */
+            transition: transform 0.12s ease; /* Smooth transition for visual appeal */
+            opacity: 1; /* Make the past date less prominent */
             pointer-events: none;
         }
-
+        
         .unclick {
-            pointer-events: none
+            pointer-events: none;
         }
-
-        .not-available {
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-
+        
         .date {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            /* Optional: Add margin for spacing */
+            margin-bottom: 10px; /* Optional: Add margin for spacing */
         }
-
+        
         /* Adjust spacing between input fields */
         .form-group input[type="date"] {
-            margin-right: 10px;
-            /* Optional: Add margin to separate the input fields */
+            margin-right: 10px; /* Optional: Add margin to separate the input fields */
         }
-    </style>
+        </style>
+        
+        
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">

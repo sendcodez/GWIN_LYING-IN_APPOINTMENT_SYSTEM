@@ -138,54 +138,48 @@
                                 </div>
                             </div>
                         </div>
-
                         <div data-row-counter="0">
-                            <table id="dataTable">
-                                <thead>
-                                    <tr>
-
-                                        <th data-type="number">No. of Pregnancy</th>
-                                        <th data-type="date">Date</th>
-                                        <th>AOG</th>
-                                        <th>Manner of Delivery</th>
-                                        <th>BW</th>
-                                        <th data-type="select">Sex</th>
-                                        <th>Present Status</th>
-                                        <th>Complications</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="first_row">
-
-                                        <td><input type="number" name="pregnancies[0][pregnancy]"
-                                                class="form-control pregnancy" /></td>
-                                        <td><input type="date" name="pregnancies[0][pregnancy_date]"
-                                                class="form-control pregnancy_date" /></td>
-                                        <td><input type="text" name="pregnancies[0][aog]" class="form-control aog" />
-                                        </td>
-                                        <td><input type="text" name="pregnancies[0][manner]"
-                                                class="form-control manner" />
-                                        </td>
-                                        <td><input type="text" name="pregnancies[0][bw]" class="form-control bw" />
-                                        </td>
-                                        <td>
-                                            <select class="form-control sex" name="pregnancies[0][sex]">
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
-                                            </select>
-                                        </td>
-                                        <td><input type="text" name="pregnancies[0][present_status]"
-                                                class="form-control present_status" /></td>
-                                        <td><input type="text" name="pregnancies[0][complications]"
-                                                class="form-control complications" />
-                                        </td>
-                                        <td><a href="javascript:void(0)" class="text-success font-18" title="Add"
-                                                id="addBtn"><i class="fa fa-plus"></i></a></td>
-                                    </tr>
+                            <!-- Wrap the table with table-responsive div -->
+                            <div class="table-responsive">
+                                <table id="dataTable" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th data-type="number">No. of Pregnancy</th>
+                                            <th data-type="date">Date</th>
+                                            <th>AOG</th>
+                                            <th>Manner of Delivery</th>
+                                            <th>BW</th>
+                                            <th data-type="select">Sex</th>
+                                            <th>Present Status</th>
+                                            <th>Complications</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="first_row">
+                                            <td><input type="number" name="pregnancies[0][pregnancy]" class="form-control pregnancy" /></td>
+                                            <td><input type="date" name="pregnancies[0][pregnancy_date]" class="form-control pregnancy_date" /></td>
+                                            <td><input type="text" name="pregnancies[0][aog]" class="form-control aog" /></td>
+                                            <td><input type="text" name="pregnancies[0][manner]" class="form-control manner" /></td>
+                                            <td><input type="text" name="pregnancies[0][bw]" class="form-control bw" /></td>
+                                            <td>
+                                                <select class="form-control sex" name="pregnancies[0][sex]">
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                </select>
+                                            </td>
+                                            <td><input type="text" name="pregnancies[0][present_status]" class="form-control present_status" /></td>
+                                            <td><input type="text" name="pregnancies[0][complications]" class="form-control complications" /></td>
+                                            <td>
+                                                <a href="javascript:void(0)" class="text-success font-18" title="Add" id="addBtn">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        </tbody>
-                        </table>
-                    </div>
+                        
       
            <br>
                 <div class="clearfix">
@@ -342,7 +336,7 @@
         <button type="reset" class="btn btn-danger">Reset</button>&nbsp
         <button type="submit" class="btn btn-primary">
             <i class="bx bx-check d-block d-sm-none"></i>
-            <span class="d-none d-sm-block">Submit</span>
+            <span class="d-block">Submit</span>
         </button>
     </div>
     </form>

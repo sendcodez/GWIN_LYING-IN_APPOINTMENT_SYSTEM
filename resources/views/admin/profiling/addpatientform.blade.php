@@ -264,7 +264,7 @@
                     <div class="col-12 d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">
                             <i class="bx bx-check d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Submit</span>
+                            <span class="d-block">Submit</span>
                         </button>&nbsp
                         <button type="reset" class="btn btn-danger">Reset</button>
                     </div>

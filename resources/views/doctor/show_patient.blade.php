@@ -67,7 +67,7 @@
                                     </ul>
                                 </div>
                                 <div class="profile-info">
-                                    <h5 class="mb-20 h5 text-green">Husband Informations</h5>
+                                    <h5 class="mb-20 h5 text-green">Spouse Informations</h5>
                                     <ul>
                                         <li>
                                             <span>Full name:</span>
@@ -114,6 +114,17 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" data-toggle="tab" href="#tasks" role="tab">Medical
                                                     History</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#pncu" role="tab">PNCU</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#laboratory"
+                                                    role="tab">Laboratory Result</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#ultrasound"
+                                                    role="tab">Ultrasound Result</a>
                                             </li>
 
                                         </ul>
@@ -209,7 +220,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                     
+
                                             <div class="tab-pane fade" id="tasks" role="tabpanel">
                                                 <div class="pd-20 profile-task-wrap">
                                                     <div class="container pd-0">
@@ -219,237 +230,404 @@
                                                                     @foreach ($patient->medicalHistories as $history)
                                                                         <tr>
                                                                             <td>Hypertension</td>
-                                                                            <td style="color: {{ $history->hypertension ? 'red' : 'blue' }}">
-                                                                                {{ $history->hypertension ? 'Yes' : 'No' }}</td>
+                                                                            <td
+                                                                                style="color: {{ $history->hypertension ? 'red' : 'blue' }}">
+                                                                                {{ $history->hypertension ? 'Yes' : 'No' }}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Heart Disease</td>
-                                                                            <td style="color: {{ $history->heartdisease ? 'red' : 'blue' }}">
-                                                                                {{ $history->heartdisease ? 'Yes' : 'No' }}</td>
+                                                                            <td
+                                                                                style="color: {{ $history->heartdisease ? 'red' : 'blue' }}">
+                                                                                {{ $history->heartdisease ? 'Yes' : 'No' }}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Asthma</td>
-                                                                            <td style="color: {{ $history->asthma ? 'red' : 'blue' }}">
+                                                                            <td
+                                                                                style="color: {{ $history->asthma ? 'red' : 'blue' }}">
                                                                                 {{ $history->asthma ? 'Yes' : 'No' }}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Tuberculosis</td>
-                                                                            <td style="color: {{ $history->tuberculosis ? 'red' : 'blue' }}">
-                                                                                {{ $history->tuberculosis ? 'Yes' : 'No' }}</td>
+                                                                            <td
+                                                                                style="color: {{ $history->tuberculosis ? 'red' : 'blue' }}">
+                                                                                {{ $history->tuberculosis ? 'Yes' : 'No' }}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Diabetes</td>
-                                                                            <td style="color: {{ $history->diabetes ? 'red' : 'blue' }}">
-                                                                                {{ $history->diabetes ? 'Yes' : 'No' }}</td>
+                                                                            <td
+                                                                                style="color: {{ $history->diabetes ? 'red' : 'blue' }}">
+                                                                                {{ $history->diabetes ? 'Yes' : 'No' }}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Goiter</td>
-                                                                            <td style="color: {{ $history->goiter ? 'red' : 'blue' }}">
+                                                                            <td
+                                                                                style="color: {{ $history->goiter ? 'red' : 'blue' }}">
                                                                                 {{ $history->goiter ? 'Yes' : 'No' }}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Epilepsy</td>
-                                                                            <td style="color: {{ $history->epilepsy ? 'red' : 'blue' }}">
-                                                                                {{ $history->epilepsy ? 'Yes' : 'No' }}</td>
+                                                                            <td
+                                                                                style="color: {{ $history->epilepsy ? 'red' : 'blue' }}">
+                                                                                {{ $history->epilepsy ? 'Yes' : 'No' }}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Allergy</td>
-                                                                            <td style="color: {{ $history->allergy ? 'red' : 'blue' }}">
+                                                                            <td
+                                                                                style="color: {{ $history->allergy ? 'red' : 'blue' }}">
                                                                                 {{ $history->allergy ? 'Yes' : 'No' }}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Hepatitis</td>
-                                                                            <td style="color: {{ $history->hepatitis ? 'red' : 'blue' }}">
-                                                                                {{ $history->hepatitis ? 'Yes' : 'No' }}</td>
+                                                                            <td
+                                                                                style="color: {{ $history->hepatitis ? 'red' : 'blue' }}">
+                                                                                {{ $history->hepatitis ? 'Yes' : 'No' }}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>VDRL</td>
-                                                                            <td style="color: {{ $history->vdrl ? 'red' : 'blue' }}">
+                                                                            <td
+                                                                                style="color: {{ $history->vdrl ? 'red' : 'blue' }}">
                                                                                 {{ $history->vdrl ? 'Yes' : 'No' }}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Bleeding</td>
-                                                                            <td style="color: {{ $history->bleeding ? 'red' : 'blue' }}">
-                                                                                {{ $history->bleeding ? 'Yes' : 'No' }}</td>
+                                                                            <td
+                                                                                style="color: {{ $history->bleeding ? 'red' : 'blue' }}">
+                                                                                {{ $history->bleeding ? 'Yes' : 'No' }}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Operation</td>
-                                                                            <td style="color: {{ $history->operation ? 'red' : 'blue' }}">
-                                                                                {{ $history->operation ? 'Yes' : 'No' }}</td>
+                                                                            <td
+                                                                                style="color: {{ $history->operation ? 'red' : 'blue' }}">
+                                                                                {{ $history->operation ? 'Yes' : 'No' }}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Others</td>
-                                                                            <td style="color: {{ $history->others !== null ? 'red' : 'blue' }}">
-                                                                                {{ $history->others !== null ? 'Yes' : 'No' }}</td>
+                                                                            <td
+                                                                                style="color: {{ $history->others !== null ? 'red' : 'blue' }}">
+                                                                                {{ $history->others !== null ? 'Yes' : 'No' }}
+                                                                            </td>
                                                                         </tr>
-                                                                    
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                        </div>
-                        
-                                            
+
+
+                                            <!-- PNCU -->
+                                            <div class="tab-pane fade " id="pncu" role="tabpanel">
+                                                <div class="pd-20">
+                                                    <table class="table table-striped table-bordered" id="pncu1">
+                                                        <thead>
+                                                            <tr class="table-info">
+                                                                <th class="">Date</th>
+                                                                <th class="">AOG</th>
+                                                                <th class="">Chief Complaint</th>
+                                                                <th style="">Blood Pressure</th>
+                                                                <th>Weight</th>
+                                                                <th>Temperature</th>
+                                                                <th>Cardiac Rate</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                @foreach ($patient->records as $record)
+                                                            <tr>
+                                                                <td class="table-plus">
+                                                                    <div class="name-avatar d-flex align-items-center">
+                                                                        <div class="txt">
+                                                                            <div class="weight-600">
+                                                                                {{ $record->date }}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td class="table-plus">
+                                                                    <div class="name-avatar d-flex align-items-center">
+                                                                        <div class="txt">
+                                                                            <div class="weight-600">
+                                                                                {{ $record->aog }} </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>{{ $record->chief }}</td>
+                                                                <td>{{ $record->blood_pressure }}</td>
+                                                                <td>{{ $record->weight }}</td>
+                                                                <td>{{ $record->temperature }}</td>
+                                                                <td>{{ $record->cardiac }}</td>
+
+                                                            </tr>
                 @endforeach
-                @else
-                @include('errors.record_not_found')
-                @endif
-                <!-- Tasks Tab End -->
-                <!-- Setting Tab start -->
-                <div class="tab-pane fade height-100-p" id="setting" role="tabpanel">
-                    <div class="profile-setting">
-                        <form>
-                            <ul class="profile-edit-list row">
-                                <li class="weight-500 col-md-6">
-                                    <h4 class="text-blue h5 mb-20">
-                                        Edit Your Personal Setting
-                                    </h4>
-                                    <div class="form-group">
-                                        <label>Full Name</label>
-                                        <input class="form-control form-control-lg" type="text" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Title</label>
-                                        <input class="form-control form-control-lg" type="text" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input class="form-control form-control-lg" type="email" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Date of birth</label>
-                                        <input class="form-control form-control-lg date-picker" type="text" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Gender</label>
-                                        <div class="d-flex">
-                                            <div class="custom-control custom-radio mb-5 mr-20">
-                                                <input type="radio" id="customRadio4" name="customRadio"
-                                                    class="custom-control-input" />
-                                                <label class="custom-control-label weight-400"
-                                                    for="customRadio4">Male</label>
-                                            </div>
-                                            <div class="custom-control custom-radio mb-5">
-                                                <input type="radio" id="customRadio5" name="customRadio"
-                                                    class="custom-control-input" />
-                                                <label class="custom-control-label weight-400"
-                                                    for="customRadio5">Female</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Country</label>
-                                        <select class="selectpicker form-control form-control-lg"
-                                            data-style="btn-outline-secondary btn-lg" title="Not Chosen">
-                                            <option>United States</option>
-                                            <option>India</option>
-                                            <option>United Kingdom</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>State/Province/Region</label>
-                                        <input class="form-control form-control-lg" type="text" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Postal Code</label>
-                                        <input class="form-control form-control-lg" type="text" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input class="form-control form-control-lg" type="text" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Address</label>
-                                        <textarea class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Visa Card Number</label>
-                                        <input class="form-control form-control-lg" type="text" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Paypal ID</label>
-                                        <input class="form-control form-control-lg" type="text" />
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox mb-5">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1-1" />
-                                            <label class="custom-control-label weight-400" for="customCheck1-1">I agree to
-                                                receive notification
-                                                emails</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <input type="submit" class="btn btn-primary" value="Update Information" />
-                                    </div>
-                                </li>
-                                <li class="weight-500 col-md-6">
-                                    <h4 class="text-blue h5 mb-20">
-                                        Edit Social Media links
-                                    </h4>
-                                    <div class="form-group">
-                                        <label>Facebook URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Twitter URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Linkedin URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Instagram URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Dribbble URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Dropbox URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Google-plus URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Pinterest URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Skype URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Vine URL:</label>
-                                        <input class="form-control form-control-lg" type="text"
-                                            placeholder="Paste your link here" />
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <input type="submit" class="btn btn-primary" value="Save & Update" />
-                                    </div>
-                                </li>
-                            </ul>
-                        </form>
-                    </div>
-                </div>
-                <!-- Setting Tab End -->
+                </tr>
+                </tbody>
+                </table>
+
+                <table class="table table-striped table-bordered" id="records2">
+                    <thead>
+                        <tr class="table-info">
+                            <th>Respiratory Rate</th>
+                            <th class="table-plus">Fundic Height</th>
+                            <th class="table-plus">FHT</th>
+                            <th style="text-align: center">IE</th>
+                            <th>Diagnosis</th>
+                            <th>Plan</th>
+                            <th>Follow Up Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $record->respiratory }}</td>
+                            <td>{{ $record->fundic }}</td>
+                            <td>{{ $record->fht }}</td>
+                            <td>{{ $record->ie }}</td>
+                            <td>{{ $record->diagnosis }}</td>
+                            <td>{{ $record->plan }}</td>
+                            <td>{{ $record->follow_up }}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+
+        <!-- ULTRASOUND -->
+
+        <div class="tab-pane fade " id="ultrasound" role="tabpanel">
+            <div class="pd-20">
+                <table class="table table-striped table-bordered" id="ultrasound">
+                    <thead>
+                        <tr class="table-info">
+                            <th class="table-plus">Date</th>
+                            <th class="table-plus">Result</th>
+                            <th style="text-align: center">Attachment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @foreach ($patient->ultrasounds as $ultra)
+                     
+
+                            <td>{{ $ultra->date }}</td>
+                            <td>{{ $ultra->result }}</td>
+                            <td style="text-align: center">
+                                <a href="{{ asset('ultrasound_image/' . $ultra->attachment) }}"
+                                    download="{{ $ultra->attachment }}">
+                                    <img src="{{ asset('ultrasound_image/' . $ultra->attachment) }}"
+                                        alt="Ultrasound Image" style="max-width: 100px;">
+                                </a>
+                            </td>
+
+                      
+                        @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- LABORATORY -->
+        <div class="tab-pane fade " id="laboratory" role="tabpanel">
+            <div class="pd-20">
+
+                <table class="table table-striped table-bordered" id="laboratory">
+                    <thead>
+                        <tr class="table-info">
+                            <th class="table-plus">Date</th>
+                            <th class="table-plus">Urinalysis</th>
+                            <th style="text-align: center">CBC</th>
+                            <th>Blood Type</th>
+                            <th>HBSAG</th>
+                            <th>VDRL</th>
+                            <th>FBS</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @foreach ($patient->laboratories as $lab)
+                     
+
+                            <td>{{ $lab->date }}</td>
+                            <td>{{ $lab->urinalysis }}</td>
+                            <td>{{ $lab->cbc }}</td>
+                            <td>{{ $lab->blood_type }}</td>
+                            <td>{{ $lab->hbsag }}</td>
+                            <td>{{ $lab->vdrl }}</td>
+                            <td>{{ $lab->fbs }}</td>
+                            @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+    @endforeach
+@else
+    @include('errors.record_not_found')
+    @endif
+    <!-- Tasks Tab End -->
+    <!-- Setting Tab start -->
+    <div class="tab-pane fade height-100-p" id="setting" role="tabpanel">
+        <div class="profile-setting">
+            <form>
+                <ul class="profile-edit-list row">
+                    <li class="weight-500 col-md-6">
+                        <h4 class="text-blue h5 mb-20">
+                            Edit Your Personal Setting
+                        </h4>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input class="form-control form-control-lg" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input class="form-control form-control-lg" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control form-control-lg" type="email" />
+                        </div>
+                        <div class="form-group">
+                            <label>Date of birth</label>
+                            <input class="form-control form-control-lg date-picker" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <div class="d-flex">
+                                <div class="custom-control custom-radio mb-5 mr-20">
+                                    <input type="radio" id="customRadio4" name="customRadio"
+                                        class="custom-control-input" />
+                                    <label class="custom-control-label weight-400" for="customRadio4">Male</label>
+                                </div>
+                                <div class="custom-control custom-radio mb-5">
+                                    <input type="radio" id="customRadio5" name="customRadio"
+                                        class="custom-control-input" />
+                                    <label class="custom-control-label weight-400" for="customRadio5">Female</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <select class="selectpicker form-control form-control-lg"
+                                data-style="btn-outline-secondary btn-lg" title="Not Chosen">
+                                <option>United States</option>
+                                <option>India</option>
+                                <option>United Kingdom</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>State/Province/Region</label>
+                            <input class="form-control form-control-lg" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label>Postal Code</label>
+                            <input class="form-control form-control-lg" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input class="form-control form-control-lg" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Visa Card Number</label>
+                            <input class="form-control form-control-lg" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label>Paypal ID</label>
+                            <input class="form-control form-control-lg" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox mb-5">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1-1" />
+                                <label class="custom-control-label weight-400" for="customCheck1-1">I agree to
+                                    receive notification
+                                    emails</label>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="submit" class="btn btn-primary" value="Update Information" />
+                        </div>
+                    </li>
+                    <li class="weight-500 col-md-6">
+                        <h4 class="text-blue h5 mb-20">
+                            Edit Social Media links
+                        </h4>
+                        <div class="form-group">
+                            <label>Facebook URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group">
+                            <label>Twitter URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group">
+                            <label>Linkedin URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group">
+                            <label>Dribbble URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group">
+                            <label>Dropbox URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group">
+                            <label>Google-plus URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group">
+                            <label>Pinterest URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group">
+                            <label>Skype URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group">
+                            <label>Vine URL:</label>
+                            <input class="form-control form-control-lg" type="text"
+                                placeholder="Paste your link here" />
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="submit" class="btn btn-primary" value="Save & Update" />
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <!-- Setting Tab End -->
+    </div>
+    </div>
     </div>
     </div>
     </div>

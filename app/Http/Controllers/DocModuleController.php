@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Medication;
 use App\Models\Patient;
+use App\Models\Record;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,7 +98,7 @@ class DocModuleController extends Controller
     public function show($userId)
     {
         // Fetch the patient with related data based on the user_id
-        $patient = Patient::with(['pregnancyTerms', 'PregnancyHistories', 'MedicalHistories'])
+        $patient = Patient::with(['pregnancyTerms', 'PregnancyHistories', 'MedicalHistories','Records'])
             ->where('user_id', $userId)
             ->first();
 

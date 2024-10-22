@@ -352,13 +352,14 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary prev">
                                         <i class="bx bx-x d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">Previous</span>
+                                        <span class="d-block">Previous</span>
                                     </button>
                                     <button type="submit" id="submitButton" class="btn btn-primary ml-1">
                                         <i class="bx bx-check d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">Submit</span>
+                                        <span class="d-block">Submit</span>
                                     </button>
                                 </div>
+                                
                             </div>
                         </form>
                     </div>

@@ -212,6 +212,7 @@ Route::middleware('auth')->group(function () {
     //USERS ROUTE
     Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
     Route::post('/create_user', [UserController::class, 'store'])->name('user.store');
+    Route::post('/add_user', [UserController::class, 'addUser'])->name('user.add');
     Route::patch('/update-user-status/{id}', [UserController::class, 'updateStatus'])->name('update-user-status');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
