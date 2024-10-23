@@ -51,6 +51,18 @@
                                 <input type="text" id="maiden" name="maiden" class="form-control" />
                                 <div id="maiden-error" class="text-danger mt-1"></div> <!-- Error message div -->
                             </div>
+                        </div> <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Maiden Name (If Married)</label>
+                                <input type="text" id="maiden" name="maiden" class="form-control" />
+                                <div id="maiden-error" class="text-danger mt-1"></div> <!-- Error message div -->
+                            </div>
+                        </div> <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Maiden Name (If Married)</label>
+                                <input type="text" id="maiden" name="maiden" class="form-control" />
+                                <div id="maiden-error" class="text-danger mt-1"></div> <!-- Error message div -->
+                            </div>
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <div class="form-group">
@@ -108,9 +120,8 @@
                         <div class="col-md-4 col-sm-12">
                             <div class="form-group">
                                 <label>Contact Number</label>
-                                <input type="text" id="contact_number" name="contact_number"
-                                    class="form-control" pattern="^09[0-9]{9}$"
-                                    title="Enter a valid mobile number starting with 09." required
+                                <input type="text" id="contact_number" name="contact_number" class="form-control"
+                                    pattern="^09[0-9]{9}$" title="Enter a valid mobile number starting with 09." required
                                     maxlength="11" oninput="validateContactNumber(event)" />
                                 <span id="error-message-2" style="color: red; display: none;"></span>
                                 <!-- Error message placeholder -->
@@ -225,11 +236,10 @@
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label style="font-weight:100">Contact Number</label>
-                                    <input type="text" id="husband_contact_number"
-                                        name="husband_contact_number" class="form-control"
-                                        pattern="^09[0-9]{9}$"
-                                        title="Enter a valid mobile number starting with 09."
-                                        maxlength="11" oninput="validateContactNumber(event)" />
+                                    <input type="text" id="husband_contact_number" name="husband_contact_number"
+                                        class="form-control" pattern="^09[0-9]{9}$"
+                                        title="Enter a valid mobile number starting with 09." maxlength="11"
+                                        oninput="validateContactNumber(event)" />
                                     <span id="error-message" style="color: red; display: none;"></span>
                                     <!-- Error message placeholder -->
                                 </div>
@@ -342,68 +352,26 @@
             }
         };
 
-        function validateNameInput(event) {
-            const regex = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces only
-            const input = event.target.value;
-            const errorField = document.getElementById(`${event.target.id}-error`);
-
-            if (!regex.test(input)) {
-                errorField.textContent = "Only letters are allowed."; // Display error message
-            } else {
-                errorField.textContent = ''; // Clear error message if valid
-            }
-        }
 
         function validateNameInput(event) {
             const regex = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces only
             const input = event.target.value;
             const errorField = document.getElementById(`${event.target.id}-error`);
 
-            if (!regex.test(input)) {
-                errorField.textContent = "Only letters are allowed."; // Display error message
-                event.target.classList.add('is-invalid'); // Optional: Add a class for styling
+            if (input === "") {
+                // If input is empty, do not show an error (skip validation)
+                errorField.textContent = '';
+                event.target.classList.remove('is-invalid');
+            } else if (!regex.test(input)) {
+                // If input is not empty and doesn't match regex, show error
+                errorField.textContent = "Only letters are allowed.";
+                event.target.classList.add('is-invalid');
             } else {
-                errorField.textContent = ''; // Clear error message if valid
-                event.target.classList.remove('is-invalid'); // Optional: Remove the invalid class
+                // Input is valid, clear the error message
+                errorField.textContent = '';
+                event.target.classList.remove('is-invalid');
             }
         }
-
-        // Validate form on submission
-        document.getElementById('myForm').addEventListener('submit', function(event) {
-            let isValid = true; // Flag to track form validity
-
-            // List of input fields to validate
-            const inputs = [
-                document.getElementById('firstname'),
-                document.getElementById('middlename'),
-                document.getElementById('lastname'),
-                document.getElementById('maiden'),
-                document.getElementById('husband_firstname'),
-                document.getElementById('husband_middlename'),
-                document.getElementById('husband_lastname')
-            ];
-
-            // Validate each input
-            inputs.forEach(function(input) {
-                const regex = /^[A-Za-z\s]+$/;
-                const inputVal = input.value;
-                const errorField = document.getElementById(`${input.id}-error`);
-
-                if (!regex.test(inputVal)) {
-                    errorField.textContent = "Only letters are allowed."; // Display error message
-                    input.classList.add('is-invalid'); // Add invalid class for styling
-                    isValid = false; // Mark form as invalid
-                } else {
-                    errorField.textContent = ''; // Clear error message if valid
-                    input.classList.remove('is-invalid'); // Remove invalid class
-                }
-            });
-
-            // If any input is invalid, prevent form submission
-            if (!isValid) {
-                event.preventDefault(); // Stop form from submitting
-            }
-        });
 
         // Add event listeners for real-time validation
         document.getElementById('firstname').addEventListener('input', validateNameInput);

@@ -27,6 +27,7 @@
     <!-- Bootstrap JS (requires Popper.js for the dropdowns and collapse toggler) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
     <title>Register</title>
 </head>
 <style>
@@ -127,9 +128,9 @@
                                 <div class="row">
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-group">
-                                            <label style="font-weight:100">Maiden Name (If Married)</label>
-                                            <input type="text" name="maiden" pattern="[A-Za-z\s]+"
-                                                title="Only letters are allowed." class="form-control" />
+                                            <label>Maiden Name (If Married)</label>
+                                            <input type="text" id="maiden" name="maiden" class="form-control" />
+                                            <div id="maiden-error" class="text-danger mt-1"></div> <!-- Error message div -->
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
@@ -238,25 +239,29 @@
                                     <div class="row">
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label style="font-weight:100">First Name</label>
-                                                <input type="text" name="husband_firstname" pattern="[A-Za-z\s]+"
-                                                    title="Only letters are allowed." class="form-control" />
+                                                <label style="font-weight:100">Husband's First Name</label>
+                                                <input type="text" id="husband_firstname" name="husband_firstname"
+                                                    class="form-control" />
+                                                <div id="husband_firstname-error" class="text-danger mt-1"></div>
+                                                <!-- Error message div -->
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label style="font-weight:100">Middle Name</label>
-                                                <input type="text" pattern="[A-Za-z\s]+"
-                                                    title="Only letters are allowed." name="husband_middlename"
+                                                <label style="font-weight:100">Husband's Middle Name</label>
+                                                <input type="text" id="husband_middlename" name="husband_middlename"
                                                     class="form-control" />
+                                                <div id="husband_middlename-error" class="text-danger mt-1"></div>
+                                                <!-- Error message div -->
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label style="font-weight:100">Last Name</label>
-                                                <input type="text" pattern="[A-Za-z\s]+"
-                                                    title="Only letters are allowed." name="husband_lastname"
+                                                <label style="font-weight:100">Husband's Last Name</label>
+                                                <input type="text" id="husband_lastname" name="husband_lastname"
                                                     class="form-control" />
+                                                <div id="husband_lastname-error" class="text-danger mt-1"></div>
+                                                <!-- Error message div -->
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
@@ -347,7 +352,17 @@
                 integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
             </script>
             <script src="js/my-login.js"></script>
+            @if (session('success'))
+                <script>
+                    toastr.success('{{ session('success') }}');
+                </script>
+            @endif
 
+            @if (session('error'))
+                <script>
+                    toastr.error('{{ session('error') }}');
+                </script>
+            @endif
             <script>
                 document.getElementById('spouseDropdown').addEventListener('change', function() {
                     var spouseInfoDiv = document.getElementById('spouseInfo');
@@ -374,19 +389,27 @@
                     const input = event.target.value;
                     const errorField = document.getElementById(`${event.target.id}-error`);
 
-                    if (!regex.test(input)) {
-                        errorField.textContent = "Only letters are allowed."; // Display error message
+                    if (input === "") {
+                        // If input is empty, do not show an error (skip validation)
+                        errorField.textContent = '';
+                        event.target.classList.remove('is-invalid');
+                    } else if (!regex.test(input)) {
+                        // If input is not empty and doesn't match regex, show error
+                        errorField.textContent = "Only letters are allowed.";
+                        event.target.classList.add('is-invalid');
                     } else {
-                        errorField.textContent = ''; // Clear error message if valid
+                        // Input is valid, clear the error message
+                        errorField.textContent = '';
+                        event.target.classList.remove('is-invalid');
                     }
                 }
 
-                // Add event listeners to the fields
+                // Add event listeners for real-time validation
                 document.getElementById('firstname').addEventListener('input', validateNameInput);
                 document.getElementById('middlename').addEventListener('input', validateNameInput);
                 document.getElementById('lastname').addEventListener('input', validateNameInput);
                 document.getElementById('maiden').addEventListener('input', validateNameInput);
-                document.getElementById('husband_firstame').addEventListener('input', validateNameInput);
+                document.getElementById('husband_firstname').addEventListener('input', validateNameInput);
                 document.getElementById('husband_middlename').addEventListener('input', validateNameInput);
                 document.getElementById('husband_lastname').addEventListener('input', validateNameInput);
 

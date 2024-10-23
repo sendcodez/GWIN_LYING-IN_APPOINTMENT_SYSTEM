@@ -194,6 +194,7 @@
     document.getElementById('firstname').addEventListener('input', validateNameInput);
     document.getElementById('middlename').addEventListener('input', validateNameInput);
     document.getElementById('lastname').addEventListener('input', validateNameInput);
+    
 
 
     document.addEventListener('DOMContentLoaded', function() {
