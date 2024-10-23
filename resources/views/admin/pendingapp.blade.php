@@ -1,6 +1,21 @@
 @extends('layouts.sidebar')
 @section('title', 'Pending Appointments')
 @section('contents')
+    <style>
+        .modal {
+            z-index: 1050 !important;
+            /* Ensure modal is above other content */
+        }
+
+        .modal-backdrop {
+            z-index: 1040 !important;
+            /* Ensure backdrop is below the modal */
+        }
+
+        .modal-content {
+            pointer-events: auto;
+        }
+    </style>
     <div class="main-container">
         <div class="pd-ltr-20">
             <div class="card-box mb-30">
@@ -12,17 +27,17 @@
                     <table class="data-table table nowrap" id="appointmentsTable">
                         <thead>
                             <tr>
-                             <!--   <th>#</th>-->
-                             <th>DATE</th>
+                                <!--   <th>#</th>-->
+                                <th>DATE</th>
                                 <th>PATIENT NAME</th>
                                 <th>DOCTOR NAME</th>
                                 <th>SERVICE</th>
-                               
+
                                 <th>TIME</th>
                                 <th>DAY</th>
-                             <!--    <th class="text-center">MODE OF APPOINTMENT</th> -->
+                                <!--    <th class="text-center">MODE OF APPOINTMENT</th> -->
                                 <th>STATUS</th>
-                              
+
                                 <th>ACTION</th>
 
                             </tr>
@@ -30,8 +45,8 @@
                         <tbody>
                             @foreach ($appointments as $key => $appointment)
                                 <tr>
-                                <!--    <td>{{ $key + 1 }}</td> -->
-                                <td>{{ $appointment->date }}</td>
+                                    <!--    <td>{{ $key + 1 }}</td> -->
+                                    <td>{{ $appointment->date }}</td>
                                     <td>{{ ucfirst($appointment->patient->firstname) }}
                                         {{ ucfirst($appointment->patient->lastname) }}</td>
                                     <td>
@@ -53,7 +68,7 @@
                                         @endif
                                     </td>
 
-                                  
+
                                     <td>
                                         @if ($appointment->start_time)
                                             {{ date('h:i A', strtotime($appointment->start_time)) }}
@@ -63,7 +78,7 @@
                                     </td>
 
                                     <td>{{ $appointment->day }}</td>
-                                  <!--   <td class="text-center">{{ $appointment->remarks }}</td> -->
+                                    <!--   <td class="text-center">{{ $appointment->remarks }}</td> -->
                                     <td>
                                         @php
                                             $statusWord = '';
@@ -97,7 +112,7 @@
                                         @endphp
                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                     </td>
-                                    
+
                                     <td>
                                         <div class="dropdown">
                                             <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -220,7 +235,7 @@
     </div>
     <!-- Modal for approving appointment -->
     <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="approveModalLabel">Set Appointment Time</h5>
@@ -234,13 +249,13 @@
                         <input type="hidden" name="doctor_id" id="doctor_id">
                         <div class="mb-3">
                             <label for="start_time" class="form-label">Start Time</label>
-                            <select class="form-control" id="start_time" name="start_time" required>
+                            <select class="form-control form-control-sm" id="start_time" name="start_time" required>
                                 <!-- Options will be dynamically loaded based on selected doctor -->
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="end_time" class="form-label">End Time</label>
-                            <select class="form-control" id="end_time" name="end_time" required>
+                            <select class="form-control form-control-sm" id="end_time" name="end_time" required>
                                 <!-- Options will be dynamically loaded based on selected doctor -->
                             </select>
                         </div>
@@ -288,202 +303,216 @@
                 const appointmentId = this.getAttribute('data-appointment-id');
                 const form = document.getElementById('approveForm');
                 const actionUrl =
-                `/appointments/${appointmentId}/approve`; // Adjust this URL to match your route
+                    `/appointments/${appointmentId}/approve`; // Adjust this URL to match your route
                 form.action = actionUrl;
                 document.getElementById('appointment_id').value = appointmentId;
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() { 
-    document.querySelectorAll('.dropdown-item[data-bs-toggle="modal"]').forEach(button => {
-        button.addEventListener('click', function() {
-            const appointmentId = this.getAttribute('data-appointment-id');
-            const doctorId = this.getAttribute('data-doctor-id');
-            const selectedDate = this.getAttribute('data-date');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.dropdown-item[data-bs-toggle="modal"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const appointmentId = this.getAttribute('data-appointment-id');
+                    const doctorId = this.getAttribute('data-doctor-id');
+                    const selectedDate = this.getAttribute('data-date');
 
-            const form = document.getElementById('approveForm');
-            const actionUrl = `/appointments/${appointmentId}/approve`; // Adjust this URL to match your route
-            form.action = actionUrl;
-            document.getElementById('appointment_id').value = appointmentId;
-            document.getElementById('doctor_id').value = doctorId;
+                    const form = document.getElementById('approveForm');
+                    const actionUrl =
+                    `/appointments/${appointmentId}/approve`; // Adjust this URL to match your route
+                    form.action = actionUrl;
+                    document.getElementById('appointment_id').value = appointmentId;
+                    document.getElementById('doctor_id').value = doctorId;
 
-            // Update available times based on selected doctor and date
-            const availabilities = @json($groupedAvailabilities); // Pass availabilities as JSON
-            const existingAppointments = @json($existingAppointments); // Pass existing appointments as JSON
+                    // Update available times based on selected doctor and date
+                    const availabilities =
+                    @json($groupedAvailabilities); // Pass availabilities as JSON
+                    const existingAppointments =
+                    @json($existingAppointments); // Pass existing appointments as JSON
 
-            const startTimeSelect = document.getElementById('start_time');
-            const endTimeSelect = document.getElementById('end_time');
-            
-            // Clear previous selections and reset values
-            startTimeSelect.innerHTML = ''; 
-            endTimeSelect.innerHTML = ''; 
-            startTimeSelect.value = ''; 
-            endTimeSelect.value = ''; 
+                    const startTimeSelect = document.getElementById('start_time');
+                    const endTimeSelect = document.getElementById('end_time');
 
-            // Remove old event listeners from start time dropdown
-            let newStartTimeSelect = startTimeSelect.cloneNode(true);
-            startTimeSelect.parentNode.replaceChild(newStartTimeSelect, startTimeSelect);
+                    // Clear previous selections and reset values
+                    startTimeSelect.innerHTML = '';
+                    endTimeSelect.innerHTML = '';
+                    startTimeSelect.value = '';
+                    endTimeSelect.value = '';
 
-            // Convert selected date to day name
-            const dayName = new Date(selectedDate).toLocaleDateString('en-US', {
-                weekday: 'long'
-            }).toLowerCase();
+                    // Remove old event listeners from start time dropdown
+                    let newStartTimeSelect = startTimeSelect.cloneNode(true);
+                    startTimeSelect.parentNode.replaceChild(newStartTimeSelect, startTimeSelect);
 
-            const doctorAvailabilities = availabilities[doctorId];
-            const doctorAppointments = existingAppointments[doctorId] || [];
+                    // Convert selected date to day name
+                    const dayName = new Date(selectedDate).toLocaleDateString('en-US', {
+                        weekday: 'long'
+                    }).toLowerCase();
 
-            const bookedSlots = doctorAppointments.map(app => ({
-                start: new Date(`1970-01-01T${app.start_time}`),
-                end: new Date(`1970-01-01T${app.end_time}`)
-            }));
+                    const doctorAvailabilities = availabilities[doctorId];
+                    const doctorAppointments = existingAppointments[doctorId] || [];
 
-            if (doctorAvailabilities && doctorAvailabilities[dayName]) {
-                const timesForDay = doctorAvailabilities[dayName];
-                const timeSlots = [];
+                    const bookedSlots = doctorAppointments.map(app => ({
+                        start: new Date(`1970-01-01T${app.start_time}`),
+                        end: new Date(`1970-01-01T${app.end_time}`)
+                    }));
 
-                timesForDay.forEach(avail => {
-                    const startTime = new Date(`1970-01-01T${avail.start_time}`);
-                    const endTime = new Date(`1970-01-01T${avail.end_time}`);
+                    if (doctorAvailabilities && doctorAvailabilities[dayName]) {
+                        const timesForDay = doctorAvailabilities[dayName];
+                        const timeSlots = [];
 
-                    // Generate 30-minute intervals
-                    for (let time = startTime; time < endTime; time.setMinutes(time.getMinutes() + 30)) {
-                        const isBooked = bookedSlots.some(slot => time >= slot.start && time < slot.end);
-                        if (!isBooked) {
-                            timeSlots.push(new Date(time));
-                        }
-                    }
-                });
+                        timesForDay.forEach(avail => {
+                            const startTime = new Date(`1970-01-01T${avail.start_time}`);
+                            const endTime = new Date(`1970-01-01T${avail.end_time}`);
 
-                timeSlots.forEach(slot => {
-                    const option = document.createElement('option');
-                    option.value = slot.toTimeString().slice(0, 5);
-                    option.textContent = slot.toTimeString().slice(0, 5);
-                    newStartTimeSelect.appendChild(option);
-                });
+                            // Generate 30-minute intervals
+                            for (let time = startTime; time < endTime; time.setMinutes(time
+                                    .getMinutes() + 30)) {
+                                const isBooked = bookedSlots.some(slot => time >= slot
+                                    .start && time < slot.end);
+                                if (!isBooked) {
+                                    timeSlots.push(new Date(time));
+                                }
+                            }
+                        });
 
-                // Add change event listener to start time dropdown
-                newStartTimeSelect.addEventListener('change', function() {
-                    endTimeSelect.innerHTML = ''; // Clear end time dropdown
-                    const selectedStartTime = new Date(`1970-01-01T${this.value}:00`);
-                    timeSlots.forEach(slot => {
-                        if (slot > selectedStartTime) {
+                        timeSlots.forEach(slot => {
                             const option = document.createElement('option');
                             option.value = slot.toTimeString().slice(0, 5);
                             option.textContent = slot.toTimeString().slice(0, 5);
-                            endTimeSelect.appendChild(option);
-                        }
-                    });
+                            newStartTimeSelect.appendChild(option);
+                        });
+
+                        // Add change event listener to start time dropdown
+                        newStartTimeSelect.addEventListener('change', function() {
+                            endTimeSelect.innerHTML = ''; // Clear end time dropdown
+                            const selectedStartTime = new Date(
+                                `1970-01-01T${this.value}:00`);
+                            timeSlots.forEach(slot => {
+                                if (slot > selectedStartTime) {
+                                    const option = document.createElement('option');
+                                    option.value = slot.toTimeString().slice(0, 5);
+                                    option.textContent = slot.toTimeString().slice(
+                                        0, 5);
+                                    endTimeSelect.appendChild(option);
+                                }
+                            });
+                        });
+                    } else {
+                        const option = document.createElement('option');
+                        option.textContent = 'No available times';
+                        newStartTimeSelect.appendChild(option);
+                    }
                 });
-            } else {
-                const option = document.createElement('option');
-                option.textContent = 'No available times';
-                newStartTimeSelect.appendChild(option);
-            }
-        });
-    });
-});
-document.addEventListener('DOMContentLoaded', function() {
-    // Attach click event listeners to all buttons that trigger the modal
-    document.querySelectorAll('.dropdown-item[data-bs-toggle="modal"]').forEach(button => {
-        button.addEventListener('click', function() {
-            // Get relevant data from the clicked button
-            const appointmentId = this.getAttribute('data-appointment-id');
-            const doctorId = this.getAttribute('data-doctor-id');
-            const selectedDate = this.getAttribute('data-date');
-
-            const form = document.getElementById('approveForm');
-            const actionUrl = `/appointments/${appointmentId}/approve`; // Adjust this URL to match your route
-            form.action = actionUrl;
-            document.getElementById('appointment_id').value = appointmentId;
-            document.getElementById('doctor_id').value = doctorId;
-
-            // Update available times based on selected doctor and date
-            const availabilities = @json($groupedAvailabilities); // Pass availabilities as JSON from backend
-            const existingAppointments = @json($existingAppointments); // Pass existing appointments as JSON from backend
-
-            const startTimeSelect = document.getElementById('start_time');
-            const endTimeSelect = document.getElementById('end_time');
-            
-            // Clear previous selections and reset values completely
-            startTimeSelect.innerHTML = ''; 
-            endTimeSelect.innerHTML = ''; 
-            startTimeSelect.value = ''; 
-            endTimeSelect.value = '';
-
-            // Remove all event listeners from the start_time dropdown to avoid duplicates
-            let newStartTimeSelect = startTimeSelect.cloneNode(true);
-            startTimeSelect.parentNode.replaceChild(newStartTimeSelect, startTimeSelect);
-
-            // Convert selected date to day name (e.g., 'Monday')
-            const dayName = new Date(selectedDate).toLocaleDateString('en-US', {
-                weekday: 'long'
-            }).toLowerCase();
-
-            // Get the availabilities for the doctor on the selected day
-            const doctorAvailabilities = availabilities[doctorId] || {};
-            const doctorAppointments = existingAppointments[doctorId] || [];
-
-            // Filter appointments for the selected date only
-            const appointmentsForDay = doctorAppointments.filter(app => {
-                const appDate = new Date(app.date).toDateString(); // Assumes app.date holds the appointment date
-                return appDate === new Date(selectedDate).toDateString();
             });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attach click event listeners to all buttons that trigger the modal
+            document.querySelectorAll('.dropdown-item[data-bs-toggle="modal"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get relevant data from the clicked button
+                    const appointmentId = this.getAttribute('data-appointment-id');
+                    const doctorId = this.getAttribute('data-doctor-id');
+                    const selectedDate = this.getAttribute('data-date');
 
-            // Map the booked slots for the selected day
-            const bookedSlots = appointmentsForDay.map(app => ({
-                start: new Date(`1970-01-01T${app.start_time}`),
-                end: new Date(`1970-01-01T${app.end_time}`)
-            }));
+                    const form = document.getElementById('approveForm');
+                    const actionUrl =
+                    `/appointments/${appointmentId}/approve`; // Adjust this URL to match your route
+                    form.action = actionUrl;
+                    document.getElementById('appointment_id').value = appointmentId;
+                    document.getElementById('doctor_id').value = doctorId;
 
-            if (doctorAvailabilities[dayName]) {
-                const timesForDay = doctorAvailabilities[dayName];
-                const availableSlots = [];
+                    // Update available times based on selected doctor and date
+                    const availabilities =
+                    @json($groupedAvailabilities); // Pass availabilities as JSON from backend
+                    const existingAppointments =
+                    @json($existingAppointments); // Pass existing appointments as JSON from backend
 
-                // Generate 30-minute intervals and check for booked slots for the selected date
-                timesForDay.forEach(avail => {
-                    const startTime = new Date(`1970-01-01T${avail.start_time}`);
-                    const endTime = new Date(`1970-01-01T${avail.end_time}`);
+                    const startTimeSelect = document.getElementById('start_time');
+                    const endTimeSelect = document.getElementById('end_time');
 
-                    for (let time = new Date(startTime); time < endTime; time.setMinutes(time.getMinutes() + 30)) {
-                        const isBooked = bookedSlots.some(slot => time >= slot.start && time < slot.end);
-                        if (!isBooked) {
-                            availableSlots.push(new Date(time));
-                        }
-                    }
-                });
+                    // Clear previous selections and reset values completely
+                    startTimeSelect.innerHTML = '';
+                    endTimeSelect.innerHTML = '';
+                    startTimeSelect.value = '';
+                    endTimeSelect.value = '';
 
-                // Populate start time dropdown with available slots
-                availableSlots.forEach(slot => {
-                    const option = document.createElement('option');
-                    option.value = slot.toTimeString().slice(0, 5);
-                    option.textContent = slot.toTimeString().slice(0, 5);
-                    newStartTimeSelect.appendChild(option);
-                });
+                    // Remove all event listeners from the start_time dropdown to avoid duplicates
+                    let newStartTimeSelect = startTimeSelect.cloneNode(true);
+                    startTimeSelect.parentNode.replaceChild(newStartTimeSelect, startTimeSelect);
 
-                // Add event listener to update end time when a start time is selected
-                newStartTimeSelect.addEventListener('change', function() {
-                    endTimeSelect.innerHTML = ''; // Clear the end time dropdown
-                    const selectedStartTime = new Date(`1970-01-01T${this.value}:00`);
-                    
-                    // Populate end time dropdown with slots after the selected start time
-                    availableSlots.forEach(slot => {
-                        if (slot > selectedStartTime) {
+                    // Convert selected date to day name (e.g., 'Monday')
+                    const dayName = new Date(selectedDate).toLocaleDateString('en-US', {
+                        weekday: 'long'
+                    }).toLowerCase();
+
+                    // Get the availabilities for the doctor on the selected day
+                    const doctorAvailabilities = availabilities[doctorId] || {};
+                    const doctorAppointments = existingAppointments[doctorId] || [];
+
+                    // Filter appointments for the selected date only
+                    const appointmentsForDay = doctorAppointments.filter(app => {
+                        const appDate = new Date(app.date)
+                    .toDateString(); // Assumes app.date holds the appointment date
+                        return appDate === new Date(selectedDate).toDateString();
+                    });
+
+                    // Map the booked slots for the selected day
+                    const bookedSlots = appointmentsForDay.map(app => ({
+                        start: new Date(`1970-01-01T${app.start_time}`),
+                        end: new Date(`1970-01-01T${app.end_time}`)
+                    }));
+
+                    if (doctorAvailabilities[dayName]) {
+                        const timesForDay = doctorAvailabilities[dayName];
+                        const availableSlots = [];
+
+                        // Generate 30-minute intervals and check for booked slots for the selected date
+                        timesForDay.forEach(avail => {
+                            const startTime = new Date(`1970-01-01T${avail.start_time}`);
+                            const endTime = new Date(`1970-01-01T${avail.end_time}`);
+
+                            for (let time = new Date(startTime); time < endTime; time
+                                .setMinutes(time.getMinutes() + 30)) {
+                                const isBooked = bookedSlots.some(slot => time >= slot
+                                    .start && time < slot.end);
+                                if (!isBooked) {
+                                    availableSlots.push(new Date(time));
+                                }
+                            }
+                        });
+
+                        // Populate start time dropdown with available slots
+                        availableSlots.forEach(slot => {
                             const option = document.createElement('option');
                             option.value = slot.toTimeString().slice(0, 5);
                             option.textContent = slot.toTimeString().slice(0, 5);
-                            endTimeSelect.appendChild(option);
-                        }
-                    });
-                });
-            } else {
-                // If no availabilities, display "No available times"
-                const option = document.createElement('option');
-                option.textContent = 'No available times';
-                newStartTimeSelect.appendChild(option);
-            }
-        });
-    });
-});
+                            newStartTimeSelect.appendChild(option);
+                        });
 
+                        // Add event listener to update end time when a start time is selected
+                        newStartTimeSelect.addEventListener('change', function() {
+                            endTimeSelect.innerHTML = ''; // Clear the end time dropdown
+                            const selectedStartTime = new Date(
+                                `1970-01-01T${this.value}:00`);
+
+                            // Populate end time dropdown with slots after the selected start time
+                            availableSlots.forEach(slot => {
+                                if (slot > selectedStartTime) {
+                                    const option = document.createElement('option');
+                                    option.value = slot.toTimeString().slice(0, 5);
+                                    option.textContent = slot.toTimeString().slice(
+                                        0, 5);
+                                    endTimeSelect.appendChild(option);
+                                }
+                            });
+                        });
+                    } else {
+                        // If no availabilities, display "No available times"
+                        const option = document.createElement('option');
+                        option.textContent = 'No available times';
+                        newStartTimeSelect.appendChild(option);
+                    }
+                });
+            });
+        });
     </script>
 @endsection
