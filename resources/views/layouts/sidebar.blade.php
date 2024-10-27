@@ -305,7 +305,7 @@
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="#">
+            <a href="{{ route('admin.home') }}">
                 <img src="{{ asset('img/gwinlogo.png') }}" alt="GWIN Lying-in Logo" class="gwin">
                 <h1 style="color:#4CAF50">GWIN</h1>
             </a>

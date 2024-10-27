@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () {
     //CALENDAR ROUTE
 
     Route::get('/calendar', [CalendarController::class, 'showCalendar'])->name('admin.calendar');
+
     Route::post('/walkin-appointments/store', [CalendarController::class, 'store'])->name('calendar.store');
 
 

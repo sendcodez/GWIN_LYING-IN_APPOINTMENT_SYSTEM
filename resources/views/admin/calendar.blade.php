@@ -10,13 +10,60 @@
     <script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-        .red-day, .rest-day {
+        @media (max-width: 768px) {
+            .custom-bordered-table {
+                font-size: 14px;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+            }
+
+            th,
+            td {
+                position: relative;
+                /* Position cells relative for absolute children */
+                overflow: hidden;
+                /* Prevent overflow */
+            }
+
+            /* Style for not-available text */
+            .not-available {
+                font-weight: bold;
+                position: absolute;
+                /* Change to absolute positioning */
+                z-index: 2;
+                /* Ensure it stays on top */
+                top: 50%;
+                /* Center vertically */
+                left: 50%;
+                /* Center horizontally */
+                transform: translate(-50%, -50%);
+                /* Move to the middle of the cell */
+                color: white;
+                /* Text color */
+
+                padding: 2px 5px;
+                /* Optional: padding around the text */
+                border-radius: 3px;
+                /* Optional: rounded corners */
+                pointer-events: none;
+                /* Prevent mouse interactions */
+                white-space: nowrap;
+                /* Prevent text wrapping */
+                max-width: 100%;
+                /* Prevent overflow beyond the cell */
+
+            }
+        }
+
+        .red-day {
             background-color: #ff7b7b !important;
             /* Change background color to red */
             color: white;
-
             /* Change text color to white */
         }
+
         .past-date {
             background-color: #d3d3d3 !important;
             /* Light grey background */
@@ -32,15 +79,7 @@
         }
 
         .unclick {
-            pointer-events: none
-        }
-
-        .not-available {
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
+            pointer-events: none;
         }
 
         .date {
@@ -56,103 +95,94 @@
             /* Optional: Add margin to separate the input fields */
         }
     </style>
+
+
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
+
                 <div class="pd-20 card-box mb-30">
                     <div class="row">
                         <!-- Calendar Section -->
-                        <div class="calendar-wrap col-md-6 col-sm-6">
-                            <p>Please Click the Calendar Cell to Book an Appointment</p>
+                        <div class="calendar-wrap col-md-6 col-sm-6 custom-bordered-table">
+
                             <div id="calendar"></div>
                         </div>
                         <!-- Table Section -->
+
                         <div class="table-wrap col-md-6 col-sm-6">
+
                             <div class="table-responsive">
-                            <table class="table table-striped custom-bordered-table">
-                                <thead>
-                                    <center>
-                                        <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
-                                    </center>
-                                    <select id="serviceFilter" onchange="filterTable()" class="form-control">
-                                        <option value="all">All Services</option>
-                                        @foreach ($services as $service)
-                                            <option value="{{ $service->name }}">{{ $service->name }}</option>
-                                        @endforeach
-                                    </select>
+                                <table class="table table-striped custom-bordered-table">
+                                    <thead>
+                                        <center>
+                                            <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
+                                        </center>
+                                        <select id="serviceFilter" onchange="filterTable()" class="form-control mb-3">
+                                            <option value="all">All</option>
+                                            @foreach ($doctors as $doctor)
+                                                @php
+                                                    $service = $doctor->services->first()->name; // Assuming each doctor has only one service
+                                                @endphp
+                                                <option value="{{ $doctor->lastname }} ({{ $service }})">
+                                                    Dr. {{ $doctor->lastname }} | Service Offered: {{ $service }}
+                                                </option>
+                                            @endforeach
+                                        </select>
 
-                                    <tr>
-                                        <th>NAME</th>
-                                        <th>SERVICE</th>
-                                        <th>DAY AVAILABILITY</th>
-                                        <th>TIME AVAILABILITY</th>
-                                        <th class="text-center">REST DAY</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="doctorScheduleTable">
-                                    @foreach ($doctorAvailabilities as $availability)
-                                        <tr
-                                            data-services="@if ($availability->doctor) @foreach ($availability->doctor->services as $service)
-                                            {{ $service->name }}@if (!$loop->last), @endif
-                                        @endforeach
-                                    @endif">
-
-                                            <td>
-                                                @if ($availability->doctor)
-                                                    {{ $availability->doctor->firstname }}
-                                                    {{ $availability->doctor->lastname }}
-                                                @else
-                                                    Doctor not found
-                                                @endif
-                                            </td>
-
-                                            <td>
-                                                @if ($availability->doctor)
-                                                    @foreach ($availability->doctor->services as $service)
-                                                        {{ $service->name }}
-                                                        @if (!$loop->last),
-                                                        @endif
-                                                    @endforeach
-                                                @else
-                                                    No services available
-                                                @endif
-                                            </td>
-
-                                            <td>{{ ucfirst($availability->day) }}</td>
-
-                                            <td>
-                                                {{ date('h:i A', strtotime($availability->start_time)) }} -
-                                                {{ date('h:i A', strtotime($availability->end_time)) }}
-                                            </td>
-
-
-                                            <td class="rest-day">
-                                                @if ($availability->doctor)
-                                                    @php
-                                                        $doctorRestDays = $rd
-                                                            ->where('doctor_id', $availability->doctor->id)
-                                                            ->pluck('rest_day');
-                                                    @endphp
-                                                    @if ($doctorRestDays->isEmpty())
-                                                        No rest days
-                                                    @else
-                                                        @foreach ($doctorRestDays as $restDay)
-                                                            {{ $restDay->format('M d, Y') }}
-                                                            @if (!$loop->last), @endif
-                                                        @endforeach
-                                                    @endif
-                                                @else
-                                                    No rest days available
-                                                @endif
-                                            </td>
-
+                                        <tr>
+                                            <th>DAY AVAILABILITY</th>
+                                            <th>TIME AVAILABILITY</th>
+                                            <th class="text-center">REST DAY</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody id="doctorScheduleTable">
+                                        @foreach ($doctorAvailabilities as $availability)
+                                            @php
+                                                $doctor = $availability->doctor;
+                                                $service = $doctor ? $doctor->services->first()->name : 'No service'; // Single service per doctor
+                                            @endphp
+                                            <tr data-filter="Dr. {{ $doctor->lastname }} ({{ $service }})">
+                                                <td>{{ ucfirst($availability->day) }}</td>
+                                                <td>
+                                                    {{ date('h:i A', strtotime($availability->start_time)) }} -
+                                                    {{ date('h:i A', strtotime($availability->end_time)) }}
+                                                </td>
+
+                                                <td class="rest-day">
+                                                    @if ($doctor)
+                                                        @php
+                                                            $doctorRestDays = $rd
+                                                                ->where('doctor_id', $doctor->id)
+                                                                ->pluck('rest_day');
+                                                        @endphp
+                                                        @if ($doctorRestDays->isEmpty())
+                                                            No rest days
+                                                        @else
+                                                            @foreach ($doctorRestDays as $restDay)
+                                                                {{ $restDay->format('M d, Y') }}
+                                                                @if (!$loop->last)
+                                                                    ,
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    @else
+                                                        No rest days available
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+                            <br>
+                            <hr>
+                            <vr>
 
                         </div>
-                    </div>
                     </div>
 
                     <!-- calendar modal -->
@@ -181,7 +211,7 @@
                     <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                                <form id="add-event" action="{{ route('appointments.store') }}" method="POST">
+                                <form id="add-event" action="{{ route('calendar.store') }}" method="POST">
                                     @csrf
                                     <div class="modal-body">
                                         <h4 class="text-blue h4 mb-10">Add Appointment Detail</h4>
@@ -195,29 +225,35 @@
                                                 value="" readonly />
                                         </div>
                                         <div class="form-group">
-                                            <label>Patient Name</label>
-                                            <input type="text"
-                                                value="{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}"
-                                                class="form-control" name="name" readonly />
-                                        </div>
-                                        <div class="form-group">
                                             <label for="patient_id">Patient ID</label>
                                             <input type="text" class="form-control" name="patient_id" id="patient_id"
-                                                value="{{ Auth::user()->id }}" readonly />
+                                                value="" />
                                         </div>
+                                      
 
 
+                                        <!-- <label>Select Service</label>
+                                                    <div class="form-group">
+                                                        <select id="serviceSelect" name="service[]" class="selectpicker form-control"
+                                                            data-size="5" data-style="btn-outline-secondary" multiple
+                                                            data-max-options="3" required>
+
+                                                            @foreach ($services as $service)
+    <option value="{{ $service->id }}">{{ $service->name }}</option>
+    @endforeach
+                                                        </select>
+                                                    </div>
+                                                -->
                                         <label>Select Service</label>
                                         <div class="form-group">
-                                            <select id="serviceSelect" name="service[]" class="selectpicker form-control"
-                                                data-size="5" data-style="btn-outline-secondary" multiple
-                                                data-max-options="3" required>
-
+                                            <select id="serviceSelect" name="service" class="selectpicker form-control"
+                                                data-size="5" data-style="btn-outline-secondary" required>
                                                 @foreach ($services as $service)
                                                     <option value="{{ $service->id }}">{{ $service->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
+
 
                                         <label>Select Doctor</label>
                                         <div class="form-group">
@@ -227,27 +263,27 @@
                                         </div>
 
                                         <!--   <label>Select Time</label>
-                                                            <div class="form-group">
-                                                                <select id="timeSelect" name="time" id="time" class="form-control"
-                                                                    required>
-                                                                    <option value="">Select time</option>
-                                                                </select>
-                                                                <input type="hidden" class="form-control" name="end_time" id="end_time"
-                                                                    value="" readonly />
-                                                            </div>
-                                                        -->
+                                                                        <div class="form-group">
+                                                                            <select id="timeSelect" name="time" id="time" class="form-control"
+                                                                                required>
+                                                                                <option value="">Select time</option>
+                                                                            </select>
+                                                                            <input type="hidden" class="form-control" name="end_time" id="end_time"
+                                                                                value="" readonly />
+                                                                        </div>
+                                                                    -->
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" name="remarks" id="remarks"
-                                                value="Online" readonly />
+                                                value="Walk-in" readonly />
                                         </div>
                                         <!--
-                                                    <div class="form-group">
-                                                        <input type="checkbox" id="policyCheckbox">
-                                                        <label for="policyCheckbox">I agree to the <a href="#"
-                                                                data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
-                                                                policy</span></a></label>
-                                                    </div>
-                                                -->
+                                                                <div class="form-group">
+                                                                    <input type="checkbox" id="policyCheckbox">
+                                                                    <label for="policyCheckbox">I agree to the <a href="#"
+                                                                            data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
+                                                                            policy</span></a></label>
+                                                                </div>
+                                                            -->
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary" id="saveButton">
@@ -263,22 +299,70 @@
                     </div>
                 </div>
             </div>
+            <!-- Modal for Schedule Policy -->
+            <div id="modal-schedule-policy" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Schedule Policy</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Your policy content goes here -->
+
+
+                            <p>
+
+                                1.<b> Appointment Booking</b>
+                                <br>
+                                Appointments can be booked online or through our office during business hours.
+                                <br>
+                                2. <b>Late Arrival</b>
+                                <br>
+                                Patients are requested to arrive at least 10 minutes before their scheduled appointment
+                                time. Late arrivals may result in a shortened appointment or rescheduling, depending on
+                                availability.
+                                <br>
+                                3. <b>Policy Changes</b>
+                                <br>
+                                The schedule policy is subject to change. Any changes will be communicated to patients
+                                through email or posted on our website.
+                                <br>
+                                4. <b>Contact Information</b>
+                                <br>
+                                For any questions regarding this policy or to make changes to your appointment, please
+                                contact our office at gwinlying@gmail.com.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endsection
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
             // Function to filter the doctor schedule table based on selected services
             function filterTable() {
                 const select = document.getElementById("serviceFilter");
-                const filter = select.value;
+                const filter = select.value.toLowerCase(); // Convert to lowercase for case-insensitive matching
                 const table = document.getElementById("doctorScheduleTable");
                 const rows = table.getElementsByTagName("tr");
 
                 Array.from(rows).forEach(row => {
-                    const services = row.getAttribute("data-services");
-                    row.style.display = (filter === "all" || services.includes(filter)) ? "" : "none";
+                    const dataFilter = row.getAttribute("data-filter").toLowerCase();
+                    if (filter === "all" || dataFilter.includes(filter)) {
+                        row.style.display = ""; // Show the row
+                    } else {
+                        row.style.display = "none"; // Hide the row
+                    }
                 });
             }
+
 
             // Function to fetch doctors based on selected services and date
             function fetchDoctors() {
@@ -424,6 +508,7 @@
                     cell.classList.add('red-day');
                 });
             });
+
             /*
             document.addEventListener('DOMContentLoaded', (event) => {
                 const policyCheckbox = document.getElementById('policyCheckbox');

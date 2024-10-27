@@ -65,7 +65,7 @@
     <div class="container-fluid sticky-top bg-white shadow-sm">
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-                <a href="index.html" class="navbar-brand">
+                <a href="{{ route('index') }}" class="navbar-brand">
                     
                     <h1 class="m-0 text-uppercase text-primary">
                         @if ($website->logo)
