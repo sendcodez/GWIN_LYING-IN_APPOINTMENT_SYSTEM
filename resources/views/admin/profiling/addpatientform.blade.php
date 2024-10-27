@@ -51,19 +51,8 @@
                                 <input type="text" id="maiden" name="maiden" class="form-control" />
                                 <div id="maiden-error" class="text-danger mt-1"></div> <!-- Error message div -->
                             </div>
-                        </div> <div class="col-md-4 col-sm-12">
-                            <div class="form-group">
-                                <label>Maiden Name (If Married)</label>
-                                <input type="text" id="maiden" name="maiden" class="form-control" />
-                                <div id="maiden-error" class="text-danger mt-1"></div> <!-- Error message div -->
-                            </div>
-                        </div> <div class="col-md-4 col-sm-12">
-                            <div class="form-group">
-                                <label>Maiden Name (If Married)</label>
-                                <input type="text" id="maiden" name="maiden" class="form-control" />
-                                <div id="maiden-error" class="text-danger mt-1"></div> <!-- Error message div -->
-                            </div>
                         </div>
+                        
                         <div class="col-md-4 col-sm-12">
                             <div class="form-group">
                                 <label>Email</label>
