@@ -203,13 +203,12 @@
                                                             </div>
                                                         -->
                             <div class="table-responsive">
-                                    <table class="data-table table" id="appointmentsTable">
+                                    <table class="table table-striped" id="appointmentsTable">
                                         <thead>
                                             <tr>
                                                 <th>DATE</th>
                                                 <th>DOCTOR NAME</th>
                                                 <th>SERVICE</th>
-
                                                 <th>TIME</th>
                                                 <th>STATUS</th>
                                                 <th>ACTION</th>
@@ -273,45 +272,27 @@
                                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                                     </td>
                                                     <td>
-
-                                                        <div class="dropdown">
-                                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                                href="#" role="button" data-toggle="dropdown">
-                                                                <i class="dw dw-more"></i>
-                                                            </a>
-                                                            <div
-                                                                class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                                @if ($appointment->status == 4 || $appointment->status == 5)
-                                                                    <form
-                                                                        action="{{ route('appointments.destroy', $appointment->id) }}"
-                                                                        method="POST" style="display: inline;"
-                                                                        id="deleteForm{{ $appointment->id }}">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="button"
-                                                                            class="dropdown-item delete-btn"
-                                                                            data-user-id="{{ $appointment->id }}">
-                                                                            <i class="dw dw-delete-3"></i> Delete
-                                                                            <!-- Example using Bootstrap Icons -->
-                                                                        </button>
-                                                                    </form>
-                                                                @endif
-
-                                                                @if ($appointment->status == 1 || $appointment->status == 2)
-                                                                    <form
-                                                                        action="{{ route('appointments.cancel', $appointment->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('PUT')
-                                                                        <button type="submit"
-                                                                            class="dropdown-item cancel-btn">
-                                                                            <i class="bi bi-x-circle"></i> Cancel
-                                                                        </button>
-                                                                    </form>
-                                                                @endif
-                                                            </div>
-                                                        </div>
+                                                        @if ($appointment->status == 4 || $appointment->status == 5)
+                                                            <form action="{{ route('appointments.destroy', $appointment->id) }}" method="POST" style="display: inline;" id="deleteForm{{ $appointment->id }}">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button" class="btn btn-danger delete-btn" data-user-id="{{ $appointment->id }}">
+                                                                    <i class="dw dw-delete-3"></i> Delete
+                                                                </button>
+                                                            </form>
+                                                        @endif
+                                                    
+                                                        @if ($appointment->status == 1 || $appointment->status == 2)
+                                                            <form action="{{ route('appointments.cancel', $appointment->id) }}" method="POST" style="display: inline;">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-warning cancel-btn">
+                                                                    <i class="bi bi-x-circle"></i> Cancel
+                                                                </button>
+                                                            </form>
+                                                        @endif
                                                     </td>
+                                                    
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -659,4 +640,12 @@
                 });
             });
             */
+            $(document).ready(function() {
+        $('#appointmentsTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+        });
+    });
         </script>
