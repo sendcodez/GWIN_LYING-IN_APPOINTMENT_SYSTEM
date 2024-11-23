@@ -32,7 +32,7 @@
                             <div class="widget-data">
                                 <div class="weight-700 font-24 text-dark">{{ $totalPatients }}</div>
                                 <div class="font-14 text-secondary weight-500">
-                                    Profiled Patient
+                                    Patients
                                 </div>
                             </div>
                             <div class="widget-icon" style="background-color:#B0EBB4">

@@ -106,7 +106,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+            <div class="modal-body" style="max-height: 60vh; overflow-y: auto; text-align:justify">
                 <h4>1. Introduction</h4>
                 <p>Welcome to Gwin Lying-in. These Terms and Conditions govern your use of our website and services. By
                     accessing or using our website, you agree to comply with and be bound by these Terms. If you do not

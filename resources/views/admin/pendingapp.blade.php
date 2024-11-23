@@ -72,7 +72,7 @@
                                         @endif
                                     </td>
 
-                                    <td>{{ $appointment->day }}</td>
+                                    <td>{{ ucfirst($appointment->day) }}</td>
                                     <!--   <td class="text-center">{{ $appointment->remarks }}</td> -->
                                     <td>
                                         @php

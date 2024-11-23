@@ -179,7 +179,7 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label style="font-weight:100">Husband's First Name</label>
+                                    <label style="font-weight:100">Spouse's First Name</label>
                                     <input type="text" id="husband_firstname" name="husband_firstname"
                                         class="form-control" />
                                     <div id="husband_firstname-error" class="text-danger mt-1"></div>
@@ -188,7 +188,7 @@
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label style="font-weight:100">Husband's Middle Name</label>
+                                    <label style="font-weight:100">Spouse's Middle Name</label>
                                     <input type="text" id="husband_middlename" name="husband_middlename"
                                         class="form-control" />
                                     <div id="husband_middlename-error" class="text-danger mt-1"></div>
@@ -197,7 +197,7 @@
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label style="font-weight:100">Husband's Last Name</label>
+                                    <label style="font-weight:100">Spouse's Last Name</label>
                                     <input type="text" id="husband_lastname" name="husband_lastname"
                                         class="form-control" />
                                     <div id="husband_lastname-error" class="text-danger mt-1"></div>

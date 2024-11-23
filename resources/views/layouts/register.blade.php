@@ -27,7 +27,7 @@
     <!-- Bootstrap JS (requires Popper.js for the dropdowns and collapse toggler) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    
+
     <title>Register</title>
 </head>
 <style>
@@ -129,8 +129,10 @@
                                     <div class="col-md-4 col-sm-12">
                                         <div class="form-group">
                                             <label>Maiden Name (If Married)</label>
-                                            <input type="text" id="maiden" name="maiden" class="form-control" />
-                                            <div id="maiden-error" class="text-danger mt-1"></div> <!-- Error message div -->
+                                            <input type="text" id="maiden" name="maiden"
+                                                class="form-control" />
+                                            <div id="maiden-error" class="text-danger mt-1"></div>
+                                            <!-- Error message div -->
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
@@ -239,7 +241,7 @@
                                     <div class="row">
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label style="font-weight:100">Husband's First Name</label>
+                                                <label style="font-weight:100">Spouse's First Name</label>
                                                 <input type="text" id="husband_firstname" name="husband_firstname"
                                                     class="form-control" />
                                                 <div id="husband_firstname-error" class="text-danger mt-1"></div>
@@ -248,16 +250,16 @@
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label style="font-weight:100">Husband's Middle Name</label>
-                                                <input type="text" id="husband_middlename" name="husband_middlename"
-                                                    class="form-control" />
+                                                <label style="font-weight:100">Spouse's Middle Name</label>
+                                                <input type="text" id="husband_middlename"
+                                                    name="husband_middlename" class="form-control" />
                                                 <div id="husband_middlename-error" class="text-danger mt-1"></div>
                                                 <!-- Error message div -->
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label style="font-weight:100">Husband's Last Name</label>
+                                                <label style="font-weight:100">Spouse's Last Name</label>
                                                 <input type="text" id="husband_lastname" name="husband_lastname"
                                                     class="form-control" />
                                                 <div id="husband_lastname-error" class="text-danger mt-1"></div>
@@ -467,6 +469,28 @@
                     }
                     document.getElementById("husband_age").value = age;
                 }
+                document.addEventListener('DOMContentLoaded', function() {
+                    var password = document.getElementById('password');
+                    var passwordConfirmation = document.getElementById('password_confirmation');
+                    var passwordMatchStatus = document.getElementById('password-match-status');
+
+                    function checkPasswordMatch() {
+                        if (password.value === passwordConfirmation.value) {
+                            passwordConfirmation.classList.add('input-valid');
+                            passwordConfirmation.classList.remove('input-invalid');
+                            passwordMatchStatus.textContent = 'Passwords match';
+                            passwordMatchStatus.style.color = 'green';
+                        } else {
+                            passwordConfirmation.classList.add('input-invalid');
+                            passwordConfirmation.classList.remove('input-valid');
+                            passwordMatchStatus.textContent = 'Passwords do not match';
+                            passwordMatchStatus.style.color = 'red';
+                        }
+                    }
+
+                    password.addEventListener('input', checkPasswordMatch);
+                    passwordConfirmation.addEventListener('input', checkPasswordMatch);
+                });
             </script>
     </body>
 

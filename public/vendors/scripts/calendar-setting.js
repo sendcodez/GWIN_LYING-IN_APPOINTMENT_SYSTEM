@@ -25,8 +25,18 @@ jQuery(document).ready(function () {
             // header
             header: {
                 left: "title",
-                center: "month,agendaWeek,agendaDay",
-                right: "today prev,next",
+              //  center: "month,agendaWeek,agendaDay",
+                right: "prev,next",
+            },
+            eventAfterRender: function(event, element) {
+                // Use a timeout to ensure the DOM is ready
+                setTimeout(function() {
+                    var title = jQuery('.fc-toolbar .fc-center h2').text();
+                    if (title) {
+                        var capitalizedTitle = title.charAt(0).toUpperCase() + title.slice(1);
+                        jQuery('.fc-toolbar .fc-center h2').text(capitalizedTitle);
+                    }
+                }, 100); // Small delay to ensure FullCalendar rendering is done
             },
             events: function (start, end, timezone, callback) {
                 var events = [];
@@ -114,6 +124,7 @@ jQuery(document).ready(function () {
                     return; // Exit early if it's a past date
                 }
             
+                cell.addClass("fontz");
             
                 doctorAvailabilities.forEach(function(availability) {
                     if (availability.day === dayName && availability.status !== 4) {
@@ -153,7 +164,11 @@ jQuery(document).ready(function () {
                 if (!isAvailable) {
                    // cell.addClass("red-day");
                     cell.addClass("unclick");
-                    cell.append("<span class='not-available' style='color:red;font-size:.8rem'>UNAVAILABLE</span>");
+                    cell.append("<span class='not-available' style='color:red;font-size:.6rem'>UNAVAILABLE</span>");
+                }
+                else {
+                    // Add cursor style for available days
+                    cell.css("cursor", "pointer");
                 }
             
             },

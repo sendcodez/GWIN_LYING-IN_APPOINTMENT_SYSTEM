@@ -412,6 +412,11 @@
                             <ul class="submenu">
                                 <li>
                                     <a href="{{ route('create-patient-account') }}" class="@isActiveRoute('create-patient-account')">
+                                        Patients List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('patient.addAccount') }}" class="@isActiveRoute('patient.addAccount')">
                                         Add Patient Account
                                     </a>
                                 </li>
@@ -482,7 +487,7 @@
 
                     @if (Auth::user()->usertype == '2')
                         <li class="dropdown">
-                            <a href="{{ route('admin.dashboard') }}" class="dropdown-toggle no-arrow">
+                            <a href="{{ route('admin.dashboard') }}" class="dropdown-toggle no-arrow @isActiveRoute('admin.dashboard')">
                                 <span class="micon bi bi-house"></span><span class="mtext">
                                     Home</span>
                             </a>

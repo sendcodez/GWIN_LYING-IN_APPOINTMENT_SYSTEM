@@ -14,6 +14,7 @@
             .custom-bordered-table {
                 font-size: 14px;
             }
+            
         
             .table-responsive {
                 overflow-x: auto;
@@ -60,16 +61,19 @@
         .unclick {
             pointer-events: none;
         }
+     
         
         .date {
             display: flex;
             align-items: center;
-            margin-bottom: 10px; /* Optional: Add margin for spacing */
+            margin-bottom: 10px;
+           /* Optional: Add margin for spacing */
         }
         
         /* Adjust spacing between input fields */
         .form-group input[type="date"] {
             margin-right: 10px; /* Optional: Add margin to separate the input fields */
+            
         }
         </style>
         
@@ -85,7 +89,7 @@
                             <p>Please Click the Calendar Cell to Book an Appointment</p>
                             <p>Please refer to the availability of doctors and services before scheduling</p>
                             <b> SCHEDULE POLICIES</b>
-                            <p>
+                            <p style="text-align:justify;font-size:.9rem;"> 
 
                                 1.<b> Appointment Booking</b>
                                 <br>
@@ -107,7 +111,7 @@
                                 For any questions regarding this policy or to make changes to your appointment, please
                                 contact our office at gwinlying@gmail.com.
                             </p>
-                            <div id="calendar"></div>
+                            <div id="calendar" style="font-size:.8rem;"></div>
                         </div>
                         <!-- Table Section -->
 
