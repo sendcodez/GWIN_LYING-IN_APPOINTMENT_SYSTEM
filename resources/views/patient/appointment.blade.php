@@ -7,6 +7,7 @@
         var appointments = {!! json_encode($appointments) !!};
         var restDays = @json($restDays);
     </script>
+    
     <script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
@@ -123,18 +124,17 @@
                                         <center>
                                             <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
                                         </center>
-                                        <select id="serviceFilter" onchange="filterTable()" class="form-control mb-3">
-                                            <option value="all">All</option>
+                                        <select id="serviceFilter" onchange="filterTable(); refreshCalendar();" class="form-control mb-3">
+                                           <!-- <option value="all">All</option> -->
                                             @foreach ($doctors as $doctor)
                                                 @php
                                                     $service = $doctor->services->first()->name; // Assuming each doctor has only one service
                                                 @endphp
-                                                <option value="{{ $doctor->lastname }} ({{ $service }})">
-                                                    Dr. {{ $doctor->lastname }} | Service Offered: {{ $service }} 
+                                                <option value="{{ $doctor->id }}">
+                                                    Dr. {{ $doctor->lastname }} | Service Offered: {{ $service }}
                                                 </option>
                                             @endforeach
                                         </select>
-                            
                                         <tr>
                                             <th>DAY AVAILABILITY</th>
                                             <th>TIME AVAILABILITY</th>
@@ -147,25 +147,22 @@
                                                 $doctor = $availability->doctor;
                                                 $service = $doctor ? $doctor->services->first()->name : 'No service'; // Single service per doctor
                                             @endphp
-                                            <tr data-filter="Dr. {{ $doctor->lastname }} ({{ $service }})">
+                                            <tr data-filter="{{ $doctor->id }}">
                                                 <td>{{ ucfirst($availability->day) }}</td>
                                                 <td>
                                                     {{ date('h:i A', strtotime($availability->start_time)) }} -
                                                     {{ date('h:i A', strtotime($availability->end_time)) }}
                                                 </td>
-                            
                                                 <td class="rest-day">
                                                     @if ($doctor)
                                                         @php
-                                                            $doctorRestDays = $rd
-                                                                ->where('doctor_id', $doctor->id)
-                                                                ->pluck('rest_day');
+                                                            $doctorRestDays = $rd->where('doctor_id', $doctor->id)->pluck('rest_day');
                                                         @endphp
                                                         @if ($doctorRestDays->isEmpty())
                                                             No rest days
                                                         @else
                                                             @foreach ($doctorRestDays as $restDay)
-                                                                {{ $restDay->format('M d, Y') }}
+                                                                {{ is_string($restDay) ? $restDay : $restDay->format('M d, Y') }}
                                                                 @if (!$loop->last)
                                                                     ,
                                                                 @endif
@@ -179,6 +176,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                
                             </div>
                             
 
@@ -474,20 +472,24 @@
         <script>
             // Function to filter the doctor schedule table based on selected services
             function filterTable() {
-                const select = document.getElementById("serviceFilter");
-                const filter = select.value.toLowerCase(); // Convert to lowercase for case-insensitive matching
-                const table = document.getElementById("doctorScheduleTable");
-                const rows = table.getElementsByTagName("tr");
+    const select = document.getElementById("serviceFilter");
+    const filter = select.value.toLowerCase(); // Convert to lowercase for case-insensitive matching
+    const table = document.getElementById("doctorScheduleTable");
+    const rows = table.getElementsByTagName("tr");
 
-                Array.from(rows).forEach(row => {
-                    const dataFilter = row.getAttribute("data-filter").toLowerCase();
-                    if (filter === "all" || dataFilter.includes(filter)) {
-                        row.style.display = ""; // Show the row
-                    } else {
-                        row.style.display = "none"; // Hide the row
-                    }
-                });
-            }
+    // Filter rows based on the selected doctor
+    Array.from(rows).forEach(row => {
+        const dataFilter = row.getAttribute("data-filter").toLowerCase();
+        if (filter === "all" || dataFilter.includes(filter)) {
+            row.style.display = ""; // Show the row
+        } else {
+            row.style.display = "none"; // Hide the row
+        }
+    });
+
+    // Refresh the calendar when the filter is applied
+    refreshCalendar();
+}
 
 
             // Function to fetch doctors based on selected services and date
