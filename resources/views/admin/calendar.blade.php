@@ -7,6 +7,7 @@
         var appointments = {!! json_encode($appointments) !!};
         var restDays = @json($restDays);
     </script>
+    
     <script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
@@ -14,89 +15,70 @@
             .custom-bordered-table {
                 font-size: 14px;
             }
-
+            
+        
             .table-responsive {
                 overflow-x: auto;
             }
-
-            th,
-            td {
-                position: relative;
-                /* Position cells relative for absolute children */
-                overflow: hidden;
-                /* Prevent overflow */
+        
+            th, td {
+                position: relative; /* Position cells relative for absolute children */
+                overflow: hidden; /* Prevent overflow */
             }
-
+        
             /* Style for not-available text */
             .not-available {
                 font-weight: bold;
-                position: absolute;
-                /* Change to absolute positioning */
-                z-index: 2;
-                /* Ensure it stays on top */
-                top: 50%;
-                /* Center vertically */
-                left: 50%;
-                /* Center horizontally */
-                transform: translate(-50%, -50%);
-                /* Move to the middle of the cell */
-                color: white;
-                /* Text color */
-
-                padding: 2px 5px;
-                /* Optional: padding around the text */
-                border-radius: 3px;
-                /* Optional: rounded corners */
-                pointer-events: none;
-                /* Prevent mouse interactions */
-                white-space: nowrap;
-                /* Prevent text wrapping */
-                max-width: 100%;
-                /* Prevent overflow beyond the cell */
-
+                position: absolute; /* Change to absolute positioning */
+                z-index: 2; /* Ensure it stays on top */
+                top: 50%; /* Center vertically */
+                left: 50%; /* Center horizontally */
+                transform: translate(-50%, -50%); /* Move to the middle of the cell */
+                color: white; /* Text color */
+                
+                padding: 2px 5px; /* Optional: padding around the text */
+                border-radius: 3px; /* Optional: rounded corners */
+                pointer-events: none; /* Prevent mouse interactions */
+                white-space: nowrap; /* Prevent text wrapping */
+                max-width: 100%; /* Prevent overflow beyond the cell */
+                
             }
         }
-
+        
         .red-day {
-            background-color: #ff7b7b !important;
-            /* Change background color to red */
-            color: white;
-            /* Change text color to white */
+            background-color: #ff7b7b !important; /* Change background color to red */
+            color: white; /* Change text color to white */
         }
-
+        
         .past-date {
-            background-color: #d3d3d3 !important;
-            /* Light grey background */
-            color: #666666;
-            /* Dark grey text color */
-            transform: scale(.9);
-            /* Shrinks the size of the cell to 80% of its original size */
-            transition: transform 0.12s ease;
-            /* Smooth transition for visual appeal */
-            opacity: 1;
-            /* Make the past date less prominent */
+            background-color: #d3d3d3 !important; /* Light grey background */
+            color: #666666; /* Dark grey text color */
+            transform: scale(.9); /* Shrinks the size of the cell to 80% of its original size */
+            transition: transform 0.12s ease; /* Smooth transition for visual appeal */
+            opacity: 1; /* Make the past date less prominent */
             pointer-events: none;
         }
-
+        
         .unclick {
             pointer-events: none;
         }
-
+     
+        
         .date {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            /* Optional: Add margin for spacing */
+           /* Optional: Add margin for spacing */
         }
-
+        
         /* Adjust spacing between input fields */
         .form-group input[type="date"] {
-            margin-right: 10px;
-            /* Optional: Add margin to separate the input fields */
+            margin-right: 10px; /* Optional: Add margin to separate the input fields */
+            
         }
-    </style>
-
-
+        </style>
+        
+        
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
@@ -105,8 +87,8 @@
                     <div class="row">
                         <!-- Calendar Section -->
                         <div class="calendar-wrap col-md-6 col-sm-6 custom-bordered-table">
-
-                            <div id="calendar"></div>
+                           
+                            <div id="calendar" style="font-size:.8rem;"></div>
                         </div>
                         <!-- Table Section -->
 
@@ -118,18 +100,17 @@
                                         <center>
                                             <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
                                         </center>
-                                        <select id="serviceFilter" onchange="filterTable()" class="form-control mb-3">
-                                            <option value="all">All</option>
+                                        <select id="serviceFilter" onchange="filterTable(); refreshCalendar();" class="form-control mb-3">
+                                           <!-- <option value="all">All</option> -->
                                             @foreach ($doctors as $doctor)
                                                 @php
                                                     $service = $doctor->services->first()->name; // Assuming each doctor has only one service
                                                 @endphp
-                                                <option value="{{ $doctor->lastname }} ({{ $service }})">
+                                                <option value="{{ $doctor->id }}">
                                                     Dr. {{ $doctor->lastname }} | Service Offered: {{ $service }}
                                                 </option>
                                             @endforeach
                                         </select>
-
                                         <tr>
                                             <th>DAY AVAILABILITY</th>
                                             <th>TIME AVAILABILITY</th>
@@ -142,25 +123,22 @@
                                                 $doctor = $availability->doctor;
                                                 $service = $doctor ? $doctor->services->first()->name : 'No service'; // Single service per doctor
                                             @endphp
-                                            <tr data-filter="Dr. {{ $doctor->lastname }} ({{ $service }})">
+                                            <tr data-filter="{{ $doctor->id }}">
                                                 <td>{{ ucfirst($availability->day) }}</td>
                                                 <td>
                                                     {{ date('h:i A', strtotime($availability->start_time)) }} -
                                                     {{ date('h:i A', strtotime($availability->end_time)) }}
                                                 </td>
-
                                                 <td class="rest-day">
                                                     @if ($doctor)
                                                         @php
-                                                            $doctorRestDays = $rd
-                                                                ->where('doctor_id', $doctor->id)
-                                                                ->pluck('rest_day');
+                                                            $doctorRestDays = $rd->where('doctor_id', $doctor->id)->pluck('rest_day');
                                                         @endphp
                                                         @if ($doctorRestDays->isEmpty())
                                                             No rest days
                                                         @else
                                                             @foreach ($doctorRestDays as $restDay)
-                                                                {{ $restDay->format('M d, Y') }}
+                                                                {{ is_string($restDay) ? $restDay : $restDay->format('M d, Y') }}
                                                                 @if (!$loop->last)
                                                                     ,
                                                                 @endif
@@ -174,14 +152,15 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                
                             </div>
-
+                            
 
 
                             <br>
                             <hr>
                             <vr>
-
+                                
                         </div>
                     </div>
 
@@ -211,7 +190,7 @@
                     <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                                <form id="add-event" action="{{ route('calendar.store') }}" method="POST">
+                                <form id="add-event" action="{{ route('appointments.store') }}" method="POST">
                                     @csrf
                                     <div class="modal-body">
                                         <h4 class="text-blue h4 mb-10">Add Appointment Detail</h4>
@@ -225,25 +204,30 @@
                                                 value="" readonly />
                                         </div>
                                         <div class="form-group">
+                                            <label>Patient Name</label>
+                                            <input type="text"
+                                                value="{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}"
+                                                class="form-control" name="name" readonly />
+                                        </div>
+                                        <div class="form-group">
                                             <label for="patient_id">Patient ID</label>
                                             <input type="text" class="form-control" name="patient_id" id="patient_id"
-                                                value="" />
+                                                value="{{ Auth::user()->id }}" readonly />
                                         </div>
-                                      
 
 
                                         <!-- <label>Select Service</label>
-                                                    <div class="form-group">
-                                                        <select id="serviceSelect" name="service[]" class="selectpicker form-control"
-                                                            data-size="5" data-style="btn-outline-secondary" multiple
-                                                            data-max-options="3" required>
+                                                <div class="form-group">
+                                                    <select id="serviceSelect" name="service[]" class="selectpicker form-control"
+                                                        data-size="5" data-style="btn-outline-secondary" multiple
+                                                        data-max-options="3" required>
 
-                                                            @foreach ($services as $service)
+                                                        @foreach ($services as $service)
     <option value="{{ $service->id }}">{{ $service->name }}</option>
     @endforeach
-                                                        </select>
-                                                    </div>
-                                                -->
+                                                    </select>
+                                                </div>
+                                            -->
                                         <label>Select Service</label>
                                         <div class="form-group">
                                             <select id="serviceSelect" name="service" class="selectpicker form-control"
@@ -263,27 +247,27 @@
                                         </div>
 
                                         <!--   <label>Select Time</label>
-                                                                        <div class="form-group">
-                                                                            <select id="timeSelect" name="time" id="time" class="form-control"
-                                                                                required>
-                                                                                <option value="">Select time</option>
-                                                                            </select>
-                                                                            <input type="hidden" class="form-control" name="end_time" id="end_time"
-                                                                                value="" readonly />
-                                                                        </div>
-                                                                    -->
+                                                                    <div class="form-group">
+                                                                        <select id="timeSelect" name="time" id="time" class="form-control"
+                                                                            required>
+                                                                            <option value="">Select time</option>
+                                                                        </select>
+                                                                        <input type="hidden" class="form-control" name="end_time" id="end_time"
+                                                                            value="" readonly />
+                                                                    </div>
+                                                                -->
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" name="remarks" id="remarks"
-                                                value="Walk-in" readonly />
+                                                value="Online" readonly />
                                         </div>
                                         <!--
-                                                                <div class="form-group">
-                                                                    <input type="checkbox" id="policyCheckbox">
-                                                                    <label for="policyCheckbox">I agree to the <a href="#"
-                                                                            data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
-                                                                            policy</span></a></label>
-                                                                </div>
-                                                            -->
+                                                            <div class="form-group">
+                                                                <input type="checkbox" id="policyCheckbox">
+                                                                <label for="policyCheckbox">I agree to the <a href="#"
+                                                                        data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
+                                                                        policy</span></a></label>
+                                                            </div>
+                                                        -->
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary" id="saveButton">
@@ -348,20 +332,24 @@
         <script>
             // Function to filter the doctor schedule table based on selected services
             function filterTable() {
-                const select = document.getElementById("serviceFilter");
-                const filter = select.value.toLowerCase(); // Convert to lowercase for case-insensitive matching
-                const table = document.getElementById("doctorScheduleTable");
-                const rows = table.getElementsByTagName("tr");
+    const select = document.getElementById("serviceFilter");
+    const filter = select.value.toLowerCase(); // Convert to lowercase for case-insensitive matching
+    const table = document.getElementById("doctorScheduleTable");
+    const rows = table.getElementsByTagName("tr");
 
-                Array.from(rows).forEach(row => {
-                    const dataFilter = row.getAttribute("data-filter").toLowerCase();
-                    if (filter === "all" || dataFilter.includes(filter)) {
-                        row.style.display = ""; // Show the row
-                    } else {
-                        row.style.display = "none"; // Hide the row
-                    }
-                });
-            }
+    // Filter rows based on the selected doctor
+    Array.from(rows).forEach(row => {
+        const dataFilter = row.getAttribute("data-filter").toLowerCase();
+        if (filter === "all" || dataFilter.includes(filter)) {
+            row.style.display = ""; // Show the row
+        } else {
+            row.style.display = "none"; // Hide the row
+        }
+    });
+
+    // Refresh the calendar when the filter is applied
+    refreshCalendar();
+}
 
 
             // Function to fetch doctors based on selected services and date
@@ -508,7 +496,6 @@
                     cell.classList.add('red-day');
                 });
             });
-
             /*
             document.addEventListener('DOMContentLoaded', (event) => {
                 const policyCheckbox = document.getElementById('policyCheckbox');
@@ -519,4 +506,12 @@
                 });
             });
             */
+            $(document).ready(function() {
+        $('#appointmentsTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+        });
+    });
         </script>

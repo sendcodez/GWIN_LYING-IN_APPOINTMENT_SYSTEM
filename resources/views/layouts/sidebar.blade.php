@@ -411,15 +411,16 @@
                             </a>
                             <ul class="submenu">
                                 <li>
-                                    <a href="{{ route('create-patient-account') }}" class="@isActiveRoute('create-patient-account')">
-                                        Patients List
+                                    <a href="{{ route('create-patient-account') }}" class="@isActiveRoute('create-patient-account,patient.addAccount')">
+                                        Add Patient Account
                                     </a>
                                 </li>
-                                <li>
+                               <!-- <li>
                                     <a href="{{ route('patient.addAccount') }}" class="@isActiveRoute('patient.addAccount')">
                                         Add Patient Account
                                     </a>
                                 </li>
+                            -->
                                 <li>
                                     <a href="{{ route('patient.add') }}" class="@isActiveRoute('patient.add')">
                                         Add Medical Profile

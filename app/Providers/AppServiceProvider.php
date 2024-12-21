@@ -21,9 +21,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Blade::directive('isActiveRoute', function ($route) {
-            return "<?php echo (Route::currentRouteName() == trim($route, \"'\")) ? 'active' : ''; ?>";
+        Blade::directive('isActiveRoute', function ($routes) {
+            return "<?php 
+                \$routesArray = explode(',', $routes);
+                \$isActive = false;
+                foreach (\$routesArray as \$route) {
+                    if (Route::currentRouteName() == trim(\$route, \"'\")) {
+                        \$isActive = true;
+                        break;
+                    }
+                }
+                echo \$isActive ? 'active' : '';
+            ?>";
         });
+        
     }
 
     

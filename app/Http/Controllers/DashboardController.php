@@ -37,7 +37,7 @@ class DashboardController extends Controller
             // Fetch recent appointments of the doctor
             $doc_app = Appointment::with(['patient', 'service'])
                 ->where('doctor_id', $user->doctor->id)
-                ->where('status', '!=', 2)
+                ->where('status', '=', 3)
                 ->orderBy('date', 'desc')
                 ->get();
         }
