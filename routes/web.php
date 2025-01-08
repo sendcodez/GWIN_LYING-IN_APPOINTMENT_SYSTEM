@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-user-details/{id}', function ($id) {
         $user = User::find($id);
         if ($user) {
-            return response()->json([
+            return response()->json([       
                 'firstname' => $user->firstname,
                 'middlename' => $user->middlename,
                 'lastname' => $user->lastname,
@@ -89,6 +89,9 @@ Route::middleware('auth')->group(function () {
             ], 404);
         }
     });
+    
+    Route::get('/get-patient/{id}', [PatientController::class, 'getPatient']);
+
 
 
 

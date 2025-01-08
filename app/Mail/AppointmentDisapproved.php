@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Appointment;
 
-class AppointmentCancelled extends Mailable
+class AppointmentDisapproved extends Mailable
 {
     use Queueable, SerializesModels;
 

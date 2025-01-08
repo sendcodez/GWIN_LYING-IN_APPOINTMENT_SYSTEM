@@ -56,6 +56,18 @@ class PatientController extends Controller
     {
         return view('admin.profiling.addpatientform');
     }
+    public function getPatient($user_id)
+    {
+        $patient = Patient::where('user_id', $user_id)->first();
+    
+        if ($patient) {
+            $fullName = $patient->firstname . ' ' . $patient->middlename . ' ' . $patient->lastname;
+            return response()->json(['name' => trim($fullName)]);
+        } else {
+            return response()->json(['error' => 'Patient not found'], 404);
+        }
+    }
+                
 
 
     public function storeAccount(Request $request): RedirectResponse

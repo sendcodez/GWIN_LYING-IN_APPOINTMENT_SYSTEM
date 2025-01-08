@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentCancelled;
 use App\Mail\AppointmentApproved;
+use App\Mail\AppointmentDisapproved;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Appointment;
@@ -169,7 +170,7 @@ class DashboardController extends Controller
 
         $appointment->status = 5;
         $appointment->save();
-        Mail::to($appointment->patient->email)->send(new AppointmentApproved($appointment));
+        Mail::to($appointment->patient->email)->send(new AppointmentDisapproved($appointment));
 
         $user = Auth::user();
         $action = 'disapproved_appointment';
