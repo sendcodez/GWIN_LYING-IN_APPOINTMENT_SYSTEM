@@ -209,7 +209,7 @@
                                             <div class="col-md-4">
                                                 <label>Date of Visit</label>
                                                 <div class="form-group">
-                                                    <input type="date" name="date" class="form-control">
+                                                    <input type="date" name="date_visit" class="form-control">
                                                 </div>
                                                 <label>Blood Pressure</label>
                                                 <div class="form-group">

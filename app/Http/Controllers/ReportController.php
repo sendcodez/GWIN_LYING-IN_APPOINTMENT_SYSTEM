@@ -22,7 +22,10 @@ class ReportController extends Controller
         $endDate = $request->input('endDate');
         
         // Query appointments within the selected date range
-        $appointments = Appointment::whereBetween('date', [$startDate, $endDate])->get();
+        $appointments = Appointment::whereBetween('date', [$startDate, $endDate])
+        ->where('status', '!=', 1)
+        ->get();
+
        
         return view('admin.reports', [
             'appointments' => $appointments,

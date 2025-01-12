@@ -354,9 +354,9 @@ class PatientController extends Controller
         $medicalHistoryData
     );
 
-    $pregnancyTerm = Pregnancy_term::updateOrCreate(
+    $pregnancyTerm = Pregnancy_term::updateOrCreate(    
         ['user_id' => $patient->user_id],
-        $request->only(['tt1', 'tt2', 'tt3', 'tt4', 'tt5'])
+        $request->only(['gravida', 'para', 't', 'p', 'a','l'])
     );
 
     if ($request->has('pregnancies')) {

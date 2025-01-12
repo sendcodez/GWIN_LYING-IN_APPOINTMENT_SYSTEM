@@ -160,6 +160,7 @@
     <!-- About End -->
     
 
+ 
     <!-- Services Start -->
     <div class="container-fluid py-5">
         <div class="container">
@@ -169,72 +170,85 @@
             </div>
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div
+                        class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
                         <div class="service-icon mb-4">
                             <i class="fa fa-2x fa-user-md text-white"></i>
                         </div>
                         <h4 class="mb-3">Obstetrician Gynecologist</h4>
-                        <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr dolor amet sit</p>
+                        <p class="m-0">An experienced Obstetrician Gynecologist dedicated to providing comprehensive
+                            care. Specializes in women's health, including pregnancy, childbirth, and reproductive
+                            system disorders, ensuring personalized and compassionate treatment.</p>
+
                         <a class="btn btn-lg btn-primary rounded-pill" href="">
-                            
+
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div
+                        class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
                         <div class="service-icon mb-4">
                             <i class="fa fa-2x fa-procedures text-white"></i>
                         </div>
                         <h4 class="mb-3">Normal Delivery</h4>
-                        <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr dolor amet sit</p>
-                        
+                        <p class="m-0">Providing safe and supportive care for expectant mothers during natural
+                            childbirth, ensuring a healthy delivery experience for both mother and baby.</p>
+
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div
+                        class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
                         <div class="service-icon mb-4">
                             <i class="fa fa-2x fa-stethoscope text-white"></i>
                         </div>
                         <h4 class="mb-3">Prenatal Checkup</h4>
-                        <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr dolor amet sit</p>
-                       
+                        <p class="m-0">Comprehensive prenatal care to monitor the health of both mother and baby
+                            throughout pregnancy, ensuring early detection and management of any complications.</p>
+
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div
+                        class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
                         <div class="service-icon mb-4">
                             <i class="fa fa-2x fa fa-heartbeat text-white"></i>
                         </div>
                         <h4 class="mb-3">New Born</h4>
-                        <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr dolor amet sit</p>
-                       
+                        <p class="m-0">Specialized care and support for newborns to ensure healthy development
+                            during the crucial early days of life.</p>
+
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div
+                        class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
                         <div class="service-icon mb-4">
                             <i class="fa fa-2x fa-pills text-white"></i>
                         </div>
                         <h4 class="mb-3">Immunization & Vaccine</h4>
-                        <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr dolor amet sit</p>
-                       
+                        <p class="m-0">Offering a complete range of immunizations and vaccines to protect children
+                            and adults from various preventable diseases.</p>
+
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div
+                        class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
                         <div class="service-icon mb-4">
                             <i class="fa fa-2x fa fa-medkit text-white"></i>
                         </div>
                         <h4 class="mb-3">Papsmear</h4>
-                        <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr dolor amet sit</p>
-                       
+                        <p class="m-0">Routine Papsmear tests to screen for cervical cancer and ensure early
+                            detection and treatment of potential issues.</p>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Services End -->
-
 
     <!-- Appointment Start -->
     

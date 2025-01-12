@@ -179,6 +179,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('doctor/{id}/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
     Route::patch('doctor/{id}/update-schedule', [DoctorController::class, 'updateSchedule'])->name('doctor.updateSchedule');
+    Route::get('/getRestDays', [DoctorController::class, 'getRestDays']);
 
 
     Route::put('/doctor/{id}/availability', [DoctorController::class, 'updateAvailability'])->name('doctor.updateAvailability');

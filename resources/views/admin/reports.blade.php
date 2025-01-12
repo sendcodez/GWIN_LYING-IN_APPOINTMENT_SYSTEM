@@ -95,6 +95,10 @@
                                                     $statusWord = 'Cancelled';
                                                     $badgeClass = 'badge badge-danger';
                                                     break;
+                                                case 5:
+                                                    $statusWord = 'Disapproved';
+                                                    $badgeClass = 'badge badge-warning';
+                                                    break;
                                                 default:
                                                     $statusWord = 'Unknown';
                                                     $badgeClass = 'badge badge-secondary';

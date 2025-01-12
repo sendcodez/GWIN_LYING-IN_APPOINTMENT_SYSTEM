@@ -39,10 +39,11 @@ class RecordController extends Controller
     public function storeRecords(Request $request)
     {
         try {
+            // Validate the incoming request data
             $validator = Validator::make($request->all(), [
                 'patient_id' => 'required|exists:users,id',
                 'patient_name' => 'required|string',
-                'date' => 'required|date',
+                'date_visit' => 'required|date',
                 'aog' => 'nullable|string',
                 'chief' => 'nullable|string',
                 'blood_pressure' => 'nullable|string',
@@ -55,25 +56,27 @@ class RecordController extends Controller
                 'ie' => 'nullable|string',
                 'diagnosis' => 'nullable|string',
                 'follow_up' => 'nullable|string',
-
                 'plans' => 'required|array',
                 'plans.*.plans' => 'required|string',
             ]);
-
+    
             if ($validator->fails()) {
+                // Log the validation errors
+                \Log::error('Validation failed:', $validator->errors()->toArray());
+    
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput();
             }
-
+    
             // Serialize the medications array
             $plans = json_encode($request->input('plans.*.plans'));
-
-            // Create a new Medication instance
+    
+            // Create a new Record instance
             $record = new Record();
             $record->user_id = $request->patient_id;
             $record->patient_name = $request->patient_name;
-            $record->date = $request->date;
+            $record->date = $request->date_visit; // Update this line if you choose Option 2
             $record->aog = $request->aog;
             $record->chief = $request->chief;
             $record->blood_pressure = $request->blood_pressure;
@@ -86,10 +89,15 @@ class RecordController extends Controller
             $record->ie = $request->ie;
             $record->diagnosis = $request->diagnosis;
             $record->follow_up = $request->follow_up;
-
-            $record->plan = $plans; // Assign the serialized array
+            $record->plan = $plans;
+    
             $record->save();
+    
+            // Log the successful record creation
+            \Log::info('Record added successfully for patient:', ['patient_name' => $record->patient_name]);
+            \Log::info('Submitted date_visit:', ['date_visit' => $request->date_visit]);
 
+    
             $user = Auth::user();
             $action = 'added_record';
             $description = 'Added a record for patient: ' . $record->patient_name;
@@ -99,15 +107,16 @@ class RecordController extends Controller
                 'action' => $action,
                 'description' => $description,
             ]);
-
+    
             return redirect()->back()->with('success', 'Record added successfully');
         } catch (\Exception $e) {
-            $errorMessage = $e->getMessage();
-            return redirect()->back()->with('error', $errorMessage);
+            // Log the exception message
+            \Log::error('Exception occurred while storing records:', ['message' => $e->getMessage()]);
+    
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
-
     }
-
+    
     public function storeUltrasound(Request $request)
     {
         try {
@@ -884,7 +893,7 @@ class RecordController extends Controller
             if ($patient && isset($patient->records)) {
                 foreach ($patient->records as $records) {
                     $recordsData[] = [
-                        'records_date' => optional($records->created_at)->format('Y-m-d') ?? 'No record',
+                        'records_date' => $records->date ? \Carbon\Carbon::parse($records->date)->format('Y-m-d') : 'No record', // Handle empty or null date explicitly
                         'records_aog' => $records->aog ?? 'No record',
                         'records_chief' => $records->chief ?? 'No record',
                         'records_blood_pressure' => $records->blood_pressure ?? 'No record',
@@ -944,9 +953,9 @@ class RecordController extends Controller
 
             return response()->json([
                 // USER
-                'firstname' => $user->firstname,
-                'middlename' => $user->middlename,
-                'lastname' => $user->lastname,
+                'firstname' => $user->firstname ?? '',
+                'middlename' => $user->middlename ?? '',
+                'lastname' => $user->lastname ?? '',
                 'contact_number' => $patient ? $patient->contact_number : 'No record',
                 'birthday' => $patient ? $patient->birthday : 'No record',
                 'birthplace' => $patient ? $patient->birthplace : 'No record',
@@ -957,7 +966,7 @@ class RecordController extends Controller
                 'occupation' => $patient ? $patient->occupation : 'No record',
                 'nationality' => $patient ? $patient->nationality : 'No record',
                 'husband_firstname' => $patient ? $patient->husband_firstname : 'No record',
-                'husband_middlename' => $patient ? $patient->husband_middlename : 'No record',
+                'husband_middlename' => $patient ? $patient->husband_middlename : '',
                 'husband_lastname' => $patient ? $patient->husband_lastname : 'No record',
                 'husband_occupation' => $patient ? $patient->husband_occupation : 'No record',
                 'husband_birthday' => $patient ? $patient->husband_birthday : 'No record',

@@ -32,20 +32,20 @@ class DoctorController extends Controller
     {
         // Fetch doctors with their services and availability
         $doctors = Doctor::with(['services', 'availability'])->get();
-        
+
         // Fetch active services
         $services = Service::where('status', 1)->get();
-        
+
         // Prepare availability days data
         $availabilityDays = [];
         foreach ($doctors as $doctor) {
             $availabilityDays[$doctor->id] = $doctor->availability ? $doctor->availability->pluck('day')->toArray() : [];
         }
-    
+
         // Pass data to the view
         return view('admin.create_doctor', compact('doctors', 'services', 'availabilityDays'));
     }
-    
+
 
 
     public function show(Doctor $doctor)
@@ -98,7 +98,7 @@ class DoctorController extends Controller
             ]);
 
             // Create a new doctor instance
-          //  $expertiseString = json_encode($validatedData['expertise']); // JSON string
+            //  $expertiseString = json_encode($validatedData['expertise']); // JSON string
             // $expertiseString = implode(',', $validatedData['expertise']); // Comma-separated string
 
             // Create a new doctor instance
@@ -159,7 +159,7 @@ class DoctorController extends Controller
         $doctor = Doctor::with('availability')->findOrFail($doctorId);
         return view('admin.create_doctor', compact('doctor'));
     }
-    
+
 
     public function update(Request $request, string $id)
     {
@@ -302,24 +302,24 @@ class DoctorController extends Controller
             $selectedDay = strtolower($request->input('selected_day'));
             $selectedDate = $request->input('selected_date');
             $serviceIds = $request->input('services', []);
-    
+
             Log::info('Selected Day: ' . $selectedDay);
             Log::info('Selected Date: ' . $selectedDate);
             Log::info('Service IDs: ' . implode(',', $serviceIds));
-    
+
             $doctors = Doctor::whereHas('services', function ($query) use ($serviceIds) {
                 $query->whereIn('services.id', $serviceIds);
             }, '=', count($serviceIds))
-            ->whereDoesntHave('restDays', function ($query) use ($selectedDate) {
-                $query->whereDate('rest_day', $selectedDate);
-            })
-            ->whereHas('availabilities', function ($query) use ($selectedDay) {
-                $query->where('day', ucfirst($selectedDay));
-            })
-            ->get();
-    
+                ->whereDoesntHave('restDays', function ($query) use ($selectedDate) {
+                    $query->whereDate('rest_day', $selectedDate);
+                })
+                ->whereHas('availabilities', function ($query) use ($selectedDay) {
+                    $query->where('day', ucfirst($selectedDay));
+                })
+                ->get();
+
             Log::info('Doctors found: ' . $doctors->count());
-    
+
             $availableDoctorsArray = $doctors->map(function ($doctor) {
                 return [
                     'id' => $doctor->id,
@@ -327,32 +327,32 @@ class DoctorController extends Controller
                     'lastname' => $doctor->lastname,
                 ];
             })->toArray();
-    
+
             return response()->json($availableDoctorsArray);
         } catch (\Exception $e) {
             Log::error('Error fetching doctors: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to fetch doctors.'], 500);
         }
     }
-    
-    
+
+
 
     public function addRestDay(Request $request, $id)
     {
         $request->validate([
             'rest_day' => 'required|date',
         ]);
-    
+
         $doctor = Doctor::find($id);
         if ($doctor) {
             $doctor->rest_days()->create([
                 'rest_day' => $request->rest_day,
             ]);
         }
-    
+
         return redirect()->back()->with('success', 'Rest day added successfully.');
     }
-    
+
     public function getDoctorAvailability($doctorId, Request $request)
     {
         try {
@@ -413,7 +413,7 @@ class DoctorController extends Controller
     {
         dd($request->all);
         $doctor = Doctor::find($id);
-    
+
         foreach ($request->input('schedule_id', []) as $index => $scheduleId) {
             $schedule = DoctorAvailability::find($scheduleId);
             if ($schedule) {
@@ -424,7 +424,7 @@ class DoctorController extends Controller
                 ]);
             }
         }
-    
+
         return redirect()->back()->with('success', 'Updated successfully.');
     }
     public function updateAvailability(Request $request, $doctorId)
@@ -432,10 +432,10 @@ class DoctorController extends Controller
         $days = $request->input('day');
         $startTimes = $request->input('start_time');
         $endTimes = $request->input('end_time');
-    
+
         // First, delete existing availabilities
         DoctorAvailability::where('doctor_id', $doctorId)->delete();
-    
+
         // Then, add updated availabilities
         foreach ($days as $key => $day) {
             DoctorAvailability::create([
@@ -445,8 +445,16 @@ class DoctorController extends Controller
                 'end_time' => $endTimes[$key],
             ]);
         }
-    
+
         return redirect()->back()->with('success', 'Availability updated successfully');
     }
+    public function getRestDays(Request $request)
+    {
+        $doctorId = $request->input('doctor_id');
+        $restDays = RestDay::where('doctor_id', $doctorId)->pluck('rest_day')->toArray();
+        return response()->json(['restDays' => $restDays]);
+
+    }
+
 
 }

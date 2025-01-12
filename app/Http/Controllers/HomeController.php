@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Patient;
+use App\Models\Doctor;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
 
@@ -25,7 +26,8 @@ class HomeController extends Controller
             ->where('status', 3)
             ->get();
 
-        $totalDoctors = User::where('usertype', 2)->count();
+        $totalDoctors = Doctor::where('usertype', 2)->whereNull('deleted_at')->count();
+
 
         $totalEarnings = DB::table('appointments')
             ->join('appointment_service', 'appointments.id', '=', 'appointment_service.appointment_id')

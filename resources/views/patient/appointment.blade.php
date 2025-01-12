@@ -6,6 +6,10 @@
         var doctorAvailabilities = {!! json_encode($doctorAvailabilities) !!};
         var appointments = {!! json_encode($appointments) !!};
         var restDays = @json($restDays);
+        var allRestDays = @json($rd);   
+        console.log("Rest Days for selected doctor:", restDays);
+        console.log("All Rest Days:", allRestDays); 
+        
     </script>
     
     <script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
@@ -119,13 +123,12 @@
                         <div class="table-wrap col-md-6 col-sm-6">
 
                             <div class="table-responsive">
-                                <table class="table table-striped custom-bordered-table">
+                                <table class="table custom-bordered-table">
                                     <thead>
                                         <center>
                                             <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
                                         </center>
                                         <select id="serviceFilter" onchange="filterTable(); refreshCalendar();" class="form-control mb-3">
-                                           <!-- <option value="all">All</option> -->
                                             @foreach ($doctors as $doctor)
                                                 @php
                                                     $service = $doctor->services->first()->name; // Assuming each doctor has only one service
@@ -142,40 +145,49 @@
                                         </tr>
                                     </thead>
                                     <tbody id="doctorScheduleTable">
-                                        @foreach ($doctorAvailabilities as $availability)
+                                        @foreach ($doctorAvailabilities as $index => $availability)
                                             @php
                                                 $doctor = $availability->doctor;
                                                 $service = $doctor ? $doctor->services->first()->name : 'No service'; // Single service per doctor
+                                                
+                                                $currentDate = now();
+                                                $nextRestDay = $rd->where('doctor_id', $doctor->id)
+                                                                  ->filter(function ($restDay) use ($currentDate) {
+                                                                      return $restDay->rest_day > $currentDate;
+                                                                  })
+                                                                  ->sortBy('rest_day')
+                                                                  ->first();
                                             @endphp
-                                            <tr data-filter="{{ $doctor->id }}">
-                                                <td>{{ ucfirst($availability->day) }}</td>
-                                                <td>
-                                                    {{ date('h:i A', strtotime($availability->start_time)) }} -
-                                                    {{ date('h:i A', strtotime($availability->end_time)) }}
-                                                </td>
-                                                <td class="rest-day">
-                                                    @if ($doctor)
-                                                        @php
-                                                            $doctorRestDays = $rd->where('doctor_id', $doctor->id)->pluck('rest_day');
-                                                        @endphp
-                                                        @if ($doctorRestDays->isEmpty())
-                                                            No rest days
+                                            @if ($doctor && ($index == 0 || $doctor->id != $doctorAvailabilities[$index - 1]->doctor_id))
+                                                <tr data-filter="{{ $doctor->id }}">
+                                                    <td>{{ ucfirst($availability->day) }}</td>
+                                                    <td>
+                                                        {{ date('h:i A', strtotime($availability->start_time)) }} -
+                                                        {{ date('h:i A', strtotime($availability->end_time)) }}
+                                                    </td>
+                                                    <td class="rest-day" rowspan="{{ $doctorAvailabilities->where('doctor_id', $doctor->id)->count() }}">
+                                                        @if ($nextRestDay)
+                                                            {{ is_string($nextRestDay) ? $nextRestDay : $nextRestDay->rest_day->format('M d, Y') }}
                                                         @else
-                                                            @foreach ($doctorRestDays as $restDay)
-                                                                {{ is_string($restDay) ? $restDay : $restDay->format('M d, Y') }}
-                                                                @if (!$loop->last)
-                                                                    ,
-                                                                @endif
-                                                            @endforeach
+                                                            No upcoming rest days
                                                         @endif
-                                                    @else
-                                                        No rest days available
-                                                    @endif
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                            @else
+                                                <tr data-filter="{{ $doctor->id }}">
+                                                    <td>{{ ucfirst($availability->day) }}</td>
+                                                    <td>
+                                                        {{ date('h:i A', strtotime($availability->start_time)) }} -
+                                                        {{ date('h:i A', strtotime($availability->end_time)) }}
+                                                    </td>
+                                                    <!-- Empty rest day cell to avoid repetition -->
+                                                    <td></td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>
+                                
                                 
                             </div>
                             
@@ -239,8 +251,15 @@
                                                         @endif
                                                     </td>
 
-                                                    <td>{{ date('h:i A', strtotime($appointment->start_time)) }}</td>
                                                     <td>
+                                                        @if($appointment->start_time)
+                                                            {{ date('h:i A', strtotime($appointment->start_time)) }}
+                                                        @else
+                                                            No assigned time yet
+                                                        @endif
+                                                    </td>
+                                                    
+                                                    <td>    
                                                         @php
                                                             $statusWord = '';
                                                             $badgeClass = '';

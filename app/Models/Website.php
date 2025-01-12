@@ -14,7 +14,7 @@ class Website extends Model
         'business_name',
         'tagline',
         'tagline2',
-        'aboutus',
+        'about_us',
         'contact_no',
         'email',
         'address',

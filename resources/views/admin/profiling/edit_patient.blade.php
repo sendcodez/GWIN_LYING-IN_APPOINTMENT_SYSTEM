@@ -293,7 +293,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="custom-control custom-checkbox mb-5">
-                            <input type="checkbox" class="custom-control-input" id="asthma"
+                            <input type="checkbox" class="custom-control-input" id="hypertension"
                                 name="hypertension" value="hypertension" @if($medicalHistory && $medicalHistory->hypertension) checked @endif />
                             <label class="custom-control-label" for="hypertension">Hypertension</label>
                         </div>

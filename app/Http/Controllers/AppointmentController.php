@@ -32,6 +32,7 @@ class AppointmentController extends Controller
 
         // Retrieve rest days from the RestDay model
         $restDays = RestDay::pluck('rest_day')->toArray();
+        //$restDays = RestDay::where('doctor_id', $doctorId)->pluck('rest_day')->toArray();
         $rd = RestDay::all();
 
         return view('patient.appointment', compact('allAppointments', 'appointments', 'doctorAvailabilities', 'services', 'restDays', 'rd','doctors'));
