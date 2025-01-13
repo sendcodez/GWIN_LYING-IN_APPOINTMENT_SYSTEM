@@ -564,7 +564,7 @@ class RecordController extends Controller
                         'manner' => $preg ? $preg->manner : 'No record',
                         'bw' => $preg ? $preg->bw : 'No record',
                         'sex' => $preg ? $preg->sex : 'No record',
-                        'present_status' => $preg ? $preg->status : 'No record',
+                        'present_status' => $preg ? $preg->present_status : 'No record',
                         'complications' => $preg ? $preg->complications : 'No record',
                     ];
                 }
@@ -1026,6 +1026,11 @@ class RecordController extends Controller
                 'bleeding' => $medical ? ($medical->bleeding == 1 ? 'Yes' : 'No') : 'No record',
                 'operation' => $medical ? ($medical->operation == 1 ? 'Yes' : 'No') : 'No record',
                 'others' => $medical ? $medical->others : 'No record',
+                'tt1' => $medical ? $medical->tt1 : 'No record',
+                'tt2' => $medical ? $medical->tt2 : 'No record',
+                'tt3' => $medical ? $medical->tt3 : 'No record',
+                'tt4' => $medical ? $medical->tt4 : 'No record',
+                'tt5' => $medical ? $medical->tt5 : 'No record',
             ]);
         } else {
             return response()->json([

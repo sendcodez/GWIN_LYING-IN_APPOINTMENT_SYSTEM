@@ -34,4 +34,11 @@ class MedicalHistory extends Model
     {
         return $this->belongsTo(Patient::class);
     }
+    protected $casts = [
+        'tt1' => 'string', // Ensure they are treated as strings
+        'tt2' => 'string',
+        'tt3' => 'string',
+        'tt4' => 'string',
+        'tt5' => 'string',
+    ];
 }

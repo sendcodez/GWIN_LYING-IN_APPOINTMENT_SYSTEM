@@ -11,7 +11,7 @@ class PregnancyHistory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'patient_id',
+        'user_id',
         'pregnancy',
         'pregnancy_date',
         'aog',

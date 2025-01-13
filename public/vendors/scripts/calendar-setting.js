@@ -61,7 +61,7 @@ jQuery(document).ready(function () {
                     backgroundColor: "#f8d7da", // Red background for unavailable days
                 });
                 cell.append(
-                    "<span class='not-available' style='color:red;font-size:.8rem;'>UNAVAILABLE</span>"
+                    "<span class='not-available' style='color:red;font-size:.6rem;'>UNAVAILABLE</span>"
                 );
                 return; // Skip further processing for rest days
             }
@@ -128,7 +128,7 @@ jQuery(document).ready(function () {
                 cell.css({
                     backgroundColor: "#f8d7da", // Red background for unavailable days
                 });
-                cell.append("<span class='not-available' style='color:red;font-size:.8rem;'>UNAVAILABLE</span>");
+                cell.append("<span class='not-available' style='color:red;font-size:.6rem;'>UNAVAILABLE</span>");
             }
         },
 
@@ -153,14 +153,14 @@ jQuery(document).ready(function () {
     jQuery("#serviceFilter").change(function () {
         var selectedDoctorId = jQuery("#serviceFilter").val();
         console.log("Doctor selection changed: " + selectedDoctorId);
-
+    
         // Clear old events but preserve the "unavailable" state for fully booked days
         jQuery("#calendar").fullCalendar("removeEvents");
-
+    
         // Get the current date to compare with the calendar cells
         var today = moment().startOf('day'); // Today at midnight
         console.log("Current date for comparison: " + today.format("YYYY-MM-DD"));
-
+    
         // Iterate through each calendar cell and re-render it based on new availability
         jQuery("#calendar")
             .find(".fc-day")
@@ -171,38 +171,40 @@ jQuery(document).ready(function () {
                     var cell = jQuery(this); // Current cell
                     var dayName = date.format("dddd").toLowerCase();
                     var isAvailable = false; // Default assumption for availability
-
+    
                     // Only apply text for future or current dates
                     if (date.isBefore(today)) {
                         return; // Skip previous dates
                     }
-
+    
                     console.log("Checking availability for cell date: " + cellDate);
-
+    
                     // Remove any previous status (available/not-available)
                     cell.removeClass("clickable unclick");
                     cell.find(".available, .not-available").remove();
-
-                    // Check rest days again for each cell
+    
+                    // Check if the selected doctor has a rest day on this date
                     var normalizedFormattedDate = moment(cellDate).startOf("day");
-
-                    var isRestDay = restDays.some(function (restDayEntry) {
-                        var restDay = moment(restDayEntry).startOf("day");
-                        console.log("Checking rest day: " + restDay.format("YYYY-MM-DD"));
-                        return restDay.isSame(normalizedFormattedDate, "day");
+    
+                    // Filter rest days for the selected doctor
+                    var isRestDay = allRestDays.some(function (restDayEntry) {
+                        // Check if the doctor matches and if the rest day is on the same date
+                        return restDayEntry.doctor_id == selectedDoctorId &&
+                            moment(restDayEntry.rest_day).isSame(normalizedFormattedDate, "day");
                     });
-
+    
                     if (isRestDay) {
-                        console.log("Rest day detected during filter change: " + cellDate);
+                        console.log("Rest day detected for selected doctor: " + cellDate);
                         // Mark the day as unavailable
                         cell.addClass("unclick");
                         cell.css({
                             backgroundColor: "#f8d7da", // Red background for unavailable days
                         });
-                        cell.append("<span class='not-available' style='color:red;font-size:.8rem;'>UNAVAILABLE</span>");
+                        cell.append("<span class='not-available' style='color:red;font-size:.6rem;'>UNAVAILABLE</span>");
                         return; // Skip further processing for rest days
                     }
-
+    
+                    // Check availability for the selected doctor
                     doctorAvailabilities.forEach(function (availability) {
                         if (
                             selectedDoctorId == availability.doctor_id &&
@@ -211,17 +213,17 @@ jQuery(document).ready(function () {
                             console.log("Availability found for doctor: " + selectedDoctorId + " on day: " + dayName);
                             var startTime = moment(availability.start_time, "HH:mm:ss");
                             var endTime = moment(availability.end_time, "HH:mm:ss");
-
+    
                             // Check if the doctor has slots on this day
                             var isDayFullyBooked = true;
                             var currentTime = moment(startTime);
-
+    
                             while (currentTime.isBefore(endTime)) {
                                 var slotStart = currentTime.format("HH:mm:ss");
                                 var slotEnd = moment(currentTime).add(30, "minutes").format("HH:mm:ss");
-
+    
                                 console.log("Checking slot: " + slotStart + " to " + slotEnd);
-
+    
                                 // Check for appointments that overlap with this slot
                                 var isSlotAvailable = !allAppointments.some(function (appointment) {
                                     return (
@@ -231,23 +233,23 @@ jQuery(document).ready(function () {
                                         moment(appointment.end_time, "HH:mm:ss").isAfter(moment(slotStart, "HH:mm:ss"))))
                                     ;
                                 });
-
+    
                                 // If any slot is available, mark the day as not fully booked
                                 if (isSlotAvailable) {
                                     isAvailable = true;
                                     break; // Exit loop early if we find an available slot
                                 }
-
+    
                                 // Increment currentTime manually by adding 30 minutes
                                 currentTime = moment(currentTime).add(30, "minutes");
                             }
-
+    
                             if (!isAvailable) {
                                 isDayFullyBooked = true;
                             }
                         }
                     });
-
+    
                     // If the day is available, apply the "clickable" state
                     if (isAvailable) {
                         console.log("Day available: " + cellDate);
@@ -264,13 +266,138 @@ jQuery(document).ready(function () {
                         cell.css({
                             backgroundColor: "#f8d7da", // Red background for unavailable days
                         });
-                        cell.append("<span class='not-available' style='color:red;font-size:.8rem;'>UNAVAILABLE</span>");
+                        cell.append("<span class='not-available' style='color:red;font-size:.6rem;'>UNAVAILABLE</span>");
                     }
                 }
             });
-
+    
         // After updating cells, re-fetch events to make sure the calendar is in sync
         jQuery("#calendar").fullCalendar("refetchEvents");
     });
+jQuery("#serviceFilter").change(function () {
+    var selectedDoctorId = jQuery("#serviceFilter").val();
+    console.log("Doctor selection changed: " + selectedDoctorId);
+
+    // Clear old events but preserve the "unavailable" state for fully booked days
+    jQuery("#calendar").fullCalendar("removeEvents");
+
+    // Get the current date to compare with the calendar cells
+    var today = moment().startOf('day'); // Today at midnight
+    console.log("Current date for comparison: " + today.format("YYYY-MM-DD"));
+
+    // Iterate through each calendar cell and re-render it based on new availability
+    jQuery("#calendar")
+        .find(".fc-day")
+        .each(function () {
+            var cellDate = jQuery(this).data("date"); // Get the date from the cell
+            if (cellDate) {
+                var date = moment(cellDate); // Parse it into a moment object
+                var cell = jQuery(this); // Current cell
+                var dayName = date.format("dddd").toLowerCase();
+                var isAvailable = false; // Default assumption for availability
+
+                // Only apply text for future or current dates
+                if (date.isBefore(today)) {
+                    return; // Skip previous dates
+                }
+
+                console.log("Checking availability for cell date: " + cellDate);
+
+                // Remove any previous status (available/not-available)
+                cell.removeClass("clickable unclick");
+                cell.find(".available, .not-available").remove();
+
+                // Check if the selected doctor has a rest day on this date
+                var normalizedFormattedDate = moment(cellDate).startOf("day");
+
+                // Filter rest days for the selected doctor
+                var isRestDay = allRestDays.some(function (restDayEntry) {
+                    // Check if the doctor matches and if the rest day is on the same date
+                    return restDayEntry.doctor_id == selectedDoctorId &&
+                        moment(restDayEntry.rest_day).isSame(normalizedFormattedDate, "day");
+                });
+
+                if (isRestDay) {
+                    console.log("Rest day detected for selected doctor: " + cellDate);
+                    // Mark the day as unavailable
+                    cell.addClass("unclick");
+                    cell.css({
+                        backgroundColor: "#f8d7da", // Red background for unavailable days
+                    });
+                    cell.append("<span class='not-available' style='color:red;font-size:.6rem;'>UNAVAILABLE</span>");
+                    return; // Skip further processing for rest days
+                }
+
+                // Check availability for the selected doctor
+                doctorAvailabilities.forEach(function (availability) {
+                    if (
+                        selectedDoctorId == availability.doctor_id &&
+                        availability.day.toLowerCase() === dayName
+                    ) {
+                        console.log("Availability found for doctor: " + selectedDoctorId + " on day: " + dayName);
+                        var startTime = moment(availability.start_time, "HH:mm:ss");
+                        var endTime = moment(availability.end_time, "HH:mm:ss");
+
+                        // Check if the doctor has slots on this day
+                        var isDayFullyBooked = true;
+                        var currentTime = moment(startTime);
+
+                        while (currentTime.isBefore(endTime)) {
+                            var slotStart = currentTime.format("HH:mm:ss");
+                            var slotEnd = moment(currentTime).add(30, "minutes").format("HH:mm:ss");
+
+                            console.log("Checking slot: " + slotStart + " to " + slotEnd);
+
+                            // Check for appointments that overlap with this slot
+                            var isSlotAvailable = !allAppointments.some(function (appointment) {
+                                return (
+                                    appointment.date === date.format("YYYY-MM-DD") &&
+                                    appointment.status !== 4 && // Ensure the appointment is not cancelled
+                                    (moment(appointment.start_time, "HH:mm:ss").isBefore(moment(slotEnd, "HH:mm:ss")) &&
+                                    moment(appointment.end_time, "HH:mm:ss").isAfter(moment(slotStart, "HH:mm:ss"))))
+                                ;
+                            });
+
+                            // If any slot is available, mark the day as not fully booked
+                            if (isSlotAvailable) {
+                                isAvailable = true;
+                                break; // Exit loop early if we find an available slot
+                            }
+
+                            // Increment currentTime manually by adding 30 minutes
+                            currentTime = moment(currentTime).add(30, "minutes");
+                        }
+
+                        if (!isAvailable) {
+                            isDayFullyBooked = true;
+                        }
+                    }
+                });
+
+                // If the day is available, apply the "clickable" state
+                if (isAvailable) {
+                    console.log("Day available: " + cellDate);
+                    cell.addClass("clickable");
+                    cell.css({
+                        cursor: "pointer",
+                        backgroundColor: "#d4edda", // Light green for available
+                    });
+                    cell.append("<span class='available' style='color:green;font-size:.8rem;'>Click to Book</span>");
+                } else {
+                    // Mark the day as unavailable if fully booked
+                    console.log("Day unavailable: " + cellDate);
+                    cell.addClass("unclick");
+                    cell.css({
+                        backgroundColor: "#f8d7da", // Red background for unavailable days
+                    });
+                    cell.append("<span class='not-available' style='color:red;font-size:.6rem;'>UNAVAILABLE</span>");
+                }
+            }
+        });
+
+    // After updating cells, re-fetch events to make sure the calendar is in sync
+    jQuery("#calendar").fullCalendar("refetchEvents");
+});
+    
 });
         

@@ -435,6 +435,11 @@ $(document).ready(function () {
                     $("#bleeding").text(data.bleeding);
                     $("#operation").text(data.operation);
                     $("#others").text(data.others);
+                    $("#tt1").text(data.tt1);
+                    $("#tt2").text(data.tt2);
+                    $("#tt3").text(data.tt3);
+                    $("#tt4").text(data.tt4);
+                    $("#tt5").text(data.tt5);
 
                     //MEDICATION
                     medications.forEach(function (medication) {
@@ -892,20 +897,25 @@ $(document).ready(function () {
                         });
                     }
 
-                    //MEDICAL HISTORY
-                    $("#hypertension").text(data.hypertension);
-                    $("#asthma").text(data.asthma);
-                    $("#heartdisease").text(data.heartdisease);
-                    $("#tuberculosis").text(data.tuberculosis);
-                    $("#diabetes").text(data.diabetes);
-                    $("#goiter").text(data.goiter);
-                    $("#epilepsy").text(data.epilepsy);
-                    $("#allergy").text(data.allergy);
-                    $("#hepatitis").text(data.hepatitis);
-                    $("#medical_vdrl").text(data.medical_vdrl);
-                    $("#bleeding").text(data.bleeding);
-                    $("#operation").text(data.operation);
-                    $("#others").text(data.others);
+                  //MEDICAL HISTORY
+                  $("#hypertension").text(data.hypertension);
+                  $("#asthma").text(data.asthma);
+                  $("#heartdisease").text(data.heartdisease);
+                  $("#tuberculosis").text(data.tuberculosis);
+                  $("#diabetes").text(data.diabetes);
+                  $("#goiter").text(data.goiter);
+                  $("#epilepsy").text(data.epilepsy);
+                  $("#allergy").text(data.allergy);
+                  $("#hepatitis").text(data.hepatitis);
+                  $("#medical_vdrl").text(data.medical_vdrl);
+                  $("#bleeding").text(data.bleeding);
+                  $("#operation").text(data.operation);
+                  $("#others").text(data.others);
+                  $("#tt1").text(data.tt1);
+                  $("#tt2").text(data.tt2);
+                  $("#tt3").text(data.tt3);
+                  $("#tt4").text(data.tt4);
+                  $("#tt5").text(data.tt5);
 
                     medications.forEach(function (medication) {
                         var row = $("<tr>");

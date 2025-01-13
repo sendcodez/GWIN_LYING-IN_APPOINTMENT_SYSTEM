@@ -307,6 +307,29 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <div class="pd-20">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr class="table-info">
+                                                            <th class="text-center">TT1</th>
+                                                            <th class="text-center">TT2</th>
+                                                            <th class="text-center">TT3</th>
+                                                            <th class="text-center">TT4</th>
+                                                            <th class="text-center">TT5</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="tt1" class="text-center"></td>
+                                                            <td id="tt2" class="text-center"></td>
+                                                            <td id="tt3" class="text-center"></td>
+                                                            <td id="tt4" class="text-center"></td>
+                                                            <td id="tt5" class="text-center"></td>
+                                                            
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
                                         </div>
 

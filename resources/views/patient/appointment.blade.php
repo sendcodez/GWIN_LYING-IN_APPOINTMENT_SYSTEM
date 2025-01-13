@@ -1,17 +1,21 @@
 @extends ('layouts.sidebar')
 @section('title', 'Appointment')
 @section('contents')
-    <script>
-        var allAppointments = @json($allAppointments);
-        var doctorAvailabilities = {!! json_encode($doctorAvailabilities) !!};
-        var appointments = {!! json_encode($appointments) !!};
-        var restDays = @json($restDays);
-        var allRestDays = @json($rd);   
-        console.log("Rest Days for selected doctor:", restDays);
-        console.log("All Rest Days:", allRestDays); 
-        
-    </script>
-    
+<script>
+    var allAppointments = @json($allAppointments);
+    var doctorAvailabilities = {!! json_encode($doctorAvailabilities) !!};
+    var appointments = {!! json_encode($appointments) !!};
+    var restDays = @json($restDays);
+    var allRestDays = {!! json_encode($rd) !!};
+    console.log("Rest Days for selected doctor:", restDays);
+    console.log("All Rest Days:", allRestDays); 
+
+    // Log doctor and their rest days in the frontend as well
+    allRestDays.forEach(function (restDayEntry) {
+        console.log("Doctor: " + restDayEntry.doctor_id + ", Rest Days: " + restDayEntry.rest_day);
+    });
+</script>
+
     <script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>

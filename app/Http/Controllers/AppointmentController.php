@@ -23,20 +23,26 @@ class AppointmentController extends Controller
     public function showCalendar(Request $request)
     {
         $doctorId = $request->input('doctor_id');
-
+    
         $allAppointments = Appointment::all();
         $appointments = Appointment::where('user_id', Auth::id())->get();
         $doctorAvailabilities = DoctorAvailability::with(['doctor', 'doctor_services'])->get();
         $services = Service::all();
         $doctors = Doctor::all();
-
+    
         // Retrieve rest days from the RestDay model
         $restDays = RestDay::pluck('rest_day')->toArray();
-        //$restDays = RestDay::where('doctor_id', $doctorId)->pluck('rest_day')->toArray();
         $rd = RestDay::all();
-
-        return view('patient.appointment', compact('allAppointments', 'appointments', 'doctorAvailabilities', 'services', 'restDays', 'rd','doctors'));
+    
+        // Log the doctor and their corresponding rest days
+        foreach ($doctors as $doctor) {
+            $doctorRestDays = RestDay::where('doctor_id', $doctor->id)->pluck('rest_day')->toArray();
+            \Log::info("Doctor: {$doctor->name}, Rest Days: " . implode(", ", $doctorRestDays));
+        }
+    
+        return view('patient.appointment', compact('allAppointments', 'appointments', 'doctorAvailabilities', 'services', 'restDays', 'rd', 'doctors'));
     }
+    
 
 
 

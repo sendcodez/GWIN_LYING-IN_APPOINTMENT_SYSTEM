@@ -73,7 +73,7 @@
                                 <label>Civil Status</label>
                                 <select class="custom-select2 form-control" value="{{ $patient->civil }}" name="civil" required="true">
                                     <option value="single">Single</option>
-                                    <option value="married" selected>Married</option>
+                                    <option value="married">Married</option>
                                     <option value="divorced">Divorced</option>
                                     <option value="widowed">Widowed</option>
                                 </select>
@@ -112,7 +112,7 @@
 
                     <div class="clearfix">
                         <div class="pull-left">
-                            <h4 class="text-blue h4">Husband/Partner's Information</h4>
+                            <h4 class="text-blue h4">Spouse Information</h4>
                             <p class="mb-30">(Type N/A if None)</p>
                         </div>
                     </div>
@@ -274,10 +274,20 @@
                                 <td><input type="text" name="pregnancies[{{ $index }}][present_status]" class="form-control present_status" value="{{ $pregnancyHistory->present_status }}" /></td>
                                 <td><input type="text" name="pregnancies[{{ $index }}][complications]" class="form-control complications" value="{{ $pregnancyHistory->complications }}" /></td>
                                 
+                                <input type="hidden" name="pregnancies[{{ $index }}][id]" value="{{ $pregnancyHistory->id }}">
+                                <input type="hidden" name="pregnancies[{{ $index }}][is_new]" value="0">
+
                             </tr>
                             @endforeach
                         </tbody>
+                            
                     </table>
+                    <td>
+                        <a href="javascript:void(0)" class="text-success font-18" title="Add" id="addBtn">
+                            Add Row
+                        </a>
+                    </td>
+
                 </div>
                 
         </div>
@@ -372,7 +382,7 @@
                                     <label for="tt1" class="col-form-label">TT1</label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input type="text" id="tt2" value="{{ $medicalHistory->tt1 }}" name="tt1" class="form-control">
+                                    <input type="text" id="tt1" value="{{ $medicalHistory->tt1 }}" name="tt1" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -445,12 +455,11 @@
 
 
     <script>
-//APPEND ROWS
-$("#addBtn").on("click", function() {
+ // Add new row when "Add Row" button is clicked
+ $("#addBtn").on("click", function() {
     var pregnancyIndex = parseInt($("[data-row-counter]").attr('data-row-counter'));
-    pregnancyIndex++;
-    $("[data-row-counter]").attr('data-row-counter', pregnancyIndex);
-    console.log("Current pregnancyIndex:", pregnancyIndex);
+    pregnancyIndex++; // Increment the row counter
+    $("[data-row-counter]").attr('data-row-counter', pregnancyIndex); // Update the counter
 
     var newRow = '<tr>' +
         '<td><input type="number" name="pregnancies[' + pregnancyIndex + '][pregnancy]" class="form-control pregnancy" /></td>' +
@@ -458,31 +467,30 @@ $("#addBtn").on("click", function() {
         '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][aog]" class="form-control aog" /></td>' +
         '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][manner]" class="form-control manner" /></td>' +
         '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][bw]" class="form-control bw" /></td>' +
-        '<td><select class="form-control sex" name="pregnancies[' + pregnancyIndex + '][sex]"><option value="male">Male</option><option value="female">Female</option></select></td>' +
+        
+        '<td><select class="form-control sex" name="pregnancies[' + pregnancyIndex + '][sex]">' +
+            '<option value="male">Male</option>' +
+            '<option value="female">Female</option>' +
+        '</select></td>' +
         '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][present_status]" class="form-control present_status" /></td>' +
         '<td><input type="text" name="pregnancies[' + pregnancyIndex + '][complications]" class="form-control complications" /></td>' +
-        '<td><a href="javascript:void(0)" class="text-danger font-16 remove" title="Remove"> <i class="fa fa-trash-o"></i></a></td>' +
-        '</tr>';
+        '<td>' +
+            '<input type="hidden" name="pregnancies[' + pregnancyIndex + '][is_new]" value="1">' +
+            '<a href="javascript:void(0)" class="text-danger font-16 remove" title="Remove"> <i class="fa fa-trash-o"></i></a>' +
+        '</td>' +
+    '</tr>';
 
-    $("#dataTable tbody").append(newRow); 
+    // Append the new row to the table
+    $("#dataTable tbody").append(newRow);
+    console.log($("#dataTable").find("form").serialize());  // Log serialized form data to check if it includes the new rows
 });
 
+
+// Handle row removal
 $("#dataTable").on("click", ".remove", function() {
     $(this).closest("tr").remove();
 });
 
-
-    function clearRowData(row) {
-        const inputs = row.querySelectorAll("input, select"); // Select all input and select elements within the row
-        inputs.forEach(input => {
-            // Clear the value of each input element
-            if (input.type === "text" || input.type === "number" || input.tagName === "SELECT") {
-                input.value = "";
-            } else if (input.type === "date") {
-                input.value = ""; // Set date inputs to an empty string or default date value
-            }
-        });
-    }
 
         function calculateAge() {
             var birthday = new Date(document.getElementById("birthday").value);
