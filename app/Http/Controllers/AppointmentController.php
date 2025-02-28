@@ -162,38 +162,44 @@ class AppointmentController extends Controller
 
 
     public function pendingApp()
-    {
-        $user = Auth::user(); // Get the authenticated user
+{
+    $user = Auth::user(); // Get the authenticated user
 
-        // Get all pending appointments with doctors and services
-        $appointments = Appointment::with(['doctor', 'services'])
-            ->where('status', '1')
-            ->orderBy('date', 'desc')
-            ->get();
+    // Automatically update past appointments where status is 1 to status 5
+    Appointment::where('status', 1)
+        ->whereDate('date', '<', now()->toDateString()) // Check if date is in the past
+        ->update(['status' => 5]);
 
-        // Get all unique doctor IDs from the appointments
-        $doctorIds = $appointments->pluck('doctor_id')->unique();
+    // Get all pending appointments with doctors and services
+    $appointments = Appointment::with(['doctor', 'services'])
+        ->where('status', '1')
+        ->orderBy('date', 'desc')
+        ->get();
 
-        // Fetch all availabilities for these doctors
-        $availabilities = DoctorAvailability::whereIn('doctor_id', $doctorIds)->get();
+    // Get all unique doctor IDs from the appointments
+    $doctorIds = $appointments->pluck('doctor_id')->unique();
 
-        // Group availabilities by doctor ID and day
-        $groupedAvailabilities = $availabilities->groupBy('doctor_id')->mapWithKeys(function ($items, $doctorId) {
-            return [$doctorId => $items->groupBy('day')];
-        });
+    // Fetch all availabilities for these doctors
+    $availabilities = DoctorAvailability::whereIn('doctor_id', $doctorIds)->get();
 
-        // Fetch existing appointments for these doctors
-        $existingAppointments = Appointment::whereIn('doctor_id', $doctorIds)
-            ->whereIn('status', ['1', '2']) // Pending or approved
-            ->get()
-            ->groupBy('doctor_id');
+    // Group availabilities by doctor ID and day
+    $groupedAvailabilities = $availabilities->groupBy('doctor_id')->mapWithKeys(function ($items, $doctorId) {
+        return [$doctorId => $items->groupBy('day')];
+    });
 
-        // Log grouped availabilities to verify structure
-        Log::info('Grouped Availabilities:', $groupedAvailabilities->toArray());
-        Log::info('Existing Appointments:', $existingAppointments->toArray());
+    // Fetch existing appointments for these doctors
+    $existingAppointments = Appointment::whereIn('doctor_id', $doctorIds)
+        ->whereIn('status', ['1', '2']) // Pending or approved
+        ->get()
+        ->groupBy('doctor_id');
 
-        return view('admin.pendingapp', compact('appointments', 'groupedAvailabilities', 'existingAppointments'));
-    }
+    // Log grouped availabilities to verify structure
+    Log::info('Grouped Availabilities:', $groupedAvailabilities->toArray());
+    Log::info('Existing Appointments:', $existingAppointments->toArray());
+
+    return view('admin.pendingapp', compact('appointments', 'groupedAvailabilities', 'existingAppointments'));
+}
+
 
 
 

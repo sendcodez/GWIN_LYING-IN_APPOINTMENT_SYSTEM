@@ -53,25 +53,15 @@
                                                                   
                                     
                                     <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                               
-                                                <form action="{{ route('user.destroy', $user->id) }}"
-                                                    method="POST" style="display: inline;"
-                                                    id="deleteForm{{ $user->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                <button type="button" class="dropdown-item delete-btn">
-                                                    <i class="dw dw-trash"></i>Delete
-                                                </button>
-                                            </form>
-                                            </div>
-                                        </div>
+                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST" id="deleteForm{{ $user->id }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger delete-btn">
+                                                Delete
+                                            </button>
+                                        </form>
                                     </td>
+                                    
                                 </tr>
                                 @endforeach
                             </tbody>

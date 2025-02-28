@@ -30,7 +30,7 @@
                                     <th>EMAIL</th>
                                     @if (Auth::user()->usertype == '0')
                                         <th>STATUS</th>
-                                        <th>ACTION</th>
+                                        <th class="text-center">ACTION</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -82,47 +82,34 @@
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                        href="#" role="button" data-toggle="dropdown">
-                                                        <i class="dw dw-more"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('doctor.show', ['doctor' => $doctor->id]) }}"><i
-                                                                class="dw dw-eye"></i> View</a>
-                                                        <!--
-                                                                                <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                                                    data-bs-target="#editUserModal{{ $doctor->id }}">
-                                                                                    <i class="dw dw-edit2"></i>Edit
-                                                                                </button>
-                                                                                -->
-                                                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                            data-bs-target="#editAvailabilityModal{{ $doctor->id }}">
-                                                            <i class="dw dw-edit2"></i> Edit Availability
-                                                        </button>
-
-                                                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                            data-bs-target="#addRestDayModal{{ $doctor->id }}">
-                                                            <i class="dw dw-calendar-1"></i> Add Rest Day
-                                                        </button>
-
-                                                        <form action="{{ route('doctor.destroy', $doctor->id) }}"
-                                                            method="POST" style="display: inline;"
-                                                            id="deleteForm{{ $doctor->id }}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="dropdown-item delete-btn"
-                                                                data-user-id="{{ $doctor->id }}">
-                                                                <i class="dw dw-delete-3"></i> Delete
-                                                                <!-- Example using Bootstrap Icons -->
-                                                            </button>
-                                                        </form>
-
-                                                    </div>
-                                                </div>
+                                            <td class="text-center" style="white-space: nowrap;">
+                                                <!-- View Button -->
+                                                <a href="{{ route('doctor.show', ['doctor' => $doctor->id]) }}" class="btn btn-primary btn-sm" title="View">
+                                                    <i class="dw dw-eye"></i> View
+                                                </a>
+                                            
+                                                <!-- Edit Availability Button -->
+                                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#editAvailabilityModal{{ $doctor->id }}" title="Edit Availability">
+                                                    <i class="dw dw-edit2"></i> Edit Availability
+                                                </button>
+                                            
+                                                <!-- Add Rest Day Button -->
+                                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#addRestDayModal{{ $doctor->id }}" title="Add Rest Day">
+                                                    <i class="dw dw-calendar-1"></i> Add Rest Day
+                                                </button>
+                                            
+                                                <!-- Delete Button -->
+                                                <form action="{{ route('doctor.destroy', $doctor->id) }}" method="POST" class="d-inline" id="deleteForm{{ $doctor->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-danger btn-sm delete-btn" data-user-id="{{ $doctor->id }}" title="Delete">
+                                                        <i class="dw dw-delete-3"></i> Delete
+                                                    </button>
+                                                </form>
                                             </td>
+                                            
                                         @endif
                                     </tr>
                                     <!-- EDIT AVAILABILITY MODAL -->
@@ -266,11 +253,13 @@
                                         <div class="form-group">
                                             <input type="text" name="lastname" class="form-control" required>
                                         </div>
+                                        
                                         <label>Contact number</label>
                                         <div class="form-group">
                                             <input type="text" name="contact_number" class="form-control" required>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-md-6">
                                         <label>Address</label>
                                         <div class="form-group">
@@ -298,6 +287,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                <label>Gender</label>
+<div class="form-group">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+        <label class="form-check-label" for="male">Male</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
+        <label class="form-check-label" for="female">Female</label>
+    </div>
+</div>
+
                                 <div class="col-md-12">
                                     <label for="description">Short Description</label>
                                     <div class="form-group">

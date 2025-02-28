@@ -33,7 +33,7 @@
                                 <!--    <th class="text-center">MODE OF APPOINTMENT</th> -->
                                 <th>STATUS</th>
 
-                                <th>ACTION</th>
+                                <th class="text-center">ACTION</th>
 
                             </tr>
                         </thead>
@@ -76,84 +76,58 @@
                                     <!--   <td class="text-center">{{ $appointment->remarks }}</td> -->
                                     <td>
                                         @php
-                                            $statusWord = '';
-                                            $badgeClass = '';
-                                            switch ($appointment->status) {
-                                                case 1:
-                                                    $statusWord = 'Pending';
-                                                    $badgeClass = 'badge badge-warning';
-                                                    break;
-                                                case 2:
-                                                    $statusWord = 'Approved';
-                                                    $badgeClass = 'badge badge-success';
-                                                    break;
-                                                case 3:
-                                                    $statusWord = 'Completed';
-                                                    $badgeClass = 'badge badge-primary';
-                                                    break;
-                                                case 4:
-                                                    $statusWord = 'Cancelled';
-                                                    $badgeClass = 'badge badge-danger';
-                                                    break;
-                                                case 5:
-                                                    $statusWord = 'Disapproved';
-                                                    $badgeClass = 'badge badge-info';
-                                                    break;
-                                                default:
-                                                    $statusWord = 'Unknown';
-                                                    $badgeClass = 'badge badge-secondary';
-                                                    break;
-                                            }
+                                            $statusWord = match ($appointment->status) {
+                                                1 => 'Pending',
+                                                2 => 'Approved',
+                                                3 => 'Completed',
+                                                4 => 'Cancelled',
+                                                5 => 'Disapproved',
+                                                default => 'Unknown',
+                                            };
                                         @endphp
-                                        <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
+                                        <span class="badge" style="background-color: yellow; color: black;font-size:1rem;font-weight:100;width:100px;">{{ $statusWord }}</span>
                                     </td>
+                                    
 
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#showModal{{ $appointment->id }}">
-                                                    <i class="dw dw-eye"></i> Show
+                                    <td class="text-center" style="white-space: nowrap; width: 350px;">
+                                        <div class="d-flex justify-content-between">
+                                            <!-- Show Button -->
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#showModal{{ $appointment->id }}">
+                                                <i class="dw dw-eye"></i> Show
+                                            </button>
+                                    
+                                            @if ($appointment->status == 1)
+                                                <!-- Approve Button -->
+                                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#approveModal" data-appointment-id="{{ $appointment->id }}"
+                                                    data-doctor-id="{{ $appointment->doctor_id }}" data-date="{{ $appointment->date }}">
+                                                    <i class="dw dw-check"></i> Approve
                                                 </button>
-                                                @if ($appointment->status == 1)
-                                                    <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                        data-bs-target="#approveModal"
-                                                        data-appointment-id="{{ $appointment->id }}"
-                                                        data-doctor-id="{{ $appointment->doctor_id }}"
-                                                        data-date="{{ $appointment->date }}">
-                                                        <i class="dw dw-check"></i> Approve
+                                    
+                                                <!-- Disapprove Button -->
+                                                <form action="{{ route('appointments.disapprove', $appointment->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-warning btn-sm">
+                                                        <i class="dw dw-cancel"></i> Disapprove
                                                     </button>
-                                                @endif
-
-                                                @if ($appointment->status == 1)
-                                                    <form action="{{ route('appointments.disapprove', $appointment->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="dropdown-item">
-                                                            <i class="dw dw-cancel"></i> Disapprove
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                                @if ($appointment->status == 2)
-                                                    <form action="{{ route('appointments.cancel', $appointment->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="dropdown-item cancel-btn">
-                                                            <i class="dw dw-trash"></i> Cancel
-                                                        </button>
-                                                    </form>
-                                                @endif
-
-                                            </div>
+                                                </form>
+                                            @endif
+                                    
+                                            @if ($appointment->status == 2)
+                                                <!-- Cancel Button -->
+                                                <form action="{{ route('appointments.cancel', $appointment->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-danger btn-sm cancel-btn">
+                                                        <i class="dw dw-trash"></i> Cancel
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
-
+                                    
                                 </tr>
 
                                 <!-- Modal for appointment details -->

@@ -20,8 +20,8 @@
                                     <th>CONTACT NUMBER</th>
                                     <th style="text-align: center">ADDRESS</th>
                                     <th>AGE</th>
-                                    <th>QR CODE</th>
-                                    <th>MEDICAL ACTION</th>
+                                    
+                                    <th class="text-center">MEDICAL ACTION</th>
                                     <th>ACTION</th>
                                 </tr>
                             </thead>
@@ -47,127 +47,48 @@
                                             </div>
                                         </td>
                                         <td>{{ $patient->contact_number }}</td>
-                                        <td>{{ $patient->province }}, {{ $patient->city }}, {{ $patient->barangay }}</td>
+                                        <td>{{ $patient->barangay }}, {{ $patient->city }}, {{ $patient->province }}</td>
                                         <td>{{ $patient->age }}</td>
+                                       
+                                        <td class="text-center" style="white-space: nowrap; width: 350px;">
+                                            <div class="d-flex justify-content-between">
+                                                <button type="button" class="btn btn-primary btn-sm add-laboratory-btn"
+                                                    data-patient-id="{{ $patient->user_id }}"
+                                                    data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                    Lab Result
+                                                </button>
+                                        
+                                                <button type="button" class="btn btn-success btn-sm add-record-btn"
+                                                    data-patient-id="{{ $patient->user_id }}"
+                                                    data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                    PNCU Record
+                                                </button>
+                                        
+                                                <button type="button" class="btn btn-info btn-sm add-ultrasound-btn"
+                                                    data-patient-id="{{ $patient->user_id }}"
+                                                    data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
+                                                    Ultrasound
+                                                </button>
+                                            </div>
+                                        </td>
+                                        
+                                        
                                         <td>
-                                            <img src="{{ asset('qr_image/' . $patient->qr_name) }}" alt="QR Code"
-                                                style="max-width: 100px;">
-
+                                            <!-- Edit Button -->
+                                            <a href="{{ route('patient.edit', ['userId' => $patient->user_id]) }}" class="btn btn-link text-primary" title="Edit">
+                                                <i class="dw dw-edit2"></i>
+                                            </a>
+                                        
+                                            <!-- Delete Button -->
+                                            <form action="{{ route('patient.destroy', $patient->id) }}" method="POST" id="deleteForm{{ $patient->id }}" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-link text-danger delete-btn" title="Delete" data-user-id="{{ $patient->id }}">
+                                                    <i class="dw dw-delete-3"></i>
+                                                </button>
+                                            </form>
                                         </td>
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                    href="#" role="button" data-toggle="dropdown">
-                                                    <i class="dw dw-more"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                    <!--
-                                                            <button type="button" class="dropdown-item add-attachment-btn"
-                                                                data-patient-id="{{ $patient->user_id }}"
-                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                                <i class="dw dw-add"></i> Add Attachment
-                                                            </button>
-                                                            
-                                                            <button type="button" class="dropdown-item add-delivery-btn"
-                                                                data-patient-id="{{ $patient->user_id }}"
-                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                                <i class="dw dw-add"></i> Add Delivery Record
-                                                            </button>
-
-                                                            <button type="button" class="dropdown-item add-labor-btn"
-                                                                data-patient-id="{{ $patient->user_id }}"
-                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                                <i class="dw dw-add"></i> Add Labor Monitoring
-                                                            </button>
-                                                            -->
-                                                    <button type="button" class="dropdown-item add-laboratory-btn"
-                                                        data-patient-id="{{ $patient->user_id }}"
-                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                        <i class="dw dw-add"></i> Add Laboratory Result
-                                                    </button>
-                                                    <!--
-                                                            <button type="button" class="dropdown-item add-medication-btn"
-                                                                data-patient-id="{{ $patient->user_id }}"
-                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                                <i class="dw dw-add"></i> Add Medication
-                                                            </button>
-                                                        -->
-                                                    <!--
-                                                            <button type="button" class="dropdown-item add-newborn-btn"
-                                                                data-patient-id="{{ $patient->user_id }}"
-                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
-                                                                data-patient-lastname="{{ $patient->lastname }}"
-                                                                data-patient-firstname="{{ $patient->firstname }}">
-                                                                <i class="dw dw-add"></i> Add Newborn Record
-                                                            </button>
-
-                                                            <button type="button" class="dropdown-item add-postpartum-btn"
-                                                                data-patient-id="{{ $patient->user_id }}"
-                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                                <i class="dw dw-add"></i> Add Postpartum Monitoring
-                                                            </button>
-
-                                                            <button type="button" class="dropdown-item add-physician-btn"
-                                                                data-patient-id="{{ $patient->user_id }}"
-                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
-                                                                data-patient-age="{{ $patient->age }}"
-                                                                data-patient-address="{{ $patient->barangay }} {{ $patient->city }} {{ $patient->province }}">
-                                                                <i class="dw dw-add"></i> Add Physician's Order
-                                                            </button>
-                                                        -->
-                                                    <button type="button" class="dropdown-item add-record-btn"
-                                                        data-patient-id="{{ $patient->user_id }}"
-                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                        <i class="dw dw-add"></i> Add PNCU Record
-                                                    </button>
-                                                    <!--
-                                                            <button type="button" class="dropdown-item add-staff-btn"
-                                                                data-patient-id="{{ $patient->user_id }}"
-                                                                data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}"
-                                                                data-patient-age="{{ $patient->age }}"
-                                                                data-patient-sex="{{ $patient->sex }}"
-                                                                data-patient-civil="{{ $patient->civil }}">
-                                                                <i class="dw dw-add"></i> Add Staff Notes
-                                                            </button>
-                                                        -->
-                                                    <button type="button" class="dropdown-item add-ultrasound-btn"
-                                                        data-patient-id="{{ $patient->user_id }}"
-                                                        data-patient-name="{{ $patient->firstname }} {{ $patient->lastname }}">
-                                                        <i class="dw dw-add"></i> Add Ultrasound Result
-                                                    </button>
-
-                                                </div>
-                                        </td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                    href="#" role="button" data-toggle="dropdown">
-                                                    <i class="dw dw-more"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                    <!--
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('patients.show', ['userId' => $patient->user_id]) }}">
-                                                                <i class="dw dw-eye"></i> View
-                                                            </a>
-                                                            -->
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('patient.edit', ['userId' => $patient->user_id]) }}">
-                                                        <i class="dw dw-edit2"></i> Edit
-                                                    </a>
-                                                    <form action="{{ route('patient.destroy', $patient->id) }}"
-                                                        method="POST" style="display: inline;"
-                                                        id="deleteForm{{ $patient->id }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="dropdown-item delete-btn"
-                                                            data-user-id="{{ $patient->id }}">
-                                                            <i class="dw dw-delete-3"></i> Delete
-                                                            <!-- Example using Bootstrap Icons -->
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                        </td>
+                                        
                                     </tr>
                                 @endforeach
                             </tbody>

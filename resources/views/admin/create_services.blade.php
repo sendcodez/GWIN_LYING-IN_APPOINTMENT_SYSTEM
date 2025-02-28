@@ -60,26 +60,16 @@
                                     </td>
                                                                   
                                     
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                              
-                                                <form action="{{ route('service.destroy', $service->id) }}"
-                                                    method="POST" style="display: inline;"
-                                                    id="deleteForm{{ $service->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                <button type="button" class="dropdown-item delete-btn">
-                                                    <i class="dw dw-trash"></i>Delete
-                                                </button>
-                                            </form>
-                                            </div>
-                                        </div>
+                                    <td class="text-center">
+                                        <form action="{{ route('service.destroy', $service->id) }}" method="POST" id="deleteForm{{ $service->id }}" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-sm delete-btn" title="Delete">
+                                                <i class="dw dw-trash"></i> Delete
+                                            </button>
+                                        </form>
                                     </td>
+                                    
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -114,22 +104,36 @@
                                     <div class="form-group">
                                         <input type="text" name="name" class="form-control" required>
                                     </div>
+                            
                                     <label>Price</label>
                                     <div class="form-group">
                                         <input type="number" name="price" class="form-control">
                                     </div> 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="type" id="type" value="1">
-                                        <label class="form-check-label" for="type">Package</label>
-                                        <input type="hidden" name="type" value="0">
+                            
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="type" id="type" value="1">
+                                                <label class="form-check-label" for="type">Package</label>
+                                                <input type="hidden" name="type" value="0">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="referral" id="referral" value="1">
+                                                <label class="form-check-label" for="referral">Referral</label>
+                                                <input type="hidden" name="referral" value="0">
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label> Short Description</label>
+                            
+                                    <div class="form-group mt-3">
+                                        <label>Short Description</label>
                                         <textarea class="form-control" name="description" required></textarea>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
 
                         <div class="modal-footer">

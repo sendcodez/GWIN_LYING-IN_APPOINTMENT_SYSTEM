@@ -32,7 +32,7 @@
                                 <th>Date</th>
                                 <th>Time</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th >Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -80,51 +80,25 @@
                                         @endphp
                                         <span class="{{ $badgeClass }}">{{ $statusWord }}</span>
                                     </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a class="dropdown-item"
-                                                    href="{{ route('mypatient.show', ['userId' => $appointment->user_id]) }}">
-                                                    <i class="dw dw-eye"></i> View
-                                                </a>
-                                                <!--
-                                                <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#showModal{{ $appointment->id }}">
-                                                    <i class="dw dw-add"></i> Add Medication
+                                    <td class="text-center" style="white-space: nowrap;">
+                                        <!-- View Patient Button -->
+                                        <a href="{{ route('mypatient.show', ['userId' => $appointment->user_id]) }}" 
+                                           class="btn btn-primary btn-sm" title="View Patient">
+                                            <i class="dw dw-eye"></i> View
+                                        </a>
+                                    
+                                        @if ($appointment->status == 2)
+                                            <!-- Complete Appointment Button -->
+                                            <form action="{{ route('appointments.complete', $appointment->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-success btn-sm" title="Complete">
+                                                    <i class="dw dw-tick"></i> Complete
                                                 </button>
-                                                -->
-
-                                                @if ($appointment->status == 2)
-                                                    <form action="{{ route('appointments.complete', $appointment->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit"
-                                                            class="dropdown-item \">
-                                                            <i class="dw
-                                                            dw-tick"></i> Complete
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                                <!--
-                                                @if ($appointment->status == 1 || $appointment->status == 2)
-                                                    <form action="{{ route('appointments.cancel', $appointment->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="dropdown-item cancel-btn">
-                                                            <i class="dw dw-trash"></i> Cancel
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                                -->
-                                            </div>
-                                        </div>
+                                            </form>
+                                        @endif
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                         </tbody>

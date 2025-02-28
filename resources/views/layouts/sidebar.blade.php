@@ -319,7 +319,7 @@
                     @if (Auth::user()->usertype == '1' || Auth::user()->usertype == '0')
                         <li class="dropdown">
                             <a href="{{ route('admin.home') }}" class="dropdown-toggle no-arrow @isActiveRoute('admin.home')">
-                                <span class="micon bi bi-house"></span><span class="mtext">Dashboard</span>
+                                <span class="micon bi bi-house"></span><span class="mtext">Clinic Overview</span>
                             </a>
                         </li>
                         <!--
@@ -330,55 +330,64 @@
 
                     </li>
                     -->
-                        <li class="dropdown @isActiveRoute('appointments.*')">
-                            <a href="javascript:;" class="dropdown-toggle">
-                                <span class="micon bi bi-calendar4-week"></span><span
-                                    class="mtext">Appointments</span>
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="{{ route('appointments.pending') }}" class="@isActiveRoute('appointments.pending')">
-                                        Pending
-                                        @if($appointmentCounts['pending'] > 0)
-                                            <span class="badge">{{ $appointmentCounts['pending'] }}</span>
-                                        @endif
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('appointments.approved') }}" class="@isActiveRoute('appointments.approved')">
-                                        Approved
-                                        @if($appointmentCounts['approved'] > 0)
-                                            <span class="badge">{{ $appointmentCounts['approved'] }}</span>
-                                        @endif
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('appointments.completed') }}" class="@isActiveRoute('appointments.completed')">
-                                        Completed
-                                        @if($appointmentCounts['completed'] > 0)
-                                            <span class="badge">{{ $appointmentCounts['completed'] }}</span>
-                                        @endif
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('appointments.cancelled') }}" class="@isActiveRoute('appointments.cancelled')">
-                                        Cancelled
-                                        @if($appointmentCounts['cancelled'] > 0)
-                                            <span class="badge">{{ $appointmentCounts['cancelled'] }}</span>
-                                        @endif
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('appointments.disapproved') }}" class="@isActiveRoute('appointments.disapproved')">
-                                        Disapproved
-                                        @if($appointmentCounts['disapproved'] > 0)
-                                            <span class="badge">{{ $appointmentCounts['disapproved'] }}</span>
-                                        @endif
-                                    </a>
-                                </li>
-                            </ul>
-                            
-                        </li>
+                    <li class="dropdown @isActiveRoute('appointments.*')">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon bi bi-calendar4-week"></span><span class="mtext">Appointments</span>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('appointments.pending') }}" class="@isActiveRoute('appointments.pending')">
+                                    Pending
+                                    @if($appointmentCounts['pending'] > 0)
+                                        <span class="badge" style="background-color: yellow; color: black;">
+                                            {{ $appointmentCounts['pending'] }}
+                                        </span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('appointments.approved') }}" class="@isActiveRoute('appointments.approved')">
+                                    Approved
+                                    @if($appointmentCounts['approved'] > 0)
+                                        <span class="badge" style="background-color: green; color: white;">
+                                            {{ $appointmentCounts['approved'] }}
+                                        </span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('appointments.completed') }}" class="@isActiveRoute('appointments.completed')">
+                                    Completed
+                                    @if($appointmentCounts['completed'] > 0)
+                                        <span class="badge" style="background-color: blue; color: white;">
+                                            {{ $appointmentCounts['completed'] }}
+                                        </span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('appointments.cancelled') }}" class="@isActiveRoute('appointments.cancelled')">
+                                    Cancelled
+                                    @if($appointmentCounts['cancelled'] > 0)
+                                        <span class="badge" style="background-color: red; color: white;">
+                                            {{ $appointmentCounts['cancelled'] }}
+                                        </span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('appointments.disapproved') }}" class="@isActiveRoute('appointments.disapproved')">
+                                    Disapproved
+                                    @if($appointmentCounts['disapproved'] > 0)
+                                        <span class="badge" style="background-color: red; color: white;">
+                                            {{ $appointmentCounts['disapproved'] }}
+                                        </span>
+                                    @endif
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
 
 
                         @if (Auth::user()->usertype == '1')
