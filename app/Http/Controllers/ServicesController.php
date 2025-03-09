@@ -24,38 +24,30 @@ class ServicesController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-
-        try {
+{
+    try {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'nullable|numeric',
             'description' => 'required|string|max:255',
-            'type' => 'nullable|boolean',   
+            'type' => 'nullable|boolean',
+            'referral' => 'nullable|boolean', // ✅ Add referral validation
         ]);
-        
-        // Convert the checkbox value to 1 or 0
-        $type = $request->has('type') && $request->input('type') ? 1 : 0;
-        
-        // Save the form data into the database
-        $service = Service::create($validatedData);
-        
 
-        $user = Auth::user();
-        $action = 'added_service';
-        $description = 'Added a service: ' . $service->name;
-        ActivityLog::create([
-            'user_id' => $user->id,
-            'name' => $user->firstname,
-            'action' => $action,
-            'description' => $description,
-        ]);
+        // ✅ Explicitly set referral (force 1 or 0)
+        $validatedData['referral'] = $request->has('referral') ? 1 : 0;
+
+        // Debug before saving
+    
+
+        $service = Service::create($validatedData);
+
         return back()->with('success', 'Service added successfully.');
     } catch (\Exception $e) {
-        // Handle the exception, you can log it or return a response
-        return redirect()->back()->with('error', 'An error occurred while saving data');
+        return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
     }
 }
+
     
     /**
      * Display the specified resource.

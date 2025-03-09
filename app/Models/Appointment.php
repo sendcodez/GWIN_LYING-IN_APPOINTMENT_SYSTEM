@@ -21,6 +21,7 @@ class Appointment extends Model
         'end_time',
         'remarks',
         'status',
+        'referral',
     ];
     public function doctor()
     {

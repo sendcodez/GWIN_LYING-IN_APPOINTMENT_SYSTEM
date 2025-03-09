@@ -74,8 +74,10 @@ class DoctorController extends Controller
                 'expertise' => 'required|integer|exists:services,id',
                 'email' => 'required|email|unique:doctors',
                 'password' => 'required|string|min:8',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:30748'
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:30748',
                 // You may need to add more validation rules for day and time inputs
+                'gender' => 'required|in:Male,Female',
+
             ]);
 
             $image = $request->file('image');
@@ -94,6 +96,7 @@ class DoctorController extends Controller
                 'email' => $validatedData['email'],
                 'email_verified_at' => '2024-08-01 09:34:57',
                 'usertype' => 2,
+                'gender' => $validatedData['gender'],
                 'password' => bcrypt($validatedData['password']),
             ]);
 
@@ -113,6 +116,7 @@ class DoctorController extends Controller
                 'email' => $validatedData['email'],
                 'image' => $imageName,
                 'password' => bcrypt($validatedData['password']),
+                'gender' => $validatedData['gender'],
                 'expertise' => $validatedData['expertise'] // Store the expertise string
             ]);
 
@@ -175,6 +179,7 @@ class DoctorController extends Controller
                 'address' => 'required|string',
                 'description' => 'required|string',
                 'expertise' => 'required|integer',
+                'gender' => 'required|in:Male,Female',
                 'email' => 'required|email|unique:doctors,email,' . $doctor->id,
                 'password' => 'required|string|min:8',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:30748',
@@ -191,6 +196,7 @@ class DoctorController extends Controller
             $doctor->contact_no = $request->input('contact_number');
             $doctor->address = $request->input('address');
             $doctor->expertise = $request->input('expertise');
+            $doctor->gender = $request->input('gender');
             $doctor->description = $request->input('description');
             $doctor->email = $request->input('email');
             $doctor->password = $request->input('password');

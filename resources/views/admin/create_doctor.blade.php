@@ -84,32 +84,36 @@
                                             </td>
                                             <td class="text-center" style="white-space: nowrap;">
                                                 <!-- View Button -->
-                                                <a href="{{ route('doctor.show', ['doctor' => $doctor->id]) }}" class="btn btn-primary btn-sm" title="View">
+                                                <a href="{{ route('doctor.show', ['doctor' => $doctor->id]) }}"
+                                                    class="btn btn-primary btn-sm" title="View">
                                                     <i class="dw dw-eye"></i> View
                                                 </a>
-                                            
+
                                                 <!-- Edit Availability Button -->
                                                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#editAvailabilityModal{{ $doctor->id }}" title="Edit Availability">
+                                                    data-bs-target="#editAvailabilityModal{{ $doctor->id }}"
+                                                    title="Edit Availability">
                                                     <i class="dw dw-edit2"></i> Edit Availability
                                                 </button>
-                                            
+
                                                 <!-- Add Rest Day Button -->
                                                 <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#addRestDayModal{{ $doctor->id }}" title="Add Rest Day">
+                                                    data-bs-target="#addRestDayModal{{ $doctor->id }}"
+                                                    title="Add Rest Day">
                                                     <i class="dw dw-calendar-1"></i> Add Rest Day
                                                 </button>
-                                            
+
                                                 <!-- Delete Button -->
-                                                <form action="{{ route('doctor.destroy', $doctor->id) }}" method="POST" class="d-inline" id="deleteForm{{ $doctor->id }}">
+                                                <form action="{{ route('doctor.destroy', $doctor->id) }}" method="POST"
+                                                    class="d-inline" id="deleteForm{{ $doctor->id }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm delete-btn" data-user-id="{{ $doctor->id }}" title="Delete">
+                                                    <button type="button" class="btn btn-danger btn-sm delete-btn"
+                                                        data-user-id="{{ $doctor->id }}" title="Delete">
                                                         <i class="dw dw-delete-3"></i> Delete
                                                     </button>
                                                 </form>
                                             </td>
-                                            
                                         @endif
                                     </tr>
                                     <!-- EDIT AVAILABILITY MODAL -->
@@ -253,19 +257,19 @@
                                         <div class="form-group">
                                             <input type="text" name="lastname" class="form-control" required>
                                         </div>
-                                        
+
                                         <label>Contact number</label>
                                         <div class="form-group">
                                             <input type="text" name="contact_number" class="form-control" required>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-6">
                                         <label>Address</label>
                                         <div class="form-group">
                                             <input type="text" name="address" class="form-control" required>
                                         </div>
-                                    
+
                                         <label>Service Offered</label>
                                         <div class="form-group">
                                             <select name="expertise" class="selectpicker form-control" data-size="5"
@@ -288,16 +292,18 @@
                                     </div>
                                 </div>
                                 <label>Gender</label>
-<div class="form-group">
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
-        <label class="form-check-label" for="male">Male</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
-        <label class="form-check-label" for="female">Female</label>
-    </div>
-</div>
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="male"
+                                            value="Male" required>
+                                        <label class="form-check-label" for="male">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="female"
+                                            value="Female" required>
+                                        <label class="form-check-label" for="female">Female</label>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-12">
                                     <label for="description">Short Description</label>
@@ -360,7 +366,7 @@
                                         <span class="d-block">Submit</span>
                                     </button>
                                 </div>
-                                
+
                             </div>
                         </form>
                     </div>

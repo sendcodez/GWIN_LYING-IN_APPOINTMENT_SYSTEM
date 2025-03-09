@@ -159,6 +159,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/appointments/{id}/approve', [AppointmentController::class, 'approve'])->name('appointments.approve');
 
     Route::get('/get-availability', [DoctorController::class, 'getAvailability']);
+    
 
     //WEBSITE ROUTE
     Route::get('admin/website', [WebsiteController::class, 'index'])->name('website.index');

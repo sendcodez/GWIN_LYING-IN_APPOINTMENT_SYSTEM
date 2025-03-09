@@ -24,6 +24,7 @@ class Doctor extends Model
         'usertype',
         'status',
         'image',
+        'gender',
     ];
     public function availabilities()
     {

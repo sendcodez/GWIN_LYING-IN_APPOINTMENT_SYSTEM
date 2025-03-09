@@ -120,10 +120,12 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check">
+                                                <input type="hidden" name="referral" value="0"> <!-- This ensures 0 if unchecked -->
                                                 <input class="form-check-input" type="checkbox" name="referral" id="referral" value="1">
                                                 <label class="form-check-label" for="referral">Referral</label>
-                                                <input type="hidden" name="referral" value="0">
                                             </div>
+                                            
+                                            
                                         </div>
                                     </div>
                             

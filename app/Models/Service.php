@@ -16,6 +16,7 @@ class Service extends Model
         'price',
         'type',
         'status',
+        'referral',
     ];
 
    /* public function appointments()

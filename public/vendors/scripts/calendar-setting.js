@@ -142,10 +142,19 @@ jQuery(document).ready(function () {
             ) {
                 return false; // Prevent click on past dates or unavailable days
             }
+            $('#selected_date').val(date.format('YYYY-MM-DD'));
+            $('#selected_day').val(date.format('dddd').toLowerCase());
+            
+            // Show the modal
+            $('#modal-view-event-add').modal('show');
+            
+            // Add this line to populate the form fields
+            populateFormFromFilter();  
 
             // Only allow click if the day is available
             jQuery("#selected_date").val(date.format("YYYY-MM-DD"));
             jQuery("#modal-view-event-add").modal();
+            
         },
     });
 

@@ -12,14 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('services', function (Blueprint $table) {
-            $table->string('referral')->nullable();
-      
-
+            $table->boolean('referral')->default(0);
         });
-        Schema::table('doctors', function (Blueprint $table) {
-            $table->string('gender')->nullable();
-      
 
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('gender', ['Male', 'Female'])->after('usertype')->nullable();
+        });
+    
+        Schema::table('doctors', function (Blueprint $table) {
+            $table->enum('gender', ['Male', 'Female'])->after('expertise')->nullable();
+        });
+
+        Schema::table('appointments', function (Blueprint $table) {
+            $table->boolean('referral')->default(0);
         });
     }
 
