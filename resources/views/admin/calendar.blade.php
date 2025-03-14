@@ -1,21 +1,20 @@
 @extends ('layouts.sidebar')
 @section('title', 'Appointment')
 @section('contents')
-<script>
-    var allAppointments = @json($allAppointments);
-    var doctorAvailabilities = {!! json_encode($doctorAvailabilities) !!};
-    var appointments = {!! json_encode($appointments) !!};
-    var restDays = @json($restDays);
-    var allRestDays = {!! json_encode($rd) !!};
-    console.log("Rest Days for selected doctor:", restDays);
-    console.log("All Rest Days:", allRestDays); 
+    <script>
+        var allAppointments = @json($allAppointments);
+        var doctorAvailabilities = {!! json_encode($doctorAvailabilities) !!};
+        var appointments = {!! json_encode($appointments) !!};
+        var restDays = @json($restDays);
+        var allRestDays = {!! json_encode($rd) !!};
+        console.log("Rest Days for selected doctor:", restDays);
+        console.log("All Rest Days:", allRestDays);
 
-    // Log doctor and their rest days in the frontend as well
-    allRestDays.forEach(function (restDayEntry) {
-        console.log("Doctor: " + restDayEntry.doctor_id + ", Rest Days: " + restDayEntry.rest_day);
-    });
-</script>
-
+        // Log doctor and their rest days in the frontend as well
+        allRestDays.forEach(function(restDayEntry) {
+            console.log("Doctor: " + restDayEntry.doctor_id + ", Rest Days: " + restDayEntry.rest_day);
+        });
+    </script>
 
     <script src="{{ asset('vendors/scripts/calendar-setting.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -118,9 +117,47 @@
                     <div class="row">
                         <!-- Calendar Section -->
                         <div class="calendar-wrap col-md-6 col-sm-6 custom-bordered-table">
+                            <select id="serviceFilter" onchange="filterTable(); refreshCalendar();" class="form-control mb-3">
+                                @foreach ($doctors as $doctor)
+                                    @php
+                                        $service = $doctor->services->first()->name; // Assuming each doctor has only one service
+                                    @endphp
+                                    <option value="{{ $doctor->id }}">
+                                        Dr. {{ $doctor->lastname }} ( {{ $doctor->gender }} ) | Service Offered:
+                                        {{ $service }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <!--
+                                    <p>Please Click the Calendar Cell to Book an Appointment</p>
+                                    <p>Please refer to the availability of doctors and services before scheduling</p>
+                                    <b> SCHEDULE POLICIES</b>
+                                    <p style="text-align:justify;font-size:.9rem;">
 
+                                        1.<b> Appointment Booking</b>
+                                        <br>
+                                        Appointments can be booked online or through our office during business hours.
+                                        <br>
+                                        2. <b>Late Arrival</b>
+                                        <br>
+                                        Patients are requested to arrive at least 10 minutes before their scheduled appointment
+                                        time. Late arrivals may result in a shortened appointment or rescheduling, depending on
+                                        availability.
+                                        <br>
+                                        3. <b>Policy Changes</b>
+                                        <br>
+                                        The schedule policy is subject to change. Any changes will be communicated to patients
+                                        through email or posted on our website.
+                                        <br>
+                                        4. <b>Contact Information</b>
+                                        <br>
+                                        For any questions regarding this policy or to make changes to your appointment, please
+                                        contact our office at gwinlying@gmail.com.
+                                    </p>
+                                     -->
                             <div id="calendar" style="font-size:.8rem;"></div>
                         </div>
+
                         <!-- Table Section -->
 
                         <div class="table-wrap col-md-6 col-sm-6">
@@ -131,16 +168,18 @@
                                         <center>
                                             <h3 class="custom-bordered-table">DOCTORS SCHEDULE</h3>
                                         </center>
-                                        <select id="serviceFilter" onchange="filterTable(); refreshCalendar();" class="form-control mb-3">
-                                            @foreach ($doctors as $doctor)
-                                                @php
-                                                    $service = $doctor->services->first()->name; // Assuming each doctor has only one service
-                                                @endphp
-                                                <option value="{{ $doctor->id }}">
-                                                    Dr. {{ $doctor->lastname }} | Service Offered: {{ $service }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <!--
+                                                <select id="serviceFilter" onchange="filterTable(); refreshCalendar();" class="form-control mb-3">
+                                                    @foreach ($doctors as $doctor)
+    @php
+        $service = $doctor->services->first()->name; // Assuming each doctor has only one service
+    @endphp
+                                                        <option value="{{ $doctor->id }}">
+                                                            Dr. {{ $doctor->lastname }} | Service Offered: {{ $service }}
+                                                        </option>
+    @endforeach
+                                                </select>
+                                            -->
                                         <tr>
                                             <th>DAY AVAILABILITY</th>
                                             <th>TIME AVAILABILITY</th>
@@ -152,14 +191,15 @@
                                             @php
                                                 $doctor = $availability->doctor;
                                                 $service = $doctor ? $doctor->services->first()->name : 'No service'; // Single service per doctor
-                                                
+
                                                 $currentDate = now();
-                                                $nextRestDay = $rd->where('doctor_id', $doctor->id)
-                                                                  ->filter(function ($restDay) use ($currentDate) {
-                                                                      return $restDay->rest_day > $currentDate;
-                                                                  })
-                                                                  ->sortBy('rest_day')
-                                                                  ->first();
+                                                $nextRestDay = $rd
+                                                    ->where('doctor_id', $doctor->id)
+                                                    ->filter(function ($restDay) use ($currentDate) {
+                                                        return $restDay->rest_day > $currentDate;
+                                                    })
+                                                    ->sortBy('rest_day')
+                                                    ->first();
                                             @endphp
                                             @if ($doctor && ($index == 0 || $doctor->id != $doctorAvailabilities[$index - 1]->doctor_id))
                                                 <tr data-filter="{{ $doctor->id }}">
@@ -168,7 +208,8 @@
                                                         {{ date('h:i A', strtotime($availability->start_time)) }} -
                                                         {{ date('h:i A', strtotime($availability->end_time)) }}
                                                     </td>
-                                                    <td class="rest-day" rowspan="{{ $doctorAvailabilities->where('doctor_id', $doctor->id)->count() }}">
+                                                    <td class="rest-day"
+                                                        rowspan="{{ $doctorAvailabilities->where('doctor_id', $doctor->id)->count() }}">
                                                         @if ($nextRestDay)
                                                             {{ is_string($nextRestDay) ? $nextRestDay : $nextRestDay->rest_day->format('M d, Y') }}
                                                         @else
@@ -190,15 +231,15 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                
+
+
                             </div>
 
 
 
                             <br>
                             <hr>
-                            <vr>
-
+                            <vr> 
                         </div>
                     </div>
 
@@ -249,62 +290,63 @@
                                             <label>Patient Name</label>
                                             <input type="text" value="" class="form-control" name="name" id="patient_name" readonly />
                                         </div>
-                                        
-
-
 
                                         <!-- <label>Select Service</label>
-                                                    <div class="form-group">
-                                                        <select id="serviceSelect" name="service[]" class="selectpicker form-control"
-                                                            data-size="5" data-style="btn-outline-secondary" multiple
-                                                            data-max-options="3" required>
+                                                        <div class="form-group">
+                                                            <select id="serviceSelect" name="service[]" class="selectpicker form-control"
+                                                                data-size="5" data-style="btn-outline-secondary" multiple
+                                                                data-max-options="3" required>
 
-                                                            @foreach ($services as $service)
+                                                                @foreach ($services as $service)
     <option value="{{ $service->id }}">{{ $service->name }}</option>
     @endforeach
-                                                        </select>
-                                                    </div>
-                                                -->
-                                        <label>Select Service</label>
+                                                            </select>
+                                                        </div>
+                                                    -->
                                         <div class="form-group">
-                                            <select id="serviceSelect" name="service" class="selectpicker form-control"
-                                                data-size="5" data-style="btn-outline-secondary" required>
-                                                @foreach ($services as $service)
-                                                    <option value="{{ $service->id }}">{{ $service->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <label>Service</label>
+                                            <input type="text" class="form-control" name="service_name"
+                                                id="serviceText" readonly />
+                                            <input type="hidden" name="service" id="serviceValue" />
                                         </div>
 
-
-                                        <label>Select Doctor</label>
+                                        <!-- Replace the doctor dropdown with text field -->
                                         <div class="form-group">
-                                            <select id="doctorSelect" name="doctor" class="form-control" required>
-                                                <option value="">Select Doctor</option>
-                                            </select>
+                                            <label>Doctor</label>
+                                            <input type="text" class="form-control" name="doctor_name"
+                                                id="doctorText" readonly />
+                                            <input type="hidden" name="doctor" id="doctorValue" />
                                         </div>
 
                                         <!--   <label>Select Time</label>
-                                                                        <div class="form-group">
-                                                                            <select id="timeSelect" name="time" id="time" class="form-control"
-                                                                                required>
-                                                                                <option value="">Select time</option>
-                                                                            </select>
-                                                                            <input type="hidden" class="form-control" name="end_time" id="end_time"
-                                                                                value="" readonly />
-                                                                        </div>
-                                                                    -->
+                                                                            <div class="form-group">
+                                                                                <select id="timeSelect" name="time" id="time" class="form-control"
+                                                                                    required>
+                                                                                    <option value="">Select time</option>
+                                                                                </select>
+                                                                                <input type="hidden" class="form-control" name="end_time" id="end_time"
+                                                                                    value="" readonly />
+                                                                            </div>
+                                                                        -->
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" name="remarks" id="remarks"
-                                                value="Walk-in  " readonly />
+                                                value="Online" readonly />
                                         </div>
-                                        <!--
-                                                                <div class="form-group">
-                                                                    <input type="checkbox" id="policyCheckbox">
-                                                                    <label for="policyCheckbox">I agree to the <a href="#"
-                                                                            data-toggle="modal" data-target="#modal-schedule-policy"><span style="color:blue">schedule
-                                                                            policy</span></a></label>
-                                                                </div>
-                                                            -->
+
+                                        <div class="form-group" id="referralCheckboxContainer" style="display: none;">
+                                            <input type="checkbox" id="referralCheckbox" name="referral_used">
+                                            <label for="referralCheckbox">Referral</label>
+                                        </div>
+                                         
+                                        <div class="form-group">
+                                            <input type="checkbox" id="policyCheckbox">
+                                            <label for="policyCheckbox">I agree to the <a href="#"
+                                                    data-toggle="modal" data-target="#modal-schedule-policy"><span
+                                                        style="color:blue">schedule
+                                                        policy</span></a></label>
+                                        </div>
+                                 
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary" id="saveButton">
@@ -552,7 +594,147 @@
                 });
             });
 
-            $(document).ready(function() {
+
+            // Add this code to your page, either in a <script> tag at the bottom 
+            // or by modifying your calendar-setting.js file
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Function to populate form fields from the selected filter
+                function populateFormFromFilter() {
+                    // Get the selected doctor from the filter
+                    const serviceFilterSelect = document.getElementById('serviceFilter');
+                    if (!serviceFilterSelect) {
+                        console.error('Service filter select not found');
+                        return;
+                    }
+
+                    const selectedDoctorId = serviceFilterSelect.value;
+                    const selectedOption = serviceFilterSelect.options[serviceFilterSelect.selectedIndex];
+                    const optionText = selectedOption ? selectedOption.text : '';
+
+                    // Extract doctor name and service from the option text
+                    // Format is typically: "Dr. LastName ( Gender ) | Service Offered: ServiceName"
+                    const doctorMatch = optionText.match(/Dr\. ([^\(]+)/);
+                    const serviceMatch = optionText.match(/Service Offered: (.*?)(?:\)|$)/);
+
+                    const doctorName = doctorMatch ? doctorMatch[1].trim() : '';
+                    const serviceName = serviceMatch ? serviceMatch[1].trim() : '';
+
+                    console.log('Extracted - Doctor:', doctorName, 'Service:', serviceName);
+
+                    // Get references to the text fields
+                    const serviceText = document.getElementById('serviceText');
+                    const serviceValue = document.getElementById('serviceValue');
+                    const doctorText = document.getElementById('doctorText');
+                    const doctorValue = document.getElementById('doctorValue');
+                    const referralCheckboxContainer = document.getElementById('referralCheckboxContainer');
+
+                    // Set the visible text fields
+                    if (serviceText) serviceText.value = serviceName;
+                    if (doctorText) doctorText.value = 'Dr.' + ' ' + doctorName;
+
+                    // Set the hidden value fields
+                    if (serviceValue && services) {
+                        // Find the service ID by name from your services data
+                        const service = services.find(s => s.name === serviceName);
+                        serviceValue.value = service ? service.id : '';
+
+                        // Check if the service has referral and show/hide the checkbox
+                        if (service && referralCheckboxContainer) {
+                            // Find if the doctor offers this service with referral
+                            const hasReferral = doctors.some(doctor =>
+                                doctor.id == selectedDoctorId &&
+                                doctor.services.some(s =>
+                                    s.id == service.id && s.referral
+                                )
+                            );
+
+                            // Show/hide the referral checkbox based on whether referral is available
+                            referralCheckboxContainer.style.display = hasReferral ? 'block' : 'none';
+
+                            // You can also set a hidden field for referral status if needed
+                            const hasReferralField = document.getElementById('hasReferral');
+                            if (hasReferralField) {
+                                hasReferralField.value = hasReferral ? '1' : '0';
+                            }
+                        }
+                    }
+
+                    if (doctorValue) doctorValue.value = selectedDoctorId;
+                }
+
+                // When the modal is opened, populate the form fields
+                $('#modal-view-event-add').on('show.bs.modal', function() {
+                    populateFormFromFilter();
+                });
+
+                // When the service filter changes, update the form if modal is open
+                const serviceFilterSelect = document.getElementById('serviceFilter');
+                if (serviceFilterSelect) {
+                    serviceFilterSelect.addEventListener('change', function() {
+                        if ($('#modal-view-event-add').is(':visible')) {
+                            populateFormFromFilter();
+                        }
+                    });
+                }
+
+                // Make the service and doctor variables available globally
+                // You'll need to add this to your Blade template where you define other variables
+                var services = @json($services);
+                var doctors = @json($doctors);
+            });
+            document.addEventListener("DOMContentLoaded", function() {
+    const policyCheckbox = document.getElementById("policyCheckbox");
+    const saveButton = document.getElementById("saveButton");
+    const referralCheckbox = document.getElementById("referralCheckbox");
+    const referralCheckboxContainer = document.getElementById("referralCheckboxContainer");
+
+    if (policyCheckbox && saveButton) {
+        // Initially disable the Save button
+        saveButton.disabled = true;
+
+        // Function to check if the save button should be enabled
+        function updateSaveButtonState() {
+            // Policy checkbox must always be checked
+            let shouldEnable = policyCheckbox.checked;
+            
+            // If referral is visible, it must also be checked
+            if (referralCheckboxContainer && 
+                referralCheckbox && 
+                referralCheckboxContainer.style.display !== 'none') {
+                shouldEnable = shouldEnable && referralCheckbox.checked;
+            }
+            
+            // Update button state
+            saveButton.disabled = !shouldEnable;
+        }
+
+        // Add event listeners to both checkboxes
+        policyCheckbox.addEventListener("change", updateSaveButtonState);
+        
+        if (referralCheckbox) {
+            referralCheckbox.addEventListener("change", updateSaveButtonState);
+        }
+        
+        // Also check when the referral container visibility changes
+        // Create a mutation observer to monitor changes to the referral container display style
+        if (referralCheckboxContainer) {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === "attributes" && mutation.attributeName === "style") {
+                        updateSaveButtonState();
+                    }
+                });
+            });
+            
+            observer.observe(referralCheckboxContainer, { attributes: true });
+        }
+        
+        // Initial check
+        updateSaveButtonState();
+    }
+});
+$(document).ready(function() {
     $('#patient_id').on('input', function() {
         var userId = $(this).val(); // Use userId to search
         if (userId) {
@@ -575,6 +757,4 @@
         }
     });
 });
-
-
         </script>
