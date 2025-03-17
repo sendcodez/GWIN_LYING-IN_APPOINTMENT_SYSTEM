@@ -287,7 +287,7 @@ body.modal-open {
                 </div>
             </div>
         </div>
-    </div>
+    
     <!-- Replace the Bootstrap modal with this custom modal -->
     <div id="customApproveModal" class="custom-modal" style="display: none;">
         <div class="custom-modal-overlay"></div>
@@ -327,6 +327,21 @@ body.modal-open {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+         $(document).ready(function () {
+        $('#appointmentsTable').DataTable({
+            "paging": true,  // Enable pagination
+            "ordering": true, // Enable sorting
+            "info": true,    // Show table info
+           
+            "searching": true, // Enable search box
+            "lengthMenu": [10, 25, 50, 100], // Customize page length
+            "language": {
+                "emptyTable": "No data available",
+                "lengthMenu": "Show _MENU_ entries",
+                "search": "Search:",
+            }
+        });
+    });
         // Add this to your script section or JS file
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('customApproveModal');
