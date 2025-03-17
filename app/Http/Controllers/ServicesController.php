@@ -35,7 +35,8 @@ class ServicesController extends Controller
         ]);
 
         // ✅ Explicitly set referral (force 1 or 0)
-        $validatedData['referral'] = $request->has('referral') ? 1 : 0;
+        $validatedData['referral'] = $request->input('referral', 0);
+
 
         // Debug before saving
     
